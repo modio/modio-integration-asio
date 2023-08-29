@@ -30,6 +30,9 @@ class thread_info_base;
 class thread_context
 {
 public:
+  // Ensure the call_stack is set to nullptr
+  ASIO_DECL static void nullify_call_stack();
+
   // Obtain a pointer to the top of the thread call stack. Returns null when
   // not running inside a thread context.
   ASIO_DECL static thread_info_base* top_of_thread_call_stack();

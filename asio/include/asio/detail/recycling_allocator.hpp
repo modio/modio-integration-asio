@@ -48,6 +48,13 @@ public:
 
   T* allocate(std::size_t n)
   {
+    #ifdef ASIO_INITIALIZE_CALL_STACK
+    // In some platforms, it is possible that the call_stack is not
+    // properly iniitialized. This method makes sure to assign to 
+    // nullptr the values inside
+    thread_context::nullify_call_stack();
+    #endif
+    
     void* p = thread_info_base::allocate(Purpose(),
         thread_context::top_of_thread_call_stack(),
         sizeof(T) * n, ASIO_ALIGNOF(T));
