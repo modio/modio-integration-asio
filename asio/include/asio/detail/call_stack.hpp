@@ -87,6 +87,12 @@ public:
 
   friend class context;
 
+  // Initialize to nullptr the static top_ variable
+  static void nullify_top()
+  {
+    top_ = nullptr;
+  }
+
   // Determine whether the specified owner is on the stack. Returns address of
   // key if present, 0 otherwise.
   static Value* contains(Key* k)

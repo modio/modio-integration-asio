@@ -22,6 +22,11 @@
 namespace asio {
 namespace detail {
 
+void thread_context::nullify_call_stack()
+{
+  thread_call_stack::nullify_top();
+}
+
 thread_info_base* thread_context::top_of_thread_call_stack()
 {
   return thread_call_stack::top();
