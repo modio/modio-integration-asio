@@ -17,9 +17,7 @@
 
 #include "asio/detail/config.hpp"
 
-#if !defined(ASIO_HAS_THREADS)
-// Nothing to include.
-#elif defined(ASIO_HAS_STD_ATOMIC)
+#if defined(ASIO_HAS_STD_ATOMIC)
 # include <atomic>
 #else // defined(ASIO_HAS_STD_ATOMIC)
 # include <boost/detail/atomic_count.hpp>
@@ -28,13 +26,7 @@
 namespace asio {
 namespace detail {
 
-#if !defined(ASIO_HAS_THREADS)
-typedef long atomic_count;
-inline void increment(atomic_count& a, long b) { a += b; }
-inline void decrement(atomic_count& a, long b) { a -= b; }
-inline void ref_count_up(atomic_count& a) { ++a; }
-inline bool ref_count_down(atomic_count& a) { return --a == 0; }
-#elif defined(ASIO_HAS_STD_ATOMIC)
+#if defined(ASIO_HAS_STD_ATOMIC)
 typedef std::atomic<long> atomic_count;
 inline void increment(atomic_count& a, long b) { a += b; }
 inline void decrement(atomic_count& a, long b) { a -= b; }
