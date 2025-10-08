@@ -19,7 +19,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace detail {
 
 void thread_context::nullify_call_stack()
@@ -33,7 +33,7 @@ thread_info_base* thread_context::top_of_thread_call_stack()
 }
 
 } // namespace detail
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

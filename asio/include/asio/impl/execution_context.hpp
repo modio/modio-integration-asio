@@ -21,7 +21,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 
 #if !defined(GENERATING_DOCUMENTATION)
 
@@ -102,7 +102,7 @@ inline execution_context& execution_context::service::context()
   return owner_;
 }
 
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

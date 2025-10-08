@@ -22,12 +22,12 @@
 
 #include "asio/basic_random_access_file.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 
 /// Typedef for the typical usage of a random-access file.
 typedef basic_random_access_file<> random_access_file;
 
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #endif // defined(ASIO_HAS_FILE)
        //   || defined(GENERATING_DOCUMENTATION)

@@ -21,7 +21,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace detail {
 
 class winsock_init_base
@@ -81,7 +81,7 @@ public:
   //   #pragma warning(push)
   //   #pragma warning(disable:4073)
   //   #pragma init_seg(lib)
-  //   asio::detail::winsock_init<>::manual manual_winsock_init;
+  //   ASIO_NAMESPACE::detail::winsock_init<>::manual manual_winsock_init;
   //   #pragma warning(pop)
   class manual
   {
@@ -115,7 +115,7 @@ winsock_init_base::data winsock_init<Major, Minor>::data_;
 static const winsock_init<>& winsock_init_instance = winsock_init<>(false);
 
 } // namespace detail
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

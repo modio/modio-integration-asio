@@ -26,15 +26,15 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace detail {
 
 void win_static_mutex::init()
 {
   int error = do_init();
-  asio::error_code ec(error,
-      asio::error::get_system_category());
-  asio::detail::throw_error(ec, "static_mutex");
+  ASIO_NAMESPACE::error_code ec(error,
+      ASIO_NAMESPACE::error::get_system_category());
+  ASIO_NAMESPACE::detail::throw_error(ec, "static_mutex");
 }
 
 int win_static_mutex::do_init()
@@ -127,7 +127,7 @@ int win_static_mutex::do_init()
 }
 
 } // namespace detail
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

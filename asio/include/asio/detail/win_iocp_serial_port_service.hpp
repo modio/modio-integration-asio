@@ -27,7 +27,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace detail {
 
 // Extend win_iocp_handle_service to provide serial port support.
@@ -76,12 +76,12 @@ public:
   }
 
   // Open the serial port using the specified device name.
-  ASIO_DECL asio::error_code open(implementation_type& impl,
-      const std::string& device, asio::error_code& ec);
+  ASIO_DECL ASIO_NAMESPACE::error_code open(implementation_type& impl,
+      const std::string& device, ASIO_NAMESPACE::error_code& ec);
 
   // Assign a native handle to a serial port implementation.
-  asio::error_code assign(implementation_type& impl,
-      const native_handle_type& handle, asio::error_code& ec)
+  ASIO_NAMESPACE::error_code assign(implementation_type& impl,
+      const native_handle_type& handle, ASIO_NAMESPACE::error_code& ec)
   {
     return handle_service_.assign(impl, handle, ec);
   }
@@ -93,8 +93,8 @@ public:
   }
 
   // Destroy a serial port implementation.
-  asio::error_code close(implementation_type& impl,
-      asio::error_code& ec)
+  ASIO_NAMESPACE::error_code close(implementation_type& impl,
+      ASIO_NAMESPACE::error_code& ec)
   {
     return handle_service_.close(impl, ec);
   }
@@ -106,16 +106,16 @@ public:
   }
 
   // Cancel all operations associated with the handle.
-  asio::error_code cancel(implementation_type& impl,
-      asio::error_code& ec)
+  ASIO_NAMESPACE::error_code cancel(implementation_type& impl,
+      ASIO_NAMESPACE::error_code& ec)
   {
     return handle_service_.cancel(impl, ec);
   }
 
   // Set an option on the serial port.
   template <typename SettableSerialPortOption>
-  asio::error_code set_option(implementation_type& impl,
-      const SettableSerialPortOption& option, asio::error_code& ec)
+  ASIO_NAMESPACE::error_code set_option(implementation_type& impl,
+      const SettableSerialPortOption& option, ASIO_NAMESPACE::error_code& ec)
   {
     return do_set_option(impl,
         &win_iocp_serial_port_service::store_option<SettableSerialPortOption>,
@@ -124,8 +124,8 @@ public:
 
   // Get an option from the serial port.
   template <typename GettableSerialPortOption>
-  asio::error_code get_option(const implementation_type& impl,
-      GettableSerialPortOption& option, asio::error_code& ec) const
+  ASIO_NAMESPACE::error_code get_option(const implementation_type& impl,
+      GettableSerialPortOption& option, ASIO_NAMESPACE::error_code& ec) const
   {
     return do_get_option(impl,
         &win_iocp_serial_port_service::load_option<GettableSerialPortOption>,
@@ -133,10 +133,10 @@ public:
   }
 
   // Send a break sequence to the serial port.
-  asio::error_code send_break(implementation_type&,
-      asio::error_code& ec)
+  ASIO_NAMESPACE::error_code send_break(implementation_type&,
+      ASIO_NAMESPACE::error_code& ec)
   {
-    ec = asio::error::operation_not_supported;
+    ec = ASIO_NAMESPACE::error::operation_not_supported;
     ASIO_ERROR_LOCATION(ec);
     return ec;
   }
@@ -144,7 +144,7 @@ public:
   // Write the given data. Returns the number of bytes sent.
   template <typename ConstBufferSequence>
   size_t write_some(implementation_type& impl,
-      const ConstBufferSequence& buffers, asio::error_code& ec)
+      const ConstBufferSequence& buffers, ASIO_NAMESPACE::error_code& ec)
   {
     return handle_service_.write_some(impl, buffers, ec);
   }
@@ -162,7 +162,7 @@ public:
   // Read some data. Returns the number of bytes received.
   template <typename MutableBufferSequence>
   size_t read_some(implementation_type& impl,
-      const MutableBufferSequence& buffers, asio::error_code& ec)
+      const MutableBufferSequence& buffers, ASIO_NAMESPACE::error_code& ec)
   {
     return handle_service_.read_some(impl, buffers, ec);
   }
@@ -180,47 +180,47 @@ public:
 
 private:
   // Function pointer type for storing a serial port option.
-  typedef asio::error_code (*store_function_type)(
-      const void*, ::DCB&, asio::error_code&);
+  typedef ASIO_NAMESPACE::error_code (*store_function_type)(
+      const void*, ::DCB&, ASIO_NAMESPACE::error_code&);
 
   // Helper function template to store a serial port option.
   template <typename SettableSerialPortOption>
-  static asio::error_code store_option(const void* option,
-      ::DCB& storage, asio::error_code& ec)
+  static ASIO_NAMESPACE::error_code store_option(const void* option,
+      ::DCB& storage, ASIO_NAMESPACE::error_code& ec)
   {
     static_cast<const SettableSerialPortOption*>(option)->store(storage, ec);
     return ec;
   }
 
   // Helper function to set a serial port option.
-  ASIO_DECL asio::error_code do_set_option(
+  ASIO_DECL ASIO_NAMESPACE::error_code do_set_option(
       implementation_type& impl, store_function_type store,
-      const void* option, asio::error_code& ec);
+      const void* option, ASIO_NAMESPACE::error_code& ec);
 
   // Function pointer type for loading a serial port option.
-  typedef asio::error_code (*load_function_type)(
-      void*, const ::DCB&, asio::error_code&);
+  typedef ASIO_NAMESPACE::error_code (*load_function_type)(
+      void*, const ::DCB&, ASIO_NAMESPACE::error_code&);
 
   // Helper function template to load a serial port option.
   template <typename GettableSerialPortOption>
-  static asio::error_code load_option(void* option,
-      const ::DCB& storage, asio::error_code& ec)
+  static ASIO_NAMESPACE::error_code load_option(void* option,
+      const ::DCB& storage, ASIO_NAMESPACE::error_code& ec)
   {
     static_cast<GettableSerialPortOption*>(option)->load(storage, ec);
     return ec;
   }
 
   // Helper function to get a serial port option.
-  ASIO_DECL asio::error_code do_get_option(
+  ASIO_DECL ASIO_NAMESPACE::error_code do_get_option(
       const implementation_type& impl, load_function_type load,
-      void* option, asio::error_code& ec) const;
+      void* option, ASIO_NAMESPACE::error_code& ec) const;
 
   // The implementation used for initiating asynchronous operations.
   win_iocp_handle_service handle_service_;
 };
 
 } // namespace detail
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

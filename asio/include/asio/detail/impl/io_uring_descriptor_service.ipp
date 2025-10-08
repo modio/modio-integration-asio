@@ -24,13 +24,13 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace detail {
 
 io_uring_descriptor_service::io_uring_descriptor_service(
     execution_context& context)
   : execution_context_service_base<io_uring_descriptor_service>(context),
-    io_uring_service_(asio::use_service<io_uring_service>(context))
+    io_uring_service_(ASIO_NAMESPACE::use_service<io_uring_service>(context))
 {
   io_uring_service_.init_task();
 }
@@ -88,19 +88,19 @@ void io_uring_descriptor_service::destroy(
           "descriptor", &impl, impl.descriptor_, "close"));
 
     io_uring_service_.deregister_io_object(impl.io_object_data_);
-    asio::error_code ignored_ec;
+    ASIO_NAMESPACE::error_code ignored_ec;
     descriptor_ops::close(impl.descriptor_, impl.state_, ignored_ec);
     io_uring_service_.cleanup_io_object(impl.io_object_data_);
   }
 }
 
-asio::error_code io_uring_descriptor_service::assign(
+ASIO_NAMESPACE::error_code io_uring_descriptor_service::assign(
     io_uring_descriptor_service::implementation_type& impl,
-    const native_handle_type& native_descriptor, asio::error_code& ec)
+    const native_handle_type& native_descriptor, ASIO_NAMESPACE::error_code& ec)
 {
   if (is_open(impl))
   {
-    ec = asio::error::already_open;
+    ec = ASIO_NAMESPACE::error::already_open;
     ASIO_ERROR_LOCATION(ec);
     return ec;
   }
@@ -113,9 +113,9 @@ asio::error_code io_uring_descriptor_service::assign(
   return ec;
 }
 
-asio::error_code io_uring_descriptor_service::close(
+ASIO_NAMESPACE::error_code io_uring_descriptor_service::close(
     io_uring_descriptor_service::implementation_type& impl,
-    asio::error_code& ec)
+    ASIO_NAMESPACE::error_code& ec)
 {
   if (is_open(impl))
   {
@@ -161,13 +161,13 @@ io_uring_descriptor_service::release(
   return descriptor;
 }
 
-asio::error_code io_uring_descriptor_service::cancel(
+ASIO_NAMESPACE::error_code io_uring_descriptor_service::cancel(
     io_uring_descriptor_service::implementation_type& impl,
-    asio::error_code& ec)
+    ASIO_NAMESPACE::error_code& ec)
 {
   if (!is_open(impl))
   {
-    ec = asio::error::bad_descriptor;
+    ec = ASIO_NAMESPACE::error::bad_descriptor;
     ASIO_ERROR_LOCATION(ec);
     return ec;
   }
@@ -196,7 +196,7 @@ void io_uring_descriptor_service::start_op(
 }
 
 } // namespace detail
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

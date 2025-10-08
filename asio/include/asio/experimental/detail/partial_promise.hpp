@@ -22,7 +22,7 @@
 # include <experimental/coroutine>
 #endif // defined(ASIO_HAS_STD_COROUTINE)
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace experimental {
 namespace detail {
 
@@ -48,7 +48,7 @@ struct partial_promise
 {
   auto initial_suspend() noexcept
   {
-    return asio::detail::suspend_always{};
+    return ASIO_NAMESPACE::detail::suspend_always{};
   }
 
   auto final_suspend() noexcept
@@ -59,7 +59,7 @@ struct partial_promise
 
       constexpr bool await_ready() noexcept { return true; }
 
-      auto await_suspend(asio::detail::coroutine_handle<>) noexcept
+      auto await_suspend(ASIO_NAMESPACE::detail::coroutine_handle<>) noexcept
       {
         p->get_return_object().destroy();
       }
@@ -85,7 +85,7 @@ struct partial_promise
 
 } // namespace detail
 } // namespace experimental
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #if defined(ASIO_HAS_STD_COROUTINE)
 
@@ -93,10 +93,10 @@ namespace std {
 
 template <typename ... Args>
 struct coroutine_traits<
-    coroutine_handle<asio::experimental::detail::partial_promise>,
+    coroutine_handle<ASIO_NAMESPACE::experimental::detail::partial_promise>,
     Args...>
 {
-  using promise_type = asio::experimental::detail::partial_promise;
+  using promise_type = ASIO_NAMESPACE::experimental::detail::partial_promise;
 };
 
 } // namespace std
@@ -107,17 +107,17 @@ namespace std { namespace experimental {
 
 template <typename... Args>
 struct coroutine_traits<
-    coroutine_handle<asio::experimental::detail::partial_promise>,
+    coroutine_handle<ASIO_NAMESPACE::experimental::detail::partial_promise>,
     Args...>
 {
-  using promise_type = asio::experimental::detail::partial_promise;
+  using promise_type = ASIO_NAMESPACE::experimental::detail::partial_promise;
 };
 
 }} // namespace std::experimental
 
 #endif // defined(ASIO_HAS_STD_COROUTINE)
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace experimental {
 namespace detail {
 
@@ -171,6 +171,6 @@ auto dispatch_coroutine(Context &ctx, CompletionToken token) noexcept
 
 } // namespace detail
 } // namespace experimental
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #endif // ASIO_EXPERIMENTAL_DETAIL_PARTIAL_PROMISE_HPP

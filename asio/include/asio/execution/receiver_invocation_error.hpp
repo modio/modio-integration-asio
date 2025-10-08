@@ -20,7 +20,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace execution {
 
 /// Exception reported via @c set_error when an exception escapes from
@@ -37,7 +37,7 @@ public:
 };
 
 } // namespace execution
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

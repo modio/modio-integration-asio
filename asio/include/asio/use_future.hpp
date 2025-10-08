@@ -26,7 +26,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace detail {
 
 template <typename Function, typename Allocator>
@@ -43,11 +43,11 @@ class packaged_handler;
  * The use_future_t class is a completion token type that is used to indicate
  * that an asynchronous operation should return a std::future object. A
  * use_future_t object may be passed as a completion token to an asynchronous
- * operation, typically using the special value @c asio::use_future. For
+ * operation, typically using the special value @c ASIO_NAMESPACE::use_future. For
  * example:
  *
  * @code std::future<std::size_t> my_future
- *   = my_socket.async_read_some(my_buffer, asio::use_future); @endcode
+ *   = my_socket.async_read_some(my_buffer, ASIO_NAMESPACE::use_future); @endcode
  *
  * The initiating function (async_read_some in the above example) returns a
  * future that will receive the result of the operation. If the operation
@@ -105,7 +105,7 @@ public:
    *
    * @code std::future<std::size_t> fut =
    *   my_socket.async_read_some(buffer,
-   *     use_future([](asio::error_code ec, std::size_t n)
+   *     use_future([](ASIO_NAMESPACE::error_code ec, std::size_t n)
    *       {
    *         return ec ? 0 : n;
    *       }));
@@ -143,7 +143,7 @@ private:
 /// A @ref completion_token object that causes an asynchronous operation to
 /// return a future.
 /**
- * See the documentation for asio::use_future_t for a usage example.
+ * See the documentation for ASIO_NAMESPACE::use_future_t for a usage example.
  */
 #if defined(ASIO_HAS_CONSTEXPR) || defined(GENERATING_DOCUMENTATION)
 constexpr use_future_t<> use_future;
@@ -151,7 +151,7 @@ constexpr use_future_t<> use_future;
 __declspec(selectany) use_future_t<> use_future;
 #endif
 
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

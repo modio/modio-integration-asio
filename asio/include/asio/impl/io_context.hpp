@@ -26,7 +26,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 
 #if !defined(GENERATING_DOCUMENTATION)
 
@@ -93,11 +93,11 @@ std::size_t io_context::run_one_until(
     if (rel_time > chrono::seconds(1))
       rel_time = chrono::seconds(1);
 
-    asio::error_code ec;
+    ASIO_NAMESPACE::error_code ec;
     std::size_t s = impl_.wait_one(
         static_cast<long>(chrono::duration_cast<
           chrono::microseconds>(rel_time).count()), ec);
-    asio::detail::throw_error(ec);
+    ASIO_NAMESPACE::detail::throw_error(ec);
 
     if (s || impl_.stopped())
       return s;
@@ -132,7 +132,7 @@ struct io_context::initiate_dispatch
     if (self->impl_.can_dispatch())
     {
       detail::fenced_block b(detail::fenced_block::full);
-      asio_handler_invoke_helpers::invoke(
+      ASIO_NAMESPACE::asio_handler_invoke_helpers::invoke(
           handler2.value, handler2.value);
     }
     else
@@ -178,7 +178,7 @@ struct io_context::initiate_post
     detail::non_const_lvalue<LegacyCompletionHandler> handler2(handler);
 
     bool is_continuation =
-      asio_handler_cont_helpers::is_continuation(handler2.value);
+      ASIO_NAMESPACE::asio_handler_cont_helpers::is_continuation(handler2.value);
 
     // Allocate and construct an operation to wrap the handler.
     typedef detail::completion_handler<
@@ -290,7 +290,7 @@ void io_context::basic_executor_type<Allocator, Bits>::execute(
 #endif // defined(ASIO_HAS_STD_EXCEPTION_PTR)
        //   && !defined(ASIO_NO_EXCEPTIONS)
       detail::fenced_block b(detail::fenced_block::full);
-      asio_handler_invoke_helpers::invoke(tmp, tmp);
+      ASIO_NAMESPACE::asio_handler_invoke_helpers::invoke(tmp, tmp);
       return;
 #if defined(ASIO_HAS_STD_EXCEPTION_PTR) \
   && !defined(ASIO_NO_EXCEPTIONS)
@@ -356,7 +356,7 @@ void io_context::basic_executor_type<Allocator, Bits>::dispatch(
     function_type tmp(ASIO_MOVE_CAST(Function)(f));
 
     detail::fenced_block b(detail::fenced_block::full);
-    asio_handler_invoke_helpers::invoke(tmp, tmp);
+    ASIO_NAMESPACE::asio_handler_invoke_helpers::invoke(tmp, tmp);
     return;
   }
 
@@ -415,7 +415,7 @@ void io_context::basic_executor_type<Allocator, Bits>::defer(
 #endif // !defined(ASIO_NO_TS_EXECUTORS)
 
 #if !defined(ASIO_NO_DEPRECATED)
-inline io_context::work::work(asio::io_context& io_context)
+inline io_context::work::work(ASIO_NAMESPACE::io_context& io_context)
   : io_context_impl_(io_context.impl_)
 {
   io_context_impl_.work_started();
@@ -432,18 +432,18 @@ inline io_context::work::~work()
   io_context_impl_.work_finished();
 }
 
-inline asio::io_context& io_context::work::get_io_context()
+inline ASIO_NAMESPACE::io_context& io_context::work::get_io_context()
 {
-  return static_cast<asio::io_context&>(io_context_impl_.context());
+  return static_cast<ASIO_NAMESPACE::io_context&>(io_context_impl_.context());
 }
 #endif // !defined(ASIO_NO_DEPRECATED)
 
-inline asio::io_context& io_context::service::get_io_context()
+inline ASIO_NAMESPACE::io_context& io_context::service::get_io_context()
 {
-  return static_cast<asio::io_context&>(context());
+  return static_cast<ASIO_NAMESPACE::io_context&>(context());
 }
 
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

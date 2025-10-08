@@ -26,7 +26,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace experimental {
 namespace detail {
 
@@ -180,7 +180,7 @@ co_spawn(coro<void() noexcept, void, Executor> c, CompletionToken&& token)
 }
 
 } // namespace detail
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

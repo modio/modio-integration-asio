@@ -34,7 +34,7 @@
 # include "asio/detail/select_reactor.hpp"
 #endif
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace detail {
 
 #if defined(ASIO_HAS_IOCP) || defined(ASIO_WINDOWS_RUNTIME) || defined(ASIO_NULL_REACTOR)
@@ -52,6 +52,6 @@ typedef select_reactor reactor;
 #endif
 
 } // namespace detail
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #endif // ASIO_DETAIL_REACTOR_HPP

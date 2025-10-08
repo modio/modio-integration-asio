@@ -22,7 +22,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace detail {
 
 #if defined(ASIO_HAS_MOVE)
@@ -112,7 +112,7 @@ private:
     // Make the upcall if required.
     if (call)
     {
-      asio_handler_invoke_helpers::invoke(function, function);
+      ASIO_NAMESPACE::asio_handler_invoke_helpers::invoke(function, function);
     }
   }
 
@@ -197,7 +197,7 @@ private:
 };
 
 } // namespace detail
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

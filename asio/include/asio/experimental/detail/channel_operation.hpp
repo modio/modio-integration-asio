@@ -26,7 +26,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace experimental {
 namespace detail {
 
@@ -69,7 +69,7 @@ protected:
   {
   }
 
-  friend class asio::detail::op_queue_access;
+  friend class ASIO_NAMESPACE::detail::op_queue_access;
   channel_operation* next_;
   func_type func_;
 
@@ -83,7 +83,7 @@ class channel_operation::handler_work_base
 {
 public:
   handler_work_base(int, const Executor& ex)
-    : executor_(asio::prefer(ex, execution::outstanding_work.tracked))
+    : executor_(ASIO_NAMESPACE::prefer(ex, execution::outstanding_work.tracked))
   {
   }
 
@@ -94,8 +94,8 @@ public:
       (get_associated_allocator)(handler);
 
     execution::execute(
-        asio::prefer(
-          asio::require(executor_, execution::blocking.never),
+        ASIO_NAMESPACE::prefer(
+          ASIO_NAMESPACE::require(executor_, execution::blocking.never),
           execution::allocator(allocator)),
         ASIO_MOVE_CAST(Function)(function));
   }
@@ -192,7 +192,7 @@ public:
 
 } // namespace detail
 } // namespace experimental
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

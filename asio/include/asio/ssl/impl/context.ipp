@@ -26,7 +26,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace ssl {
 
 struct context::bio_cleanup
@@ -73,8 +73,8 @@ context::context(context::method m)
   case context::sslv2:
   case context::sslv2_client:
   case context::sslv2_server:
-    asio::detail::throw_error(
-        asio::error::invalid_argument, "context");
+    ASIO_NAMESPACE::detail::throw_error(
+        ASIO_NAMESPACE::error::invalid_argument, "context");
     break;
 #else // (OPENSSL_VERSION_NUMBER >= 0x10100000L) || defined(OPENSSL_NO_SSL2)
   case context::sslv2:
@@ -118,8 +118,8 @@ context::context(context::method m)
   case context::sslv3:
   case context::sslv3_client:
   case context::sslv3_server:
-    asio::detail::throw_error(
-        asio::error::invalid_argument, "context");
+    ASIO_NAMESPACE::detail::throw_error(
+        ASIO_NAMESPACE::error::invalid_argument, "context");
     break;
 #else // defined(OPENSSL_NO_SSL3)
   case context::sslv3:
@@ -173,8 +173,8 @@ context::context(context::method m)
   case context::tlsv1:
   case context::tlsv1_client:
   case context::tlsv1_server:
-    asio::detail::throw_error(
-        asio::error::invalid_argument, "context");
+    ASIO_NAMESPACE::detail::throw_error(
+        ASIO_NAMESPACE::error::invalid_argument, "context");
     break;
 #endif // defined(SSL_TXT_TLSV1)
 
@@ -218,8 +218,8 @@ context::context(context::method m)
   case context::tlsv11:
   case context::tlsv11_client:
   case context::tlsv11_server:
-    asio::detail::throw_error(
-        asio::error::invalid_argument, "context");
+    ASIO_NAMESPACE::detail::throw_error(
+        ASIO_NAMESPACE::error::invalid_argument, "context");
     break;
 #endif // defined(SSL_TXT_TLSV1_1)
 
@@ -263,8 +263,8 @@ context::context(context::method m)
   case context::tlsv12:
   case context::tlsv12_client:
   case context::tlsv12_server:
-    asio::detail::throw_error(
-        asio::error::invalid_argument, "context");
+    ASIO_NAMESPACE::detail::throw_error(
+        ASIO_NAMESPACE::error::invalid_argument, "context");
     break;
 #endif // defined(SSL_TXT_TLSV1_2)
 
@@ -300,8 +300,8 @@ context::context(context::method m)
   case context::tlsv13:
   case context::tlsv13_client:
   case context::tlsv13_server:
-    asio::detail::throw_error(
-        asio::error::invalid_argument, "context");
+    ASIO_NAMESPACE::detail::throw_error(
+        ASIO_NAMESPACE::error::invalid_argument, "context");
     break;
 #endif // (OPENSSL_VERSION_NUMBER >= 0x10101000L)
        //   && !defined(LIBRESSL_VERSION_NUMBER)
@@ -359,8 +359,8 @@ context::context(context::method m)
 
   if (handle_ == 0)
   {
-    asio::error_code ec = translate_error(::ERR_get_error());
-    asio::detail::throw_error(ec, "context");
+    ASIO_NAMESPACE::error_code ec = translate_error(::ERR_get_error());
+    ASIO_NAMESPACE::detail::throw_error(ec, "context");
   }
 
   set_options(no_compression);
@@ -371,8 +371,8 @@ context::context(context::native_handle_type native_handle)
 {
   if (!handle_)
   {
-    asio::detail::throw_error(
-        asio::error::invalid_argument, "context");
+    ASIO_NAMESPACE::detail::throw_error(
+        ASIO_NAMESPACE::error::invalid_argument, "context");
   }
 }
 
@@ -440,13 +440,13 @@ context::native_handle_type context::native_handle()
 
 void context::clear_options(context::options o)
 {
-  asio::error_code ec;
+  ASIO_NAMESPACE::error_code ec;
   clear_options(o, ec);
-  asio::detail::throw_error(ec, "clear_options");
+  ASIO_NAMESPACE::detail::throw_error(ec, "clear_options");
 }
 
 ASIO_SYNC_OP_VOID context::clear_options(
-    context::options o, asio::error_code& ec)
+    context::options o, ASIO_NAMESPACE::error_code& ec)
 {
 #if (OPENSSL_VERSION_NUMBER >= 0x009080DFL) \
   && (OPENSSL_VERSION_NUMBER != 0x00909000L)
@@ -462,11 +462,11 @@ ASIO_SYNC_OP_VOID context::clear_options(
 
   ::SSL_CTX_clear_options(handle_, o);
 
-  ec = asio::error_code();
+  ec = ASIO_NAMESPACE::error_code();
 #else // (OPENSSL_VERSION_NUMBER >= 0x009080DFL)
       //   && (OPENSSL_VERSION_NUMBER != 0x00909000L)
   (void)o;
-  ec = asio::error::operation_not_supported;
+  ec = ASIO_NAMESPACE::error::operation_not_supported;
 #endif // (OPENSSL_VERSION_NUMBER >= 0x009080DFL)
        //   && (OPENSSL_VERSION_NUMBER != 0x00909000L)
   ASIO_SYNC_OP_VOID_RETURN(ec);
@@ -474,20 +474,20 @@ ASIO_SYNC_OP_VOID context::clear_options(
 
 void context::set_options(context::options o)
 {
-  asio::error_code ec;
+  ASIO_NAMESPACE::error_code ec;
   set_options(o, ec);
-  asio::detail::throw_error(ec, "set_options");
+  ASIO_NAMESPACE::detail::throw_error(ec, "set_options");
 }
 
 ASIO_SYNC_OP_VOID context::set_options(
-    context::options o, asio::error_code& ec)
+    context::options o, ASIO_NAMESPACE::error_code& ec)
 {
 #if !defined(SSL_OP_NO_COMPRESSION)
   if ((o & context::no_compression) != 0)
   {
 #if (OPENSSL_VERSION_NUMBER >= 0x00908000L)
     handle_->comp_methods =
-      asio::ssl::detail::openssl_init<>::get_null_compression_methods();
+      ASIO_NAMESPACE::ssl::detail::openssl_init<>::get_null_compression_methods();
 #endif // (OPENSSL_VERSION_NUMBER >= 0x00908000L)
     o ^= context::no_compression;
   }
@@ -495,51 +495,51 @@ ASIO_SYNC_OP_VOID context::set_options(
 
   ::SSL_CTX_set_options(handle_, o);
 
-  ec = asio::error_code();
+  ec = ASIO_NAMESPACE::error_code();
   ASIO_SYNC_OP_VOID_RETURN(ec);
 }
 
 void context::set_verify_mode(verify_mode v)
 {
-  asio::error_code ec;
+  ASIO_NAMESPACE::error_code ec;
   set_verify_mode(v, ec);
-  asio::detail::throw_error(ec, "set_verify_mode");
+  ASIO_NAMESPACE::detail::throw_error(ec, "set_verify_mode");
 }
 
 ASIO_SYNC_OP_VOID context::set_verify_mode(
-    verify_mode v, asio::error_code& ec)
+    verify_mode v, ASIO_NAMESPACE::error_code& ec)
 {
   ::SSL_CTX_set_verify(handle_, v, ::SSL_CTX_get_verify_callback(handle_));
 
-  ec = asio::error_code();
+  ec = ASIO_NAMESPACE::error_code();
   ASIO_SYNC_OP_VOID_RETURN(ec);
 }
 
 void context::set_verify_depth(int depth)
 {
-  asio::error_code ec;
+  ASIO_NAMESPACE::error_code ec;
   set_verify_depth(depth, ec);
-  asio::detail::throw_error(ec, "set_verify_depth");
+  ASIO_NAMESPACE::detail::throw_error(ec, "set_verify_depth");
 }
 
 ASIO_SYNC_OP_VOID context::set_verify_depth(
-    int depth, asio::error_code& ec)
+    int depth, ASIO_NAMESPACE::error_code& ec)
 {
   ::SSL_CTX_set_verify_depth(handle_, depth);
 
-  ec = asio::error_code();
+  ec = ASIO_NAMESPACE::error_code();
   ASIO_SYNC_OP_VOID_RETURN(ec);
 }
 
 void context::load_verify_file(const std::string& filename)
 {
-  asio::error_code ec;
+  ASIO_NAMESPACE::error_code ec;
   load_verify_file(filename, ec);
-  asio::detail::throw_error(ec, "load_verify_file");
+  ASIO_NAMESPACE::detail::throw_error(ec, "load_verify_file");
 }
 
 ASIO_SYNC_OP_VOID context::load_verify_file(
-    const std::string& filename, asio::error_code& ec)
+    const std::string& filename, ASIO_NAMESPACE::error_code& ec)
 {
   ::ERR_clear_error();
 
@@ -549,19 +549,19 @@ ASIO_SYNC_OP_VOID context::load_verify_file(
     ASIO_SYNC_OP_VOID_RETURN(ec);
   }
 
-  ec = asio::error_code();
+  ec = ASIO_NAMESPACE::error_code();
   ASIO_SYNC_OP_VOID_RETURN(ec);
 }
 
 void context::add_certificate_authority(const const_buffer& ca)
 {
-  asio::error_code ec;
+  ASIO_NAMESPACE::error_code ec;
   add_certificate_authority(ca, ec);
-  asio::detail::throw_error(ec, "add_certificate_authority");
+  ASIO_NAMESPACE::detail::throw_error(ec, "add_certificate_authority");
 }
 
 ASIO_SYNC_OP_VOID context::add_certificate_authority(
-    const const_buffer& ca, asio::error_code& ec)
+    const const_buffer& ca, ASIO_NAMESPACE::error_code& ec)
 {
   ::ERR_clear_error();
 
@@ -593,19 +593,19 @@ ASIO_SYNC_OP_VOID context::add_certificate_authority(
     }
   }
 
-  ec = asio::error_code();
+  ec = ASIO_NAMESPACE::error_code();
   ASIO_SYNC_OP_VOID_RETURN(ec);
 }
 
 void context::set_default_verify_paths()
 {
-  asio::error_code ec;
+  ASIO_NAMESPACE::error_code ec;
   set_default_verify_paths(ec);
-  asio::detail::throw_error(ec, "set_default_verify_paths");
+  ASIO_NAMESPACE::detail::throw_error(ec, "set_default_verify_paths");
 }
 
 ASIO_SYNC_OP_VOID context::set_default_verify_paths(
-    asio::error_code& ec)
+    ASIO_NAMESPACE::error_code& ec)
 {
   ::ERR_clear_error();
 
@@ -615,19 +615,19 @@ ASIO_SYNC_OP_VOID context::set_default_verify_paths(
     ASIO_SYNC_OP_VOID_RETURN(ec);
   }
 
-  ec = asio::error_code();
+  ec = ASIO_NAMESPACE::error_code();
   ASIO_SYNC_OP_VOID_RETURN(ec);
 }
 
 void context::add_verify_path(const std::string& path)
 {
-  asio::error_code ec;
+  ASIO_NAMESPACE::error_code ec;
   add_verify_path(path, ec);
-  asio::detail::throw_error(ec, "add_verify_path");
+  ASIO_NAMESPACE::detail::throw_error(ec, "add_verify_path");
 }
 
 ASIO_SYNC_OP_VOID context::add_verify_path(
-    const std::string& path, asio::error_code& ec)
+    const std::string& path, ASIO_NAMESPACE::error_code& ec)
 {
   ::ERR_clear_error();
 
@@ -637,21 +637,21 @@ ASIO_SYNC_OP_VOID context::add_verify_path(
     ASIO_SYNC_OP_VOID_RETURN(ec);
   }
 
-  ec = asio::error_code();
+  ec = ASIO_NAMESPACE::error_code();
   ASIO_SYNC_OP_VOID_RETURN(ec);
 }
 
 void context::use_certificate(
     const const_buffer& certificate, file_format format)
 {
-  asio::error_code ec;
+  ASIO_NAMESPACE::error_code ec;
   use_certificate(certificate, format, ec);
-  asio::detail::throw_error(ec, "use_certificate");
+  ASIO_NAMESPACE::detail::throw_error(ec, "use_certificate");
 }
 
 ASIO_SYNC_OP_VOID context::use_certificate(
     const const_buffer& certificate, file_format format,
-    asio::error_code& ec)
+    ASIO_NAMESPACE::error_code& ec)
 {
   ::ERR_clear_error();
 
@@ -661,7 +661,7 @@ ASIO_SYNC_OP_VOID context::use_certificate(
           static_cast<int>(certificate.size()),
           static_cast<const unsigned char*>(certificate.data())) == 1)
     {
-      ec = asio::error_code();
+      ec = ASIO_NAMESPACE::error_code();
       ASIO_SYNC_OP_VOID_RETURN(ec);
     }
   }
@@ -675,7 +675,7 @@ ASIO_SYNC_OP_VOID context::use_certificate(
       {
         if (::SSL_CTX_use_certificate(handle_, cert.p) == 1)
         {
-          ec = asio::error_code();
+          ec = ASIO_NAMESPACE::error_code();
           ASIO_SYNC_OP_VOID_RETURN(ec);
         }
       }
@@ -683,7 +683,7 @@ ASIO_SYNC_OP_VOID context::use_certificate(
   }
   else
   {
-    ec = asio::error::invalid_argument;
+    ec = ASIO_NAMESPACE::error::invalid_argument;
     ASIO_SYNC_OP_VOID_RETURN(ec);
   }
 
@@ -694,14 +694,14 @@ ASIO_SYNC_OP_VOID context::use_certificate(
 void context::use_certificate_file(
     const std::string& filename, file_format format)
 {
-  asio::error_code ec;
+  ASIO_NAMESPACE::error_code ec;
   use_certificate_file(filename, format, ec);
-  asio::detail::throw_error(ec, "use_certificate_file");
+  ASIO_NAMESPACE::detail::throw_error(ec, "use_certificate_file");
 }
 
 ASIO_SYNC_OP_VOID context::use_certificate_file(
     const std::string& filename, file_format format,
-    asio::error_code& ec)
+    ASIO_NAMESPACE::error_code& ec)
 {
   int file_type;
   switch (format)
@@ -714,7 +714,7 @@ ASIO_SYNC_OP_VOID context::use_certificate_file(
     break;
   default:
     {
-      ec = asio::error::invalid_argument;
+      ec = ASIO_NAMESPACE::error::invalid_argument;
       ASIO_SYNC_OP_VOID_RETURN(ec);
     }
   }
@@ -727,19 +727,19 @@ ASIO_SYNC_OP_VOID context::use_certificate_file(
     ASIO_SYNC_OP_VOID_RETURN(ec);
   }
 
-  ec = asio::error_code();
+  ec = ASIO_NAMESPACE::error_code();
   ASIO_SYNC_OP_VOID_RETURN(ec);
 }
 
 void context::use_certificate_chain(const const_buffer& chain)
 {
-  asio::error_code ec;
+  ASIO_NAMESPACE::error_code ec;
   use_certificate_chain(chain, ec);
-  asio::detail::throw_error(ec, "use_certificate_chain");
+  ASIO_NAMESPACE::detail::throw_error(ec, "use_certificate_chain");
 }
 
 ASIO_SYNC_OP_VOID context::use_certificate_chain(
-    const const_buffer& chain, asio::error_code& ec)
+    const const_buffer& chain, ASIO_NAMESPACE::error_code& ec)
 {
   ::ERR_clear_error();
 
@@ -802,7 +802,7 @@ ASIO_SYNC_OP_VOID context::use_certificate_chain(
         && (ERR_GET_REASON(result) == PEM_R_NO_START_LINE))
     {
       ::ERR_clear_error();
-      ec = asio::error_code();
+      ec = ASIO_NAMESPACE::error_code();
       ASIO_SYNC_OP_VOID_RETURN(ec);
     }
   }
@@ -813,13 +813,13 @@ ASIO_SYNC_OP_VOID context::use_certificate_chain(
 
 void context::use_certificate_chain_file(const std::string& filename)
 {
-  asio::error_code ec;
+  ASIO_NAMESPACE::error_code ec;
   use_certificate_chain_file(filename, ec);
-  asio::detail::throw_error(ec, "use_certificate_chain_file");
+  ASIO_NAMESPACE::detail::throw_error(ec, "use_certificate_chain_file");
 }
 
 ASIO_SYNC_OP_VOID context::use_certificate_chain_file(
-    const std::string& filename, asio::error_code& ec)
+    const std::string& filename, ASIO_NAMESPACE::error_code& ec)
 {
   ::ERR_clear_error();
 
@@ -829,21 +829,21 @@ ASIO_SYNC_OP_VOID context::use_certificate_chain_file(
     ASIO_SYNC_OP_VOID_RETURN(ec);
   }
 
-  ec = asio::error_code();
+  ec = ASIO_NAMESPACE::error_code();
   ASIO_SYNC_OP_VOID_RETURN(ec);
 }
 
 void context::use_private_key(
     const const_buffer& private_key, context::file_format format)
 {
-  asio::error_code ec;
+  ASIO_NAMESPACE::error_code ec;
   use_private_key(private_key, format, ec);
-  asio::detail::throw_error(ec, "use_private_key");
+  ASIO_NAMESPACE::detail::throw_error(ec, "use_private_key");
 }
 
 ASIO_SYNC_OP_VOID context::use_private_key(
     const const_buffer& private_key, context::file_format format,
-    asio::error_code& ec)
+    ASIO_NAMESPACE::error_code& ec)
 {
   ::ERR_clear_error();
 
@@ -874,7 +874,7 @@ ASIO_SYNC_OP_VOID context::use_private_key(
       break;
     default:
       {
-        ec = asio::error::invalid_argument;
+        ec = ASIO_NAMESPACE::error::invalid_argument;
         ASIO_SYNC_OP_VOID_RETURN(ec);
       }
     }
@@ -883,7 +883,7 @@ ASIO_SYNC_OP_VOID context::use_private_key(
     {
       if (::SSL_CTX_use_PrivateKey(handle_, evp_private_key.p) == 1)
       {
-        ec = asio::error_code();
+        ec = ASIO_NAMESPACE::error_code();
         ASIO_SYNC_OP_VOID_RETURN(ec);
       }
     }
@@ -896,22 +896,22 @@ ASIO_SYNC_OP_VOID context::use_private_key(
 void context::use_private_key_file(
     const std::string& filename, context::file_format format)
 {
-  asio::error_code ec;
+  ASIO_NAMESPACE::error_code ec;
   use_private_key_file(filename, format, ec);
-  asio::detail::throw_error(ec, "use_private_key_file");
+  ASIO_NAMESPACE::detail::throw_error(ec, "use_private_key_file");
 }
 
 void context::use_rsa_private_key(
     const const_buffer& private_key, context::file_format format)
 {
-  asio::error_code ec;
+  ASIO_NAMESPACE::error_code ec;
   use_rsa_private_key(private_key, format, ec);
-  asio::detail::throw_error(ec, "use_rsa_private_key");
+  ASIO_NAMESPACE::detail::throw_error(ec, "use_rsa_private_key");
 }
 
 ASIO_SYNC_OP_VOID context::use_rsa_private_key(
     const const_buffer& private_key, context::file_format format,
-    asio::error_code& ec)
+    ASIO_NAMESPACE::error_code& ec)
 {
   ::ERR_clear_error();
 
@@ -943,7 +943,7 @@ ASIO_SYNC_OP_VOID context::use_rsa_private_key(
       break;
     default:
       {
-        ec = asio::error::invalid_argument;
+        ec = ASIO_NAMESPACE::error::invalid_argument;
         ASIO_SYNC_OP_VOID_RETURN(ec);
       }
     }
@@ -959,7 +959,7 @@ ASIO_SYNC_OP_VOID context::use_rsa_private_key(
 
       if (::SSL_CTX_use_PrivateKey(handle_, evp_private_key.p) == 1)
       {
-        ec = asio::error_code();
+        ec = ASIO_NAMESPACE::error_code();
         ASIO_SYNC_OP_VOID_RETURN(ec);
       }
     }
@@ -977,7 +977,7 @@ ASIO_SYNC_OP_VOID context::use_rsa_private_key(
       break;
     default:
       {
-        ec = asio::error::invalid_argument;
+        ec = ASIO_NAMESPACE::error::invalid_argument;
         ASIO_SYNC_OP_VOID_RETURN(ec);
       }
     }
@@ -986,7 +986,7 @@ ASIO_SYNC_OP_VOID context::use_rsa_private_key(
     {
       if (::SSL_CTX_use_RSAPrivateKey(handle_, rsa_private_key.p) == 1)
       {
-        ec = asio::error_code();
+        ec = ASIO_NAMESPACE::error_code();
         ASIO_SYNC_OP_VOID_RETURN(ec);
       }
     }
@@ -999,7 +999,7 @@ ASIO_SYNC_OP_VOID context::use_rsa_private_key(
 
 ASIO_SYNC_OP_VOID context::use_private_key_file(
     const std::string& filename, context::file_format format,
-    asio::error_code& ec)
+    ASIO_NAMESPACE::error_code& ec)
 {
   int file_type;
   switch (format)
@@ -1012,7 +1012,7 @@ ASIO_SYNC_OP_VOID context::use_private_key_file(
     break;
   default:
     {
-      ec = asio::error::invalid_argument;
+      ec = ASIO_NAMESPACE::error::invalid_argument;
       ASIO_SYNC_OP_VOID_RETURN(ec);
     }
   }
@@ -1025,21 +1025,21 @@ ASIO_SYNC_OP_VOID context::use_private_key_file(
     ASIO_SYNC_OP_VOID_RETURN(ec);
   }
 
-  ec = asio::error_code();
+  ec = ASIO_NAMESPACE::error_code();
   ASIO_SYNC_OP_VOID_RETURN(ec);
 }
 
 void context::use_rsa_private_key_file(
     const std::string& filename, context::file_format format)
 {
-  asio::error_code ec;
+  ASIO_NAMESPACE::error_code ec;
   use_rsa_private_key_file(filename, format, ec);
-  asio::detail::throw_error(ec, "use_rsa_private_key_file");
+  ASIO_NAMESPACE::detail::throw_error(ec, "use_rsa_private_key_file");
 }
 
 ASIO_SYNC_OP_VOID context::use_rsa_private_key_file(
     const std::string& filename, context::file_format format,
-    asio::error_code& ec)
+    ASIO_NAMESPACE::error_code& ec)
 {
 #if (OPENSSL_VERSION_NUMBER >= 0x30000000L)
   ::ERR_clear_error();
@@ -1063,7 +1063,7 @@ ASIO_SYNC_OP_VOID context::use_rsa_private_key_file(
       break;
     default:
       {
-        ec = asio::error::invalid_argument;
+        ec = ASIO_NAMESPACE::error::invalid_argument;
         ASIO_SYNC_OP_VOID_RETURN(ec);
       }
     }
@@ -1079,7 +1079,7 @@ ASIO_SYNC_OP_VOID context::use_rsa_private_key_file(
 
       if (::SSL_CTX_use_PrivateKey(handle_, evp_private_key.p) == 1)
       {
-        ec = asio::error_code();
+        ec = ASIO_NAMESPACE::error_code();
         ASIO_SYNC_OP_VOID_RETURN(ec);
       }
     }
@@ -1099,7 +1099,7 @@ ASIO_SYNC_OP_VOID context::use_rsa_private_key_file(
     break;
   default:
     {
-      ec = asio::error::invalid_argument;
+      ec = ASIO_NAMESPACE::error::invalid_argument;
       ASIO_SYNC_OP_VOID_RETURN(ec);
     }
   }
@@ -1113,20 +1113,20 @@ ASIO_SYNC_OP_VOID context::use_rsa_private_key_file(
     ASIO_SYNC_OP_VOID_RETURN(ec);
   }
 
-  ec = asio::error_code();
+  ec = ASIO_NAMESPACE::error_code();
   ASIO_SYNC_OP_VOID_RETURN(ec);
 #endif // (OPENSSL_VERSION_NUMBER >= 0x30000000L)
 }
 
 void context::use_tmp_dh(const const_buffer& dh)
 {
-  asio::error_code ec;
+  ASIO_NAMESPACE::error_code ec;
   use_tmp_dh(dh, ec);
-  asio::detail::throw_error(ec, "use_tmp_dh");
+  ASIO_NAMESPACE::detail::throw_error(ec, "use_tmp_dh");
 }
 
 ASIO_SYNC_OP_VOID context::use_tmp_dh(
-    const const_buffer& dh, asio::error_code& ec)
+    const const_buffer& dh, ASIO_NAMESPACE::error_code& ec)
 {
   ::ERR_clear_error();
 
@@ -1142,13 +1142,13 @@ ASIO_SYNC_OP_VOID context::use_tmp_dh(
 
 void context::use_tmp_dh_file(const std::string& filename)
 {
-  asio::error_code ec;
+  ASIO_NAMESPACE::error_code ec;
   use_tmp_dh_file(filename, ec);
-  asio::detail::throw_error(ec, "use_tmp_dh_file");
+  ASIO_NAMESPACE::detail::throw_error(ec, "use_tmp_dh_file");
 }
 
 ASIO_SYNC_OP_VOID context::use_tmp_dh_file(
-    const std::string& filename, asio::error_code& ec)
+    const std::string& filename, ASIO_NAMESPACE::error_code& ec)
 {
   ::ERR_clear_error();
 
@@ -1163,7 +1163,7 @@ ASIO_SYNC_OP_VOID context::use_tmp_dh_file(
 }
 
 ASIO_SYNC_OP_VOID context::do_use_tmp_dh(
-    BIO* bio, asio::error_code& ec)
+    BIO* bio, ASIO_NAMESPACE::error_code& ec)
 {
   ::ERR_clear_error();
 
@@ -1173,7 +1173,7 @@ ASIO_SYNC_OP_VOID context::do_use_tmp_dh(
   {
     if (::SSL_CTX_set0_tmp_dh_pkey(handle_, p) == 1)
     {
-      ec = asio::error_code();
+      ec = ASIO_NAMESPACE::error_code();
       ASIO_SYNC_OP_VOID_RETURN(ec);
     }
     else
@@ -1185,7 +1185,7 @@ ASIO_SYNC_OP_VOID context::do_use_tmp_dh(
   {
     if (::SSL_CTX_set_tmp_dh(handle_, dh.p) == 1)
     {
-      ec = asio::error_code();
+      ec = ASIO_NAMESPACE::error_code();
       ASIO_SYNC_OP_VOID_RETURN(ec);
     }
   }
@@ -1196,7 +1196,7 @@ ASIO_SYNC_OP_VOID context::do_use_tmp_dh(
 }
 
 ASIO_SYNC_OP_VOID context::do_set_verify_callback(
-    detail::verify_callback_base* callback, asio::error_code& ec)
+    detail::verify_callback_base* callback, ASIO_NAMESPACE::error_code& ec)
 {
   if (SSL_CTX_get_app_data(handle_))
   {
@@ -1210,7 +1210,7 @@ ASIO_SYNC_OP_VOID context::do_set_verify_callback(
       ::SSL_CTX_get_verify_mode(handle_),
       &context::verify_callback_function);
 
-  ec = asio::error_code();
+  ec = ASIO_NAMESPACE::error_code();
   ASIO_SYNC_OP_VOID_RETURN(ec);
 }
 
@@ -1241,7 +1241,7 @@ int context::verify_callback_function(int preverified, X509_STORE_CTX* ctx)
 }
 
 ASIO_SYNC_OP_VOID context::do_set_password_callback(
-    detail::password_callback_base* callback, asio::error_code& ec)
+    detail::password_callback_base* callback, ASIO_NAMESPACE::error_code& ec)
 {
 #if ((OPENSSL_VERSION_NUMBER >= 0x10100000L) \
       && (!defined(LIBRESSL_VERSION_NUMBER) \
@@ -1260,7 +1260,7 @@ ASIO_SYNC_OP_VOID context::do_set_password_callback(
 
   SSL_CTX_set_default_passwd_cb(handle_, &context::password_callback_function);
 
-  ec = asio::error_code();
+  ec = ASIO_NAMESPACE::error_code();
   ASIO_SYNC_OP_VOID_RETURN(ec);
 }
 
@@ -1298,23 +1298,23 @@ BIO* context::make_buffer_bio(const const_buffer& b)
       static_cast<int>(b.size()));
 }
 
-asio::error_code context::translate_error(long error)
+ASIO_NAMESPACE::error_code context::translate_error(long error)
 {
 #if (OPENSSL_VERSION_NUMBER >= 0x30000000L)
   if (ERR_SYSTEM_ERROR(error))
   {
-    return asio::error_code(
+    return ASIO_NAMESPACE::error_code(
         static_cast<int>(ERR_GET_REASON(error)),
-        asio::error::get_system_category());
+        ASIO_NAMESPACE::error::get_system_category());
   }
 #endif // (OPENSSL_VERSION_NUMBER >= 0x30000000L)
 
-  return asio::error_code(static_cast<int>(error),
-      asio::error::get_ssl_category());
+  return ASIO_NAMESPACE::error_code(static_cast<int>(error),
+      ASIO_NAMESPACE::error::get_ssl_category());
 }
 
 } // namespace ssl
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

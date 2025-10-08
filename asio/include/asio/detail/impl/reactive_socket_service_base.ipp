@@ -25,7 +25,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace detail {
 
 reactive_socket_service_base::reactive_socket_service_base(
@@ -90,16 +90,16 @@ void reactive_socket_service_base::destroy(
     reactor_.deregister_descriptor(impl.socket_, impl.reactor_data_,
         (impl.state_ & socket_ops::possible_dup) == 0);
 
-    asio::error_code ignored_ec;
+    ASIO_NAMESPACE::error_code ignored_ec;
     socket_ops::close(impl.socket_, impl.state_, true, ignored_ec);
 
     reactor_.cleanup_descriptor_data(impl.reactor_data_);
   }
 }
 
-asio::error_code reactive_socket_service_base::close(
+ASIO_NAMESPACE::error_code reactive_socket_service_base::close(
     reactive_socket_service_base::base_implementation_type& impl,
-    asio::error_code& ec)
+    ASIO_NAMESPACE::error_code& ec)
 {
   if (is_open(impl))
   {
@@ -115,7 +115,7 @@ asio::error_code reactive_socket_service_base::close(
   }
   else
   {
-    ec = asio::error_code();
+    ec = ASIO_NAMESPACE::error_code();
   }
 
   // The descriptor is closed by the OS even if close() returns an error.
@@ -133,11 +133,11 @@ asio::error_code reactive_socket_service_base::close(
 
 socket_type reactive_socket_service_base::release(
     reactive_socket_service_base::base_implementation_type& impl,
-    asio::error_code& ec)
+    ASIO_NAMESPACE::error_code& ec)
 {
   if (!is_open(impl))
   {
-    ec = asio::error::bad_descriptor;
+    ec = ASIO_NAMESPACE::error::bad_descriptor;
     return invalid_socket;
   }
 
@@ -148,17 +148,17 @@ socket_type reactive_socket_service_base::release(
   reactor_.cleanup_descriptor_data(impl.reactor_data_);
   socket_type sock = impl.socket_;
   construct(impl);
-  ec = asio::error_code();
+  ec = ASIO_NAMESPACE::error_code();
   return sock;
 }
 
-asio::error_code reactive_socket_service_base::cancel(
+ASIO_NAMESPACE::error_code reactive_socket_service_base::cancel(
     reactive_socket_service_base::base_implementation_type& impl,
-    asio::error_code& ec)
+    ASIO_NAMESPACE::error_code& ec)
 {
   if (!is_open(impl))
   {
-    ec = asio::error::bad_descriptor;
+    ec = ASIO_NAMESPACE::error::bad_descriptor;
     return ec;
   }
 
@@ -166,17 +166,17 @@ asio::error_code reactive_socket_service_base::cancel(
         "socket", &impl, impl.socket_, "cancel"));
 
   reactor_.cancel_ops(impl.socket_, impl.reactor_data_);
-  ec = asio::error_code();
+  ec = ASIO_NAMESPACE::error_code();
   return ec;
 }
 
-asio::error_code reactive_socket_service_base::do_open(
+ASIO_NAMESPACE::error_code reactive_socket_service_base::do_open(
     reactive_socket_service_base::base_implementation_type& impl,
-    int af, int type, int protocol, asio::error_code& ec)
+    int af, int type, int protocol, ASIO_NAMESPACE::error_code& ec)
 {
   if (is_open(impl))
   {
-    ec = asio::error::already_open;
+    ec = ASIO_NAMESPACE::error::already_open;
     return ec;
   }
 
@@ -186,8 +186,8 @@ asio::error_code reactive_socket_service_base::do_open(
 
   if (int err = reactor_.register_descriptor(sock.get(), impl.reactor_data_))
   {
-    ec = asio::error_code(err,
-        asio::error::get_system_category());
+    ec = ASIO_NAMESPACE::error_code(err,
+        ASIO_NAMESPACE::error::get_system_category());
     return ec;
   }
 
@@ -198,26 +198,26 @@ asio::error_code reactive_socket_service_base::do_open(
   case SOCK_DGRAM: impl.state_ = socket_ops::datagram_oriented; break;
   default: impl.state_ = 0; break;
   }
-  ec = asio::error_code();
+  ec = ASIO_NAMESPACE::error_code();
   return ec;
 }
 
-asio::error_code reactive_socket_service_base::do_assign(
+ASIO_NAMESPACE::error_code reactive_socket_service_base::do_assign(
     reactive_socket_service_base::base_implementation_type& impl, int type,
     const reactive_socket_service_base::native_handle_type& native_socket,
-    asio::error_code& ec)
+    ASIO_NAMESPACE::error_code& ec)
 {
   if (is_open(impl))
   {
-    ec = asio::error::already_open;
+    ec = ASIO_NAMESPACE::error::already_open;
     return ec;
   }
 
   if (int err = reactor_.register_descriptor(
         native_socket, impl.reactor_data_))
   {
-    ec = asio::error_code(err,
-        asio::error::get_system_category());
+    ec = ASIO_NAMESPACE::error_code(err,
+        ASIO_NAMESPACE::error::get_system_category());
     return ec;
   }
 
@@ -229,7 +229,7 @@ asio::error_code reactive_socket_service_base::do_assign(
   default: impl.state_ = 0; break;
   }
   impl.state_ |= socket_ops::possible_dup;
-  ec = asio::error_code();
+  ec = ASIO_NAMESPACE::error_code();
   return ec;
 }
 
@@ -261,7 +261,7 @@ void reactive_socket_service_base::start_accept_op(
     start_op(impl, reactor::read_op, op, is_continuation, true, false);
   else
   {
-    op->ec_ = asio::error::already_open;
+    op->ec_ = ASIO_NAMESPACE::error::already_open;
     reactor_.post_immediate_completion(op, is_continuation);
   }
 }
@@ -276,10 +276,10 @@ void reactive_socket_service_base::start_connect_op(
   {
     if (socket_ops::connect(impl.socket_, addr, addrlen, op->ec_) != 0)
     {
-      if (op->ec_ == asio::error::in_progress
-          || op->ec_ == asio::error::would_block)
+      if (op->ec_ == ASIO_NAMESPACE::error::in_progress
+          || op->ec_ == ASIO_NAMESPACE::error::would_block)
       {
-        op->ec_ = asio::error_code();
+        op->ec_ = ASIO_NAMESPACE::error_code();
         reactor_.start_op(reactor::connect_op, impl.socket_,
             impl.reactor_data_, op, is_continuation, false);
         return;
@@ -291,7 +291,7 @@ void reactive_socket_service_base::start_connect_op(
 }
 
 } // namespace detail
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

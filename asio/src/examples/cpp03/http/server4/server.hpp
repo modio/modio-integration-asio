@@ -25,22 +25,22 @@ struct request;
 struct reply;
 
 /// The top-level coroutine of the HTTP server.
-class server : asio::coroutine
+class server : ASIO_NAMESPACE::coroutine
 {
 public:
   /// Construct the server to listen on the specified TCP address and port, and
   /// serve up files from the given directory.
-  explicit server(asio::io_context& io_context,
+  explicit server(ASIO_NAMESPACE::io_context& io_context,
       const std::string& address, const std::string& port,
       boost::function<void(const request&, reply&)> request_handler);
 
   /// Perform work associated with the server.
   void operator()(
-      asio::error_code ec = asio::error_code(),
+      ASIO_NAMESPACE::error_code ec = ASIO_NAMESPACE::error_code(),
       std::size_t length = 0);
 
 private:
-  typedef asio::ip::tcp tcp;
+  typedef ASIO_NAMESPACE::ip::tcp tcp;
 
   /// The user-supplied handler for all incoming requests.
   boost::function<void(const request&, reply&)> request_handler_;

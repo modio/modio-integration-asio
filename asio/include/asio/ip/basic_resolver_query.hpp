@@ -22,12 +22,12 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace ip {
 
 /// An query to be passed to a resolver.
 /**
- * The asio::ip::basic_resolver_query class template describes a query
+ * The ASIO_NAMESPACE::ip::basic_resolver_query class template describes a query
  * that can be passed to a resolver.
  *
  * @par Thread Safety
@@ -213,7 +213,7 @@ public:
   }
 
   /// Get the hints associated with the query.
-  const asio::detail::addrinfo_type& hints() const
+  const ASIO_NAMESPACE::detail::addrinfo_type& hints() const
   {
     return hints_;
   }
@@ -231,13 +231,13 @@ public:
   }
 
 private:
-  asio::detail::addrinfo_type hints_;
+  ASIO_NAMESPACE::detail::addrinfo_type hints_;
   std::string host_name_;
   std::string service_name_;
 };
 
 } // namespace ip
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

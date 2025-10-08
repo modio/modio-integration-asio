@@ -35,7 +35,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace detail {
 
 class wait_op;
@@ -47,7 +47,7 @@ class win_iocp_io_context
 public:
   // Constructor. Specifies a concurrency hint that is passed through to the
   // underlying I/O completion port.
-  ASIO_DECL win_iocp_io_context(asio::execution_context& ctx,
+  ASIO_DECL win_iocp_io_context(ASIO_NAMESPACE::execution_context& ctx,
       int concurrency_hint = -1, bool own_thread = true);
 
   // Destructor.
@@ -62,23 +62,23 @@ public:
   }
 
   // Register a handle with the IO completion port.
-  ASIO_DECL asio::error_code register_handle(
-      HANDLE handle, asio::error_code& ec);
+  ASIO_DECL ASIO_NAMESPACE::error_code register_handle(
+      HANDLE handle, ASIO_NAMESPACE::error_code& ec);
 
   // Run the event loop until stopped or no more work.
-  ASIO_DECL size_t run(asio::error_code& ec);
+  ASIO_DECL size_t run(ASIO_NAMESPACE::error_code& ec);
 
   // Run until stopped or one operation is performed.
-  ASIO_DECL size_t run_one(asio::error_code& ec);
+  ASIO_DECL size_t run_one(ASIO_NAMESPACE::error_code& ec);
 
   // Run until timeout, interrupted, or one operation is performed.
-  ASIO_DECL size_t wait_one(long usec, asio::error_code& ec);
+  ASIO_DECL size_t wait_one(long usec, ASIO_NAMESPACE::error_code& ec);
 
   // Poll for operations without blocking.
-  ASIO_DECL size_t poll(asio::error_code& ec);
+  ASIO_DECL size_t poll(ASIO_NAMESPACE::error_code& ec);
 
   // Poll for one operation without blocking.
-  ASIO_DECL size_t poll_one(asio::error_code& ec);
+  ASIO_DECL size_t poll_one(ASIO_NAMESPACE::error_code& ec);
 
   // Stop the event processing loop.
   ASIO_DECL void stop();
@@ -173,7 +173,7 @@ public:
   // immediately. The caller must have already called work_started() prior to
   // starting the operation.
   ASIO_DECL void on_completion(win_iocp_operation* op,
-      const asio::error_code& ec, DWORD bytes_transferred = 0);
+      const ASIO_NAMESPACE::error_code& ec, DWORD bytes_transferred = 0);
 
   // Add a new timer queue to the service.
   template <typename Time_Traits>
@@ -228,7 +228,7 @@ private:
   // executes it. Returns the number of operations that were dequeued (i.e.
   // either 0 or 1).
   ASIO_DECL size_t do_one(DWORD msec,
-      win_iocp_thread_info& this_thread, asio::error_code& ec);
+      win_iocp_thread_info& this_thread, ASIO_NAMESPACE::error_code& ec);
 
   // Helper to calculate the GetQueuedCompletionStatus timeout.
   ASIO_DECL static DWORD get_gqcs_timeout();
@@ -331,7 +331,7 @@ private:
 };
 
 } // namespace detail
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

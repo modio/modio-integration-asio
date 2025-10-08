@@ -31,7 +31,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace detail {
 
 template <typename Handler, typename IoExecutor>
@@ -42,7 +42,7 @@ public:
 
   win_iocp_null_buffers_op(socket_ops::weak_cancel_token_type cancel_token,
       Handler& handler, const IoExecutor& io_ex)
-    : reactor_op(asio::error_code(),
+    : reactor_op(ASIO_NAMESPACE::error_code(),
         &win_iocp_null_buffers_op::do_perform,
         &win_iocp_null_buffers_op::do_complete),
       cancel_token_(cancel_token),
@@ -57,14 +57,14 @@ public:
   }
 
   static void do_complete(void* owner, operation* base,
-      const asio::error_code& result_ec,
+      const ASIO_NAMESPACE::error_code& result_ec,
       std::size_t bytes_transferred)
   {
-    asio::error_code ec(result_ec);
+    ASIO_NAMESPACE::error_code ec(result_ec);
 
     // Take ownership of the operation object.
     win_iocp_null_buffers_op* o(static_cast<win_iocp_null_buffers_op*>(base));
-    ptr p = { asio::detail::addressof(o->handler_), o, o };
+    ptr p = { ASIO_NAMESPACE::detail::addressof(o->handler_), o, o };
 
     ASIO_HANDLER_COMPLETION((*o));
 
@@ -81,13 +81,13 @@ public:
     if (ec.value() == ERROR_NETNAME_DELETED)
     {
       if (o->cancel_token_.expired())
-        ec = asio::error::operation_aborted;
+        ec = ASIO_NAMESPACE::error::operation_aborted;
       else
-        ec = asio::error::connection_reset;
+        ec = ASIO_NAMESPACE::error::connection_reset;
     }
     else if (ec.value() == ERROR_PORT_UNREACHABLE)
     {
-      ec = asio::error::connection_refused;
+      ec = ASIO_NAMESPACE::error::connection_refused;
     }
 
     ASIO_ERROR_LOCATION(ec);
@@ -98,9 +98,9 @@ public:
     // with the handler. Consequently, a local copy of the handler is required
     // to ensure that any owning sub-object remains valid until after we have
     // deallocated the memory here.
-    detail::binder2<Handler, asio::error_code, std::size_t>
+    detail::binder2<Handler, ASIO_NAMESPACE::error_code, std::size_t>
       handler(o->handler_, ec, bytes_transferred);
-    p.h = asio::detail::addressof(handler.handler_);
+    p.h = ASIO_NAMESPACE::detail::addressof(handler.handler_);
     p.reset();
 
     // Make the upcall if required.
@@ -120,7 +120,7 @@ private:
 };
 
 } // namespace detail
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

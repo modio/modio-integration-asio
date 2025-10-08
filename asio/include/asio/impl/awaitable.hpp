@@ -32,7 +32,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace detail {
 
 struct awaitable_thread_has_context_switched {};
@@ -82,17 +82,17 @@ public:
 #if !defined(ASIO_DISABLE_AWAITABLE_FRAME_RECYCLING)
   void* operator new(std::size_t size)
   {
-    return asio::detail::thread_info_base::allocate(
-        asio::detail::thread_info_base::awaitable_frame_tag(),
-        asio::detail::thread_context::top_of_thread_call_stack(),
+    return ASIO_NAMESPACE::detail::thread_info_base::allocate(
+        ASIO_NAMESPACE::detail::thread_info_base::awaitable_frame_tag(),
+        ASIO_NAMESPACE::detail::thread_context::top_of_thread_call_stack(),
         size);
   }
 
   void operator delete(void* pointer, std::size_t size)
   {
-    asio::detail::thread_info_base::deallocate(
-        asio::detail::thread_info_base::awaitable_frame_tag(),
-        asio::detail::thread_context::top_of_thread_call_stack(),
+    ASIO_NAMESPACE::detail::thread_info_base::deallocate(
+        ASIO_NAMESPACE::detail::thread_info_base::awaitable_frame_tag(),
+        ASIO_NAMESPACE::detail::thread_context::top_of_thread_call_stack(),
         pointer, size);
   }
 #endif // !defined(ASIO_DISABLE_AWAITABLE_FRAME_RECYCLING)
@@ -134,9 +134,9 @@ public:
     pending_exception_ = e;
   }
 
-  void set_error(const asio::error_code& ec)
+  void set_error(const ASIO_NAMESPACE::error_code& ec)
   {
-    this->set_except(std::make_exception_ptr(asio::system_error(ec)));
+    this->set_except(std::make_exception_ptr(ASIO_NAMESPACE::system_error(ec)));
   }
 
   void unhandled_exception()
@@ -163,7 +163,7 @@ public:
   {
     if (attached_thread_->entry_point()->throw_if_cancelled_)
       if (!!attached_thread_->get_cancellation_state().cancelled())
-        throw_error(asio::error::operation_aborted, "co_await");
+        throw_error(ASIO_NAMESPACE::error::operation_aborted, "co_await");
     return a;
   }
 
@@ -173,7 +173,7 @@ public:
   {
     if (attached_thread_->entry_point()->throw_if_cancelled_)
       if (!!attached_thread_->get_cancellation_state().cancelled())
-        throw_error(asio::error::operation_aborted, "co_await");
+        throw_error(ASIO_NAMESPACE::error::operation_aborted, "co_await");
 
     return awaitable_async_op<typename completion_signature_of<Op>::type,
       typename decay<Op>::type, Executor>{
@@ -628,8 +628,8 @@ private:
   } u_;
 
   awaitable_frame_base<Executor>* top_of_stack_;
-  asio::cancellation_slot parent_cancellation_slot_;
-  asio::cancellation_state cancellation_state_;
+  ASIO_NAMESPACE::cancellation_slot parent_cancellation_slot_;
+  ASIO_NAMESPACE::cancellation_state cancellation_state_;
   bool has_executor_;
   bool has_context_switched_;
   bool throw_if_cancelled_;
@@ -790,11 +790,11 @@ public:
 };
 
 template <typename R, typename Executor>
-class awaitable_async_op_handler<R(asio::error_code), Executor>
+class awaitable_async_op_handler<R(ASIO_NAMESPACE::error_code), Executor>
   : public awaitable_thread<Executor>
 {
 public:
-  typedef asio::error_code* result_type;
+  typedef ASIO_NAMESPACE::error_code* result_type;
 
   awaitable_async_op_handler(
       awaitable_thread<Executor>* h, result_type& result)
@@ -803,7 +803,7 @@ public:
   {
   }
 
-  void operator()(asio::error_code ec)
+  void operator()(ASIO_NAMESPACE::error_code ec)
   {
     result_ = &ec;
     this->entry_point()->top_of_stack_->attach_thread(this);
@@ -887,13 +887,13 @@ private:
 };
 
 template <typename R, typename T, typename Executor>
-class awaitable_async_op_handler<R(asio::error_code, T), Executor>
+class awaitable_async_op_handler<R(ASIO_NAMESPACE::error_code, T), Executor>
   : public awaitable_thread<Executor>
 {
 public:
   struct result_type
   {
-    asio::error_code* ec_;
+    ASIO_NAMESPACE::error_code* ec_;
     T* value_;
   };
 
@@ -904,7 +904,7 @@ public:
   {
   }
 
-  void operator()(asio::error_code ec, T value)
+  void operator()(ASIO_NAMESPACE::error_code ec, T value)
   {
     result_.ec_ = &ec;
     result_.value_ = &value;
@@ -998,13 +998,13 @@ private:
 };
 
 template <typename R, typename... Ts, typename Executor>
-class awaitable_async_op_handler<R(asio::error_code, Ts...), Executor>
+class awaitable_async_op_handler<R(ASIO_NAMESPACE::error_code, Ts...), Executor>
   : public awaitable_thread<Executor>
 {
 public:
   struct result_type
   {
-    asio::error_code* ec_;
+    ASIO_NAMESPACE::error_code* ec_;
     std::tuple<Ts...>* value_;
   };
 
@@ -1016,7 +1016,7 @@ public:
   }
 
   template <typename... Args>
-  void operator()(asio::error_code ec, Args&&... args)
+  void operator()(ASIO_NAMESPACE::error_code ec, Args&&... args)
   {
     result_.ec_ = &ec;
     std::tuple<Ts...> value(std::forward<Args>(args)...);
@@ -1120,7 +1120,7 @@ private:
 };
 
 } // namespace detail
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #if !defined(GENERATING_DOCUMENTATION)
 # if defined(ASIO_HAS_STD_COROUTINE)
@@ -1128,9 +1128,9 @@ private:
 namespace std {
 
 template <typename T, typename Executor, typename... Args>
-struct coroutine_traits<asio::awaitable<T, Executor>, Args...>
+struct coroutine_traits<ASIO_NAMESPACE::awaitable<T, Executor>, Args...>
 {
-  typedef asio::detail::awaitable_frame<T, Executor> promise_type;
+  typedef ASIO_NAMESPACE::detail::awaitable_frame<T, Executor> promise_type;
 };
 
 } // namespace std
@@ -1140,9 +1140,9 @@ struct coroutine_traits<asio::awaitable<T, Executor>, Args...>
 namespace std { namespace experimental {
 
 template <typename T, typename Executor, typename... Args>
-struct coroutine_traits<asio::awaitable<T, Executor>, Args...>
+struct coroutine_traits<ASIO_NAMESPACE::awaitable<T, Executor>, Args...>
 {
-  typedef asio::detail::awaitable_frame<T, Executor> promise_type;
+  typedef ASIO_NAMESPACE::detail::awaitable_frame<T, Executor> promise_type;
 };
 
 }} // namespace std::experimental

@@ -31,25 +31,25 @@ class connection
 {
 public:
   /// Construct a connection with the given io_context.
-  explicit connection(asio::io_context& io_context,
+  explicit connection(ASIO_NAMESPACE::io_context& io_context,
       request_handler& handler);
 
   /// Get the socket associated with the connection.
-  asio::ip::tcp::socket& socket();
+  ASIO_NAMESPACE::ip::tcp::socket& socket();
 
   /// Start the first asynchronous operation for the connection.
   void start();
 
 private:
   /// Handle completion of a read operation.
-  void handle_read(const asio::error_code& e,
+  void handle_read(const ASIO_NAMESPACE::error_code& e,
       std::size_t bytes_transferred);
 
   /// Handle completion of a write operation.
-  void handle_write(const asio::error_code& e);
+  void handle_write(const ASIO_NAMESPACE::error_code& e);
 
   /// Socket for the connection.
-  asio::ip::tcp::socket socket_;
+  ASIO_NAMESPACE::ip::tcp::socket socket_;
 
   /// The handler used to process the incoming request.
   request_handler& request_handler_;

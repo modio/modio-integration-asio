@@ -28,7 +28,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace traits {
 
 template <typename T, typename F, typename N, typename = void>
@@ -107,7 +107,7 @@ struct bulk_execute_member :
 };
 
 } // namespace traits
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

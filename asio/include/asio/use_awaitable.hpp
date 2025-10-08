@@ -30,7 +30,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 
 /// A @ref completion_token that represents the currently executing coroutine.
 /**
@@ -146,7 +146,7 @@ struct use_awaitable_t
 /// A @ref completion_token object that represents the currently executing
 /// coroutine.
 /**
- * See the documentation for asio::use_awaitable_t for a usage example.
+ * See the documentation for ASIO_NAMESPACE::use_awaitable_t for a usage example.
  */
 #if defined(GENERATING_DOCUMENTATION)
 constexpr use_awaitable_t<> use_awaitable;
@@ -156,7 +156,7 @@ constexpr use_awaitable_t<> use_awaitable(0, 0, 0);
 __declspec(selectany) use_awaitable_t<> use_awaitable(0, 0, 0);
 #endif
 
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

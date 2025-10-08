@@ -23,7 +23,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace windows {
 
 /// Provides stream-oriented handle functionality.
@@ -62,7 +62,7 @@ public:
 #if defined(GENERATING_DOCUMENTATION)
   typedef implementation_defined native_handle_type;
 #else
-  typedef asio::detail::win_iocp_handle_service::native_handle_type
+  typedef ASIO_NAMESPACE::detail::win_iocp_handle_service::native_handle_type
     native_handle_type;
 #endif
 
@@ -110,7 +110,7 @@ public:
    *
    * @param handle The new underlying handle implementation.
    *
-   * @throws asio::system_error Thrown on failure.
+   * @throws ASIO_NAMESPACE::system_error Thrown on failure.
    */
   basic_stream_handle(const executor_type& ex, const native_handle_type& handle)
     : basic_overlapped_handle<Executor>(ex, handle)
@@ -128,7 +128,7 @@ public:
    *
    * @param handle The new underlying handle implementation.
    *
-   * @throws asio::system_error Thrown on failure.
+   * @throws ASIO_NAMESPACE::system_error Thrown on failure.
    */
   template <typename ExecutionContext>
   basic_stream_handle(ExecutionContext& context,
@@ -227,8 +227,8 @@ public:
    *
    * @returns The number of bytes written.
    *
-   * @throws asio::system_error Thrown on failure. An error code of
-   * asio::error::eof indicates that the connection was closed by the
+   * @throws ASIO_NAMESPACE::system_error Thrown on failure. An error code of
+   * ASIO_NAMESPACE::error::eof indicates that the connection was closed by the
    * peer.
    *
    * @note The write_some operation may not transmit all of the data to the
@@ -238,7 +238,7 @@ public:
    * @par Example
    * To write a single data buffer use the @ref buffer function as follows:
    * @code
-   * handle.write_some(asio::buffer(data, size));
+   * handle.write_some(ASIO_NAMESPACE::buffer(data, size));
    * @endcode
    * See the @ref buffer documentation for information on writing multiple
    * buffers in one go, and how to use it with arrays, boost::array or
@@ -247,10 +247,10 @@ public:
   template <typename ConstBufferSequence>
   std::size_t write_some(const ConstBufferSequence& buffers)
   {
-    asio::error_code ec;
+    ASIO_NAMESPACE::error_code ec;
     std::size_t s = this->impl_.get_service().write_some(
         this->impl_.get_implementation(), buffers, ec);
-    asio::detail::throw_error(ec, "write_some");
+    ASIO_NAMESPACE::detail::throw_error(ec, "write_some");
     return s;
   }
 
@@ -272,7 +272,7 @@ public:
    */
   template <typename ConstBufferSequence>
   std::size_t write_some(const ConstBufferSequence& buffers,
-      asio::error_code& ec)
+      ASIO_NAMESPACE::error_code& ec)
   {
     return this->impl_.get_service().write_some(
         this->impl_.get_implementation(), buffers, ec);
@@ -295,16 +295,16 @@ public:
    * @ref yield_context, or a function object with the correct completion
    * signature. The function signature of the completion handler must be:
    * @code void handler(
-   *   const asio::error_code& error, // Result of operation.
+   *   const ASIO_NAMESPACE::error_code& error, // Result of operation.
    *   std::size_t bytes_transferred // Number of bytes written.
    * ); @endcode
    * Regardless of whether the asynchronous operation completes immediately or
    * not, the completion handler will not be invoked from within this function.
    * On immediate completion, invocation of the handler will be performed in a
-   * manner equivalent to using asio::post().
+   * manner equivalent to using ASIO_NAMESPACE::post().
    *
    * @par Completion Signature
-   * @code void(asio::error_code, std::size_t) @endcode
+   * @code void(ASIO_NAMESPACE::error_code, std::size_t) @endcode
    *
    * @note The write operation may not transmit all of the data to the peer.
    * Consider using the @ref async_write function if you need to ensure that all
@@ -313,7 +313,7 @@ public:
    * @par Example
    * To write a single data buffer use the @ref buffer function as follows:
    * @code
-   * handle.async_write_some(asio::buffer(data, size), handler);
+   * handle.async_write_some(ASIO_NAMESPACE::buffer(data, size), handler);
    * @endcode
    * See the @ref buffer documentation for information on writing multiple
    * buffers in one go, and how to use it with arrays, boost::array or
@@ -321,7 +321,7 @@ public:
    *
    * @par Per-Operation Cancellation
    * This asynchronous operation supports cancellation for the following
-   * asio::cancellation_type values:
+   * ASIO_NAMESPACE::cancellation_type values:
    *
    * @li @c cancellation_type::terminal
    *
@@ -330,21 +330,21 @@ public:
    * @li @c cancellation_type::total
    */
   template <typename ConstBufferSequence,
-      ASIO_COMPLETION_TOKEN_FOR(void (asio::error_code,
+      ASIO_COMPLETION_TOKEN_FOR(void (ASIO_NAMESPACE::error_code,
         std::size_t)) WriteToken
           ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(executor_type)>
   ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(WriteToken,
-      void (asio::error_code, std::size_t))
+      void (ASIO_NAMESPACE::error_code, std::size_t))
   async_write_some(const ConstBufferSequence& buffers,
       ASIO_MOVE_ARG(WriteToken) token
         ASIO_DEFAULT_COMPLETION_TOKEN(executor_type))
     ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
       async_initiate<WriteToken,
-        void (asio::error_code, std::size_t)>(
+        void (ASIO_NAMESPACE::error_code, std::size_t)>(
           declval<initiate_async_write_some>(), token, buffers)))
   {
     return async_initiate<WriteToken,
-      void (asio::error_code, std::size_t)>(
+      void (ASIO_NAMESPACE::error_code, std::size_t)>(
         initiate_async_write_some(this), token, buffers);
   }
 
@@ -358,8 +358,8 @@ public:
    *
    * @returns The number of bytes read.
    *
-   * @throws asio::system_error Thrown on failure. An error code of
-   * asio::error::eof indicates that the connection was closed by the
+   * @throws ASIO_NAMESPACE::system_error Thrown on failure. An error code of
+   * ASIO_NAMESPACE::error::eof indicates that the connection was closed by the
    * peer.
    *
    * @note The read_some operation may not read all of the requested number of
@@ -370,7 +370,7 @@ public:
    * @par Example
    * To read into a single data buffer use the @ref buffer function as follows:
    * @code
-   * handle.read_some(asio::buffer(data, size));
+   * handle.read_some(ASIO_NAMESPACE::buffer(data, size));
    * @endcode
    * See the @ref buffer documentation for information on reading into multiple
    * buffers in one go, and how to use it with arrays, boost::array or
@@ -379,10 +379,10 @@ public:
   template <typename MutableBufferSequence>
   std::size_t read_some(const MutableBufferSequence& buffers)
   {
-    asio::error_code ec;
+    ASIO_NAMESPACE::error_code ec;
     std::size_t s = this->impl_.get_service().read_some(
         this->impl_.get_implementation(), buffers, ec);
-    asio::detail::throw_error(ec, "read_some");
+    ASIO_NAMESPACE::detail::throw_error(ec, "read_some");
     return s;
   }
 
@@ -405,7 +405,7 @@ public:
    */
   template <typename MutableBufferSequence>
   std::size_t read_some(const MutableBufferSequence& buffers,
-      asio::error_code& ec)
+      ASIO_NAMESPACE::error_code& ec)
   {
     return this->impl_.get_service().read_some(
         this->impl_.get_implementation(), buffers, ec);
@@ -428,16 +428,16 @@ public:
    * @ref yield_context, or a function object with the correct completion
    * signature. The function signature of the completion handler must be:
    * @code void handler(
-   *   const asio::error_code& error, // Result of operation.
+   *   const ASIO_NAMESPACE::error_code& error, // Result of operation.
    *   std::size_t bytes_transferred // Number of bytes read.
    * ); @endcode
    * Regardless of whether the asynchronous operation completes immediately or
    * not, the completion handler will not be invoked from within this function.
    * On immediate completion, invocation of the handler will be performed in a
-   * manner equivalent to using asio::post().
+   * manner equivalent to using ASIO_NAMESPACE::post().
    *
    * @par Completion Signature
-   * @code void(asio::error_code, std::size_t) @endcode
+   * @code void(ASIO_NAMESPACE::error_code, std::size_t) @endcode
    *
    * @note The read operation may not read all of the requested number of bytes.
    * Consider using the @ref async_read function if you need to ensure that the
@@ -447,7 +447,7 @@ public:
    * @par Example
    * To read into a single data buffer use the @ref buffer function as follows:
    * @code
-   * handle.async_read_some(asio::buffer(data, size), handler);
+   * handle.async_read_some(ASIO_NAMESPACE::buffer(data, size), handler);
    * @endcode
    * See the @ref buffer documentation for information on reading into multiple
    * buffers in one go, and how to use it with arrays, boost::array or
@@ -455,7 +455,7 @@ public:
    *
    * @par Per-Operation Cancellation
    * This asynchronous operation supports cancellation for the following
-   * asio::cancellation_type values:
+   * ASIO_NAMESPACE::cancellation_type values:
    *
    * @li @c cancellation_type::terminal
    *
@@ -464,21 +464,21 @@ public:
    * @li @c cancellation_type::total
    */
   template <typename MutableBufferSequence,
-      ASIO_COMPLETION_TOKEN_FOR(void (asio::error_code,
+      ASIO_COMPLETION_TOKEN_FOR(void (ASIO_NAMESPACE::error_code,
         std::size_t)) ReadToken
           ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(executor_type)>
   ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(ReadToken,
-      void (asio::error_code, std::size_t))
+      void (ASIO_NAMESPACE::error_code, std::size_t))
   async_read_some(const MutableBufferSequence& buffers,
       ASIO_MOVE_ARG(ReadToken) token
         ASIO_DEFAULT_COMPLETION_TOKEN(executor_type))
     ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
       async_initiate<ReadToken,
-        void (asio::error_code, std::size_t)>(
+        void (ASIO_NAMESPACE::error_code, std::size_t)>(
           declval<initiate_async_read_some>(), token, buffers)))
   {
     return async_initiate<ReadToken,
-      void (asio::error_code, std::size_t)>(
+      void (ASIO_NAMESPACE::error_code, std::size_t)>(
         initiate_async_read_some(this), token, buffers);
   }
 
@@ -551,7 +551,7 @@ private:
 };
 
 } // namespace windows
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

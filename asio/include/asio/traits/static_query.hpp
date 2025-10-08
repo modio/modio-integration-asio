@@ -32,7 +32,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace traits {
 
 template <typename T, typename Property, typename = void>
@@ -101,7 +101,7 @@ struct static_query : static_query_default<T, Property>
 };
 
 } // namespace traits
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

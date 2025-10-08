@@ -25,7 +25,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace experimental {
 namespace detail {
 
@@ -64,7 +64,7 @@ public:
   {
     // Take ownership of the operation object.
     channel_receive_op* o(static_cast<channel_receive_op*>(base));
-    ptr p = { asio::detail::addressof(o->handler_), o, o };
+    ptr p = { ASIO_NAMESPACE::detail::addressof(o->handler_), o, o };
 
     ASIO_HANDLER_COMPLETION((*o));
 
@@ -84,7 +84,7 @@ public:
       Payload* payload = static_cast<Payload*>(v);
       channel_handler<Payload, Handler> handler(
           ASIO_MOVE_CAST(Payload)(*payload), o->handler_);
-      p.h = asio::detail::addressof(handler.handler_);
+      p.h = ASIO_NAMESPACE::detail::addressof(handler.handler_);
       p.reset();
       ASIO_HANDLER_INVOCATION_BEGIN(());
       w.complete(handler, handler.handler_);
@@ -92,8 +92,8 @@ public:
     }
     else
     {
-      asio::detail::binder0<Handler> handler(o->handler_);
-      p.h = asio::detail::addressof(handler.handler_);
+      ASIO_NAMESPACE::detail::binder0<Handler> handler(o->handler_);
+      p.h = ASIO_NAMESPACE::detail::addressof(handler.handler_);
       p.reset();
     }
   }
@@ -105,7 +105,7 @@ private:
 
 } // namespace detail
 } // namespace experimental
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

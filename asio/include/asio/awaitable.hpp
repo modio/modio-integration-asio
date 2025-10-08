@@ -30,7 +30,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace detail {
 
 #if defined(ASIO_HAS_STD_COROUTINE)
@@ -131,7 +131,7 @@ private:
   detail::awaitable_frame<T, Executor>* frame_;
 };
 
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

@@ -23,7 +23,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace experimental {
 namespace detail {
 
@@ -59,7 +59,7 @@ public:
   }
 
   template <
-      ASIO_COMPLETION_TOKEN_FOR(void (asio::error_code))
+      ASIO_COMPLETION_TOKEN_FOR(void (ASIO_NAMESPACE::error_code))
         CompletionToken ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(Executor)>
   auto async_send(Args... args,
       ASIO_MOVE_ARG(CompletionToken) token
@@ -68,7 +68,7 @@ public:
     typedef typename Derived::payload_type payload_type;
     typedef typename detail::channel_message<R(Args...)> message_type;
     Derived* self = static_cast<Derived*>(this);
-    return async_initiate<CompletionToken, void (asio::error_code)>(
+    return async_initiate<CompletionToken, void (ASIO_NAMESPACE::error_code)>(
         typename Derived::initiate_async_send(self), token,
         payload_type(message_type(0, ASIO_MOVE_CAST(Args)(args)...)));
   }
@@ -108,7 +108,7 @@ public:
   }
 
   template <
-      ASIO_COMPLETION_TOKEN_FOR(void (asio::error_code))
+      ASIO_COMPLETION_TOKEN_FOR(void (ASIO_NAMESPACE::error_code))
         CompletionToken ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(Executor)>
   auto async_send(Args... args,
       ASIO_MOVE_ARG(CompletionToken) token
@@ -117,7 +117,7 @@ public:
     typedef typename Derived::payload_type payload_type;
     typedef typename detail::channel_message<R(Args...)> message_type;
     Derived* self = static_cast<Derived*>(this);
-    return async_initiate<CompletionToken, void (asio::error_code)>(
+    return async_initiate<CompletionToken, void (ASIO_NAMESPACE::error_code)>(
         typename Derived::initiate_async_send(self), token,
         payload_type(message_type(0, ASIO_MOVE_CAST(Args)(args)...)));
   }
@@ -125,7 +125,7 @@ public:
 
 } // namespace detail
 } // namespace experimental
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

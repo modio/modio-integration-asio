@@ -24,7 +24,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace detail {
 
 class initiate_defer;
@@ -207,7 +207,7 @@ ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(NullaryToken, void()) defer(
         declval<detail::initiate_defer_with_executor<
           typename ExecutionContext::executor_type> >(), token)));
 
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

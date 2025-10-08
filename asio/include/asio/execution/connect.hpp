@@ -31,7 +31,7 @@
 
 #if defined(GENERATING_DOCUMENTATION)
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace execution {
 
 /// A customisation point that connects a sender to a receiver.
@@ -126,26 +126,27 @@ template <typename S, typename R>
 using connect_result_t = typename connect_result<S, R>::type;
 
 } // namespace execution
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #else // defined(GENERATING_DOCUMENTATION)
 
+namespace ASIO_NAMESPACE {
 namespace asio_execution_connect_fn {
 
-using asio::conditional;
-using asio::declval;
-using asio::enable_if;
-using asio::execution::detail::as_invocable;
-using asio::execution::detail::as_operation;
-using asio::execution::detail::is_as_receiver;
-using asio::execution::is_executor_of;
-using asio::execution::is_operation_state;
-using asio::execution::is_receiver;
-using asio::execution::is_sender;
-using asio::false_type;
-using asio::remove_cvref;
-using asio::traits::connect_free;
-using asio::traits::connect_member;
+using ASIO_NAMESPACE::conditional;
+using ASIO_NAMESPACE::declval;
+using ASIO_NAMESPACE::enable_if;
+using ASIO_NAMESPACE::execution::detail::as_invocable;
+using ASIO_NAMESPACE::execution::detail::as_operation;
+using ASIO_NAMESPACE::execution::detail::is_as_receiver;
+using ASIO_NAMESPACE::execution::is_executor_of;
+using ASIO_NAMESPACE::execution::is_operation_state;
+using ASIO_NAMESPACE::execution::is_receiver;
+using ASIO_NAMESPACE::execution::is_sender;
+using ASIO_NAMESPACE::false_type;
+using ASIO_NAMESPACE::remove_cvref;
+using ASIO_NAMESPACE::traits::connect_free;
+using ASIO_NAMESPACE::traits::connect_member;
 
 void connect();
 
@@ -426,7 +427,8 @@ template <typename T>
 const T static_instance<T>::instance = {};
 
 } // namespace asio_execution_connect_fn
-namespace asio {
+} // namespace ASIO_NAMESPACE
+namespace ASIO_NAMESPACE {
 namespace execution {
 namespace {
 
@@ -480,7 +482,7 @@ using connect_result_t = typename connect_result<S, R>::type;
 #endif // defined(ASIO_HAS_ALIAS_TEMPLATES)
 
 } // namespace execution
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #endif // defined(GENERATING_DOCUMENTATION)
 

@@ -25,7 +25,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace ssl {
 
 /// (Deprecated. Use ssl::host_name_verification.) Verifies a certificate
@@ -35,8 +35,8 @@ namespace ssl {
  * The following example shows how to synchronously open a secure connection to
  * a given host name:
  * @code
- * using asio::ip::tcp;
- * namespace ssl = asio::ssl;
+ * using ASIO_NAMESPACE::ip::tcp;
+ * namespace ssl = ASIO_NAMESPACE::ssl;
  * typedef ssl::stream<tcp::socket> ssl_socket;
  *
  * // Create a context that uses the default paths for finding CA certificates.
@@ -44,11 +44,11 @@ namespace ssl {
  * ctx.set_default_verify_paths();
  *
  * // Open a socket and connect it to the remote host.
- * asio::io_context io_context;
+ * ASIO_NAMESPACE::io_context io_context;
  * ssl_socket sock(io_context, ctx);
  * tcp::resolver resolver(io_context);
  * tcp::resolver::query query("host.name", "https");
- * asio::connect(sock.lowest_layer(), resolver.resolve(query));
+ * ASIO_NAMESPACE::connect(sock.lowest_layer(), resolver.resolve(query));
  * sock.lowest_layer().set_option(tcp::no_delay(true));
  *
  * // Perform SSL handshake and verify the remote host's certificate.
@@ -85,7 +85,7 @@ private:
 };
 
 } // namespace ssl
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

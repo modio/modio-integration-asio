@@ -22,14 +22,14 @@
 
 #include "asio/posix/basic_descriptor.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace posix {
 
 /// Typedef for the typical usage of basic_descriptor.
 typedef basic_descriptor<> descriptor;
 
 } // namespace posix
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #endif // defined(ASIO_HAS_POSIX_STREAM_DESCRIPTOR)
        // || defined(GENERATING_DOCUMENTATION)

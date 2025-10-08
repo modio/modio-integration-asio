@@ -28,13 +28,13 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace experimental {
 namespace detail {
 
 template <typename Mutex>
 class channel_service
-  : public asio::detail::execution_context_service_base<
+  : public ASIO_NAMESPACE::detail::execution_context_service_base<
       channel_service<Mutex> >
 {
 public:
@@ -68,7 +68,7 @@ public:
     std::size_t max_buffer_size_;
 
     // The operations that are waiting on the channel.
-    asio::detail::op_queue<channel_operation> waiters_;
+    ASIO_NAMESPACE::detail::op_queue<channel_operation> waiters_;
 
     // Pointers to adjacent channel implementations in linked list.
     base_implementation_type* next_;
@@ -154,13 +154,13 @@ public:
       Handler& handler, const IoExecutor& io_ex)
   {
     typename associated_cancellation_slot<Handler>::type slot
-      = asio::get_associated_cancellation_slot(handler);
+      = ASIO_NAMESPACE::get_associated_cancellation_slot(handler);
 
     // Allocate and construct an operation to wrap the handler.
     typedef channel_send_op<
       typename implementation_type<Traits, Signatures...>::payload_type,
         Handler, IoExecutor> op;
-    typename op::ptr p = { asio::detail::addressof(handler),
+    typename op::ptr p = { ASIO_NAMESPACE::detail::addressof(handler),
       op::ptr::allocate(handler), 0 };
     p.p = new (p.v) op(ASIO_MOVE_CAST2(typename implementation_type<
           Traits, Signatures...>::payload_type)(payload), handler, io_ex);
@@ -193,13 +193,13 @@ public:
       Handler& handler, const IoExecutor& io_ex)
   {
     typename associated_cancellation_slot<Handler>::type slot
-      = asio::get_associated_cancellation_slot(handler);
+      = ASIO_NAMESPACE::get_associated_cancellation_slot(handler);
 
     // Allocate and construct an operation to wrap the handler.
     typedef channel_receive_op<
       typename implementation_type<Traits, Signatures...>::payload_type,
         Handler, IoExecutor> op;
-    typename op::ptr p = { asio::detail::addressof(handler),
+    typename op::ptr p = { ASIO_NAMESPACE::detail::addressof(handler),
       op::ptr::allocate(handler), 0 };
     p.p = new (p.v) op(handler, io_ex);
 
@@ -283,7 +283,7 @@ private:
   };
 
   // Mutex to protect access to the linked list of implementations.
-  asio::detail::mutex mutex_;
+  ASIO_NAMESPACE::detail::mutex mutex_;
 
   // The head of a linked list of all implementations.
   base_implementation_type* impl_list_;
@@ -488,7 +488,7 @@ private:
 
 } // namespace detail
 } // namespace experimental
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

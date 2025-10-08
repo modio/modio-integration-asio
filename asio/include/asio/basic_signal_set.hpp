@@ -30,7 +30,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 
 /// Provides signal functionality.
 /**
@@ -45,7 +45,7 @@ namespace asio {
  * Performing an asynchronous wait:
  * @code
  * void handler(
- *     const asio::error_code& error,
+ *     const ASIO_NAMESPACE::error_code& error,
  *     int signal_number)
  * {
  *   if (!error)
@@ -57,7 +57,7 @@ namespace asio {
  * ...
  *
  * // Construct a signal set registered for process termination.
- * asio::signal_set signals(my_context, SIGINT, SIGTERM);
+ * ASIO_NAMESPACE::signal_set signals(my_context, SIGINT, SIGTERM);
  *
  * // Start an asynchronous wait for one of the signals to occur.
  * signals.async_wait(handler);
@@ -152,15 +152,15 @@ public:
    * @param signal_number_1 The signal number to be added.
    *
    * @note This constructor is equivalent to performing:
-   * @code asio::signal_set signals(ex);
+   * @code ASIO_NAMESPACE::signal_set signals(ex);
    * signals.add(signal_number_1); @endcode
    */
   basic_signal_set(const executor_type& ex, int signal_number_1)
     : impl_(0, ex)
   {
-    asio::error_code ec;
+    ASIO_NAMESPACE::error_code ec;
     impl_.get_service().add(impl_.get_implementation(), signal_number_1, ec);
-    asio::detail::throw_error(ec, "add");
+    ASIO_NAMESPACE::detail::throw_error(ec, "add");
   }
 
   /// Construct a signal set and add one signal.
@@ -174,7 +174,7 @@ public:
    * @param signal_number_1 The signal number to be added.
    *
    * @note This constructor is equivalent to performing:
-   * @code asio::signal_set signals(context);
+   * @code ASIO_NAMESPACE::signal_set signals(context);
    * signals.add(signal_number_1); @endcode
    */
   template <typename ExecutionContext>
@@ -185,9 +185,9 @@ public:
       >::type = defaulted_constraint())
     : impl_(0, 0, context)
   {
-    asio::error_code ec;
+    ASIO_NAMESPACE::error_code ec;
     impl_.get_service().add(impl_.get_implementation(), signal_number_1, ec);
-    asio::detail::throw_error(ec, "add");
+    ASIO_NAMESPACE::detail::throw_error(ec, "add");
   }
 
   /// Construct a signal set and add two signals.
@@ -203,7 +203,7 @@ public:
    * @param signal_number_2 The second signal number to be added.
    *
    * @note This constructor is equivalent to performing:
-   * @code asio::signal_set signals(ex);
+   * @code ASIO_NAMESPACE::signal_set signals(ex);
    * signals.add(signal_number_1);
    * signals.add(signal_number_2); @endcode
    */
@@ -211,11 +211,11 @@ public:
       int signal_number_2)
     : impl_(0, ex)
   {
-    asio::error_code ec;
+    ASIO_NAMESPACE::error_code ec;
     impl_.get_service().add(impl_.get_implementation(), signal_number_1, ec);
-    asio::detail::throw_error(ec, "add");
+    ASIO_NAMESPACE::detail::throw_error(ec, "add");
     impl_.get_service().add(impl_.get_implementation(), signal_number_2, ec);
-    asio::detail::throw_error(ec, "add");
+    ASIO_NAMESPACE::detail::throw_error(ec, "add");
   }
 
   /// Construct a signal set and add two signals.
@@ -231,7 +231,7 @@ public:
    * @param signal_number_2 The second signal number to be added.
    *
    * @note This constructor is equivalent to performing:
-   * @code asio::signal_set signals(context);
+   * @code ASIO_NAMESPACE::signal_set signals(context);
    * signals.add(signal_number_1);
    * signals.add(signal_number_2); @endcode
    */
@@ -244,11 +244,11 @@ public:
       >::type = defaulted_constraint())
     : impl_(0, 0, context)
   {
-    asio::error_code ec;
+    ASIO_NAMESPACE::error_code ec;
     impl_.get_service().add(impl_.get_implementation(), signal_number_1, ec);
-    asio::detail::throw_error(ec, "add");
+    ASIO_NAMESPACE::detail::throw_error(ec, "add");
     impl_.get_service().add(impl_.get_implementation(), signal_number_2, ec);
-    asio::detail::throw_error(ec, "add");
+    ASIO_NAMESPACE::detail::throw_error(ec, "add");
   }
 
   /// Construct a signal set and add three signals.
@@ -266,7 +266,7 @@ public:
    * @param signal_number_3 The third signal number to be added.
    *
    * @note This constructor is equivalent to performing:
-   * @code asio::signal_set signals(ex);
+   * @code ASIO_NAMESPACE::signal_set signals(ex);
    * signals.add(signal_number_1);
    * signals.add(signal_number_2);
    * signals.add(signal_number_3); @endcode
@@ -275,13 +275,13 @@ public:
       int signal_number_2, int signal_number_3)
     : impl_(0, ex)
   {
-    asio::error_code ec;
+    ASIO_NAMESPACE::error_code ec;
     impl_.get_service().add(impl_.get_implementation(), signal_number_1, ec);
-    asio::detail::throw_error(ec, "add");
+    ASIO_NAMESPACE::detail::throw_error(ec, "add");
     impl_.get_service().add(impl_.get_implementation(), signal_number_2, ec);
-    asio::detail::throw_error(ec, "add");
+    ASIO_NAMESPACE::detail::throw_error(ec, "add");
     impl_.get_service().add(impl_.get_implementation(), signal_number_3, ec);
-    asio::detail::throw_error(ec, "add");
+    ASIO_NAMESPACE::detail::throw_error(ec, "add");
   }
 
   /// Construct a signal set and add three signals.
@@ -299,7 +299,7 @@ public:
    * @param signal_number_3 The third signal number to be added.
    *
    * @note This constructor is equivalent to performing:
-   * @code asio::signal_set signals(context);
+   * @code ASIO_NAMESPACE::signal_set signals(context);
    * signals.add(signal_number_1);
    * signals.add(signal_number_2);
    * signals.add(signal_number_3); @endcode
@@ -313,13 +313,13 @@ public:
       >::type = defaulted_constraint())
     : impl_(0, 0, context)
   {
-    asio::error_code ec;
+    ASIO_NAMESPACE::error_code ec;
     impl_.get_service().add(impl_.get_implementation(), signal_number_1, ec);
-    asio::detail::throw_error(ec, "add");
+    ASIO_NAMESPACE::detail::throw_error(ec, "add");
     impl_.get_service().add(impl_.get_implementation(), signal_number_2, ec);
-    asio::detail::throw_error(ec, "add");
+    ASIO_NAMESPACE::detail::throw_error(ec, "add");
     impl_.get_service().add(impl_.get_implementation(), signal_number_3, ec);
-    asio::detail::throw_error(ec, "add");
+    ASIO_NAMESPACE::detail::throw_error(ec, "add");
   }
 
   /// Destroys the signal set.
@@ -345,13 +345,13 @@ public:
    *
    * @param signal_number The signal to be added to the set.
    *
-   * @throws asio::system_error Thrown on failure.
+   * @throws ASIO_NAMESPACE::system_error Thrown on failure.
    */
   void add(int signal_number)
   {
-    asio::error_code ec;
+    ASIO_NAMESPACE::error_code ec;
     impl_.get_service().add(impl_.get_implementation(), signal_number, ec);
-    asio::detail::throw_error(ec, "add");
+    ASIO_NAMESPACE::detail::throw_error(ec, "add");
   }
 
   /// Add a signal to a signal_set.
@@ -364,7 +364,7 @@ public:
    * @param ec Set to indicate what error occurred, if any.
    */
   ASIO_SYNC_OP_VOID add(int signal_number,
-      asio::error_code& ec)
+      ASIO_NAMESPACE::error_code& ec)
   {
     impl_.get_service().add(impl_.get_implementation(), signal_number, ec);
     ASIO_SYNC_OP_VOID_RETURN(ec);
@@ -377,16 +377,16 @@ public:
    *
    * @param signal_number The signal to be removed from the set.
    *
-   * @throws asio::system_error Thrown on failure.
+   * @throws ASIO_NAMESPACE::system_error Thrown on failure.
    *
    * @note Removes any notifications that have been queued for the specified
    * signal number.
    */
   void remove(int signal_number)
   {
-    asio::error_code ec;
+    ASIO_NAMESPACE::error_code ec;
     impl_.get_service().remove(impl_.get_implementation(), signal_number, ec);
-    asio::detail::throw_error(ec, "remove");
+    ASIO_NAMESPACE::detail::throw_error(ec, "remove");
   }
 
   /// Remove a signal from a signal_set.
@@ -402,7 +402,7 @@ public:
    * signal number.
    */
   ASIO_SYNC_OP_VOID remove(int signal_number,
-      asio::error_code& ec)
+      ASIO_NAMESPACE::error_code& ec)
   {
     impl_.get_service().remove(impl_.get_implementation(), signal_number, ec);
     ASIO_SYNC_OP_VOID_RETURN(ec);
@@ -413,15 +413,15 @@ public:
    * This function removes all signals from the set. It has no effect if the set
    * is already empty.
    *
-   * @throws asio::system_error Thrown on failure.
+   * @throws ASIO_NAMESPACE::system_error Thrown on failure.
    *
    * @note Removes all queued notifications.
    */
   void clear()
   {
-    asio::error_code ec;
+    ASIO_NAMESPACE::error_code ec;
     impl_.get_service().clear(impl_.get_implementation(), ec);
-    asio::detail::throw_error(ec, "clear");
+    ASIO_NAMESPACE::detail::throw_error(ec, "clear");
   }
 
   /// Remove all signals from a signal_set.
@@ -433,7 +433,7 @@ public:
    *
    * @note Removes all queued notifications.
    */
-  ASIO_SYNC_OP_VOID clear(asio::error_code& ec)
+  ASIO_SYNC_OP_VOID clear(ASIO_NAMESPACE::error_code& ec)
   {
     impl_.get_service().clear(impl_.get_implementation(), ec);
     ASIO_SYNC_OP_VOID_RETURN(ec);
@@ -443,12 +443,12 @@ public:
   /**
    * This function forces the completion of any pending asynchronous wait
    * operations against the signal set. The handler for each cancelled
-   * operation will be invoked with the asio::error::operation_aborted
+   * operation will be invoked with the ASIO_NAMESPACE::error::operation_aborted
    * error code.
    *
    * Cancellation does not alter the set of registered signals.
    *
-   * @throws asio::system_error Thrown on failure.
+   * @throws ASIO_NAMESPACE::system_error Thrown on failure.
    *
    * @note If a registered signal occurred before cancel() is called, then the
    * handlers for asynchronous wait operations will:
@@ -462,16 +462,16 @@ public:
    */
   void cancel()
   {
-    asio::error_code ec;
+    ASIO_NAMESPACE::error_code ec;
     impl_.get_service().cancel(impl_.get_implementation(), ec);
-    asio::detail::throw_error(ec, "cancel");
+    ASIO_NAMESPACE::detail::throw_error(ec, "cancel");
   }
 
   /// Cancel all operations associated with the signal set.
   /**
    * This function forces the completion of any pending asynchronous wait
    * operations against the signal set. The handler for each cancelled
-   * operation will be invoked with the asio::error::operation_aborted
+   * operation will be invoked with the ASIO_NAMESPACE::error::operation_aborted
    * error code.
    *
    * Cancellation does not alter the set of registered signals.
@@ -488,7 +488,7 @@ public:
    * These handlers can no longer be cancelled, and therefore are passed an
    * error code that indicates the successful completion of the wait operation.
    */
-  ASIO_SYNC_OP_VOID cancel(asio::error_code& ec)
+  ASIO_SYNC_OP_VOID cancel(ASIO_NAMESPACE::error_code& ec)
   {
     impl_.get_service().cancel(impl_.get_implementation(), ec);
     ASIO_SYNC_OP_VOID_RETURN(ec);
@@ -506,7 +506,7 @@ public:
    * @li One of the registered signals in the signal set occurs; or
    *
    * @li The signal set was cancelled, in which case the handler is passed the
-   * error code asio::error::operation_aborted.
+   * error code ASIO_NAMESPACE::error::operation_aborted.
    *
    * @param token The @ref completion_token that will be used to produce a
    * completion handler, which will be called when the wait completes.
@@ -514,20 +514,20 @@ public:
    * @ref yield_context, or a function object with the correct completion
    * signature. The function signature of the completion handler must be:
    * @code void handler(
-   *   const asio::error_code& error, // Result of operation.
+   *   const ASIO_NAMESPACE::error_code& error, // Result of operation.
    *   int signal_number // Indicates which signal occurred.
    * ); @endcode
    * Regardless of whether the asynchronous operation completes immediately or
    * not, the completion handler will not be invoked from within this function.
    * On immediate completion, invocation of the handler will be performed in a
-   * manner equivalent to using asio::post().
+   * manner equivalent to using ASIO_NAMESPACE::post().
    *
    * @par Completion Signature
-   * @code void(asio::error_code, int) @endcode
+   * @code void(ASIO_NAMESPACE::error_code, int) @endcode
    *
    * @par Per-Operation Cancellation
    * This asynchronous operation supports cancellation for the following
-   * asio::cancellation_type values:
+   * ASIO_NAMESPACE::cancellation_type values:
    *
    * @li @c cancellation_type::terminal
    *
@@ -536,18 +536,18 @@ public:
    * @li @c cancellation_type::total
    */
   template <
-    ASIO_COMPLETION_TOKEN_FOR(void (asio::error_code, int))
+    ASIO_COMPLETION_TOKEN_FOR(void (ASIO_NAMESPACE::error_code, int))
       SignalToken ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(executor_type)>
   ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(SignalToken,
-      void (asio::error_code, int))
+      void (ASIO_NAMESPACE::error_code, int))
   async_wait(
       ASIO_MOVE_ARG(SignalToken) token
         ASIO_DEFAULT_COMPLETION_TOKEN(executor_type))
     ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
-      async_initiate<SignalToken, void (asio::error_code, int)>(
+      async_initiate<SignalToken, void (ASIO_NAMESPACE::error_code, int)>(
           declval<initiate_async_wait>(), token)))
   {
-    return async_initiate<SignalToken, void (asio::error_code, int)>(
+    return async_initiate<SignalToken, void (ASIO_NAMESPACE::error_code, int)>(
         initiate_async_wait(this), token);
   }
 
@@ -591,7 +591,7 @@ private:
   detail::io_object_impl<detail::signal_set_service, Executor> impl_;
 };
 
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

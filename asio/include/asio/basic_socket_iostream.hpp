@@ -74,7 +74,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace detail {
 
 // A separate base class is used to ensure that the streambuf is initialised
@@ -306,7 +306,7 @@ public:
    *   std::cout << "Error: " << s.error().message() << std::endl;
    * } @endcode
    */
-  const asio::error_code& error() const
+  const ASIO_NAMESPACE::error_code& error() const
   {
     return rdbuf()->error();
   }
@@ -337,7 +337,7 @@ public:
    * This function sets the expiry time associated with the stream. Stream
    * operations performed after this time (where the operations cannot be
    * completed using the internal buffers) will fail with the error
-   * asio::error::operation_aborted.
+   * ASIO_NAMESPACE::error::operation_aborted.
    *
    * @param expiry_time The expiry time to be used for the stream.
    */
@@ -351,7 +351,7 @@ public:
    * This function sets the expiry time associated with the stream. Stream
    * operations performed after this time (where the operations cannot be
    * completed using the internal buffers) will fail with the error
-   * asio::error::operation_aborted.
+   * ASIO_NAMESPACE::error::operation_aborted.
    *
    * @param expiry_time The expiry time to be used for the timer.
    */
@@ -376,7 +376,7 @@ public:
    * This function sets the expiry time associated with the stream. Stream
    * operations performed after this time (where the operations cannot be
    * completed using the internal buffers) will fail with the error
-   * asio::error::operation_aborted.
+   * ASIO_NAMESPACE::error::operation_aborted.
    *
    * @param expiry_time The expiry time to be used for the timer.
    */
@@ -393,7 +393,7 @@ private:
       const basic_socket_iostream&) ASIO_DELETED;
 };
 
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

@@ -26,7 +26,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace detail {
 
 io_uring_file_service::io_uring_file_service(
@@ -41,14 +41,14 @@ void io_uring_file_service::shutdown()
   descriptor_service_.shutdown();
 }
 
-asio::error_code io_uring_file_service::open(
+ASIO_NAMESPACE::error_code io_uring_file_service::open(
     io_uring_file_service::implementation_type& impl,
     const char* path, file_base::flags open_flags,
-    asio::error_code& ec)
+    ASIO_NAMESPACE::error_code& ec)
 {
   if (is_open(impl))
   {
-    ec = asio::error::already_open;
+    ec = ASIO_NAMESPACE::error::already_open;
     ASIO_ERROR_LOCATION(ec);
     return ec;
   }
@@ -64,7 +64,7 @@ asio::error_code io_uring_file_service::open(
   // We're done. Take ownership of the serial port descriptor.
   if (descriptor_service_.assign(impl, fd, ec))
   {
-    asio::error_code ignored_ec;
+    ASIO_NAMESPACE::error_code ignored_ec;
     descriptor_ops::close(fd, state, ignored_ec);
   }
 
@@ -77,7 +77,7 @@ asio::error_code io_uring_file_service::open(
 
 uint64_t io_uring_file_service::size(
     const io_uring_file_service::implementation_type& impl,
-    asio::error_code& ec) const
+    ASIO_NAMESPACE::error_code& ec) const
 {
   struct stat s;
   int result = ::fstat(native_handle(impl), &s);
@@ -86,9 +86,9 @@ uint64_t io_uring_file_service::size(
   return !ec ? s.st_size : 0;
 }
 
-asio::error_code io_uring_file_service::resize(
+ASIO_NAMESPACE::error_code io_uring_file_service::resize(
     io_uring_file_service::implementation_type& impl,
-    uint64_t n, asio::error_code& ec)
+    uint64_t n, ASIO_NAMESPACE::error_code& ec)
 {
   int result = ::ftruncate(native_handle(impl), n);
   descriptor_ops::get_last_error(ec, result != 0);
@@ -96,18 +96,18 @@ asio::error_code io_uring_file_service::resize(
   return ec;
 }
 
-asio::error_code io_uring_file_service::sync_all(
+ASIO_NAMESPACE::error_code io_uring_file_service::sync_all(
     io_uring_file_service::implementation_type& impl,
-    asio::error_code& ec)
+    ASIO_NAMESPACE::error_code& ec)
 {
   int result = ::fsync(native_handle(impl));
   descriptor_ops::get_last_error(ec, result != 0);
   return ec;
 }
 
-asio::error_code io_uring_file_service::sync_data(
+ASIO_NAMESPACE::error_code io_uring_file_service::sync_data(
     io_uring_file_service::implementation_type& impl,
-    asio::error_code& ec)
+    ASIO_NAMESPACE::error_code& ec)
 {
 #if defined(_POSIX_SYNCHRONIZED_IO)
   int result = ::fdatasync(native_handle(impl));
@@ -121,7 +121,7 @@ asio::error_code io_uring_file_service::sync_data(
 
 uint64_t io_uring_file_service::seek(
     io_uring_file_service::implementation_type& impl, int64_t offset,
-    file_base::seek_basis whence, asio::error_code& ec)
+    file_base::seek_basis whence, ASIO_NAMESPACE::error_code& ec)
 {
   int64_t result = ::lseek(native_handle(impl), offset, whence);
   descriptor_ops::get_last_error(ec, result < 0);
@@ -130,7 +130,7 @@ uint64_t io_uring_file_service::seek(
 }
 
 } // namespace detail
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

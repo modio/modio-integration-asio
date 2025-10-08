@@ -25,7 +25,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace detail {
 
 DWORD win_tss_ptr_create()
@@ -40,15 +40,15 @@ DWORD win_tss_ptr_create()
   if (tss_key == out_of_indexes)
   {
     DWORD last_error = ::GetLastError();
-    asio::error_code ec(last_error,
-        asio::error::get_system_category());
-    asio::detail::throw_error(ec, "tss");
+    ASIO_NAMESPACE::error_code ec(last_error,
+        ASIO_NAMESPACE::error::get_system_category());
+    ASIO_NAMESPACE::detail::throw_error(ec, "tss");
   }
   return tss_key;
 }
 
 } // namespace detail
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

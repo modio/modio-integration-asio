@@ -27,7 +27,7 @@
 # error Only Windows and POSIX are supported!
 #endif
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace detail {
 
 #if !defined(ASIO_HAS_THREADS) || defined(ASIO_WINDOWS) \
@@ -39,6 +39,6 @@ typedef posix_signal_blocker signal_blocker;
 #endif
 
 } // namespace detail
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #endif // ASIO_DETAIL_SIGNAL_BLOCKER_HPP

@@ -21,7 +21,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace error {
 
 enum ssl_errors
@@ -30,11 +30,11 @@ enum ssl_errors
 };
 
 extern ASIO_DECL
-const asio::error_category& get_ssl_category();
+const ASIO_NAMESPACE::error_category& get_ssl_category();
 
-static const asio::error_category&
+static const ASIO_NAMESPACE::error_category&
   ssl_category ASIO_UNUSED_VARIABLE
-  = asio::error::get_ssl_category();
+  = ASIO_NAMESPACE::error::get_ssl_category();
 
 } // namespace error
 namespace ssl {
@@ -67,25 +67,25 @@ enum stream_errors
 };
 
 extern ASIO_DECL
-const asio::error_category& get_stream_category();
+const ASIO_NAMESPACE::error_category& get_stream_category();
 
-static const asio::error_category&
+static const ASIO_NAMESPACE::error_category&
   stream_category ASIO_UNUSED_VARIABLE
-  = asio::ssl::error::get_stream_category();
+  = ASIO_NAMESPACE::ssl::error::get_stream_category();
 
 } // namespace error
 } // namespace ssl
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #if defined(ASIO_HAS_STD_SYSTEM_ERROR)
 namespace std {
 
-template<> struct is_error_code_enum<asio::error::ssl_errors>
+template<> struct is_error_code_enum<ASIO_NAMESPACE::error::ssl_errors>
 {
   static const bool value = true;
 };
 
-template<> struct is_error_code_enum<asio::ssl::error::stream_errors>
+template<> struct is_error_code_enum<ASIO_NAMESPACE::ssl::error::stream_errors>
 {
   static const bool value = true;
 };
@@ -93,12 +93,12 @@ template<> struct is_error_code_enum<asio::ssl::error::stream_errors>
 } // namespace std
 #endif // defined(ASIO_HAS_STD_SYSTEM_ERROR)
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace error {
 
-inline asio::error_code make_error_code(ssl_errors e)
+inline ASIO_NAMESPACE::error_code make_error_code(ssl_errors e)
 {
-  return asio::error_code(
+  return ASIO_NAMESPACE::error_code(
       static_cast<int>(e), get_ssl_category());
 }
 
@@ -106,15 +106,15 @@ inline asio::error_code make_error_code(ssl_errors e)
 namespace ssl {
 namespace error {
 
-inline asio::error_code make_error_code(stream_errors e)
+inline ASIO_NAMESPACE::error_code make_error_code(stream_errors e)
 {
-  return asio::error_code(
+  return ASIO_NAMESPACE::error_code(
       static_cast<int>(e), get_stream_category());
 }
 
 } // namespace error
 } // namespace ssl
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

@@ -26,7 +26,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace detail {
 
 template <typename Executor, typename = void>
@@ -40,7 +40,7 @@ public:
     >::type executor_type;
 
   co_spawn_work_guard(const Executor& ex)
-    : executor_(asio::prefer(ex, execution::outstanding_work.tracked))
+    : executor_(ASIO_NAMESPACE::prefer(ex, execution::outstanding_work.tracked))
   {
   }
 
@@ -82,7 +82,7 @@ awaitable<awaitable_thread_entry_point, Executor> co_spawn_entry_point(
 {
   auto spawn_work = make_co_spawn_work_guard(ex);
   auto handler_work = make_co_spawn_work_guard(
-      asio::get_associated_executor(handler, ex));
+      ASIO_NAMESPACE::get_associated_executor(handler, ex));
 
   (void) co_await (dispatch)(
       use_awaitable_t<Executor>{__FILE__, __LINE__, "co_spawn_entry_point"});
@@ -147,7 +147,7 @@ awaitable<awaitable_thread_entry_point, Executor> co_spawn_entry_point(
 {
   auto spawn_work = make_co_spawn_work_guard(ex);
   auto handler_work = make_co_spawn_work_guard(
-      asio::get_associated_executor(handler, ex));
+      ASIO_NAMESPACE::get_associated_executor(handler, ex));
 
   (void) co_await (dispatch)(
       use_awaitable_t<Executor>{__FILE__, __LINE__, "co_spawn_entry_point"});
@@ -204,7 +204,7 @@ class co_spawn_cancellation_handler
 {
 public:
   co_spawn_cancellation_handler(const Handler& handler, const Executor& ex)
-    : ex_(asio::get_associated_executor(handler, ex))
+    : ex_(ASIO_NAMESPACE::get_associated_executor(handler, ex))
   {
   }
 
@@ -216,7 +216,7 @@ public:
   void operator()(cancellation_type_t type)
   {
     cancellation_signal* sig = &signal_;
-    asio::dispatch(ex_, [sig, type]{ sig->emit(type); });
+    ASIO_NAMESPACE::dispatch(ex_, [sig, type]{ sig->emit(type); });
   }
 
 private:
@@ -279,7 +279,7 @@ public:
     typedef co_spawn_cancellation_handler<
       handler_type, Executor> cancel_handler_type;
 
-    auto slot = asio::get_associated_cancellation_slot(handler);
+    auto slot = ASIO_NAMESPACE::get_associated_cancellation_slot(handler);
     cancel_handler_type* cancel_handler = slot.is_connected()
       ? &slot.template emplace<cancel_handler_type>(handler, ex_)
       : nullptr;
@@ -403,7 +403,7 @@ co_spawn(ExecutionContext& ctx, F&& f, CompletionToken&& token,
       std::forward<CompletionToken>(token));
 }
 
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

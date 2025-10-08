@@ -41,7 +41,7 @@ private:
   void start_accept();
 
   /// Handle completion of an asynchronous accept operation.
-  void handle_accept(const asio::error_code& e);
+  void handle_accept(const ASIO_NAMESPACE::error_code& e);
 
   /// Handle a request to stop the server.
   void handle_stop();
@@ -50,10 +50,10 @@ private:
   io_context_pool io_context_pool_;
 
   /// The signal_set is used to register for process termination notifications.
-  asio::signal_set signals_;
+  ASIO_NAMESPACE::signal_set signals_;
 
   /// Acceptor used to listen for incoming connections.
-  asio::ip::tcp::acceptor acceptor_;
+  ASIO_NAMESPACE::ip::tcp::acceptor acceptor_;
 
   /// The next connection to be accepted.
   connection_ptr new_connection_;

@@ -28,7 +28,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 
 #if defined(GENERATING_DOCUMENTATION)
 
@@ -134,7 +134,7 @@ struct context_as_t
 #endif // defined(ASIO_MSVC)
 #endif // !defined(__clang__)
   {
-    return asio::query(ex, context);
+    return ASIO_NAMESPACE::query(ex, context);
   }
 };
 
@@ -214,7 +214,7 @@ struct query_free<T, execution::context_as_t<U>,
 
 #endif // defined(GENERATING_DOCUMENTATION)
 
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

@@ -23,7 +23,7 @@
 # include <boost/detail/atomic_count.hpp>
 #endif // defined(ASIO_HAS_STD_ATOMIC)
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace detail {
 
 #if defined(ASIO_HAS_STD_ATOMIC)
@@ -54,6 +54,6 @@ inline bool ref_count_down(atomic_count& a) { return --a == 0; }
 #endif // defined(ASIO_HAS_STD_ATOMIC)
 
 } // namespace detail
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #endif // ASIO_DETAIL_ATOMIC_COUNT_HPP

@@ -40,7 +40,7 @@
        //   && defined(ASIO_HAS_BOOST_ALIGN)
        //   && defined(ASIO_HAS_ALIGNOF)
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace detail {
 
 #if defined(ASIO_HAS_STD_SHARED_PTR)
@@ -102,7 +102,7 @@ inline void* aligned_new(std::size_t align, std::size_t size)
   if (!ptr)
   {
     std::bad_alloc ex;
-    asio::detail::throw_exception(ex);
+    ASIO_NAMESPACE::detail::throw_exception(ex);
   }
   return ptr;
 #elif defined(ASIO_HAS_BOOST_ALIGN) && defined(ASIO_HAS_ALIGNOF)
@@ -112,7 +112,7 @@ inline void* aligned_new(std::size_t align, std::size_t size)
   if (!ptr)
   {
     std::bad_alloc ex;
-    asio::detail::throw_exception(ex);
+    ASIO_NAMESPACE::detail::throw_exception(ex);
   }
   return ptr;
 #elif defined(ASIO_MSVC) && defined(ASIO_HAS_ALIGNOF)
@@ -122,7 +122,7 @@ inline void* aligned_new(std::size_t align, std::size_t size)
   if (!ptr)
   {
     std::bad_alloc ex;
-    asio::detail::throw_exception(ex);
+    ASIO_NAMESPACE::detail::throw_exception(ex);
   }
   return ptr;
 #else // defined(ASIO_MSVC) && defined(ASIO_HAS_ALIGNOF)
@@ -144,6 +144,6 @@ inline void aligned_delete(void* ptr)
 #endif // defined(ASIO_MSVC) && defined(ASIO_HAS_ALIGNOF)
 }
 
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #endif // ASIO_DETAIL_MEMORY_HPP

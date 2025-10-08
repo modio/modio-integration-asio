@@ -21,20 +21,20 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace detail {
 
 ASIO_DECL void do_throw_error(
-    const asio::error_code& err
+    const ASIO_NAMESPACE::error_code& err
     ASIO_SOURCE_LOCATION_PARAM);
 
 ASIO_DECL void do_throw_error(
-    const asio::error_code& err,
+    const ASIO_NAMESPACE::error_code& err,
     const char* location
     ASIO_SOURCE_LOCATION_PARAM);
 
 inline void throw_error(
-    const asio::error_code& err
+    const ASIO_NAMESPACE::error_code& err
     ASIO_SOURCE_LOCATION_DEFAULTED_PARAM)
 {
   if (err)
@@ -42,7 +42,7 @@ inline void throw_error(
 }
 
 inline void throw_error(
-    const asio::error_code& err,
+    const ASIO_NAMESPACE::error_code& err,
     const char* location
     ASIO_SOURCE_LOCATION_DEFAULTED_PARAM)
 {
@@ -51,7 +51,7 @@ inline void throw_error(
 }
 
 } // namespace detail
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

@@ -26,7 +26,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 
 /// The file_base class is used as a base for the basic_stream_file and
 /// basic_random_access_file class templates so that we have a common place to
@@ -156,7 +156,7 @@ protected:
   }
 };
 
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

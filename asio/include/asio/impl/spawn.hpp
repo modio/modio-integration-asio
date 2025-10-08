@@ -42,7 +42,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace detail {
 
 #if defined(ASIO_HAS_BOOST_COROUTINE)
@@ -106,7 +106,7 @@ public:
   {
     if (throw_if_cancelled_)
       if (!!cancellation_state_.cancelled())
-        throw_error(asio::error::operation_aborted, "yield");
+        throw_error(ASIO_NAMESPACE::error::operation_aborted, "yield");
     has_context_switched_ = true;
     on_suspend_fn_ = fn;
     on_suspend_arg_ = arg;
@@ -215,7 +215,7 @@ public:
   {
     if (throw_if_cancelled_)
       if (!!cancellation_state_.cancelled())
-        throw_error(asio::error::operation_aborted, "yield");
+        throw_error(ASIO_NAMESPACE::error::operation_aborted, "yield");
     has_context_switched_ = true;
     on_suspend_fn_ = fn;
     on_suspend_arg_ = arg;
@@ -475,12 +475,12 @@ public:
 };
 
 template <typename Executor, typename R>
-class spawn_handler<Executor, R(asio::error_code)>
+class spawn_handler<Executor, R(ASIO_NAMESPACE::error_code)>
   : public spawn_handler_base<Executor>
 {
 public:
   typedef void return_type;
-  typedef asio::error_code* result_type;
+  typedef ASIO_NAMESPACE::error_code* result_type;
 
   spawn_handler(const basic_yield_context<Executor>& yield, result_type& result)
     : spawn_handler_base<Executor>(yield),
@@ -488,7 +488,7 @@ public:
   {
   }
 
-  void operator()(asio::error_code ec)
+  void operator()(ASIO_NAMESPACE::error_code ec)
   {
     if (this->yield_.ec_)
     {
@@ -570,7 +570,7 @@ private:
 };
 
 template <typename Executor, typename R, typename T>
-class spawn_handler<Executor, R(asio::error_code, T)>
+class spawn_handler<Executor, R(ASIO_NAMESPACE::error_code, T)>
   : public spawn_handler_base<Executor>
 {
 public:
@@ -578,7 +578,7 @@ public:
 
   struct result_type
   {
-    asio::error_code* ec_;
+    ASIO_NAMESPACE::error_code* ec_;
     return_type* value_;
   };
 
@@ -588,7 +588,7 @@ public:
   {
   }
 
-  void operator()(asio::error_code ec, T value)
+  void operator()(ASIO_NAMESPACE::error_code ec, T value)
   {
     if (this->yield_.ec_)
     {
@@ -685,7 +685,7 @@ private:
 };
 
 template <typename Executor, typename R, typename... Ts>
-class spawn_handler<Executor, R(asio::error_code, Ts...)>
+class spawn_handler<Executor, R(ASIO_NAMESPACE::error_code, Ts...)>
   : public spawn_handler_base<Executor>
 {
 public:
@@ -693,7 +693,7 @@ public:
 
   struct result_type
   {
-    asio::error_code* ec_;
+    ASIO_NAMESPACE::error_code* ec_;
     return_type* value_;
   };
 
@@ -704,7 +704,7 @@ public:
   }
 
   template <typename... Args>
-  void operator()(asio::error_code ec,
+  void operator()(ASIO_NAMESPACE::error_code ec,
       ASIO_MOVE_ARG(Args)... args)
   {
     return_type value(ASIO_MOVE_CAST(Args)(args)...);
@@ -1066,7 +1066,7 @@ class spawn_cancellation_handler
 {
 public:
   spawn_cancellation_handler(const Handler& handler, const Executor& ex)
-    : ex_(asio::get_associated_executor(handler, ex))
+    : ex_(ASIO_NAMESPACE::get_associated_executor(handler, ex))
   {
   }
 
@@ -1142,7 +1142,7 @@ public:
       handler_type, Executor> cancel_handler_type;
 
     typename associated_cancellation_slot<handler_type>::type slot
-      = asio::get_associated_cancellation_slot(handler);
+      = ASIO_NAMESPACE::get_associated_cancellation_slot(handler);
 
     cancel_handler_type* cancel_handler = slot.is_connected()
       ? &slot.template emplace<cancel_handler_type>(handler, executor_)
@@ -1177,7 +1177,7 @@ public:
       handler_type, Executor> cancel_handler_type;
 
     typename associated_cancellation_slot<handler_type>::type slot
-      = asio::get_associated_cancellation_slot(handler);
+      = ASIO_NAMESPACE::get_associated_cancellation_slot(handler);
 
     cancel_handler_type* cancel_handler = slot.is_connected()
       ? &slot.template emplace<cancel_handler_type>(handler, executor_)
@@ -1462,7 +1462,7 @@ inline void spawn(ASIO_MOVE_ARG(Function) function,
   typename associated_executor<function_type>::type ex(
       (get_associated_executor)(function));
 
-  asio::spawn(ex, ASIO_MOVE_CAST(Function)(function), attributes);
+  ASIO_NAMESPACE::spawn(ex, ASIO_MOVE_CAST(Function)(function), attributes);
 }
 
 template <typename Handler, typename Function>
@@ -1513,7 +1513,7 @@ inline void spawn(const Executor& ex,
       is_executor<Executor>::value || execution::is_executor<Executor>::value
     >::type)
 {
-  asio::spawn(asio::strand<Executor>(ex),
+  ASIO_NAMESPACE::spawn(ASIO_NAMESPACE::strand<Executor>(ex),
       ASIO_MOVE_CAST(Function)(function), attributes);
 }
 
@@ -1522,7 +1522,7 @@ inline void spawn(const strand<Executor>& ex,
     ASIO_MOVE_ARG(Function) function,
     const boost::coroutines::attributes& attributes)
 {
-  asio::spawn(asio::bind_executor(
+  ASIO_NAMESPACE::spawn(ASIO_NAMESPACE::bind_executor(
         ex, &detail::default_spawn_handler),
       ASIO_MOVE_CAST(Function)(function), attributes);
 }
@@ -1530,11 +1530,11 @@ inline void spawn(const strand<Executor>& ex,
 #if !defined(ASIO_NO_TS_EXECUTORS)
 
 template <typename Function>
-inline void spawn(const asio::io_context::strand& s,
+inline void spawn(const ASIO_NAMESPACE::io_context::strand& s,
     ASIO_MOVE_ARG(Function) function,
     const boost::coroutines::attributes& attributes)
 {
-  asio::spawn(asio::bind_executor(
+  ASIO_NAMESPACE::spawn(ASIO_NAMESPACE::bind_executor(
         s, &detail::default_spawn_handler),
       ASIO_MOVE_CAST(Function)(function), attributes);
 }
@@ -1548,13 +1548,13 @@ inline void spawn(ExecutionContext& ctx,
     typename constraint<is_convertible<
       ExecutionContext&, execution_context&>::value>::type)
 {
-  asio::spawn(ctx.get_executor(),
+  ASIO_NAMESPACE::spawn(ctx.get_executor(),
       ASIO_MOVE_CAST(Function)(function), attributes);
 }
 
 #endif // defined(ASIO_HAS_BOOST_COROUTINE)
 
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

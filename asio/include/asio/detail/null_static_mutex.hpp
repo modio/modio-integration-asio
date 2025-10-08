@@ -23,12 +23,12 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace detail {
 
 struct null_static_mutex
 {
-  typedef asio::detail::scoped_lock<null_static_mutex> scoped_lock;
+  typedef ASIO_NAMESPACE::detail::scoped_lock<null_static_mutex> scoped_lock;
 
   // Initialise the mutex.
   void init()
@@ -51,7 +51,7 @@ struct null_static_mutex
 #define ASIO_NULL_STATIC_MUTEX_INIT { 0 }
 
 } // namespace detail
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

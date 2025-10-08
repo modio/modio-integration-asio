@@ -41,7 +41,7 @@
 # define ASIO_TEST_IOSTREAM std::cerr
 #endif // !defined(ASIO_TEST_IOSTREAM)
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace detail {
 
 inline const char*& test_name()
@@ -58,8 +58,8 @@ inline atomic_count& test_errors()
 
 inline void begin_test_suite(const char* name)
 {
-  asio::detail::test_name();
-  asio::detail::test_errors();
+  ASIO_NAMESPACE::detail::test_name();
+  ASIO_NAMESPACE::detail::test_errors();
   ASIO_TEST_IOSTREAM << name << " test suite begins" << std::endl;
 }
 
@@ -67,7 +67,7 @@ inline int end_test_suite(const char* name)
 {
   ASIO_TEST_IOSTREAM << name << " test suite ends" << std::endl;
   ASIO_TEST_IOSTREAM << "\n*** ";
-  long errors = asio::detail::test_errors();
+  long errors = ASIO_NAMESPACE::detail::test_errors();
   if (errors == 0)
     ASIO_TEST_IOSTREAM << "No errors detected.";
   else if (errors == 1)
@@ -82,7 +82,7 @@ template <void (*Test)()>
 inline void run_test(const char* name)
 {
   test_name() = name;
-  long errors_before = asio::detail::test_errors();
+  long errors_before = ASIO_NAMESPACE::detail::test_errors();
   Test();
   if (test_errors() == errors_before)
     ASIO_TEST_IOSTREAM << name << " passed" << std::endl;
@@ -108,67 +108,67 @@ void throw_exception(const T& t)
 #endif // defined(ASIO_NO_EXCEPTIONS)
 
 } // namespace detail
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #define ASIO_CHECK(expr) \
   do { if (!(expr)) { \
     ASIO_TEST_IOSTREAM << __FILE__ << "(" << __LINE__ << "): " \
-      << asio::detail::test_name() << ": " \
+      << ASIO_NAMESPACE::detail::test_name() << ": " \
       << "check '" << #expr << "' failed" << std::endl; \
-    ++asio::detail::test_errors(); \
+    ++ASIO_NAMESPACE::detail::test_errors(); \
   } } while (0)
 
 #define ASIO_CHECK_MESSAGE(expr, msg) \
   do { if (!(expr)) { \
     ASIO_TEST_IOSTREAM << __FILE__ << "(" << __LINE__ << "): " \
-      << asio::detail::test_name() << ": " \
+      << ASIO_NAMESPACE::detail::test_name() << ": " \
       << msg << std::endl; \
-    ++asio::detail::test_errors(); \
+    ++ASIO_NAMESPACE::detail::test_errors(); \
   } } while (0)
 
 #define ASIO_WARN_MESSAGE(expr, msg) \
   do { if (!(expr)) { \
     ASIO_TEST_IOSTREAM << __FILE__ << "(" << __LINE__ << "): " \
-      << asio::detail::test_name() << ": " \
+      << ASIO_NAMESPACE::detail::test_name() << ": " \
       << msg << std::endl; \
   } } while (0)
 
 #define ASIO_ERROR(msg) \
   do { \
     ASIO_TEST_IOSTREAM << __FILE__ << "(" << __LINE__ << "): " \
-      << asio::detail::test_name() << ": " \
+      << ASIO_NAMESPACE::detail::test_name() << ": " \
       << msg << std::endl; \
-    ++asio::detail::test_errors(); \
+    ++ASIO_NAMESPACE::detail::test_errors(); \
   } while (0)
 
 #define ASIO_TEST_SUITE(name, tests) \
   int main() \
   { \
-    asio::detail::begin_test_suite(name); \
+    ASIO_NAMESPACE::detail::begin_test_suite(name); \
     tests \
-    return asio::detail::end_test_suite(name); \
+    return ASIO_NAMESPACE::detail::end_test_suite(name); \
   }
 
 #define ASIO_TEST_CASE(test) \
-  asio::detail::run_test<&test>(#test);
+  ASIO_NAMESPACE::detail::run_test<&test>(#test);
 
 #define ASIO_TEST_CASE2(test1, test2) \
-  asio::detail::run_test<&test1, test2>(#test1 "," #test2);
+  ASIO_NAMESPACE::detail::run_test<&test1, test2>(#test1 "," #test2);
 
 #define ASIO_TEST_CASE3(test1, test2, test3) \
-  asio::detail::run_test<&test1, test2, test3>( \
+  ASIO_NAMESPACE::detail::run_test<&test1, test2, test3>( \
     #test1 "," #test2 "," #test3);
 
 #define ASIO_TEST_CASE4(test1, test2, test3, test4) \
-  asio::detail::run_test<&test1, test2, test3, test4>( \
+  ASIO_NAMESPACE::detail::run_test<&test1, test2, test3, test4>( \
     #test1 "," #test2 "," #test3 "," #test4);
 
 #define ASIO_TEST_CASE5(test1, test2, test3, test4, test5) \
-  asio::detail::run_test<&test1, test2, test3, test4, test5>( \
+  ASIO_NAMESPACE::detail::run_test<&test1, test2, test3, test4, test5>( \
     #test1 "," #test2 "," #test3 "," #test4 "," #test5);
 
 #define ASIO_COMPILE_TEST_CASE(test) \
-  asio::detail::compile_test<&test>(#test);
+  ASIO_NAMESPACE::detail::compile_test<&test>(#test);
 
 inline void null_test()
 {

@@ -22,14 +22,14 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace detail {
 
 class null_mutex
   : private noncopyable
 {
 public:
-  typedef asio::detail::scoped_lock<null_mutex> scoped_lock;
+  typedef ASIO_NAMESPACE::detail::scoped_lock<null_mutex> scoped_lock;
 
   // Constructor.
   null_mutex()
@@ -53,7 +53,7 @@ public:
 };
 
 } // namespace detail
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

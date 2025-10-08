@@ -29,14 +29,14 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace detail {
 
 template <typename ConstBufferSequence>
 class descriptor_write_op_base : public reactor_op
 {
 public:
-  descriptor_write_op_base(const asio::error_code& success_ec,
+  descriptor_write_op_base(const ASIO_NAMESPACE::error_code& success_ec,
       int descriptor, const ConstBufferSequence& buffers,
       func_type complete_func)
     : reactor_op(success_ec,
@@ -50,7 +50,7 @@ public:
   {
     descriptor_write_op_base* o(static_cast<descriptor_write_op_base*>(base));
 
-    typedef buffer_sequence_adapter<asio::const_buffer,
+    typedef buffer_sequence_adapter<ASIO_NAMESPACE::const_buffer,
         ConstBufferSequence> bufs_type;
 
     status result;
@@ -87,7 +87,7 @@ class descriptor_write_op
 public:
   ASIO_DEFINE_HANDLER_PTR(descriptor_write_op);
 
-  descriptor_write_op(const asio::error_code& success_ec,
+  descriptor_write_op(const ASIO_NAMESPACE::error_code& success_ec,
       int descriptor, const ConstBufferSequence& buffers,
       Handler& handler, const IoExecutor& io_ex)
     : descriptor_write_op_base<ConstBufferSequence>(success_ec,
@@ -98,12 +98,12 @@ public:
   }
 
   static void do_complete(void* owner, operation* base,
-      const asio::error_code& /*ec*/,
+      const ASIO_NAMESPACE::error_code& /*ec*/,
       std::size_t /*bytes_transferred*/)
   {
     // Take ownership of the handler object.
     descriptor_write_op* o(static_cast<descriptor_write_op*>(base));
-    ptr p = { asio::detail::addressof(o->handler_), o, o };
+    ptr p = { ASIO_NAMESPACE::detail::addressof(o->handler_), o, o };
 
     ASIO_HANDLER_COMPLETION((*o));
 
@@ -120,9 +120,9 @@ public:
     // with the handler. Consequently, a local copy of the handler is required
     // to ensure that any owning sub-object remains valid until after we have
     // deallocated the memory here.
-    detail::binder2<Handler, asio::error_code, std::size_t>
+    detail::binder2<Handler, ASIO_NAMESPACE::error_code, std::size_t>
       handler(o->handler_, o->ec_, o->bytes_transferred_);
-    p.h = asio::detail::addressof(handler.handler_);
+    p.h = ASIO_NAMESPACE::detail::addressof(handler.handler_);
     p.reset();
 
     // Make the upcall if required.
@@ -141,7 +141,7 @@ private:
 };
 
 } // namespace detail
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

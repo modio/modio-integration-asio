@@ -26,7 +26,7 @@
 
 #if defined(GENERATING_DOCUMENTATION)
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace execution {
 
 /// A customisation point that executes a function on an executor.
@@ -66,11 +66,11 @@ struct can_execute :
 };
 
 } // namespace execution
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #else // defined(GENERATING_DOCUMENTATION)
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace execution {
 
 template <typename T, typename R>
@@ -83,22 +83,23 @@ void submit_helper(ASIO_MOVE_ARG(S) s, ASIO_MOVE_ARG(R) r);
 
 } // namespace detail
 } // namespace execution
-} // namespace asio
+} // namespace ASIO_NAMESPACE
+namespace ASIO_NAMESPACE {
 namespace asio_execution_execute_fn {
 
-using asio::conditional;
-using asio::decay;
-using asio::declval;
-using asio::enable_if;
-using asio::execution::detail::as_receiver;
-using asio::execution::detail::is_as_invocable;
-using asio::execution::is_sender_to;
-using asio::false_type;
-using asio::result_of;
-using asio::traits::execute_free;
-using asio::traits::execute_member;
-using asio::true_type;
-using asio::void_type;
+using ASIO_NAMESPACE::conditional;
+using ASIO_NAMESPACE::decay;
+using ASIO_NAMESPACE::declval;
+using ASIO_NAMESPACE::enable_if;
+using ASIO_NAMESPACE::execution::detail::as_receiver;
+using ASIO_NAMESPACE::execution::detail::is_as_invocable;
+using ASIO_NAMESPACE::execution::is_sender_to;
+using ASIO_NAMESPACE::false_type;
+using ASIO_NAMESPACE::result_of;
+using ASIO_NAMESPACE::traits::execute_free;
+using ASIO_NAMESPACE::traits::execute_member;
+using ASIO_NAMESPACE::true_type;
+using ASIO_NAMESPACE::void_type;
 
 void execute();
 
@@ -229,7 +230,7 @@ struct impl
     ASIO_NOEXCEPT_IF((
       call_traits<impl, T, void(F)>::is_noexcept))
   {
-    return asio::execution::detail::submit_helper(
+    return ASIO_NAMESPACE::execution::detail::submit_helper(
         ASIO_MOVE_CAST(T)(t),
         as_receiver<typename decay<F>::type, T>(
           ASIO_MOVE_CAST(F)(f), 0));
@@ -246,7 +247,8 @@ template <typename T>
 const T static_instance<T>::instance = {};
 
 } // namespace asio_execution_execute_fn
-namespace asio {
+} // namespace ASIO_NAMESPACE
+namespace ASIO_NAMESPACE {
 namespace execution {
 namespace {
 
@@ -274,7 +276,7 @@ constexpr bool can_execute_v = can_execute<T, F>::value;
 #endif // defined(ASIO_HAS_VARIABLE_TEMPLATES)
 
 } // namespace execution
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #endif // defined(GENERATING_DOCUMENTATION)
 

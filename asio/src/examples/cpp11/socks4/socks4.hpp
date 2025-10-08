@@ -29,7 +29,7 @@ public:
     bind = 0x02
   };
 
-  request(command_type cmd, const asio::ip::tcp::endpoint& endpoint,
+  request(command_type cmd, const ASIO_NAMESPACE::ip::tcp::endpoint& endpoint,
       const std::string& user_id)
     : version_(version),
       command_(cmd),
@@ -37,10 +37,10 @@ public:
       null_byte_(0)
   {
     // Only IPv4 is supported by the SOCKS 4 protocol.
-    if (endpoint.protocol() != asio::ip::tcp::v4())
+    if (endpoint.protocol() != ASIO_NAMESPACE::ip::tcp::v4())
     {
-      throw asio::system_error(
-          asio::error::address_family_not_supported);
+      throw ASIO_NAMESPACE::system_error(
+          ASIO_NAMESPACE::error::address_family_not_supported);
     }
 
     // Convert port number to network byte order.
@@ -52,18 +52,18 @@ public:
     address_ = endpoint.address().to_v4().to_bytes();
   }
 
-  std::array<asio::const_buffer, 7> buffers() const
+  std::array<ASIO_NAMESPACE::const_buffer, 7> buffers() const
   {
     return
     {
       {
-        asio::buffer(&version_, 1),
-        asio::buffer(&command_, 1),
-        asio::buffer(&port_high_byte_, 1),
-        asio::buffer(&port_low_byte_, 1),
-        asio::buffer(address_),
-        asio::buffer(user_id_),
-        asio::buffer(&null_byte_, 1)
+        ASIO_NAMESPACE::buffer(&version_, 1),
+        ASIO_NAMESPACE::buffer(&command_, 1),
+        ASIO_NAMESPACE::buffer(&port_high_byte_, 1),
+        ASIO_NAMESPACE::buffer(&port_low_byte_, 1),
+        ASIO_NAMESPACE::buffer(address_),
+        ASIO_NAMESPACE::buffer(user_id_),
+        ASIO_NAMESPACE::buffer(&null_byte_, 1)
       }
     };
   }
@@ -73,7 +73,7 @@ private:
   unsigned char command_;
   unsigned char port_high_byte_;
   unsigned char port_low_byte_;
-  asio::ip::address_v4::bytes_type address_;
+  ASIO_NAMESPACE::ip::address_v4::bytes_type address_;
   std::string user_id_;
   unsigned char null_byte_;
 };
@@ -95,16 +95,16 @@ public:
   {
   }
 
-  std::array<asio::mutable_buffer, 5> buffers()
+  std::array<ASIO_NAMESPACE::mutable_buffer, 5> buffers()
   {
     return
     {
       {
-        asio::buffer(&null_byte_, 1),
-        asio::buffer(&status_, 1),
-        asio::buffer(&port_high_byte_, 1),
-        asio::buffer(&port_low_byte_, 1),
-        asio::buffer(address_)
+        ASIO_NAMESPACE::buffer(&null_byte_, 1),
+        ASIO_NAMESPACE::buffer(&status_, 1),
+        ASIO_NAMESPACE::buffer(&port_high_byte_, 1),
+        ASIO_NAMESPACE::buffer(&port_low_byte_, 1),
+        ASIO_NAMESPACE::buffer(address_)
       }
     };
   }
@@ -119,15 +119,15 @@ public:
     return status_;
   }
 
-  asio::ip::tcp::endpoint endpoint() const
+  ASIO_NAMESPACE::ip::tcp::endpoint endpoint() const
   {
     unsigned short port = port_high_byte_;
     port = (port << 8) & 0xff00;
     port = port | port_low_byte_;
 
-    asio::ip::address_v4 address(address_);
+    ASIO_NAMESPACE::ip::address_v4 address(address_);
 
-    return asio::ip::tcp::endpoint(address, port);
+    return ASIO_NAMESPACE::ip::tcp::endpoint(address, port);
   }
 
 private:
@@ -135,7 +135,7 @@ private:
   unsigned char status_;
   unsigned char port_high_byte_;
   unsigned char port_low_byte_;
-  asio::ip::address_v4::bytes_type address_;
+  ASIO_NAMESPACE::ip::address_v4::bytes_type address_;
 };
 
 } // namespace socks4

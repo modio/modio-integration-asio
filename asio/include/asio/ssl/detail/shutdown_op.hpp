@@ -21,7 +21,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace ssl {
 namespace detail {
 
@@ -34,7 +34,7 @@ public:
   }
 
   engine::want operator()(engine& eng,
-      asio::error_code& ec,
+      ASIO_NAMESPACE::error_code& ec,
       std::size_t& bytes_transferred) const
   {
     bytes_transferred = 0;
@@ -43,15 +43,15 @@ public:
 
   template <typename Handler>
   void call_handler(Handler& handler,
-      const asio::error_code& ec,
+      const ASIO_NAMESPACE::error_code& ec,
       const std::size_t&) const
   {
-    if (ec == asio::error::eof)
+    if (ec == ASIO_NAMESPACE::error::eof)
     {
       // The engine only generates an eof when the shutdown notification has
       // been received from the peer. This indicates that the shutdown has
       // completed successfully, and thus need not be passed on to the handler.
-      ASIO_MOVE_OR_LVALUE(Handler)(handler)(asio::error_code());
+      ASIO_MOVE_OR_LVALUE(Handler)(handler)(ASIO_NAMESPACE::error_code());
     }
     else
     {
@@ -62,7 +62,7 @@ public:
 
 } // namespace detail
 } // namespace ssl
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

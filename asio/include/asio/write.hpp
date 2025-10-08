@@ -28,7 +28,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace detail {
 
 template <typename> class initiate_async_write;
@@ -40,7 +40,7 @@ template <typename> class initiate_async_write_dynbuf_v2;
 } // namespace detail
 
 /**
- * @defgroup write asio::write
+ * @defgroup write ASIO_NAMESPACE::write
  *
  * @brief The @c write function is a composed operation that writes a certain
  * amount of data to a stream before returning.
@@ -69,19 +69,19 @@ template <typename> class initiate_async_write_dynbuf_v2;
  *
  * @returns The number of bytes transferred.
  *
- * @throws asio::system_error Thrown on failure.
+ * @throws ASIO_NAMESPACE::system_error Thrown on failure.
  *
  * @par Example
  * To write a single data buffer use the @ref buffer function as follows:
- * @code asio::write(s, asio::buffer(data, size)); @endcode
+ * @code ASIO_NAMESPACE::write(s, ASIO_NAMESPACE::buffer(data, size)); @endcode
  * See the @ref buffer documentation for information on writing multiple
  * buffers in one go, and how to use it with arrays, boost::array or
  * std::vector.
  *
  * @note This overload is equivalent to calling:
- * @code asio::write(
+ * @code ASIO_NAMESPACE::write(
  *     s, buffers,
- *     asio::transfer_all()); @endcode
+ *     ASIO_NAMESPACE::transfer_all()); @endcode
  */
 template <typename SyncWriteStream, typename ConstBufferSequence>
 std::size_t write(SyncWriteStream& s, const ConstBufferSequence& buffers,
@@ -115,19 +115,19 @@ std::size_t write(SyncWriteStream& s, const ConstBufferSequence& buffers,
  *
  * @par Example
  * To write a single data buffer use the @ref buffer function as follows:
- * @code asio::write(s, asio::buffer(data, size), ec); @endcode
+ * @code ASIO_NAMESPACE::write(s, ASIO_NAMESPACE::buffer(data, size), ec); @endcode
  * See the @ref buffer documentation for information on writing multiple
  * buffers in one go, and how to use it with arrays, boost::array or
  * std::vector.
  *
  * @note This overload is equivalent to calling:
- * @code asio::write(
+ * @code ASIO_NAMESPACE::write(
  *     s, buffers,
- *     asio::transfer_all(), ec); @endcode
+ *     ASIO_NAMESPACE::transfer_all(), ec); @endcode
  */
 template <typename SyncWriteStream, typename ConstBufferSequence>
 std::size_t write(SyncWriteStream& s, const ConstBufferSequence& buffers,
-    asio::error_code& ec,
+    ASIO_NAMESPACE::error_code& ec,
     typename constraint<
       is_const_buffer_sequence<ConstBufferSequence>::value
     >::type = 0);
@@ -157,7 +157,7 @@ std::size_t write(SyncWriteStream& s, const ConstBufferSequence& buffers,
  * must be:
  * @code std::size_t completion_condition(
  *   // Result of latest write_some operation.
- *   const asio::error_code& error,
+ *   const ASIO_NAMESPACE::error_code& error,
  *
  *   // Number of bytes transferred so far.
  *   std::size_t bytes_transferred
@@ -168,12 +168,12 @@ std::size_t write(SyncWriteStream& s, const ConstBufferSequence& buffers,
  *
  * @returns The number of bytes transferred.
  *
- * @throws asio::system_error Thrown on failure.
+ * @throws ASIO_NAMESPACE::system_error Thrown on failure.
  *
  * @par Example
  * To write a single data buffer use the @ref buffer function as follows:
- * @code asio::write(s, asio::buffer(data, size),
- *     asio::transfer_at_least(32)); @endcode
+ * @code ASIO_NAMESPACE::write(s, ASIO_NAMESPACE::buffer(data, size),
+ *     ASIO_NAMESPACE::transfer_at_least(32)); @endcode
  * See the @ref buffer documentation for information on writing multiple
  * buffers in one go, and how to use it with arrays, boost::array or
  * std::vector.
@@ -211,7 +211,7 @@ std::size_t write(SyncWriteStream& s, const ConstBufferSequence& buffers,
  * must be:
  * @code std::size_t completion_condition(
  *   // Result of latest write_some operation.
- *   const asio::error_code& error,
+ *   const ASIO_NAMESPACE::error_code& error,
  *
  *   // Number of bytes transferred so far.
  *   std::size_t bytes_transferred
@@ -228,7 +228,7 @@ std::size_t write(SyncWriteStream& s, const ConstBufferSequence& buffers,
 template <typename SyncWriteStream, typename ConstBufferSequence,
     typename CompletionCondition>
 std::size_t write(SyncWriteStream& s, const ConstBufferSequence& buffers,
-    CompletionCondition completion_condition, asio::error_code& ec,
+    CompletionCondition completion_condition, ASIO_NAMESPACE::error_code& ec,
     typename constraint<
       is_const_buffer_sequence<ConstBufferSequence>::value
     >::type = 0);
@@ -255,12 +255,12 @@ std::size_t write(SyncWriteStream& s, const ConstBufferSequence& buffers,
  *
  * @returns The number of bytes transferred.
  *
- * @throws asio::system_error Thrown on failure.
+ * @throws ASIO_NAMESPACE::system_error Thrown on failure.
  *
  * @note This overload is equivalent to calling:
- * @code asio::write(
+ * @code ASIO_NAMESPACE::write(
  *     s, buffers,
- *     asio::transfer_all()); @endcode
+ *     ASIO_NAMESPACE::transfer_all()); @endcode
  */
 template <typename SyncWriteStream, typename DynamicBuffer_v1>
 std::size_t write(SyncWriteStream& s,
@@ -295,14 +295,14 @@ std::size_t write(SyncWriteStream& s,
  * @returns The number of bytes transferred.
  *
  * @note This overload is equivalent to calling:
- * @code asio::write(
+ * @code ASIO_NAMESPACE::write(
  *     s, buffers,
- *     asio::transfer_all(), ec); @endcode
+ *     ASIO_NAMESPACE::transfer_all(), ec); @endcode
  */
 template <typename SyncWriteStream, typename DynamicBuffer_v1>
 std::size_t write(SyncWriteStream& s,
     ASIO_MOVE_ARG(DynamicBuffer_v1) buffers,
-    asio::error_code& ec,
+    ASIO_NAMESPACE::error_code& ec,
     typename constraint<
       is_dynamic_buffer_v1<typename decay<DynamicBuffer_v1>::type>::value
     >::type = 0,
@@ -333,7 +333,7 @@ std::size_t write(SyncWriteStream& s,
  * must be:
  * @code std::size_t completion_condition(
  *   // Result of latest write_some operation.
- *   const asio::error_code& error,
+ *   const ASIO_NAMESPACE::error_code& error,
  *
  *   // Number of bytes transferred so far.
  *   std::size_t bytes_transferred
@@ -344,7 +344,7 @@ std::size_t write(SyncWriteStream& s,
  *
  * @returns The number of bytes transferred.
  *
- * @throws asio::system_error Thrown on failure.
+ * @throws ASIO_NAMESPACE::system_error Thrown on failure.
  */
 template <typename SyncWriteStream, typename DynamicBuffer_v1,
     typename CompletionCondition>
@@ -381,7 +381,7 @@ std::size_t write(SyncWriteStream& s,
  * must be:
  * @code std::size_t completion_condition(
  *   // Result of latest write_some operation.
- *   const asio::error_code& error,
+ *   const ASIO_NAMESPACE::error_code& error,
  *
  *   // Number of bytes transferred so far.
  *   std::size_t bytes_transferred
@@ -399,7 +399,7 @@ template <typename SyncWriteStream, typename DynamicBuffer_v1,
     typename CompletionCondition>
 std::size_t write(SyncWriteStream& s,
     ASIO_MOVE_ARG(DynamicBuffer_v1) buffers,
-    CompletionCondition completion_condition, asio::error_code& ec,
+    CompletionCondition completion_condition, ASIO_NAMESPACE::error_code& ec,
     typename constraint<
       is_dynamic_buffer_v1<typename decay<DynamicBuffer_v1>::type>::value
     >::type = 0,
@@ -429,12 +429,12 @@ std::size_t write(SyncWriteStream& s,
  *
  * @returns The number of bytes transferred.
  *
- * @throws asio::system_error Thrown on failure.
+ * @throws ASIO_NAMESPACE::system_error Thrown on failure.
  *
  * @note This overload is equivalent to calling:
- * @code asio::write(
+ * @code ASIO_NAMESPACE::write(
  *     s, b,
- *     asio::transfer_all()); @endcode
+ *     ASIO_NAMESPACE::transfer_all()); @endcode
  */
 template <typename SyncWriteStream, typename Allocator>
 std::size_t write(SyncWriteStream& s, basic_streambuf<Allocator>& b);
@@ -461,13 +461,13 @@ std::size_t write(SyncWriteStream& s, basic_streambuf<Allocator>& b);
  * @returns The number of bytes transferred.
  *
  * @note This overload is equivalent to calling:
- * @code asio::write(
+ * @code ASIO_NAMESPACE::write(
  *     s, b,
- *     asio::transfer_all(), ec); @endcode
+ *     ASIO_NAMESPACE::transfer_all(), ec); @endcode
  */
 template <typename SyncWriteStream, typename Allocator>
 std::size_t write(SyncWriteStream& s, basic_streambuf<Allocator>& b,
-    asio::error_code& ec);
+    ASIO_NAMESPACE::error_code& ec);
 
 /// Write a certain amount of data to a stream before returning.
 /**
@@ -491,7 +491,7 @@ std::size_t write(SyncWriteStream& s, basic_streambuf<Allocator>& b,
  * must be:
  * @code std::size_t completion_condition(
  *   // Result of latest write_some operation.
- *   const asio::error_code& error,
+ *   const ASIO_NAMESPACE::error_code& error,
  *
  *   // Number of bytes transferred so far.
  *   std::size_t bytes_transferred
@@ -502,7 +502,7 @@ std::size_t write(SyncWriteStream& s, basic_streambuf<Allocator>& b,
  *
  * @returns The number of bytes transferred.
  *
- * @throws asio::system_error Thrown on failure.
+ * @throws ASIO_NAMESPACE::system_error Thrown on failure.
  */
 template <typename SyncWriteStream, typename Allocator,
     typename CompletionCondition>
@@ -531,7 +531,7 @@ std::size_t write(SyncWriteStream& s, basic_streambuf<Allocator>& b,
  * must be:
  * @code std::size_t completion_condition(
  *   // Result of latest write_some operation.
- *   const asio::error_code& error,
+ *   const ASIO_NAMESPACE::error_code& error,
  *
  *   // Number of bytes transferred so far.
  *   std::size_t bytes_transferred
@@ -548,7 +548,7 @@ std::size_t write(SyncWriteStream& s, basic_streambuf<Allocator>& b,
 template <typename SyncWriteStream, typename Allocator,
     typename CompletionCondition>
 std::size_t write(SyncWriteStream& s, basic_streambuf<Allocator>& b,
-    CompletionCondition completion_condition, asio::error_code& ec);
+    CompletionCondition completion_condition, ASIO_NAMESPACE::error_code& ec);
 
 #endif // !defined(ASIO_NO_IOSTREAM)
 #endif // !defined(ASIO_NO_EXTENSIONS)
@@ -574,12 +574,12 @@ std::size_t write(SyncWriteStream& s, basic_streambuf<Allocator>& b,
  *
  * @returns The number of bytes transferred.
  *
- * @throws asio::system_error Thrown on failure.
+ * @throws ASIO_NAMESPACE::system_error Thrown on failure.
  *
  * @note This overload is equivalent to calling:
- * @code asio::write(
+ * @code ASIO_NAMESPACE::write(
  *     s, buffers,
- *     asio::transfer_all()); @endcode
+ *     ASIO_NAMESPACE::transfer_all()); @endcode
  */
 template <typename SyncWriteStream, typename DynamicBuffer_v2>
 std::size_t write(SyncWriteStream& s, DynamicBuffer_v2 buffers,
@@ -610,13 +610,13 @@ std::size_t write(SyncWriteStream& s, DynamicBuffer_v2 buffers,
  * @returns The number of bytes transferred.
  *
  * @note This overload is equivalent to calling:
- * @code asio::write(
+ * @code ASIO_NAMESPACE::write(
  *     s, buffers,
- *     asio::transfer_all(), ec); @endcode
+ *     ASIO_NAMESPACE::transfer_all(), ec); @endcode
  */
 template <typename SyncWriteStream, typename DynamicBuffer_v2>
 std::size_t write(SyncWriteStream& s, DynamicBuffer_v2 buffers,
-    asio::error_code& ec,
+    ASIO_NAMESPACE::error_code& ec,
     typename constraint<
       is_dynamic_buffer_v2<DynamicBuffer_v2>::value
     >::type = 0);
@@ -644,7 +644,7 @@ std::size_t write(SyncWriteStream& s, DynamicBuffer_v2 buffers,
  * must be:
  * @code std::size_t completion_condition(
  *   // Result of latest write_some operation.
- *   const asio::error_code& error,
+ *   const ASIO_NAMESPACE::error_code& error,
  *
  *   // Number of bytes transferred so far.
  *   std::size_t bytes_transferred
@@ -655,7 +655,7 @@ std::size_t write(SyncWriteStream& s, DynamicBuffer_v2 buffers,
  *
  * @returns The number of bytes transferred.
  *
- * @throws asio::system_error Thrown on failure.
+ * @throws ASIO_NAMESPACE::system_error Thrown on failure.
  */
 template <typename SyncWriteStream, typename DynamicBuffer_v2,
     typename CompletionCondition>
@@ -688,7 +688,7 @@ std::size_t write(SyncWriteStream& s, DynamicBuffer_v2 buffers,
  * must be:
  * @code std::size_t completion_condition(
  *   // Result of latest write_some operation.
- *   const asio::error_code& error,
+ *   const ASIO_NAMESPACE::error_code& error,
  *
  *   // Number of bytes transferred so far.
  *   std::size_t bytes_transferred
@@ -705,14 +705,14 @@ std::size_t write(SyncWriteStream& s, DynamicBuffer_v2 buffers,
 template <typename SyncWriteStream, typename DynamicBuffer_v2,
     typename CompletionCondition>
 std::size_t write(SyncWriteStream& s, DynamicBuffer_v2 buffers,
-    CompletionCondition completion_condition, asio::error_code& ec,
+    CompletionCondition completion_condition, ASIO_NAMESPACE::error_code& ec,
     typename constraint<
       is_dynamic_buffer_v2<DynamicBuffer_v2>::value
     >::type = 0);
 
 /*@}*/
 /**
- * @defgroup async_write asio::async_write
+ * @defgroup async_write ASIO_NAMESPACE::async_write
  *
  * @brief The @c async_write function is a composed asynchronous operation that
  * writes a certain amount of data to a stream before completion.
@@ -753,7 +753,7 @@ std::size_t write(SyncWriteStream& s, DynamicBuffer_v2 buffers,
  * signature. The function signature of the completion handler must be:
  * @code void handler(
  *   // Result of operation.
- *   const asio::error_code& error,
+ *   const ASIO_NAMESPACE::error_code& error,
  *
  *   // Number of bytes written from the buffers. If an error
  *   // occurred, this will be less than the sum of the buffer sizes.
@@ -762,15 +762,15 @@ std::size_t write(SyncWriteStream& s, DynamicBuffer_v2 buffers,
  * Regardless of whether the asynchronous operation completes immediately or
  * not, the completion handler will not be invoked from within this function.
  * On immediate completion, invocation of the handler will be performed in a
- * manner equivalent to using asio::post().
+ * manner equivalent to using ASIO_NAMESPACE::post().
  *
  * @par Completion Signature
- * @code void(asio::error_code, std::size_t) @endcode
+ * @code void(ASIO_NAMESPACE::error_code, std::size_t) @endcode
  *
  * @par Example
  * To write a single data buffer use the @ref buffer function as follows:
  * @code
- * asio::async_write(s, asio::buffer(data, size), handler);
+ * ASIO_NAMESPACE::async_write(s, ASIO_NAMESPACE::buffer(data, size), handler);
  * @endcode
  * See the @ref buffer documentation for information on writing multiple
  * buffers in one go, and how to use it with arrays, boost::array or
@@ -778,7 +778,7 @@ std::size_t write(SyncWriteStream& s, DynamicBuffer_v2 buffers,
  *
  * @par Per-Operation Cancellation
  * This asynchronous operation supports cancellation for the following
- * asio::cancellation_type values:
+ * ASIO_NAMESPACE::cancellation_type values:
  *
  * @li @c cancellation_type::terminal
  *
@@ -788,12 +788,12 @@ std::size_t write(SyncWriteStream& s, DynamicBuffer_v2 buffers,
  * @c async_write_some operation.
  */
 template <typename AsyncWriteStream, typename ConstBufferSequence,
-    ASIO_COMPLETION_TOKEN_FOR(void (asio::error_code,
+    ASIO_COMPLETION_TOKEN_FOR(void (ASIO_NAMESPACE::error_code,
       std::size_t)) WriteToken
         ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(
           typename AsyncWriteStream::executor_type)>
 ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(WriteToken,
-    void (asio::error_code, std::size_t))
+    void (ASIO_NAMESPACE::error_code, std::size_t))
 async_write(AsyncWriteStream& s, const ConstBufferSequence& buffers,
     ASIO_MOVE_ARG(WriteToken) token
       ASIO_DEFAULT_COMPLETION_TOKEN(
@@ -803,7 +803,7 @@ async_write(AsyncWriteStream& s, const ConstBufferSequence& buffers,
     >::type = 0)
   ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
     async_initiate<WriteToken,
-      void (asio::error_code, std::size_t)>(
+      void (ASIO_NAMESPACE::error_code, std::size_t)>(
         declval<detail::initiate_async_write<AsyncWriteStream> >(),
         token, buffers, transfer_all())));
 
@@ -839,7 +839,7 @@ async_write(AsyncWriteStream& s, const ConstBufferSequence& buffers,
  * must be:
  * @code std::size_t completion_condition(
  *   // Result of latest async_write_some operation.
- *   const asio::error_code& error,
+ *   const ASIO_NAMESPACE::error_code& error,
  *
  *   // Number of bytes transferred so far.
  *   std::size_t bytes_transferred
@@ -855,7 +855,7 @@ async_write(AsyncWriteStream& s, const ConstBufferSequence& buffers,
  * signature. The function signature of the completion handler must be:
  * @code void handler(
  *   // Result of operation.
- *   const asio::error_code& error,
+ *   const ASIO_NAMESPACE::error_code& error,
  *
  *   // Number of bytes written from the buffers. If an error
  *   // occurred, this will be less than the sum of the buffer sizes.
@@ -864,16 +864,16 @@ async_write(AsyncWriteStream& s, const ConstBufferSequence& buffers,
  * Regardless of whether the asynchronous operation completes immediately or
  * not, the completion handler will not be invoked from within this function.
  * On immediate completion, invocation of the handler will be performed in a
- * manner equivalent to using asio::post().
+ * manner equivalent to using ASIO_NAMESPACE::post().
  *
  * @par Completion Signature
- * @code void(asio::error_code, std::size_t) @endcode
+ * @code void(ASIO_NAMESPACE::error_code, std::size_t) @endcode
  *
  * @par Example
  * To write a single data buffer use the @ref buffer function as follows:
- * @code asio::async_write(s,
- *     asio::buffer(data, size),
- *     asio::transfer_at_least(32),
+ * @code ASIO_NAMESPACE::async_write(s,
+ *     ASIO_NAMESPACE::buffer(data, size),
+ *     ASIO_NAMESPACE::transfer_at_least(32),
  *     handler); @endcode
  * See the @ref buffer documentation for information on writing multiple
  * buffers in one go, and how to use it with arrays, boost::array or
@@ -881,7 +881,7 @@ async_write(AsyncWriteStream& s, const ConstBufferSequence& buffers,
  *
  * @par Per-Operation Cancellation
  * This asynchronous operation supports cancellation for the following
- * asio::cancellation_type values:
+ * ASIO_NAMESPACE::cancellation_type values:
  *
  * @li @c cancellation_type::terminal
  *
@@ -892,10 +892,10 @@ async_write(AsyncWriteStream& s, const ConstBufferSequence& buffers,
  */
 template <typename AsyncWriteStream,
     typename ConstBufferSequence, typename CompletionCondition,
-    ASIO_COMPLETION_TOKEN_FOR(void (asio::error_code,
+    ASIO_COMPLETION_TOKEN_FOR(void (ASIO_NAMESPACE::error_code,
       std::size_t)) WriteToken>
 ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(WriteToken,
-    void (asio::error_code, std::size_t))
+    void (ASIO_NAMESPACE::error_code, std::size_t))
 async_write(AsyncWriteStream& s, const ConstBufferSequence& buffers,
     CompletionCondition completion_condition,
     ASIO_MOVE_ARG(WriteToken) token,
@@ -904,7 +904,7 @@ async_write(AsyncWriteStream& s, const ConstBufferSequence& buffers,
     >::type = 0)
   ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
     async_initiate<WriteToken,
-      void (asio::error_code, std::size_t)>(
+      void (ASIO_NAMESPACE::error_code, std::size_t)>(
         declval<detail::initiate_async_write<AsyncWriteStream> >(),
         token, buffers,
         ASIO_MOVE_CAST(CompletionCondition)(completion_condition))));
@@ -945,7 +945,7 @@ async_write(AsyncWriteStream& s, const ConstBufferSequence& buffers,
  * signature. The function signature of the completion handler must be:
  * @code void handler(
  *   // Result of operation.
- *   const asio::error_code& error,
+ *   const ASIO_NAMESPACE::error_code& error,
  *
  *   // Number of bytes written from the buffers. If an error
  *   // occurred, this will be less than the sum of the buffer sizes.
@@ -954,14 +954,14 @@ async_write(AsyncWriteStream& s, const ConstBufferSequence& buffers,
  * Regardless of whether the asynchronous operation completes immediately or
  * not, the completion handler will not be invoked from within this function.
  * On immediate completion, invocation of the handler will be performed in a
- * manner equivalent to using asio::post().
+ * manner equivalent to using ASIO_NAMESPACE::post().
  *
  * @par Completion Signature
- * @code void(asio::error_code, std::size_t) @endcode
+ * @code void(ASIO_NAMESPACE::error_code, std::size_t) @endcode
  *
  * @par Per-Operation Cancellation
  * This asynchronous operation supports cancellation for the following
- * asio::cancellation_type values:
+ * ASIO_NAMESPACE::cancellation_type values:
  *
  * @li @c cancellation_type::terminal
  *
@@ -971,12 +971,12 @@ async_write(AsyncWriteStream& s, const ConstBufferSequence& buffers,
  * @c async_write_some operation.
  */
 template <typename AsyncWriteStream, typename DynamicBuffer_v1,
-    ASIO_COMPLETION_TOKEN_FOR(void (asio::error_code,
+    ASIO_COMPLETION_TOKEN_FOR(void (ASIO_NAMESPACE::error_code,
       std::size_t)) WriteToken
         ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(
           typename AsyncWriteStream::executor_type)>
 ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(WriteToken,
-    void (asio::error_code, std::size_t))
+    void (ASIO_NAMESPACE::error_code, std::size_t))
 async_write(AsyncWriteStream& s,
     ASIO_MOVE_ARG(DynamicBuffer_v1) buffers,
     ASIO_MOVE_ARG(WriteToken) token
@@ -990,7 +990,7 @@ async_write(AsyncWriteStream& s,
     >::type = 0)
   ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
     async_initiate<WriteToken,
-      void (asio::error_code, std::size_t)>(
+      void (ASIO_NAMESPACE::error_code, std::size_t)>(
         declval<detail::initiate_async_write_dynbuf_v1<AsyncWriteStream> >(),
         token, ASIO_MOVE_CAST(DynamicBuffer_v1)(buffers),
         transfer_all())));
@@ -1027,7 +1027,7 @@ async_write(AsyncWriteStream& s,
  * must be:
  * @code std::size_t completion_condition(
  *   // Result of latest async_write_some operation.
- *   const asio::error_code& error,
+ *   const ASIO_NAMESPACE::error_code& error,
  *
  *   // Number of bytes transferred so far.
  *   std::size_t bytes_transferred
@@ -1043,7 +1043,7 @@ async_write(AsyncWriteStream& s,
  * signature. The function signature of the completion handler must be:
  * @code void handler(
  *   // Result of operation.
- *   const asio::error_code& error,
+ *   const ASIO_NAMESPACE::error_code& error,
  *
  *   // Number of bytes written from the buffers. If an error
  *   // occurred, this will be less than the sum of the buffer sizes.
@@ -1052,14 +1052,14 @@ async_write(AsyncWriteStream& s,
  * Regardless of whether the asynchronous operation completes immediately or
  * not, the completion handler will not be invoked from within this function.
  * On immediate completion, invocation of the handler will be performed in a
- * manner equivalent to using asio::post().
+ * manner equivalent to using ASIO_NAMESPACE::post().
  *
  * @par Completion Signature
- * @code void(asio::error_code, std::size_t) @endcode
+ * @code void(ASIO_NAMESPACE::error_code, std::size_t) @endcode
  *
  * @par Per-Operation Cancellation
  * This asynchronous operation supports cancellation for the following
- * asio::cancellation_type values:
+ * ASIO_NAMESPACE::cancellation_type values:
  *
  * @li @c cancellation_type::terminal
  *
@@ -1070,10 +1070,10 @@ async_write(AsyncWriteStream& s,
  */
 template <typename AsyncWriteStream,
     typename DynamicBuffer_v1, typename CompletionCondition,
-    ASIO_COMPLETION_TOKEN_FOR(void (asio::error_code,
+    ASIO_COMPLETION_TOKEN_FOR(void (ASIO_NAMESPACE::error_code,
       std::size_t)) WriteToken>
 ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(WriteToken,
-    void (asio::error_code, std::size_t))
+    void (ASIO_NAMESPACE::error_code, std::size_t))
 async_write(AsyncWriteStream& s,
     ASIO_MOVE_ARG(DynamicBuffer_v1) buffers,
     CompletionCondition completion_condition,
@@ -1086,7 +1086,7 @@ async_write(AsyncWriteStream& s,
     >::type = 0)
   ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
     async_initiate<WriteToken,
-      void (asio::error_code, std::size_t)>(
+      void (ASIO_NAMESPACE::error_code, std::size_t)>(
         declval<detail::initiate_async_write_dynbuf_v1<AsyncWriteStream> >(),
         token, ASIO_MOVE_CAST(DynamicBuffer_v1)(buffers),
         ASIO_MOVE_CAST(CompletionCondition)(completion_condition))));
@@ -1126,7 +1126,7 @@ async_write(AsyncWriteStream& s,
  * signature. The function signature of the completion handler must be:
  * @code void handler(
  *   // Result of operation.
- *   const asio::error_code& error,
+ *   const ASIO_NAMESPACE::error_code& error,
  *
  *   // Number of bytes written from the buffers. If an error
  *   // occurred, this will be less than the sum of the buffer sizes.
@@ -1135,14 +1135,14 @@ async_write(AsyncWriteStream& s,
  * Regardless of whether the asynchronous operation completes immediately or
  * not, the completion handler will not be invoked from within this function.
  * On immediate completion, invocation of the handler will be performed in a
- * manner equivalent to using asio::post().
+ * manner equivalent to using ASIO_NAMESPACE::post().
  *
  * @par Completion Signature
- * @code void(asio::error_code, std::size_t) @endcode
+ * @code void(ASIO_NAMESPACE::error_code, std::size_t) @endcode
  *
  * @par Per-Operation Cancellation
  * This asynchronous operation supports cancellation for the following
- * asio::cancellation_type values:
+ * ASIO_NAMESPACE::cancellation_type values:
  *
  * @li @c cancellation_type::terminal
  *
@@ -1152,12 +1152,12 @@ async_write(AsyncWriteStream& s,
  * @c async_write_some operation.
  */
 template <typename AsyncWriteStream, typename Allocator,
-    ASIO_COMPLETION_TOKEN_FOR(void (asio::error_code,
+    ASIO_COMPLETION_TOKEN_FOR(void (ASIO_NAMESPACE::error_code,
       std::size_t)) WriteToken
         ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(
           typename AsyncWriteStream::executor_type)>
 ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(WriteToken,
-    void (asio::error_code, std::size_t))
+    void (ASIO_NAMESPACE::error_code, std::size_t))
 async_write(AsyncWriteStream& s, basic_streambuf<Allocator>& b,
     ASIO_MOVE_ARG(WriteToken) token
       ASIO_DEFAULT_COMPLETION_TOKEN(
@@ -1196,7 +1196,7 @@ async_write(AsyncWriteStream& s, basic_streambuf<Allocator>& b,
  * must be:
  * @code std::size_t completion_condition(
  *   // Result of latest async_write_some operation.
- *   const asio::error_code& error,
+ *   const ASIO_NAMESPACE::error_code& error,
  *
  *   // Number of bytes transferred so far.
  *   std::size_t bytes_transferred
@@ -1212,7 +1212,7 @@ async_write(AsyncWriteStream& s, basic_streambuf<Allocator>& b,
  * signature. The function signature of the completion handler must be:
  * @code void handler(
  *   // Result of operation.
- *   const asio::error_code& error,
+ *   const ASIO_NAMESPACE::error_code& error,
  *
  *   // Number of bytes written from the buffers. If an error
  *   // occurred, this will be less than the sum of the buffer sizes.
@@ -1221,14 +1221,14 @@ async_write(AsyncWriteStream& s, basic_streambuf<Allocator>& b,
  * Regardless of whether the asynchronous operation completes immediately or
  * not, the completion handler will not be invoked from within this function.
  * On immediate completion, invocation of the handler will be performed in a
- * manner equivalent to using asio::post().
+ * manner equivalent to using ASIO_NAMESPACE::post().
  *
  * @par Completion Signature
- * @code void(asio::error_code, std::size_t) @endcode
+ * @code void(ASIO_NAMESPACE::error_code, std::size_t) @endcode
  *
  * @par Per-Operation Cancellation
  * This asynchronous operation supports cancellation for the following
- * asio::cancellation_type values:
+ * ASIO_NAMESPACE::cancellation_type values:
  *
  * @li @c cancellation_type::terminal
  *
@@ -1239,10 +1239,10 @@ async_write(AsyncWriteStream& s, basic_streambuf<Allocator>& b,
  */
 template <typename AsyncWriteStream,
     typename Allocator, typename CompletionCondition,
-    ASIO_COMPLETION_TOKEN_FOR(void (asio::error_code,
+    ASIO_COMPLETION_TOKEN_FOR(void (ASIO_NAMESPACE::error_code,
       std::size_t)) WriteToken>
 ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(WriteToken,
-    void (asio::error_code, std::size_t))
+    void (ASIO_NAMESPACE::error_code, std::size_t))
 async_write(AsyncWriteStream& s, basic_streambuf<Allocator>& b,
     CompletionCondition completion_condition,
     ASIO_MOVE_ARG(WriteToken) token)
@@ -1289,7 +1289,7 @@ async_write(AsyncWriteStream& s, basic_streambuf<Allocator>& b,
  * signature. The function signature of the completion handler must be:
  * @code void handler(
  *   // Result of operation.
- *   const asio::error_code& error,
+ *   const ASIO_NAMESPACE::error_code& error,
  *
  *   // Number of bytes written from the buffers. If an error
  *   // occurred, this will be less than the sum of the buffer sizes.
@@ -1298,14 +1298,14 @@ async_write(AsyncWriteStream& s, basic_streambuf<Allocator>& b,
  * Regardless of whether the asynchronous operation completes immediately or
  * not, the completion handler will not be invoked from within this function.
  * On immediate completion, invocation of the handler will be performed in a
- * manner equivalent to using asio::post().
+ * manner equivalent to using ASIO_NAMESPACE::post().
  *
  * @par Completion Signature
- * @code void(asio::error_code, std::size_t) @endcode
+ * @code void(ASIO_NAMESPACE::error_code, std::size_t) @endcode
  *
  * @par Per-Operation Cancellation
  * This asynchronous operation supports cancellation for the following
- * asio::cancellation_type values:
+ * ASIO_NAMESPACE::cancellation_type values:
  *
  * @li @c cancellation_type::terminal
  *
@@ -1315,12 +1315,12 @@ async_write(AsyncWriteStream& s, basic_streambuf<Allocator>& b,
  * @c async_write_some operation.
  */
 template <typename AsyncWriteStream, typename DynamicBuffer_v2,
-    ASIO_COMPLETION_TOKEN_FOR(void (asio::error_code,
+    ASIO_COMPLETION_TOKEN_FOR(void (ASIO_NAMESPACE::error_code,
       std::size_t)) WriteToken
         ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(
           typename AsyncWriteStream::executor_type)>
 ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(WriteToken,
-    void (asio::error_code, std::size_t))
+    void (ASIO_NAMESPACE::error_code, std::size_t))
 async_write(AsyncWriteStream& s, DynamicBuffer_v2 buffers,
     ASIO_MOVE_ARG(WriteToken) token
       ASIO_DEFAULT_COMPLETION_TOKEN(
@@ -1330,7 +1330,7 @@ async_write(AsyncWriteStream& s, DynamicBuffer_v2 buffers,
     >::type = 0)
   ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
     async_initiate<WriteToken,
-      void (asio::error_code, std::size_t)>(
+      void (ASIO_NAMESPACE::error_code, std::size_t)>(
         declval<detail::initiate_async_write_dynbuf_v2<AsyncWriteStream> >(),
         token, ASIO_MOVE_CAST(DynamicBuffer_v2)(buffers),
         transfer_all())));
@@ -1367,7 +1367,7 @@ async_write(AsyncWriteStream& s, DynamicBuffer_v2 buffers,
  * must be:
  * @code std::size_t completion_condition(
  *   // Result of latest async_write_some operation.
- *   const asio::error_code& error,
+ *   const ASIO_NAMESPACE::error_code& error,
  *
  *   // Number of bytes transferred so far.
  *   std::size_t bytes_transferred
@@ -1383,7 +1383,7 @@ async_write(AsyncWriteStream& s, DynamicBuffer_v2 buffers,
  * signature. The function signature of the completion handler must be:
  * @code void handler(
  *   // Result of operation.
- *   const asio::error_code& error,
+ *   const ASIO_NAMESPACE::error_code& error,
  *
  *   // Number of bytes written from the buffers. If an error
  *   // occurred, this will be less than the sum of the buffer sizes.
@@ -1392,14 +1392,14 @@ async_write(AsyncWriteStream& s, DynamicBuffer_v2 buffers,
  * Regardless of whether the asynchronous operation completes immediately or
  * not, the completion handler will not be invoked from within this function.
  * On immediate completion, invocation of the handler will be performed in a
- * manner equivalent to using asio::post().
+ * manner equivalent to using ASIO_NAMESPACE::post().
  *
  * @par Completion Signature
- * @code void(asio::error_code, std::size_t) @endcode
+ * @code void(ASIO_NAMESPACE::error_code, std::size_t) @endcode
  *
  * @par Per-Operation Cancellation
  * This asynchronous operation supports cancellation for the following
- * asio::cancellation_type values:
+ * ASIO_NAMESPACE::cancellation_type values:
  *
  * @li @c cancellation_type::terminal
  *
@@ -1410,10 +1410,10 @@ async_write(AsyncWriteStream& s, DynamicBuffer_v2 buffers,
  */
 template <typename AsyncWriteStream,
     typename DynamicBuffer_v2, typename CompletionCondition,
-    ASIO_COMPLETION_TOKEN_FOR(void (asio::error_code,
+    ASIO_COMPLETION_TOKEN_FOR(void (ASIO_NAMESPACE::error_code,
       std::size_t)) WriteToken>
 ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(WriteToken,
-    void (asio::error_code, std::size_t))
+    void (ASIO_NAMESPACE::error_code, std::size_t))
 async_write(AsyncWriteStream& s, DynamicBuffer_v2 buffers,
     CompletionCondition completion_condition,
     ASIO_MOVE_ARG(WriteToken) token,
@@ -1422,14 +1422,14 @@ async_write(AsyncWriteStream& s, DynamicBuffer_v2 buffers,
     >::type = 0)
   ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
     async_initiate<WriteToken,
-      void (asio::error_code, std::size_t)>(
+      void (ASIO_NAMESPACE::error_code, std::size_t)>(
         declval<detail::initiate_async_write_dynbuf_v2<AsyncWriteStream> >(),
         token, ASIO_MOVE_CAST(DynamicBuffer_v2)(buffers),
         ASIO_MOVE_CAST(CompletionCondition)(completion_condition))));
 
 /*@}*/
 
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

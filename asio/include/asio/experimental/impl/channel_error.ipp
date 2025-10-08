@@ -20,12 +20,12 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace experimental {
 namespace error {
 namespace detail {
 
-class channel_category : public asio::error_category
+class channel_category : public ASIO_NAMESPACE::error_category
 {
 public:
   const char* name() const ASIO_ERROR_CATEGORY_NOEXCEPT
@@ -46,7 +46,7 @@ public:
 
 } // namespace detail
 
-const asio::error_category& get_channel_category()
+const ASIO_NAMESPACE::error_category& get_channel_category()
 {
   static detail::channel_category instance;
   return instance;
@@ -54,7 +54,7 @@ const asio::error_category& get_channel_category()
 
 } // namespace error
 } // namespace experimental
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

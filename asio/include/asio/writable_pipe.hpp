@@ -22,12 +22,12 @@
 
 #include "asio/basic_writable_pipe.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 
 /// Typedef for the typical usage of a writable pipe.
 typedef basic_writable_pipe<> writable_pipe;
 
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #endif // defined(ASIO_HAS_PIPE)
        //   || defined(GENERATING_DOCUMENTATION)

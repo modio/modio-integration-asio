@@ -17,7 +17,7 @@
 
 #include "asio/detail/config.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace detail {
 
 #if defined(ASIO_HAS_IOCP) || defined(ASIO_WINDOWS_RUNTIME) || defined(ASIO_NULL_REACTOR)
@@ -35,6 +35,6 @@ typedef class select_reactor reactor;
 #endif
 
 } // namespace detail
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #endif // ASIO_DETAIL_REACTOR_FWD_HPP

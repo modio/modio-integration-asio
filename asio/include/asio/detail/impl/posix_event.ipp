@@ -25,7 +25,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace detail {
 
 posix_event::posix_event()
@@ -48,13 +48,13 @@ posix_event::posix_event()
 #endif // (defined(__MACH__) && defined(__APPLE__))
        // || (defined(__ANDROID__) && (__ANDROID_API__ < 21))
 
-  asio::error_code ec(error,
-      asio::error::get_system_category());
-  asio::detail::throw_error(ec, "event");
+  ASIO_NAMESPACE::error_code ec(error,
+      ASIO_NAMESPACE::error::get_system_category());
+  ASIO_NAMESPACE::detail::throw_error(ec, "event");
 }
 
 } // namespace detail
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

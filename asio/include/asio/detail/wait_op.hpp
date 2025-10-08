@@ -20,7 +20,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace detail {
 
 class wait_op
@@ -28,7 +28,7 @@ class wait_op
 {
 public:
   // The error code to be passed to the completion handler.
-  asio::error_code ec_;
+  ASIO_NAMESPACE::error_code ec_;
 
   // The operation key used for targeted cancellation.
   void* cancellation_key_;
@@ -42,7 +42,7 @@ protected:
 };
 
 } // namespace detail
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

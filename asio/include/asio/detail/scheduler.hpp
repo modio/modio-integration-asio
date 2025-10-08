@@ -30,7 +30,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace detail {
 
 struct scheduler_thread_info;
@@ -44,11 +44,11 @@ public:
 
   // The type of a function used to obtain a task instance.
   typedef scheduler_task* (*get_task_func_type)(
-      asio::execution_context&);
+      ASIO_NAMESPACE::execution_context&);
 
   // Constructor. Specifies the number of concurrent threads that are likely to
   // run the scheduler. If set to 1 certain optimisation are performed.
-  ASIO_DECL scheduler(asio::execution_context& ctx,
+  ASIO_DECL scheduler(ASIO_NAMESPACE::execution_context& ctx,
       int concurrency_hint = 0, bool own_thread = true,
       get_task_func_type get_task = &scheduler::get_default_task);
 
@@ -62,20 +62,20 @@ public:
   ASIO_DECL void init_task();
 
   // Run the event loop until interrupted or no more work.
-  ASIO_DECL std::size_t run(asio::error_code& ec);
+  ASIO_DECL std::size_t run(ASIO_NAMESPACE::error_code& ec);
 
   // Run until interrupted or one operation is performed.
-  ASIO_DECL std::size_t run_one(asio::error_code& ec);
+  ASIO_DECL std::size_t run_one(ASIO_NAMESPACE::error_code& ec);
 
   // Run until timeout, interrupted, or one operation is performed.
   ASIO_DECL std::size_t wait_one(
-      long usec, asio::error_code& ec);
+      long usec, ASIO_NAMESPACE::error_code& ec);
 
   // Poll for operations without blocking.
-  ASIO_DECL std::size_t poll(asio::error_code& ec);
+  ASIO_DECL std::size_t poll(ASIO_NAMESPACE::error_code& ec);
 
   // Poll for one operation without blocking.
-  ASIO_DECL std::size_t poll_one(asio::error_code& ec);
+  ASIO_DECL std::size_t poll_one(ASIO_NAMESPACE::error_code& ec);
 
   // Interrupt the event processing loop.
   ASIO_DECL void stop();
@@ -155,15 +155,15 @@ private:
 
   // Run at most one operation. May block.
   ASIO_DECL std::size_t do_run_one(mutex::scoped_lock& lock,
-      thread_info& this_thread, const asio::error_code& ec);
+      thread_info& this_thread, const ASIO_NAMESPACE::error_code& ec);
 
   // Run at most one operation with a timeout. May block.
   ASIO_DECL std::size_t do_wait_one(mutex::scoped_lock& lock,
-      thread_info& this_thread, long usec, const asio::error_code& ec);
+      thread_info& this_thread, long usec, const ASIO_NAMESPACE::error_code& ec);
 
   // Poll for at most one operation.
   ASIO_DECL std::size_t do_poll_one(mutex::scoped_lock& lock,
-      thread_info& this_thread, const asio::error_code& ec);
+      thread_info& this_thread, const ASIO_NAMESPACE::error_code& ec);
 
   // Stop the task and all idle threads.
   ASIO_DECL void stop_all_threads(mutex::scoped_lock& lock);
@@ -174,7 +174,7 @@ private:
 
   // Get the default task.
   ASIO_DECL static scheduler_task* get_default_task(
-      asio::execution_context& ctx);
+      ASIO_NAMESPACE::execution_context& ctx);
 
   // Helper class to run the scheduler in its own thread.
   class thread_function;
@@ -228,11 +228,11 @@ private:
   const int concurrency_hint_;
 
   // The thread that is running the scheduler.
-  asio::detail::thread* thread_;
+  ASIO_NAMESPACE::detail::thread* thread_;
 };
 
 } // namespace detail
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

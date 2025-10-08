@@ -31,7 +31,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace execution {
 namespace detail {
 
@@ -141,7 +141,7 @@ ASIO_CONSTEXPR const bool is_executor_v = is_executor<T>::value;
 template <typename T>
 ASIO_CONCEPT executor = is_executor<T>::value;
 
-#define ASIO_EXECUTION_EXECUTOR ::asio::execution::executor
+#define ASIO_EXECUTION_EXECUTOR ::ASIO_NAMESPACE::execution::executor
 
 #else // defined(ASIO_HAS_CONCEPTS)
 
@@ -183,7 +183,7 @@ template <typename T, typename F>
 ASIO_CONCEPT executor_of = is_executor_of<T, F>::value;
 
 #define ASIO_EXECUTION_EXECUTOR_OF(f) \
-  ::asio::execution::executor_of<f>
+  ::ASIO_NAMESPACE::execution::executor_of<f>
 
 #else // defined(ASIO_HAS_CONCEPTS)
 
@@ -245,7 +245,7 @@ using executor_index_t = typename executor_index<T>::type;
 #endif // defined(ASIO_HAS_ALIAS_TEMPLATES)
 
 } // namespace execution
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

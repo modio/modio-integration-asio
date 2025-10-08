@@ -21,7 +21,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 
 /// The is_contiguous_iterator class is a traits class that may be used to
 /// determine whether a type is a contiguous iterator.
@@ -38,7 +38,7 @@ struct is_contiguous_iterator :
 {
 };
 
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

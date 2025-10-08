@@ -22,7 +22,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 
 template <typename Blocking, typename Relationship, typename Allocator>
 inline system_context&
@@ -54,7 +54,7 @@ basic_system_executor<Blocking, Relationship, Allocator>::do_execute(
   {
 #endif// !defined(ASIO_NO_EXCEPTIONS)
     detail::fenced_block b(detail::fenced_block::full);
-    asio_handler_invoke_helpers::invoke(f2.value, f2.value);
+    ASIO_NAMESPACE::asio_handler_invoke_helpers::invoke(f2.value, f2.value);
 #if !defined(ASIO_NO_EXCEPTIONS)
   }
   catch (...)
@@ -78,7 +78,7 @@ basic_system_executor<Blocking, Relationship, Allocator>::do_execute(
   {
 #endif// !defined(ASIO_NO_EXCEPTIONS)
     detail::fenced_block b(detail::fenced_block::full);
-    asio_handler_invoke_helpers::invoke(f2.value, f2.value);
+    ASIO_NAMESPACE::asio_handler_invoke_helpers::invoke(f2.value, f2.value);
 #if !defined(ASIO_NO_EXCEPTIONS)
   }
   catch (...)
@@ -132,7 +132,7 @@ void basic_system_executor<Blocking, Relationship, Allocator>::dispatch(
     ASIO_MOVE_ARG(Function) f, const OtherAllocator&) const
 {
   typename decay<Function>::type tmp(ASIO_MOVE_CAST(Function)(f));
-  asio_handler_invoke_helpers::invoke(tmp, tmp);
+  ASIO_NAMESPACE::asio_handler_invoke_helpers::invoke(tmp, tmp);
 }
 
 template <typename Blocking, typename Relationship, typename Allocator>
@@ -178,7 +178,7 @@ void basic_system_executor<Blocking, Relationship, Allocator>::defer(
 }
 #endif // !defined(ASIO_NO_TS_EXECUTORS)
 
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

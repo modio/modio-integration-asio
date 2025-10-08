@@ -23,7 +23,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace detail {
 
 inline strand_service::strand_impl::strand_impl()
@@ -40,13 +40,13 @@ void strand_service::dispatch(strand_service::implementation_type& impl,
   if (running_in_this_thread(impl))
   {
     fenced_block b(fenced_block::full);
-    asio_handler_invoke_helpers::invoke(handler, handler);
+    ASIO_NAMESPACE::asio_handler_invoke_helpers::invoke(handler, handler);
     return;
   }
 
   // Allocate and construct an operation to wrap the handler.
   typedef completion_handler<Handler, io_context::executor_type> op;
-  typename op::ptr p = { asio::detail::addressof(handler),
+  typename op::ptr p = { ASIO_NAMESPACE::detail::addressof(handler),
     op::ptr::allocate(handler), 0 };
   p.p = new (p.v) op(handler, io_context_.get_executor());
 
@@ -64,11 +64,11 @@ void strand_service::post(strand_service::implementation_type& impl,
     Handler& handler)
 {
   bool is_continuation =
-    asio_handler_cont_helpers::is_continuation(handler);
+    ASIO_NAMESPACE::asio_handler_cont_helpers::is_continuation(handler);
 
   // Allocate and construct an operation to wrap the handler.
   typedef completion_handler<Handler, io_context::executor_type> op;
-  typename op::ptr p = { asio::detail::addressof(handler),
+  typename op::ptr p = { ASIO_NAMESPACE::detail::addressof(handler),
     op::ptr::allocate(handler), 0 };
   p.p = new (p.v) op(handler, io_context_.get_executor());
 
@@ -80,7 +80,7 @@ void strand_service::post(strand_service::implementation_type& impl,
 }
 
 } // namespace detail
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

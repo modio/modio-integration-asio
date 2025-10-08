@@ -24,7 +24,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 
 template <typename Stream>
 std::size_t buffered_write_stream<Stream>::flush()
@@ -36,7 +36,7 @@ std::size_t buffered_write_stream<Stream>::flush()
 }
 
 template <typename Stream>
-std::size_t buffered_write_stream<Stream>::flush(asio::error_code& ec)
+std::size_t buffered_write_stream<Stream>::flush(ASIO_NAMESPACE::error_code& ec)
 {
   std::size_t bytes_written = write(next_layer_,
       buffer(storage_.data(), storage_.size()),
@@ -72,7 +72,7 @@ namespace detail
     }
 #endif // defined(ASIO_HAS_MOVE)
 
-    void operator()(const asio::error_code& ec,
+    void operator()(const ASIO_NAMESPACE::error_code& ec,
         const std::size_t bytes_written)
     {
       storage_.consume(bytes_written);
@@ -90,10 +90,10 @@ namespace detail
       buffered_flush_handler<WriteHandler>* this_handler)
   {
 #if defined(ASIO_NO_DEPRECATED)
-    asio_handler_alloc_helpers::allocate(size, this_handler->handler_);
+    ASIO_NAMESPACE::asio_handler_alloc_helpers::allocate(size, this_handler->handler_);
     return asio_handler_allocate_is_no_longer_used();
 #else // defined(ASIO_NO_DEPRECATED)
-    return asio_handler_alloc_helpers::allocate(
+    return ASIO_NAMESPACE::asio_handler_alloc_helpers::allocate(
         size, this_handler->handler_);
 #endif // defined(ASIO_NO_DEPRECATED)
   }
@@ -103,7 +103,7 @@ namespace detail
   asio_handler_deallocate(void* pointer, std::size_t size,
       buffered_flush_handler<WriteHandler>* this_handler)
   {
-    asio_handler_alloc_helpers::deallocate(
+    ASIO_NAMESPACE::asio_handler_alloc_helpers::deallocate(
         pointer, size, this_handler->handler_);
 #if defined(ASIO_NO_DEPRECATED)
     return asio_handler_deallocate_is_no_longer_used();
@@ -114,7 +114,7 @@ namespace detail
   inline bool asio_handler_is_continuation(
       buffered_flush_handler<WriteHandler>* this_handler)
   {
-    return asio_handler_cont_helpers::is_continuation(
+    return ASIO_NAMESPACE::asio_handler_cont_helpers::is_continuation(
           this_handler->handler_);
   }
 
@@ -123,7 +123,7 @@ namespace detail
   asio_handler_invoke(Function& function,
       buffered_flush_handler<WriteHandler>* this_handler)
   {
-    asio_handler_invoke_helpers::invoke(
+    ASIO_NAMESPACE::asio_handler_invoke_helpers::invoke(
         function, this_handler->handler_);
 #if defined(ASIO_NO_DEPRECATED)
     return asio_handler_invoke_is_no_longer_used();
@@ -135,7 +135,7 @@ namespace detail
   asio_handler_invoke(const Function& function,
       buffered_flush_handler<WriteHandler>* this_handler)
   {
-    asio_handler_invoke_helpers::invoke(
+    ASIO_NAMESPACE::asio_handler_invoke_helpers::invoke(
         function, this_handler->handler_);
 #if defined(ASIO_NO_DEPRECATED)
     return asio_handler_invoke_is_no_longer_used();
@@ -200,20 +200,20 @@ struct associator<Associator,
 
 template <typename Stream>
 template <
-    ASIO_COMPLETION_TOKEN_FOR(void (asio::error_code,
+    ASIO_COMPLETION_TOKEN_FOR(void (ASIO_NAMESPACE::error_code,
       std::size_t)) WriteHandler>
 ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(WriteHandler,
-    void (asio::error_code, std::size_t))
+    void (ASIO_NAMESPACE::error_code, std::size_t))
 buffered_write_stream<Stream>::async_flush(
     ASIO_MOVE_ARG(WriteHandler) handler)
   ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
     async_initiate<WriteHandler,
-      void (asio::error_code, std::size_t)>(
+      void (ASIO_NAMESPACE::error_code, std::size_t)>(
         declval<detail::initiate_async_buffered_flush<Stream> >(),
         handler, declval<detail::buffered_stream_storage*>())))
 {
   return async_initiate<WriteHandler,
-    void (asio::error_code, std::size_t)>(
+    void (ASIO_NAMESPACE::error_code, std::size_t)>(
       detail::initiate_async_buffered_flush<Stream>(next_layer_),
       handler, &storage_);
 }
@@ -223,7 +223,7 @@ template <typename ConstBufferSequence>
 std::size_t buffered_write_stream<Stream>::write_some(
     const ConstBufferSequence& buffers)
 {
-  using asio::buffer_size;
+  using ASIO_NAMESPACE::buffer_size;
   if (buffer_size(buffers) == 0)
     return 0;
 
@@ -236,11 +236,11 @@ std::size_t buffered_write_stream<Stream>::write_some(
 template <typename Stream>
 template <typename ConstBufferSequence>
 std::size_t buffered_write_stream<Stream>::write_some(
-    const ConstBufferSequence& buffers, asio::error_code& ec)
+    const ConstBufferSequence& buffers, ASIO_NAMESPACE::error_code& ec)
 {
-  ec = asio::error_code();
+  ec = ASIO_NAMESPACE::error_code();
 
-  using asio::buffer_size;
+  using ASIO_NAMESPACE::buffer_size;
   if (buffer_size(buffers) == 0)
     return 0;
 
@@ -280,7 +280,7 @@ namespace detail
       }
 #endif // defined(ASIO_HAS_MOVE)
 
-    void operator()(const asio::error_code& ec, std::size_t)
+    void operator()(const ASIO_NAMESPACE::error_code& ec, std::size_t)
     {
       if (ec)
       {
@@ -289,14 +289,14 @@ namespace detail
       }
       else
       {
-        using asio::buffer_size;
+        using ASIO_NAMESPACE::buffer_size;
         std::size_t orig_size = storage_.size();
         std::size_t space_avail = storage_.capacity() - orig_size;
         std::size_t bytes_avail = buffer_size(buffers_);
         std::size_t length = bytes_avail < space_avail
           ? bytes_avail : space_avail;
         storage_.resize(orig_size + length);
-        const std::size_t bytes_copied = asio::buffer_copy(
+        const std::size_t bytes_copied = ASIO_NAMESPACE::buffer_copy(
             storage_.data() + orig_size, buffers_, length);
         ASIO_MOVE_OR_LVALUE(WriteHandler)(handler_)(ec, bytes_copied);
       }
@@ -315,10 +315,10 @@ namespace detail
         ConstBufferSequence, WriteHandler>* this_handler)
   {
 #if defined(ASIO_NO_DEPRECATED)
-    asio_handler_alloc_helpers::allocate(size, this_handler->handler_);
+    ASIO_NAMESPACE::asio_handler_alloc_helpers::allocate(size, this_handler->handler_);
     return asio_handler_allocate_is_no_longer_used();
 #else // defined(ASIO_NO_DEPRECATED)
-    return asio_handler_alloc_helpers::allocate(
+    return ASIO_NAMESPACE::asio_handler_alloc_helpers::allocate(
         size, this_handler->handler_);
 #endif // defined(ASIO_NO_DEPRECATED)
   }
@@ -329,7 +329,7 @@ namespace detail
       buffered_write_some_handler<
         ConstBufferSequence, WriteHandler>* this_handler)
   {
-    asio_handler_alloc_helpers::deallocate(
+    ASIO_NAMESPACE::asio_handler_alloc_helpers::deallocate(
         pointer, size, this_handler->handler_);
 #if defined(ASIO_NO_DEPRECATED)
     return asio_handler_deallocate_is_no_longer_used();
@@ -341,7 +341,7 @@ namespace detail
       buffered_write_some_handler<
         ConstBufferSequence, WriteHandler>* this_handler)
   {
-    return asio_handler_cont_helpers::is_continuation(
+    return ASIO_NAMESPACE::asio_handler_cont_helpers::is_continuation(
           this_handler->handler_);
   }
 
@@ -352,7 +352,7 @@ namespace detail
       buffered_write_some_handler<
         ConstBufferSequence, WriteHandler>* this_handler)
   {
-    asio_handler_invoke_helpers::invoke(
+    ASIO_NAMESPACE::asio_handler_invoke_helpers::invoke(
         function, this_handler->handler_);
 #if defined(ASIO_NO_DEPRECATED)
     return asio_handler_invoke_is_no_longer_used();
@@ -366,7 +366,7 @@ namespace detail
       buffered_write_some_handler<
         ConstBufferSequence, WriteHandler>* this_handler)
   {
-    asio_handler_invoke_helpers::invoke(
+    ASIO_NAMESPACE::asio_handler_invoke_helpers::invoke(
         function, this_handler->handler_);
 #if defined(ASIO_NO_DEPRECATED)
     return asio_handler_invoke_is_no_longer_used();
@@ -400,7 +400,7 @@ namespace detail
       // does not meet the documented type requirements for a WriteHandler.
       ASIO_WRITE_HANDLER_CHECK(WriteHandler, handler) type_check;
 
-      using asio::buffer_size;
+      using ASIO_NAMESPACE::buffer_size;
       non_const_lvalue<WriteHandler> handler2(handler);
       if (buffer_size(buffers) == 0 || storage->size() < storage->capacity())
       {
@@ -447,21 +447,21 @@ struct associator<Associator,
 
 template <typename Stream>
 template <typename ConstBufferSequence,
-    ASIO_COMPLETION_TOKEN_FOR(void (asio::error_code,
+    ASIO_COMPLETION_TOKEN_FOR(void (ASIO_NAMESPACE::error_code,
       std::size_t)) WriteHandler>
 ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(WriteHandler,
-    void (asio::error_code, std::size_t))
+    void (ASIO_NAMESPACE::error_code, std::size_t))
 buffered_write_stream<Stream>::async_write_some(
     const ConstBufferSequence& buffers,
     ASIO_MOVE_ARG(WriteHandler) handler)
   ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
     async_initiate<WriteHandler,
-      void (asio::error_code, std::size_t)>(
+      void (ASIO_NAMESPACE::error_code, std::size_t)>(
         declval<detail::initiate_async_buffered_write_some<Stream> >(),
         handler, declval<detail::buffered_stream_storage*>(), buffers)))
 {
   return async_initiate<WriteHandler,
-    void (asio::error_code, std::size_t)>(
+    void (ASIO_NAMESPACE::error_code, std::size_t)>(
       detail::initiate_async_buffered_write_some<Stream>(next_layer_),
       handler, &storage_, buffers);
 }
@@ -471,17 +471,17 @@ template <typename ConstBufferSequence>
 std::size_t buffered_write_stream<Stream>::copy(
     const ConstBufferSequence& buffers)
 {
-  using asio::buffer_size;
+  using ASIO_NAMESPACE::buffer_size;
   std::size_t orig_size = storage_.size();
   std::size_t space_avail = storage_.capacity() - orig_size;
   std::size_t bytes_avail = buffer_size(buffers);
   std::size_t length = bytes_avail < space_avail ? bytes_avail : space_avail;
   storage_.resize(orig_size + length);
-  return asio::buffer_copy(
+  return ASIO_NAMESPACE::buffer_copy(
       storage_.data() + orig_size, buffers, length);
 }
 
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

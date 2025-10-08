@@ -23,7 +23,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 
 template <typename Blocking, typename Relationship, typename Allocator>
 class basic_system_executor;
@@ -78,7 +78,7 @@ private:
   std::size_t num_threads_;
 };
 
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

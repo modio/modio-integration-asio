@@ -25,7 +25,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace detail {
 
 posix_thread::~posix_thread()
@@ -60,9 +60,9 @@ void posix_thread::start_thread(func_base* arg)
   if (error != 0)
   {
     delete arg;
-    asio::error_code ec(error,
-        asio::error::get_system_category());
-    asio::detail::throw_error(ec, "thread");
+    ASIO_NAMESPACE::error_code ec(error,
+        ASIO_NAMESPACE::error::get_system_category());
+    ASIO_NAMESPACE::detail::throw_error(ec, "thread");
   }
 }
 
@@ -75,7 +75,7 @@ void* asio_detail_posix_thread_function(void* arg)
 }
 
 } // namespace detail
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

@@ -22,14 +22,14 @@
 
 #include "asio/windows/basic_random_access_handle.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace windows {
 
 /// Typedef for the typical usage of a random-access handle.
 typedef basic_random_access_handle<> random_access_handle;
 
 } // namespace windows
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #endif // defined(ASIO_HAS_WINDOWS_RANDOM_ACCESS_HANDLE)
        //   || defined(GENERATING_DOCUMENTATION)

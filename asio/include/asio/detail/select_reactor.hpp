@@ -44,7 +44,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace detail {
 
 class select_reactor
@@ -68,7 +68,7 @@ public:
   };
 
   // Constructor.
-  ASIO_DECL select_reactor(asio::execution_context& ctx);
+  ASIO_DECL select_reactor(ASIO_NAMESPACE::execution_context& ctx);
 
   // Destructor.
   ASIO_DECL ~select_reactor();
@@ -78,7 +78,7 @@ public:
 
   // Recreate internal descriptors following a fork.
   ASIO_DECL void notify_fork(
-      asio::execution_context::fork_event fork_ev);
+      ASIO_NAMESPACE::execution_context::fork_event fork_ev);
 
   // Initialise the task, but only if the reactor is not in its own thread.
   ASIO_DECL void init_task();
@@ -192,7 +192,7 @@ private:
   // Cancel all operations associated with the given descriptor. This function
   // does not acquire the select_reactor's mutex.
   ASIO_DECL void cancel_ops_unlocked(socket_type descriptor,
-      const asio::error_code& ec);
+      const ASIO_NAMESPACE::error_code& ec);
 
   // The scheduler implementation used to post completions.
 # if defined(ASIO_HAS_IOCP)
@@ -203,7 +203,7 @@ private:
   scheduler_type& scheduler_;
 
   // Mutex to protect access to internal data.
-  asio::detail::mutex mutex_;
+  ASIO_NAMESPACE::detail::mutex mutex_;
 
   // The interrupter is used to break a blocking select call.
   select_interrupter interrupter_;
@@ -226,7 +226,7 @@ private:
   bool stop_thread_;
 
   // The thread that is running the reactor loop.
-  asio::detail::thread* thread_;
+  ASIO_NAMESPACE::detail::thread* thread_;
 
   // Helper class to join and restart the reactor thread.
   class restart_reactor : public operation
@@ -239,7 +239,7 @@ private:
     }
 
     ASIO_DECL static void do_complete(void* owner, operation* base,
-        const asio::error_code& ec, std::size_t bytes_transferred);
+        const ASIO_NAMESPACE::error_code& ec, std::size_t bytes_transferred);
 
   private:
     select_reactor* reactor_;
@@ -256,7 +256,7 @@ private:
 };
 
 } // namespace detail
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

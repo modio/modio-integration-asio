@@ -27,13 +27,13 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace detail {
 
 class reactive_socket_connect_op_base : public reactor_op
 {
 public:
-  reactive_socket_connect_op_base(const asio::error_code& success_ec,
+  reactive_socket_connect_op_base(const ASIO_NAMESPACE::error_code& success_ec,
       socket_type socket, func_type complete_func)
     : reactor_op(success_ec,
         &reactive_socket_connect_op_base::do_perform, complete_func),
@@ -64,7 +64,7 @@ class reactive_socket_connect_op : public reactive_socket_connect_op_base
 public:
   ASIO_DEFINE_HANDLER_PTR(reactive_socket_connect_op);
 
-  reactive_socket_connect_op(const asio::error_code& success_ec,
+  reactive_socket_connect_op(const ASIO_NAMESPACE::error_code& success_ec,
       socket_type socket, Handler& handler, const IoExecutor& io_ex)
     : reactive_socket_connect_op_base(success_ec, socket,
         &reactive_socket_connect_op::do_complete),
@@ -74,13 +74,13 @@ public:
   }
 
   static void do_complete(void* owner, operation* base,
-      const asio::error_code& /*ec*/,
+      const ASIO_NAMESPACE::error_code& /*ec*/,
       std::size_t /*bytes_transferred*/)
   {
     // Take ownership of the handler object.
     reactive_socket_connect_op* o
       (static_cast<reactive_socket_connect_op*>(base));
-    ptr p = { asio::detail::addressof(o->handler_), o, o };
+    ptr p = { ASIO_NAMESPACE::detail::addressof(o->handler_), o, o };
 
     ASIO_HANDLER_COMPLETION((*o));
 
@@ -97,9 +97,9 @@ public:
     // with the handler. Consequently, a local copy of the handler is required
     // to ensure that any owning sub-object remains valid until after we have
     // deallocated the memory here.
-    detail::binder1<Handler, asio::error_code>
+    detail::binder1<Handler, ASIO_NAMESPACE::error_code>
       handler(o->handler_, o->ec_);
-    p.h = asio::detail::addressof(handler.handler_);
+    p.h = ASIO_NAMESPACE::detail::addressof(handler.handler_);
     p.reset();
 
     // Make the upcall if required.
@@ -118,7 +118,7 @@ private:
 };
 
 } // namespace detail
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

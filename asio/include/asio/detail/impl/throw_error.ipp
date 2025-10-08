@@ -21,19 +21,19 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace detail {
 
 void do_throw_error(
-    const asio::error_code& err
+    const ASIO_NAMESPACE::error_code& err
     ASIO_SOURCE_LOCATION_PARAM)
 {
-  asio::system_error e(err);
-  asio::detail::throw_exception(e ASIO_SOURCE_LOCATION_ARG);
+  ASIO_NAMESPACE::system_error e(err);
+  ASIO_NAMESPACE::detail::throw_exception(e ASIO_SOURCE_LOCATION_ARG);
 }
 
 void do_throw_error(
-    const asio::error_code& err,
+    const ASIO_NAMESPACE::error_code& err,
     const char* location
     ASIO_SOURCE_LOCATION_PARAM)
 {
@@ -47,14 +47,14 @@ void do_throw_error(
   std::string what_msg = location;
   what_msg += ": ";
   what_msg += err.message();
-  asio::system_error e(err, what_msg);
-  asio::detail::throw_exception(e ASIO_SOURCE_LOCATION_ARG);
+  ASIO_NAMESPACE::system_error e(err, what_msg);
+  ASIO_NAMESPACE::detail::throw_exception(e ASIO_SOURCE_LOCATION_ARG);
 #else // defined(ASIO_MSVC)
       //   && defined(ASIO_HAS_STD_SYSTEM_ERROR)
       //   && (_MSC_VER < 1928)
   // boostify: non-boost code ends here
-  asio::system_error e(err, location);
-  asio::detail::throw_exception(e ASIO_SOURCE_LOCATION_ARG);
+  ASIO_NAMESPACE::system_error e(err, location);
+  ASIO_NAMESPACE::detail::throw_exception(e ASIO_SOURCE_LOCATION_ARG);
   // boostify: non-boost code starts here
 #endif // defined(ASIO_MSVC)
        //   && defined(ASIO_HAS_STD_SYSTEM_ERROR)
@@ -63,7 +63,7 @@ void do_throw_error(
 }
 
 } // namespace detail
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 

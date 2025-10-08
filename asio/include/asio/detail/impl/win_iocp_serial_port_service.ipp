@@ -25,7 +25,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ASIO_NAMESPACE {
 namespace detail {
 
 win_iocp_serial_port_service::win_iocp_serial_port_service(
@@ -39,13 +39,13 @@ void win_iocp_serial_port_service::shutdown()
 {
 }
 
-asio::error_code win_iocp_serial_port_service::open(
+ASIO_NAMESPACE::error_code win_iocp_serial_port_service::open(
     win_iocp_serial_port_service::implementation_type& impl,
-    const std::string& device, asio::error_code& ec)
+    const std::string& device, ASIO_NAMESPACE::error_code& ec)
 {
   if (is_open(impl))
   {
-    ec = asio::error::already_open;
+    ec = ASIO_NAMESPACE::error::already_open;
     ASIO_ERROR_LOCATION(ec);
     return ec;
   }
@@ -60,8 +60,8 @@ asio::error_code win_iocp_serial_port_service::open(
   if (handle == INVALID_HANDLE_VALUE)
   {
     DWORD last_error = ::GetLastError();
-    ec = asio::error_code(last_error,
-        asio::error::get_system_category());
+    ec = ASIO_NAMESPACE::error_code(last_error,
+        ASIO_NAMESPACE::error::get_system_category());
     ASIO_ERROR_LOCATION(ec);
     return ec;
   }
@@ -75,8 +75,8 @@ asio::error_code win_iocp_serial_port_service::open(
   {
     DWORD last_error = ::GetLastError();
     ::CloseHandle(handle);
-    ec = asio::error_code(last_error,
-        asio::error::get_system_category());
+    ec = ASIO_NAMESPACE::error_code(last_error,
+        ASIO_NAMESPACE::error::get_system_category());
     ASIO_ERROR_LOCATION(ec);
     return ec;
   }
@@ -102,8 +102,8 @@ asio::error_code win_iocp_serial_port_service::open(
   {
     DWORD last_error = ::GetLastError();
     ::CloseHandle(handle);
-    ec = asio::error_code(last_error,
-        asio::error::get_system_category());
+    ec = ASIO_NAMESPACE::error_code(last_error,
+        ASIO_NAMESPACE::error::get_system_category());
     ASIO_ERROR_LOCATION(ec);
     return ec;
   }
@@ -121,8 +121,8 @@ asio::error_code win_iocp_serial_port_service::open(
   {
     DWORD last_error = ::GetLastError();
     ::CloseHandle(handle);
-    ec = asio::error_code(last_error,
-        asio::error::get_system_category());
+    ec = ASIO_NAMESPACE::error_code(last_error,
+        ASIO_NAMESPACE::error::get_system_category());
     ASIO_ERROR_LOCATION(ec);
     return ec;
   }
@@ -133,10 +133,10 @@ asio::error_code win_iocp_serial_port_service::open(
   return ec;
 }
 
-asio::error_code win_iocp_serial_port_service::do_set_option(
+ASIO_NAMESPACE::error_code win_iocp_serial_port_service::do_set_option(
     win_iocp_serial_port_service::implementation_type& impl,
     win_iocp_serial_port_service::store_function_type store,
-    const void* option, asio::error_code& ec)
+    const void* option, ASIO_NAMESPACE::error_code& ec)
 {
   using namespace std; // For memcpy.
 
@@ -146,8 +146,8 @@ asio::error_code win_iocp_serial_port_service::do_set_option(
   if (!::GetCommState(handle_service_.native_handle(impl), &dcb))
   {
     DWORD last_error = ::GetLastError();
-    ec = asio::error_code(last_error,
-        asio::error::get_system_category());
+    ec = ASIO_NAMESPACE::error_code(last_error,
+        ASIO_NAMESPACE::error::get_system_category());
     ASIO_ERROR_LOCATION(ec);
     return ec;
   }
@@ -158,20 +158,20 @@ asio::error_code win_iocp_serial_port_service::do_set_option(
   if (!::SetCommState(handle_service_.native_handle(impl), &dcb))
   {
     DWORD last_error = ::GetLastError();
-    ec = asio::error_code(last_error,
-        asio::error::get_system_category());
+    ec = ASIO_NAMESPACE::error_code(last_error,
+        ASIO_NAMESPACE::error::get_system_category());
     ASIO_ERROR_LOCATION(ec);
     return ec;
   }
 
-  ec = asio::error_code();
+  ec = ASIO_NAMESPACE::error_code();
   return ec;
 }
 
-asio::error_code win_iocp_serial_port_service::do_get_option(
+ASIO_NAMESPACE::error_code win_iocp_serial_port_service::do_get_option(
     const win_iocp_serial_port_service::implementation_type& impl,
     win_iocp_serial_port_service::load_function_type load,
-    void* option, asio::error_code& ec) const
+    void* option, ASIO_NAMESPACE::error_code& ec) const
 {
   using namespace std; // For memset.
 
@@ -181,8 +181,8 @@ asio::error_code win_iocp_serial_port_service::do_get_option(
   if (!::GetCommState(handle_service_.native_handle(impl), &dcb))
   {
     DWORD last_error = ::GetLastError();
-    ec = asio::error_code(last_error,
-        asio::error::get_system_category());
+    ec = ASIO_NAMESPACE::error_code(last_error,
+        ASIO_NAMESPACE::error::get_system_category());
     ASIO_ERROR_LOCATION(ec);
     return ec;
   }
@@ -191,7 +191,7 @@ asio::error_code win_iocp_serial_port_service::do_get_option(
 }
 
 } // namespace detail
-} // namespace asio
+} // namespace ASIO_NAMESPACE
 
 #include "asio/detail/pop_options.hpp"
 
