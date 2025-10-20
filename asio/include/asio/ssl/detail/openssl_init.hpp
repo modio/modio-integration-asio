@@ -23,7 +23,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace ssl {
 namespace detail {
 
@@ -39,7 +39,7 @@ protected:
   // main, and therefore before any other threads can get started. The do_init
   // instance must be static in this function to ensure that it gets
   // initialised before any other global objects try to use it.
-  ASIO_DECL static ASIO_NAMESPACE::detail::shared_ptr<do_init> instance();
+  ASIO_DECL static ModioAsio::detail::shared_ptr<do_init> instance();
 
 #if !defined(SSL_OP_NO_COMPRESSION) \
   && (OPENSSL_VERSION_NUMBER >= 0x00908000L)
@@ -82,7 +82,7 @@ private:
 
   // Reference to singleton do_init object to ensure that openssl does not get
   // cleaned up until the last user has finished with it.
-  ASIO_NAMESPACE::detail::shared_ptr<do_init> ref_;
+  ModioAsio::detail::shared_ptr<do_init> ref_;
 };
 
 template <bool Do_Init>
@@ -90,7 +90,7 @@ openssl_init<Do_Init> openssl_init<Do_Init>::instance_;
 
 } // namespace detail
 } // namespace ssl
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

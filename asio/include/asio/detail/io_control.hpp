@@ -21,7 +21,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 namespace io_control {
 
@@ -77,7 +77,7 @@ private:
 
 } // namespace io_control
 } // namespace detail
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

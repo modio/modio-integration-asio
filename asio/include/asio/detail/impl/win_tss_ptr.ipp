@@ -25,7 +25,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 DWORD win_tss_ptr_create()
@@ -40,15 +40,15 @@ DWORD win_tss_ptr_create()
   if (tss_key == out_of_indexes)
   {
     DWORD last_error = ::GetLastError();
-    ASIO_NAMESPACE::error_code ec(last_error,
-        ASIO_NAMESPACE::error::get_system_category());
-    ASIO_NAMESPACE::detail::throw_error(ec, "tss");
+    ModioAsio::error_code ec(last_error,
+        ModioAsio::error::get_system_category());
+    ModioAsio::detail::throw_error(ec, "tss");
   }
   return tss_key;
 }
 
 } // namespace detail
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

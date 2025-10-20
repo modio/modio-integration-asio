@@ -22,14 +22,14 @@
 
 #include "asio/windows/basic_stream_handle.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace windows {
 
 /// Typedef for the typical usage of a stream-oriented handle.
 typedef basic_stream_handle<> stream_handle;
 
 } // namespace windows
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #endif // defined(ASIO_HAS_WINDOWS_STREAM_HANDLE)
        //   || defined(GENERATING_DOCUMENTATION)

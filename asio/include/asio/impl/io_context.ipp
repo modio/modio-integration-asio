@@ -31,7 +31,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 
 io_context::io_context()
   : impl_(add_impl(new impl_type(*this,
@@ -47,8 +47,8 @@ io_context::io_context(int concurrency_hint)
 
 io_context::impl_type& io_context::add_impl(io_context::impl_type* impl)
 {
-  ASIO_NAMESPACE::detail::scoped_ptr<impl_type> scoped_impl(impl);
-  ASIO_NAMESPACE::add_service<impl_type>(*this, scoped_impl.get());
+  ModioAsio::detail::scoped_ptr<impl_type> scoped_impl(impl);
+  ModioAsio::add_service<impl_type>(*this, scoped_impl.get());
   return *scoped_impl.release();
 }
 
@@ -58,14 +58,14 @@ io_context::~io_context()
 
 io_context::count_type io_context::run()
 {
-  ASIO_NAMESPACE::error_code ec;
+  ModioAsio::error_code ec;
   count_type s = impl_.run(ec);
-  ASIO_NAMESPACE::detail::throw_error(ec);
+  ModioAsio::detail::throw_error(ec);
   return s;
 }
 
 #if !defined(ASIO_NO_DEPRECATED)
-io_context::count_type io_context::run(ASIO_NAMESPACE::error_code& ec)
+io_context::count_type io_context::run(ModioAsio::error_code& ec)
 {
   return impl_.run(ec);
 }
@@ -73,14 +73,14 @@ io_context::count_type io_context::run(ASIO_NAMESPACE::error_code& ec)
 
 io_context::count_type io_context::run_one()
 {
-  ASIO_NAMESPACE::error_code ec;
+  ModioAsio::error_code ec;
   count_type s = impl_.run_one(ec);
-  ASIO_NAMESPACE::detail::throw_error(ec);
+  ModioAsio::detail::throw_error(ec);
   return s;
 }
 
 #if !defined(ASIO_NO_DEPRECATED)
-io_context::count_type io_context::run_one(ASIO_NAMESPACE::error_code& ec)
+io_context::count_type io_context::run_one(ModioAsio::error_code& ec)
 {
   return impl_.run_one(ec);
 }
@@ -88,14 +88,14 @@ io_context::count_type io_context::run_one(ASIO_NAMESPACE::error_code& ec)
 
 io_context::count_type io_context::poll()
 {
-  ASIO_NAMESPACE::error_code ec;
+  ModioAsio::error_code ec;
   count_type s = impl_.poll(ec);
-  ASIO_NAMESPACE::detail::throw_error(ec);
+  ModioAsio::detail::throw_error(ec);
   return s;
 }
 
 #if !defined(ASIO_NO_DEPRECATED)
-io_context::count_type io_context::poll(ASIO_NAMESPACE::error_code& ec)
+io_context::count_type io_context::poll(ModioAsio::error_code& ec)
 {
   return impl_.poll(ec);
 }
@@ -103,14 +103,14 @@ io_context::count_type io_context::poll(ASIO_NAMESPACE::error_code& ec)
 
 io_context::count_type io_context::poll_one()
 {
-  ASIO_NAMESPACE::error_code ec;
+  ModioAsio::error_code ec;
   count_type s = impl_.poll_one(ec);
-  ASIO_NAMESPACE::detail::throw_error(ec);
+  ModioAsio::detail::throw_error(ec);
   return s;
 }
 
 #if !defined(ASIO_NO_DEPRECATED)
-io_context::count_type io_context::poll_one(ASIO_NAMESPACE::error_code& ec)
+io_context::count_type io_context::poll_one(ModioAsio::error_code& ec)
 {
   return impl_.poll_one(ec);
 }
@@ -131,7 +131,7 @@ void io_context::restart()
   impl_.restart();
 }
 
-io_context::service::service(ASIO_NAMESPACE::io_context& owner)
+io_context::service::service(ModioAsio::io_context& owner)
   : execution_context::service(owner)
 {
 }
@@ -168,7 +168,7 @@ void io_context::service::fork_service(io_context::fork_event)
 }
 #endif // !defined(ASIO_NO_DEPRECATED)
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

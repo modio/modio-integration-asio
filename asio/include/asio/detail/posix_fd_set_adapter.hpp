@@ -28,7 +28,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 // Adapts the FD_SET type to meet the Descriptor_Set concept's requirements.
@@ -68,7 +68,7 @@ public:
       reactor_op_queue<socket_type>::iterator op_iter = i++;
       if (!set(op_iter->first))
       {
-        ASIO_NAMESPACE::error_code ec(error::fd_set_failure);
+        ModioAsio::error_code ec(error::fd_set_failure);
         operations.cancel_operations(op_iter, ops, ec);
       }
     }
@@ -107,7 +107,7 @@ private:
 };
 
 } // namespace detail
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

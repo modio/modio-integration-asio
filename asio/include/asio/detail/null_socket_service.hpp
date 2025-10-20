@@ -28,7 +28,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 template <typename Protocol>
@@ -91,18 +91,18 @@ public:
   }
 
   // Open a new socket implementation.
-  ASIO_NAMESPACE::error_code open(implementation_type&,
-      const protocol_type&, ASIO_NAMESPACE::error_code& ec)
+  ModioAsio::error_code open(implementation_type&,
+      const protocol_type&, ModioAsio::error_code& ec)
   {
-    ec = ASIO_NAMESPACE::error::operation_not_supported;
+    ec = ModioAsio::error::operation_not_supported;
     return ec;
   }
 
   // Assign a native socket to a socket implementation.
-  ASIO_NAMESPACE::error_code assign(implementation_type&, const protocol_type&,
-      const native_handle_type&, ASIO_NAMESPACE::error_code& ec)
+  ModioAsio::error_code assign(implementation_type&, const protocol_type&,
+      const native_handle_type&, ModioAsio::error_code& ec)
   {
-    ec = ASIO_NAMESPACE::error::operation_not_supported;
+    ec = ModioAsio::error::operation_not_supported;
     return ec;
   }
 
@@ -113,18 +113,18 @@ public:
   }
 
   // Destroy a socket implementation.
-  ASIO_NAMESPACE::error_code close(implementation_type&,
-      ASIO_NAMESPACE::error_code& ec)
+  ModioAsio::error_code close(implementation_type&,
+      ModioAsio::error_code& ec)
   {
-    ec = ASIO_NAMESPACE::error::operation_not_supported;
+    ec = ModioAsio::error::operation_not_supported;
     return ec;
   }
 
   // Release ownership of the socket.
   native_handle_type release(implementation_type&,
-      ASIO_NAMESPACE::error_code& ec)
+      ModioAsio::error_code& ec)
   {
-    ec = ASIO_NAMESPACE::error::operation_not_supported;
+    ec = ModioAsio::error::operation_not_supported;
     return 0;
   }
 
@@ -135,43 +135,43 @@ public:
   }
 
   // Cancel all operations associated with the socket.
-  ASIO_NAMESPACE::error_code cancel(implementation_type&,
-      ASIO_NAMESPACE::error_code& ec)
+  ModioAsio::error_code cancel(implementation_type&,
+      ModioAsio::error_code& ec)
   {
-    ec = ASIO_NAMESPACE::error::operation_not_supported;
+    ec = ModioAsio::error::operation_not_supported;
     return ec;
   }
 
   // Determine whether the socket is at the out-of-band data mark.
   bool at_mark(const implementation_type&,
-      ASIO_NAMESPACE::error_code& ec) const
+      ModioAsio::error_code& ec) const
   {
-    ec = ASIO_NAMESPACE::error::operation_not_supported;
+    ec = ModioAsio::error::operation_not_supported;
     return false;
   }
 
   // Determine the number of bytes available for reading.
   std::size_t available(const implementation_type&,
-      ASIO_NAMESPACE::error_code& ec) const
+      ModioAsio::error_code& ec) const
   {
-    ec = ASIO_NAMESPACE::error::operation_not_supported;
+    ec = ModioAsio::error::operation_not_supported;
     return 0;
   }
 
   // Place the socket into the state where it will listen for new connections.
-  ASIO_NAMESPACE::error_code listen(implementation_type&,
-      int, ASIO_NAMESPACE::error_code& ec)
+  ModioAsio::error_code listen(implementation_type&,
+      int, ModioAsio::error_code& ec)
   {
-    ec = ASIO_NAMESPACE::error::operation_not_supported;
+    ec = ModioAsio::error::operation_not_supported;
     return ec;
   }
 
   // Perform an IO control command on the socket.
   template <typename IO_Control_Command>
-  ASIO_NAMESPACE::error_code io_control(implementation_type&,
-      IO_Control_Command&, ASIO_NAMESPACE::error_code& ec)
+  ModioAsio::error_code io_control(implementation_type&,
+      IO_Control_Command&, ModioAsio::error_code& ec)
   {
-    ec = ASIO_NAMESPACE::error::operation_not_supported;
+    ec = ModioAsio::error::operation_not_supported;
     return ec;
   }
 
@@ -182,10 +182,10 @@ public:
   }
 
   // Sets the non-blocking mode of the socket.
-  ASIO_NAMESPACE::error_code non_blocking(implementation_type&,
-      bool, ASIO_NAMESPACE::error_code& ec)
+  ModioAsio::error_code non_blocking(implementation_type&,
+      bool, ModioAsio::error_code& ec)
   {
-    ec = ASIO_NAMESPACE::error::operation_not_supported;
+    ec = ModioAsio::error::operation_not_supported;
     return ec;
   }
 
@@ -196,77 +196,77 @@ public:
   }
 
   // Sets the non-blocking mode of the native socket implementation.
-  ASIO_NAMESPACE::error_code native_non_blocking(implementation_type&,
-      bool, ASIO_NAMESPACE::error_code& ec)
+  ModioAsio::error_code native_non_blocking(implementation_type&,
+      bool, ModioAsio::error_code& ec)
   {
-    ec = ASIO_NAMESPACE::error::operation_not_supported;
+    ec = ModioAsio::error::operation_not_supported;
     return ec;
   }
 
   // Disable sends or receives on the socket.
-  ASIO_NAMESPACE::error_code shutdown(implementation_type&,
-      socket_base::shutdown_type, ASIO_NAMESPACE::error_code& ec)
+  ModioAsio::error_code shutdown(implementation_type&,
+      socket_base::shutdown_type, ModioAsio::error_code& ec)
   {
-    ec = ASIO_NAMESPACE::error::operation_not_supported;
+    ec = ModioAsio::error::operation_not_supported;
     return ec;
   }
 
   // Bind the socket to the specified local endpoint.
-  ASIO_NAMESPACE::error_code bind(implementation_type&,
-      const endpoint_type&, ASIO_NAMESPACE::error_code& ec)
+  ModioAsio::error_code bind(implementation_type&,
+      const endpoint_type&, ModioAsio::error_code& ec)
   {
-    ec = ASIO_NAMESPACE::error::operation_not_supported;
+    ec = ModioAsio::error::operation_not_supported;
     return ec;
   }
 
   // Set a socket option.
   template <typename Option>
-  ASIO_NAMESPACE::error_code set_option(implementation_type&,
-      const Option&, ASIO_NAMESPACE::error_code& ec)
+  ModioAsio::error_code set_option(implementation_type&,
+      const Option&, ModioAsio::error_code& ec)
   {
-    ec = ASIO_NAMESPACE::error::operation_not_supported;
+    ec = ModioAsio::error::operation_not_supported;
     return ec;
   }
 
   // Set a socket option.
   template <typename Option>
-  ASIO_NAMESPACE::error_code get_option(const implementation_type&,
-      Option&, ASIO_NAMESPACE::error_code& ec) const
+  ModioAsio::error_code get_option(const implementation_type&,
+      Option&, ModioAsio::error_code& ec) const
   {
-    ec = ASIO_NAMESPACE::error::operation_not_supported;
+    ec = ModioAsio::error::operation_not_supported;
     return ec;
   }
 
   // Get the local endpoint.
   endpoint_type local_endpoint(const implementation_type&,
-      ASIO_NAMESPACE::error_code& ec) const
+      ModioAsio::error_code& ec) const
   {
-    ec = ASIO_NAMESPACE::error::operation_not_supported;
+    ec = ModioAsio::error::operation_not_supported;
     return endpoint_type();
   }
 
   // Get the remote endpoint.
   endpoint_type remote_endpoint(const implementation_type&,
-      ASIO_NAMESPACE::error_code& ec) const
+      ModioAsio::error_code& ec) const
   {
-    ec = ASIO_NAMESPACE::error::operation_not_supported;
+    ec = ModioAsio::error::operation_not_supported;
     return endpoint_type();
   }
 
   // Send the given data to the peer.
   template <typename ConstBufferSequence>
   std::size_t send(implementation_type&, const ConstBufferSequence&,
-      socket_base::message_flags, ASIO_NAMESPACE::error_code& ec)
+      socket_base::message_flags, ModioAsio::error_code& ec)
   {
-    ec = ASIO_NAMESPACE::error::operation_not_supported;
+    ec = ModioAsio::error::operation_not_supported;
     return 0;
   }
 
   // Wait until data can be sent without blocking.
   std::size_t send(implementation_type&, const null_buffers&,
-      socket_base::message_flags, ASIO_NAMESPACE::error_code& ec)
+      socket_base::message_flags, ModioAsio::error_code& ec)
   {
-    ec = ASIO_NAMESPACE::error::operation_not_supported;
+    ec = ModioAsio::error::operation_not_supported;
     return 0;
   }
 
@@ -276,9 +276,9 @@ public:
   void async_send(implementation_type&, const ConstBufferSequence&,
       socket_base::message_flags, Handler& handler, const IoExecutor& io_ex)
   {
-    ASIO_NAMESPACE::error_code ec = ASIO_NAMESPACE::error::operation_not_supported;
+    ModioAsio::error_code ec = ModioAsio::error::operation_not_supported;
     const std::size_t bytes_transferred = 0;
-    ASIO_NAMESPACE::post(io_ex, detail::bind_handler(
+    ModioAsio::post(io_ex, detail::bind_handler(
           handler, ec, bytes_transferred));
   }
 
@@ -287,26 +287,26 @@ public:
   void async_send(implementation_type&, const null_buffers&,
       socket_base::message_flags, Handler& handler, const IoExecutor& io_ex)
   {
-    ASIO_NAMESPACE::error_code ec = ASIO_NAMESPACE::error::operation_not_supported;
+    ModioAsio::error_code ec = ModioAsio::error::operation_not_supported;
     const std::size_t bytes_transferred = 0;
-    ASIO_NAMESPACE::post(io_ex, detail::bind_handler(
+    ModioAsio::post(io_ex, detail::bind_handler(
           handler, ec, bytes_transferred));
   }
 
   // Receive some data from the peer. Returns the number of bytes received.
   template <typename MutableBufferSequence>
   std::size_t receive(implementation_type&, const MutableBufferSequence&,
-      socket_base::message_flags, ASIO_NAMESPACE::error_code& ec)
+      socket_base::message_flags, ModioAsio::error_code& ec)
   {
-    ec = ASIO_NAMESPACE::error::operation_not_supported;
+    ec = ModioAsio::error::operation_not_supported;
     return 0;
   }
 
   // Wait until data can be received without blocking.
   std::size_t receive(implementation_type&, const null_buffers&,
-      socket_base::message_flags, ASIO_NAMESPACE::error_code& ec)
+      socket_base::message_flags, ModioAsio::error_code& ec)
   {
-    ec = ASIO_NAMESPACE::error::operation_not_supported;
+    ec = ModioAsio::error::operation_not_supported;
     return 0;
   }
 
@@ -317,9 +317,9 @@ public:
   void async_receive(implementation_type&, const MutableBufferSequence&,
       socket_base::message_flags, Handler& handler, const IoExecutor& io_ex)
   {
-    ASIO_NAMESPACE::error_code ec = ASIO_NAMESPACE::error::operation_not_supported;
+    ModioAsio::error_code ec = ModioAsio::error::operation_not_supported;
     const std::size_t bytes_transferred = 0;
-    ASIO_NAMESPACE::post(io_ex, detail::bind_handler(
+    ModioAsio::post(io_ex, detail::bind_handler(
           handler, ec, bytes_transferred));
   }
 
@@ -328,9 +328,9 @@ public:
   void async_receive(implementation_type&, const null_buffers&,
       socket_base::message_flags, Handler& handler, const IoExecutor& io_ex)
   {
-    ASIO_NAMESPACE::error_code ec = ASIO_NAMESPACE::error::operation_not_supported;
+    ModioAsio::error_code ec = ModioAsio::error::operation_not_supported;
     const std::size_t bytes_transferred = 0;
-    ASIO_NAMESPACE::post(io_ex, detail::bind_handler(
+    ModioAsio::post(io_ex, detail::bind_handler(
           handler, ec, bytes_transferred));
   }
 
@@ -339,18 +339,18 @@ public:
   template <typename MutableBufferSequence>
   std::size_t receive_with_flags(implementation_type&,
       const MutableBufferSequence&, socket_base::message_flags,
-      socket_base::message_flags&, ASIO_NAMESPACE::error_code& ec)
+      socket_base::message_flags&, ModioAsio::error_code& ec)
   {
-    ec = ASIO_NAMESPACE::error::operation_not_supported;
+    ec = ModioAsio::error::operation_not_supported;
     return 0;
   }
 
   // Wait until data can be received without blocking.
   std::size_t receive_with_flags(implementation_type&,
       const null_buffers&, socket_base::message_flags,
-      socket_base::message_flags&, ASIO_NAMESPACE::error_code& ec)
+      socket_base::message_flags&, ModioAsio::error_code& ec)
   {
-    ec = ASIO_NAMESPACE::error::operation_not_supported;
+    ec = ModioAsio::error::operation_not_supported;
     return 0;
   }
 
@@ -362,9 +362,9 @@ public:
       const MutableBufferSequence&, socket_base::message_flags,
       socket_base::message_flags&, Handler& handler, const IoExecutor& io_ex)
   {
-    ASIO_NAMESPACE::error_code ec = ASIO_NAMESPACE::error::operation_not_supported;
+    ModioAsio::error_code ec = ModioAsio::error::operation_not_supported;
     const std::size_t bytes_transferred = 0;
-    ASIO_NAMESPACE::post(io_ex, detail::bind_handler(
+    ModioAsio::post(io_ex, detail::bind_handler(
           handler, ec, bytes_transferred));
   }
 
@@ -374,9 +374,9 @@ public:
       socket_base::message_flags, socket_base::message_flags&,
       Handler& handler, const IoExecutor& io_ex)
   {
-    ASIO_NAMESPACE::error_code ec = ASIO_NAMESPACE::error::operation_not_supported;
+    ModioAsio::error_code ec = ModioAsio::error::operation_not_supported;
     const std::size_t bytes_transferred = 0;
-    ASIO_NAMESPACE::post(io_ex, detail::bind_handler(
+    ModioAsio::post(io_ex, detail::bind_handler(
           handler, ec, bytes_transferred));
   }
 
@@ -385,18 +385,18 @@ public:
   template <typename ConstBufferSequence>
   std::size_t send_to(implementation_type&, const ConstBufferSequence&,
       const endpoint_type&, socket_base::message_flags,
-      ASIO_NAMESPACE::error_code& ec)
+      ModioAsio::error_code& ec)
   {
-    ec = ASIO_NAMESPACE::error::operation_not_supported;
+    ec = ModioAsio::error::operation_not_supported;
     return 0;
   }
 
   // Wait until data can be sent without blocking.
   std::size_t send_to(implementation_type&, const null_buffers&,
       const endpoint_type&, socket_base::message_flags,
-      ASIO_NAMESPACE::error_code& ec)
+      ModioAsio::error_code& ec)
   {
-    ec = ASIO_NAMESPACE::error::operation_not_supported;
+    ec = ModioAsio::error::operation_not_supported;
     return 0;
   }
 
@@ -407,9 +407,9 @@ public:
       const endpoint_type&, socket_base::message_flags,
       Handler& handler)
   {
-    ASIO_NAMESPACE::error_code ec = ASIO_NAMESPACE::error::operation_not_supported;
+    ModioAsio::error_code ec = ModioAsio::error::operation_not_supported;
     const std::size_t bytes_transferred = 0;
-    ASIO_NAMESPACE::post(io_ex, detail::bind_handler(
+    ModioAsio::post(io_ex, detail::bind_handler(
           handler, ec, bytes_transferred));
   }
 
@@ -419,9 +419,9 @@ public:
       const endpoint_type&, socket_base::message_flags,
       Handler& handler, const IoExecutor& io_ex)
   {
-    ASIO_NAMESPACE::error_code ec = ASIO_NAMESPACE::error::operation_not_supported;
+    ModioAsio::error_code ec = ModioAsio::error::operation_not_supported;
     const std::size_t bytes_transferred = 0;
-    ASIO_NAMESPACE::post(io_ex, detail::bind_handler(
+    ModioAsio::post(io_ex, detail::bind_handler(
           handler, ec, bytes_transferred));
   }
 
@@ -430,18 +430,18 @@ public:
   template <typename MutableBufferSequence>
   std::size_t receive_from(implementation_type&, const MutableBufferSequence&,
       endpoint_type&, socket_base::message_flags,
-      ASIO_NAMESPACE::error_code& ec)
+      ModioAsio::error_code& ec)
   {
-    ec = ASIO_NAMESPACE::error::operation_not_supported;
+    ec = ModioAsio::error::operation_not_supported;
     return 0;
   }
 
   // Wait until data can be received without blocking.
   std::size_t receive_from(implementation_type&, const null_buffers&,
       endpoint_type&, socket_base::message_flags,
-      ASIO_NAMESPACE::error_code& ec)
+      ModioAsio::error_code& ec)
   {
-    ec = ASIO_NAMESPACE::error::operation_not_supported;
+    ec = ModioAsio::error::operation_not_supported;
     return 0;
   }
 
@@ -454,9 +454,9 @@ public:
       endpoint_type&, socket_base::message_flags, Handler& handler,
       const IoExecutor& io_ex)
   {
-    ASIO_NAMESPACE::error_code ec = ASIO_NAMESPACE::error::operation_not_supported;
+    ModioAsio::error_code ec = ModioAsio::error::operation_not_supported;
     const std::size_t bytes_transferred = 0;
-    ASIO_NAMESPACE::post(io_ex, detail::bind_handler(
+    ModioAsio::post(io_ex, detail::bind_handler(
           handler, ec, bytes_transferred));
   }
 
@@ -466,18 +466,18 @@ public:
       endpoint_type&, socket_base::message_flags, Handler& handler,
       const IoExecutor& io_ex)
   {
-    ASIO_NAMESPACE::error_code ec = ASIO_NAMESPACE::error::operation_not_supported;
+    ModioAsio::error_code ec = ModioAsio::error::operation_not_supported;
     const std::size_t bytes_transferred = 0;
-    ASIO_NAMESPACE::post(io_ex, detail::bind_handler(
+    ModioAsio::post(io_ex, detail::bind_handler(
           handler, ec, bytes_transferred));
   }
 
   // Accept a new connection.
   template <typename Socket>
-  ASIO_NAMESPACE::error_code accept(implementation_type&,
-      Socket&, endpoint_type*, ASIO_NAMESPACE::error_code& ec)
+  ModioAsio::error_code accept(implementation_type&,
+      Socket&, endpoint_type*, ModioAsio::error_code& ec)
   {
-    ec = ASIO_NAMESPACE::error::operation_not_supported;
+    ec = ModioAsio::error::operation_not_supported;
     return ec;
   }
 
@@ -487,15 +487,15 @@ public:
   void async_accept(implementation_type&, Socket&, endpoint_type*,
       Handler& handler, const IoExecutor& io_ex)
   {
-    ASIO_NAMESPACE::error_code ec = ASIO_NAMESPACE::error::operation_not_supported;
-    ASIO_NAMESPACE::post(io_ex, detail::bind_handler(handler, ec));
+    ModioAsio::error_code ec = ModioAsio::error::operation_not_supported;
+    ModioAsio::post(io_ex, detail::bind_handler(handler, ec));
   }
 
   // Connect the socket to the specified endpoint.
-  ASIO_NAMESPACE::error_code connect(implementation_type&,
-      const endpoint_type&, ASIO_NAMESPACE::error_code& ec)
+  ModioAsio::error_code connect(implementation_type&,
+      const endpoint_type&, ModioAsio::error_code& ec)
   {
-    ec = ASIO_NAMESPACE::error::operation_not_supported;
+    ec = ModioAsio::error::operation_not_supported;
     return ec;
   }
 
@@ -504,13 +504,13 @@ public:
   void async_connect(implementation_type&, const endpoint_type&,
       Handler& handler, const IoExecutor& io_ex)
   {
-    ASIO_NAMESPACE::error_code ec = ASIO_NAMESPACE::error::operation_not_supported;
-    ASIO_NAMESPACE::post(io_ex, detail::bind_handler(handler, ec));
+    ModioAsio::error_code ec = ModioAsio::error::operation_not_supported;
+    ModioAsio::post(io_ex, detail::bind_handler(handler, ec));
   }
 };
 
 } // namespace detail
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

@@ -26,7 +26,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 winrt_ssocket_service_base::winrt_ssocket_service_base(
@@ -41,11 +41,11 @@ winrt_ssocket_service_base::winrt_ssocket_service_base(
 void winrt_ssocket_service_base::base_shutdown()
 {
   // Close all implementations, causing all operations to complete.
-  ASIO_NAMESPACE::detail::mutex::scoped_lock lock(mutex_);
+  ModioAsio::detail::mutex::scoped_lock lock(mutex_);
   base_implementation_type* impl = impl_list_;
   while (impl)
   {
-    ASIO_NAMESPACE::error_code ignored_ec;
+    ModioAsio::error_code ignored_ec;
     close(*impl, ignored_ec);
     impl = impl->next_;
   }
@@ -55,7 +55,7 @@ void winrt_ssocket_service_base::construct(
     winrt_ssocket_service_base::base_implementation_type& impl)
 {
   // Insert implementation into linked list of all implementations.
-  ASIO_NAMESPACE::detail::mutex::scoped_lock lock(mutex_);
+  ModioAsio::detail::mutex::scoped_lock lock(mutex_);
   impl.next_ = impl_list_;
   impl.prev_ = 0;
   if (impl_list_)
@@ -72,7 +72,7 @@ void winrt_ssocket_service_base::base_move_construct(
   other_impl.socket_ = nullptr;
 
   // Insert implementation into linked list of all implementations.
-  ASIO_NAMESPACE::detail::mutex::scoped_lock lock(mutex_);
+  ModioAsio::detail::mutex::scoped_lock lock(mutex_);
   impl.next_ = impl_list_;
   impl.prev_ = 0;
   if (impl_list_)
@@ -85,13 +85,13 @@ void winrt_ssocket_service_base::base_move_assign(
     winrt_ssocket_service_base& other_service,
     winrt_ssocket_service_base::base_implementation_type& other_impl)
 {
-  ASIO_NAMESPACE::error_code ignored_ec;
+  ModioAsio::error_code ignored_ec;
   close(impl, ignored_ec);
 
   if (this != &other_service)
   {
     // Remove implementation from linked list of all implementations.
-    ASIO_NAMESPACE::detail::mutex::scoped_lock lock(mutex_);
+    ModioAsio::detail::mutex::scoped_lock lock(mutex_);
     if (impl_list_ == &impl)
       impl_list_ = impl.next_;
     if (impl.prev_)
@@ -108,7 +108,7 @@ void winrt_ssocket_service_base::base_move_assign(
   if (this != &other_service)
   {
     // Insert implementation into linked list of all implementations.
-    ASIO_NAMESPACE::detail::mutex::scoped_lock lock(other_service.mutex_);
+    ModioAsio::detail::mutex::scoped_lock lock(other_service.mutex_);
     impl.next_ = other_service.impl_list_;
     impl.prev_ = 0;
     if (other_service.impl_list_)
@@ -120,11 +120,11 @@ void winrt_ssocket_service_base::base_move_assign(
 void winrt_ssocket_service_base::destroy(
     winrt_ssocket_service_base::base_implementation_type& impl)
 {
-  ASIO_NAMESPACE::error_code ignored_ec;
+  ModioAsio::error_code ignored_ec;
   close(impl, ignored_ec);
 
   // Remove implementation from linked list of all implementations.
-  ASIO_NAMESPACE::detail::mutex::scoped_lock lock(mutex_);
+  ModioAsio::detail::mutex::scoped_lock lock(mutex_);
   if (impl_list_ == &impl)
     impl_list_ = impl.next_;
   if (impl.prev_)
@@ -135,20 +135,20 @@ void winrt_ssocket_service_base::destroy(
   impl.prev_ = 0;
 }
 
-ASIO_NAMESPACE::error_code winrt_ssocket_service_base::close(
+ModioAsio::error_code winrt_ssocket_service_base::close(
     winrt_ssocket_service_base::base_implementation_type& impl,
-    ASIO_NAMESPACE::error_code& ec)
+    ModioAsio::error_code& ec)
 {
   delete impl.socket_;
   impl.socket_ = nullptr;
-  ec = ASIO_NAMESPACE::error_code();
+  ec = ModioAsio::error_code();
   return ec;
 }
 
 winrt_ssocket_service_base::native_handle_type
 winrt_ssocket_service_base::release(
     winrt_ssocket_service_base::base_implementation_type& impl,
-    ASIO_NAMESPACE::error_code& ec)
+    ModioAsio::error_code& ec)
 {
   if (!is_open(impl))
     return nullptr;
@@ -164,11 +164,11 @@ winrt_ssocket_service_base::release(
 
 std::size_t winrt_ssocket_service_base::do_get_endpoint(
     const base_implementation_type& impl, bool local,
-    void* addr, std::size_t addr_len, ASIO_NAMESPACE::error_code& ec) const
+    void* addr, std::size_t addr_len, ModioAsio::error_code& ec) const
 {
   if (!is_open(impl))
   {
-    ec = ASIO_NAMESPACE::error::bad_descriptor;
+    ec = ModioAsio::error::bad_descriptor;
     return addr_len;
   }
 
@@ -187,7 +187,7 @@ std::size_t winrt_ssocket_service_base::do_get_endpoint(
     case ASIO_OS_DEF(AF_INET):
       if (addr_len < sizeof(sockaddr_in4_type))
       {
-        ec = ASIO_NAMESPACE::error::invalid_argument;
+        ec = ModioAsio::error::invalid_argument;
         return addr_len;
       }
       else
@@ -196,13 +196,13 @@ std::size_t winrt_ssocket_service_base::do_get_endpoint(
             &reinterpret_cast<sockaddr_in4_type*>(addr)->sin_addr, &scope, ec);
         reinterpret_cast<sockaddr_in4_type*>(addr)->sin_port
           = socket_ops::host_to_network_short(port);
-        ec = ASIO_NAMESPACE::error_code();
+        ec = ModioAsio::error_code();
         return sizeof(sockaddr_in4_type);
       }
     case ASIO_OS_DEF(AF_INET6):
       if (addr_len < sizeof(sockaddr_in6_type))
       {
-        ec = ASIO_NAMESPACE::error::invalid_argument;
+        ec = ModioAsio::error::invalid_argument;
         return addr_len;
       }
       else
@@ -211,30 +211,30 @@ std::size_t winrt_ssocket_service_base::do_get_endpoint(
             &reinterpret_cast<sockaddr_in6_type*>(addr)->sin6_addr, &scope, ec);
         reinterpret_cast<sockaddr_in6_type*>(addr)->sin6_port
           = socket_ops::host_to_network_short(port);
-        ec = ASIO_NAMESPACE::error_code();
+        ec = ModioAsio::error_code();
         return sizeof(sockaddr_in6_type);
       }
     default:
-      ec = ASIO_NAMESPACE::error::address_family_not_supported;
+      ec = ModioAsio::error::address_family_not_supported;
       return addr_len;
     }
   }
   catch (Platform::Exception^ e)
   {
-    ec = ASIO_NAMESPACE::error_code(e->HResult,
-        ASIO_NAMESPACE::system_category());
+    ec = ModioAsio::error_code(e->HResult,
+        ModioAsio::system_category());
     return addr_len;
   }
 }
 
-ASIO_NAMESPACE::error_code winrt_ssocket_service_base::do_set_option(
+ModioAsio::error_code winrt_ssocket_service_base::do_set_option(
     winrt_ssocket_service_base::base_implementation_type& impl,
     int level, int optname, const void* optval,
-    std::size_t optlen, ASIO_NAMESPACE::error_code& ec)
+    std::size_t optlen, ModioAsio::error_code& ec)
 {
   if (!is_open(impl))
   {
-    ec = ASIO_NAMESPACE::error::bad_descriptor;
+    ec = ModioAsio::error::bad_descriptor;
     return ec;
   }
 
@@ -248,11 +248,11 @@ ASIO_NAMESPACE::error_code winrt_ssocket_service_base::do_set_option(
         int value = 0;
         std::memcpy(&value, optval, optlen);
         impl.socket_->Control->KeepAlive = !!value;
-        ec = ASIO_NAMESPACE::error_code();
+        ec = ModioAsio::error_code();
       }
       else
       {
-        ec = ASIO_NAMESPACE::error::invalid_argument;
+        ec = ModioAsio::error::invalid_argument;
       }
     }
     else if (level == ASIO_OS_DEF(IPPROTO_TCP)
@@ -263,22 +263,22 @@ ASIO_NAMESPACE::error_code winrt_ssocket_service_base::do_set_option(
         int value = 0;
         std::memcpy(&value, optval, optlen);
         impl.socket_->Control->NoDelay = !!value;
-        ec = ASIO_NAMESPACE::error_code();
+        ec = ModioAsio::error_code();
       }
       else
       {
-        ec = ASIO_NAMESPACE::error::invalid_argument;
+        ec = ModioAsio::error::invalid_argument;
       }
     }
     else
     {
-      ec = ASIO_NAMESPACE::error::invalid_argument;
+      ec = ModioAsio::error::invalid_argument;
     }
   }
   catch (Platform::Exception^ e)
   {
-    ec = ASIO_NAMESPACE::error_code(e->HResult,
-        ASIO_NAMESPACE::system_category());
+    ec = ModioAsio::error_code(e->HResult,
+        ModioAsio::system_category());
   }
 
   return ec;
@@ -287,11 +287,11 @@ ASIO_NAMESPACE::error_code winrt_ssocket_service_base::do_set_option(
 void winrt_ssocket_service_base::do_get_option(
     const winrt_ssocket_service_base::base_implementation_type& impl,
     int level, int optname, void* optval,
-    std::size_t* optlen, ASIO_NAMESPACE::error_code& ec) const
+    std::size_t* optlen, ModioAsio::error_code& ec) const
 {
   if (!is_open(impl))
   {
-    ec = ASIO_NAMESPACE::error::bad_descriptor;
+    ec = ModioAsio::error::bad_descriptor;
     return;
   }
 
@@ -305,11 +305,11 @@ void winrt_ssocket_service_base::do_get_option(
         int value = impl.socket_->Control->KeepAlive ? 1 : 0;
         std::memcpy(optval, &value, sizeof(int));
         *optlen = sizeof(int);
-        ec = ASIO_NAMESPACE::error_code();
+        ec = ModioAsio::error_code();
       }
       else
       {
-        ec = ASIO_NAMESPACE::error::invalid_argument;
+        ec = ModioAsio::error::invalid_argument;
       }
     }
     else if (level == ASIO_OS_DEF(IPPROTO_TCP)
@@ -320,32 +320,32 @@ void winrt_ssocket_service_base::do_get_option(
         int value = impl.socket_->Control->NoDelay ? 1 : 0;
         std::memcpy(optval, &value, sizeof(int));
         *optlen = sizeof(int);
-        ec = ASIO_NAMESPACE::error_code();
+        ec = ModioAsio::error_code();
       }
       else
       {
-        ec = ASIO_NAMESPACE::error::invalid_argument;
+        ec = ModioAsio::error::invalid_argument;
       }
     }
     else
     {
-      ec = ASIO_NAMESPACE::error::invalid_argument;
+      ec = ModioAsio::error::invalid_argument;
     }
   }
   catch (Platform::Exception^ e)
   {
-    ec = ASIO_NAMESPACE::error_code(e->HResult,
-        ASIO_NAMESPACE::system_category());
+    ec = ModioAsio::error_code(e->HResult,
+        ModioAsio::system_category());
   }
 }
 
-ASIO_NAMESPACE::error_code winrt_ssocket_service_base::do_connect(
+ModioAsio::error_code winrt_ssocket_service_base::do_connect(
     winrt_ssocket_service_base::base_implementation_type& impl,
-    const void* addr, ASIO_NAMESPACE::error_code& ec)
+    const void* addr, ModioAsio::error_code& ec)
 {
   if (!is_open(impl))
   {
-    ec = ASIO_NAMESPACE::error::bad_descriptor;
+    ec = ModioAsio::error::bad_descriptor;
     return ec;
   }
 
@@ -368,7 +368,7 @@ ASIO_NAMESPACE::error_code winrt_ssocket_service_base::do_connect(
         reinterpret_cast<const sockaddr_in6_type*>(addr)->sin6_port);
     break;
   default:
-    ec = ASIO_NAMESPACE::error::address_family_not_supported;
+    ec = ModioAsio::error::address_family_not_supported;
     return ec;
   }
 
@@ -381,8 +381,8 @@ ASIO_NAMESPACE::error_code winrt_ssocket_service_base::do_connect(
   }
   catch (Platform::Exception^ e)
   {
-    ec = ASIO_NAMESPACE::error_code(e->HResult,
-        ASIO_NAMESPACE::system_category());
+    ec = ModioAsio::error_code(e->HResult,
+        ModioAsio::system_category());
   }
 
   return ec;
@@ -394,7 +394,7 @@ void winrt_ssocket_service_base::start_connect_op(
 {
   if (!is_open(impl))
   {
-    op->ec_ = ASIO_NAMESPACE::error::bad_descriptor;
+    op->ec_ = ModioAsio::error::bad_descriptor;
     scheduler_.post_immediate_completion(op, is_continuation);
     return;
   }
@@ -418,7 +418,7 @@ void winrt_ssocket_service_base::start_connect_op(
         reinterpret_cast<const sockaddr_in6_type*>(addr)->sin6_port);
     break;
   default:
-    op->ec_ = ASIO_NAMESPACE::error::address_family_not_supported;
+    op->ec_ = ModioAsio::error::address_family_not_supported;
     break;
   }
 
@@ -437,37 +437,37 @@ void winrt_ssocket_service_base::start_connect_op(
   }
   catch (Platform::Exception^ e)
   {
-    op->ec_ = ASIO_NAMESPACE::error_code(
-        e->HResult, ASIO_NAMESPACE::system_category());
+    op->ec_ = ModioAsio::error_code(
+        e->HResult, ModioAsio::system_category());
     scheduler_.post_immediate_completion(op, is_continuation);
   }
 }
 
 std::size_t winrt_ssocket_service_base::do_send(
     winrt_ssocket_service_base::base_implementation_type& impl,
-    const ASIO_NAMESPACE::const_buffer& data,
-    socket_base::message_flags flags, ASIO_NAMESPACE::error_code& ec)
+    const ModioAsio::const_buffer& data,
+    socket_base::message_flags flags, ModioAsio::error_code& ec)
 {
   if (flags)
   {
-    ec = ASIO_NAMESPACE::error::operation_not_supported;
+    ec = ModioAsio::error::operation_not_supported;
     return 0;
   }
 
   if (!is_open(impl))
   {
-    ec = ASIO_NAMESPACE::error::bad_descriptor;
+    ec = ModioAsio::error::bad_descriptor;
     return 0;
   }
 
   try
   {
-    buffer_sequence_adapter<ASIO_NAMESPACE::const_buffer,
-      ASIO_NAMESPACE::const_buffer> bufs(ASIO_NAMESPACE::buffer(data));
+    buffer_sequence_adapter<ModioAsio::const_buffer,
+      ModioAsio::const_buffer> bufs(ModioAsio::buffer(data));
 
     if (bufs.all_empty())
     {
-      ec = ASIO_NAMESPACE::error_code();
+      ec = ModioAsio::error_code();
       return 0;
     }
 
@@ -476,35 +476,35 @@ std::size_t winrt_ssocket_service_base::do_send(
   }
   catch (Platform::Exception^ e)
   {
-    ec = ASIO_NAMESPACE::error_code(e->HResult,
-        ASIO_NAMESPACE::system_category());
+    ec = ModioAsio::error_code(e->HResult,
+        ModioAsio::system_category());
     return 0;
   }
 }
 
 void winrt_ssocket_service_base::start_send_op(
       winrt_ssocket_service_base::base_implementation_type& impl,
-      const ASIO_NAMESPACE::const_buffer& data, socket_base::message_flags flags,
+      const ModioAsio::const_buffer& data, socket_base::message_flags flags,
       winrt_async_op<unsigned int>* op, bool is_continuation)
 {
   if (flags)
   {
-    op->ec_ = ASIO_NAMESPACE::error::operation_not_supported;
+    op->ec_ = ModioAsio::error::operation_not_supported;
     scheduler_.post_immediate_completion(op, is_continuation);
     return;
   }
 
   if (!is_open(impl))
   {
-    op->ec_ = ASIO_NAMESPACE::error::bad_descriptor;
+    op->ec_ = ModioAsio::error::bad_descriptor;
     scheduler_.post_immediate_completion(op, is_continuation);
     return;
   }
 
   try
   {
-    buffer_sequence_adapter<ASIO_NAMESPACE::const_buffer,
-        ASIO_NAMESPACE::const_buffer> bufs(ASIO_NAMESPACE::buffer(data));
+    buffer_sequence_adapter<ModioAsio::const_buffer,
+        ModioAsio::const_buffer> bufs(ModioAsio::buffer(data));
 
     if (bufs.all_empty())
     {
@@ -517,37 +517,37 @@ void winrt_ssocket_service_base::start_send_op(
   }
   catch (Platform::Exception^ e)
   {
-    op->ec_ = ASIO_NAMESPACE::error_code(e->HResult,
-        ASIO_NAMESPACE::system_category());
+    op->ec_ = ModioAsio::error_code(e->HResult,
+        ModioAsio::system_category());
     scheduler_.post_immediate_completion(op, is_continuation);
   }
 }
 
 std::size_t winrt_ssocket_service_base::do_receive(
     winrt_ssocket_service_base::base_implementation_type& impl,
-    const ASIO_NAMESPACE::mutable_buffer& data,
-    socket_base::message_flags flags, ASIO_NAMESPACE::error_code& ec)
+    const ModioAsio::mutable_buffer& data,
+    socket_base::message_flags flags, ModioAsio::error_code& ec)
 {
   if (flags)
   {
-    ec = ASIO_NAMESPACE::error::operation_not_supported;
+    ec = ModioAsio::error::operation_not_supported;
     return 0;
   }
 
   if (!is_open(impl))
   {
-    ec = ASIO_NAMESPACE::error::bad_descriptor;
+    ec = ModioAsio::error::bad_descriptor;
     return 0;
   }
 
   try
   {
-    buffer_sequence_adapter<ASIO_NAMESPACE::mutable_buffer,
-        ASIO_NAMESPACE::mutable_buffer> bufs(ASIO_NAMESPACE::buffer(data));
+    buffer_sequence_adapter<ModioAsio::mutable_buffer,
+        ModioAsio::mutable_buffer> bufs(ModioAsio::buffer(data));
 
     if (bufs.all_empty())
     {
-      ec = ASIO_NAMESPACE::error_code();
+      ec = ModioAsio::error_code();
       return 0;
     }
 
@@ -559,43 +559,43 @@ std::size_t winrt_ssocket_service_base::do_receive(
     std::size_t bytes_transferred = bufs.buffers()[0]->Length;
     if (bytes_transferred == 0 && !ec)
     {
-      ec = ASIO_NAMESPACE::error::eof;
+      ec = ModioAsio::error::eof;
     }
 
     return bytes_transferred;
   }
   catch (Platform::Exception^ e)
   {
-    ec = ASIO_NAMESPACE::error_code(e->HResult,
-        ASIO_NAMESPACE::system_category());
+    ec = ModioAsio::error_code(e->HResult,
+        ModioAsio::system_category());
     return 0;
   }
 }
 
 void winrt_ssocket_service_base::start_receive_op(
       winrt_ssocket_service_base::base_implementation_type& impl,
-      const ASIO_NAMESPACE::mutable_buffer& data, socket_base::message_flags flags,
+      const ModioAsio::mutable_buffer& data, socket_base::message_flags flags,
       winrt_async_op<Windows::Storage::Streams::IBuffer^>* op,
       bool is_continuation)
 {
   if (flags)
   {
-    op->ec_ = ASIO_NAMESPACE::error::operation_not_supported;
+    op->ec_ = ModioAsio::error::operation_not_supported;
     scheduler_.post_immediate_completion(op, is_continuation);
     return;
   }
 
   if (!is_open(impl))
   {
-    op->ec_ = ASIO_NAMESPACE::error::bad_descriptor;
+    op->ec_ = ModioAsio::error::bad_descriptor;
     scheduler_.post_immediate_completion(op, is_continuation);
     return;
   }
 
   try
   {
-    buffer_sequence_adapter<ASIO_NAMESPACE::mutable_buffer,
-        ASIO_NAMESPACE::mutable_buffer> bufs(ASIO_NAMESPACE::buffer(data));
+    buffer_sequence_adapter<ModioAsio::mutable_buffer,
+        ModioAsio::mutable_buffer> bufs(ModioAsio::buffer(data));
 
     if (bufs.all_empty())
     {
@@ -610,14 +610,14 @@ void winrt_ssocket_service_base::start_receive_op(
   }
   catch (Platform::Exception^ e)
   {
-    op->ec_ = ASIO_NAMESPACE::error_code(e->HResult,
-        ASIO_NAMESPACE::system_category());
+    op->ec_ = ModioAsio::error_code(e->HResult,
+        ModioAsio::system_category());
     scheduler_.post_immediate_completion(op, is_continuation);
   }
 }
 
 } // namespace detail
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

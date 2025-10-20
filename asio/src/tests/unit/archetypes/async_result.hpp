@@ -29,7 +29,7 @@ struct concrete_handler<R(Arg1)>
   {
   }
 
-  void operator()(typename ASIO_NAMESPACE::decay<Arg1>::type)
+  void operator()(typename ModioAsio::decay<Arg1>::type)
   {
   }
 
@@ -47,7 +47,7 @@ struct concrete_handler<R(Arg1, Arg2)>
   {
   }
 
-  void operator()(typename ASIO_NAMESPACE::decay<Arg1>::type, typename ASIO_NAMESPACE::decay<Arg2>::type)
+  void operator()(typename ModioAsio::decay<Arg1>::type, typename ModioAsio::decay<Arg2>::type)
   {
   }
 
@@ -60,7 +60,7 @@ private:
 
 } // namespace archetypes
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 
 template <typename Signature>
 class async_result<archetypes::lazy_handler, Signature>
@@ -89,6 +89,6 @@ private:
   async_result& operator=(const async_result&) ASIO_DELETED;
 };
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #endif // ARCHETYPES_ASYNC_RESULT_HPP

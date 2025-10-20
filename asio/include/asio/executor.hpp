@@ -28,7 +28,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 
 /// Exception thrown when trying to access an empty polymorphic executor.
 class bad_executor
@@ -309,7 +309,7 @@ private:
     if (!impl_)
     {
       bad_executor ex;
-      ASIO_NAMESPACE::detail::throw_exception(ex);
+      ModioAsio::detail::throw_exception(ex);
     }
     return impl_;
   }
@@ -331,9 +331,9 @@ private:
 #endif // !defined(GENERATING_DOCUMENTATION)
 };
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
-ASIO_USES_ALLOCATOR(ASIO_NAMESPACE::executor)
+ASIO_USES_ALLOCATOR(ModioAsio::executor)
 
 #include "asio/detail/pop_options.hpp"
 

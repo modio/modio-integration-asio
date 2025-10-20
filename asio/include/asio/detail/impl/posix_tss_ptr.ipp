@@ -25,19 +25,19 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 void posix_tss_ptr_create(pthread_key_t& key)
 {
   int error = ::pthread_key_create(&key, 0);
-  ASIO_NAMESPACE::error_code ec(error,
-      ASIO_NAMESPACE::error::get_system_category());
-  ASIO_NAMESPACE::detail::throw_error(ec, "tss");
+  ModioAsio::error_code ec(error,
+      ModioAsio::error::get_system_category());
+  ModioAsio::detail::throw_error(ec, "tss");
 }
 
 } // namespace detail
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

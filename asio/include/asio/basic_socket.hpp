@@ -44,7 +44,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 
 #if !defined(ASIO_BASIC_SOCKET_FWD_DECL)
 #define ASIO_BASIC_SOCKET_FWD_DECL
@@ -150,14 +150,14 @@ public:
    *
    * @param protocol An object specifying protocol parameters to be used.
    *
-   * @throws ASIO_NAMESPACE::system_error Thrown on failure.
+   * @throws ModioAsio::system_error Thrown on failure.
    */
   basic_socket(const executor_type& ex, const protocol_type& protocol)
     : impl_(0, ex)
   {
-    ASIO_NAMESPACE::error_code ec;
+    ModioAsio::error_code ec;
     impl_.get_service().open(impl_.get_implementation(), protocol, ec);
-    ASIO_NAMESPACE::detail::throw_error(ec, "open");
+    ModioAsio::detail::throw_error(ec, "open");
   }
 
   /// Construct and open a basic_socket.
@@ -170,7 +170,7 @@ public:
    *
    * @param protocol An object specifying protocol parameters to be used.
    *
-   * @throws ASIO_NAMESPACE::system_error Thrown on failure.
+   * @throws ModioAsio::system_error Thrown on failure.
    */
   template <typename ExecutionContext>
   basic_socket(ExecutionContext& context, const protocol_type& protocol,
@@ -180,9 +180,9 @@ public:
       >::type = defaulted_constraint())
     : impl_(0, 0, context)
   {
-    ASIO_NAMESPACE::error_code ec;
+    ModioAsio::error_code ec;
     impl_.get_service().open(impl_.get_implementation(), protocol, ec);
-    ASIO_NAMESPACE::detail::throw_error(ec, "open");
+    ModioAsio::detail::throw_error(ec, "open");
   }
 
   /// Construct a basic_socket, opening it and binding it to the given local
@@ -198,17 +198,17 @@ public:
    * @param endpoint An endpoint on the local machine to which the socket will
    * be bound.
    *
-   * @throws ASIO_NAMESPACE::system_error Thrown on failure.
+   * @throws ModioAsio::system_error Thrown on failure.
    */
   basic_socket(const executor_type& ex, const endpoint_type& endpoint)
     : impl_(0, ex)
   {
-    ASIO_NAMESPACE::error_code ec;
+    ModioAsio::error_code ec;
     const protocol_type protocol = endpoint.protocol();
     impl_.get_service().open(impl_.get_implementation(), protocol, ec);
-    ASIO_NAMESPACE::detail::throw_error(ec, "open");
+    ModioAsio::detail::throw_error(ec, "open");
     impl_.get_service().bind(impl_.get_implementation(), endpoint, ec);
-    ASIO_NAMESPACE::detail::throw_error(ec, "bind");
+    ModioAsio::detail::throw_error(ec, "bind");
   }
 
   /// Construct a basic_socket, opening it and binding it to the given local
@@ -225,7 +225,7 @@ public:
    * @param endpoint An endpoint on the local machine to which the socket will
    * be bound.
    *
-   * @throws ASIO_NAMESPACE::system_error Thrown on failure.
+   * @throws ModioAsio::system_error Thrown on failure.
    */
   template <typename ExecutionContext>
   basic_socket(ExecutionContext& context, const endpoint_type& endpoint,
@@ -234,12 +234,12 @@ public:
       >::type = 0)
     : impl_(0, 0, context)
   {
-    ASIO_NAMESPACE::error_code ec;
+    ModioAsio::error_code ec;
     const protocol_type protocol = endpoint.protocol();
     impl_.get_service().open(impl_.get_implementation(), protocol, ec);
-    ASIO_NAMESPACE::detail::throw_error(ec, "open");
+    ModioAsio::detail::throw_error(ec, "open");
     impl_.get_service().bind(impl_.get_implementation(), endpoint, ec);
-    ASIO_NAMESPACE::detail::throw_error(ec, "bind");
+    ModioAsio::detail::throw_error(ec, "bind");
   }
 
   /// Construct a basic_socket on an existing native socket.
@@ -253,16 +253,16 @@ public:
    *
    * @param native_socket A native socket.
    *
-   * @throws ASIO_NAMESPACE::system_error Thrown on failure.
+   * @throws ModioAsio::system_error Thrown on failure.
    */
   basic_socket(const executor_type& ex, const protocol_type& protocol,
       const native_handle_type& native_socket)
     : impl_(0, ex)
   {
-    ASIO_NAMESPACE::error_code ec;
+    ModioAsio::error_code ec;
     impl_.get_service().assign(impl_.get_implementation(),
         protocol, native_socket, ec);
-    ASIO_NAMESPACE::detail::throw_error(ec, "assign");
+    ModioAsio::detail::throw_error(ec, "assign");
   }
 
   /// Construct a basic_socket on an existing native socket.
@@ -277,7 +277,7 @@ public:
    *
    * @param native_socket A native socket.
    *
-   * @throws ASIO_NAMESPACE::system_error Thrown on failure.
+   * @throws ModioAsio::system_error Thrown on failure.
    */
   template <typename ExecutionContext>
   basic_socket(ExecutionContext& context, const protocol_type& protocol,
@@ -287,10 +287,10 @@ public:
       >::type = 0)
     : impl_(0, 0, context)
   {
-    ASIO_NAMESPACE::error_code ec;
+    ModioAsio::error_code ec;
     impl_.get_service().assign(impl_.get_implementation(),
         protocol, native_socket, ec);
-    ASIO_NAMESPACE::detail::throw_error(ec, "assign");
+    ModioAsio::detail::throw_error(ec, "assign");
   }
 
 #if defined(ASIO_HAS_MOVE) || defined(GENERATING_DOCUMENTATION)
@@ -414,19 +414,19 @@ public:
    *
    * @param protocol An object specifying protocol parameters to be used.
    *
-   * @throws ASIO_NAMESPACE::system_error Thrown on failure.
+   * @throws ModioAsio::system_error Thrown on failure.
    *
    * @par Example
    * @code
-   * ASIO_NAMESPACE::ip::tcp::socket socket(my_context);
-   * socket.open(ASIO_NAMESPACE::ip::tcp::v4());
+   * ModioAsio::ip::tcp::socket socket(my_context);
+   * socket.open(ModioAsio::ip::tcp::v4());
    * @endcode
    */
   void open(const protocol_type& protocol = protocol_type())
   {
-    ASIO_NAMESPACE::error_code ec;
+    ModioAsio::error_code ec;
     impl_.get_service().open(impl_.get_implementation(), protocol, ec);
-    ASIO_NAMESPACE::detail::throw_error(ec, "open");
+    ModioAsio::detail::throw_error(ec, "open");
   }
 
   /// Open the socket using the specified protocol.
@@ -439,9 +439,9 @@ public:
    *
    * @par Example
    * @code
-   * ASIO_NAMESPACE::ip::tcp::socket socket(my_context);
-   * ASIO_NAMESPACE::error_code ec;
-   * socket.open(ASIO_NAMESPACE::ip::tcp::v4(), ec);
+   * ModioAsio::ip::tcp::socket socket(my_context);
+   * ModioAsio::error_code ec;
+   * socket.open(ModioAsio::ip::tcp::v4(), ec);
    * if (ec)
    * {
    *   // An error occurred.
@@ -449,7 +449,7 @@ public:
    * @endcode
    */
   ASIO_SYNC_OP_VOID open(const protocol_type& protocol,
-      ASIO_NAMESPACE::error_code& ec)
+      ModioAsio::error_code& ec)
   {
     impl_.get_service().open(impl_.get_implementation(), protocol, ec);
     ASIO_SYNC_OP_VOID_RETURN(ec);
@@ -463,15 +463,15 @@ public:
    *
    * @param native_socket A native socket.
    *
-   * @throws ASIO_NAMESPACE::system_error Thrown on failure.
+   * @throws ModioAsio::system_error Thrown on failure.
    */
   void assign(const protocol_type& protocol,
       const native_handle_type& native_socket)
   {
-    ASIO_NAMESPACE::error_code ec;
+    ModioAsio::error_code ec;
     impl_.get_service().assign(impl_.get_implementation(),
         protocol, native_socket, ec);
-    ASIO_NAMESPACE::detail::throw_error(ec, "assign");
+    ModioAsio::detail::throw_error(ec, "assign");
   }
 
   /// Assign an existing native socket to the socket.
@@ -485,7 +485,7 @@ public:
    * @param ec Set to indicate what error occurred, if any.
    */
   ASIO_SYNC_OP_VOID assign(const protocol_type& protocol,
-      const native_handle_type& native_socket, ASIO_NAMESPACE::error_code& ec)
+      const native_handle_type& native_socket, ModioAsio::error_code& ec)
   {
     impl_.get_service().assign(impl_.get_implementation(),
         protocol, native_socket, ec);
@@ -502,9 +502,9 @@ public:
   /**
    * This function is used to close the socket. Any asynchronous send, receive
    * or connect operations will be cancelled immediately, and will complete
-   * with the ASIO_NAMESPACE::error::operation_aborted error.
+   * with the ModioAsio::error::operation_aborted error.
    *
-   * @throws ASIO_NAMESPACE::system_error Thrown on failure. Note that, even if
+   * @throws ModioAsio::system_error Thrown on failure. Note that, even if
    * the function indicates an error, the underlying descriptor is closed.
    *
    * @note For portable behaviour with respect to graceful closure of a
@@ -512,25 +512,25 @@ public:
    */
   void close()
   {
-    ASIO_NAMESPACE::error_code ec;
+    ModioAsio::error_code ec;
     impl_.get_service().close(impl_.get_implementation(), ec);
-    ASIO_NAMESPACE::detail::throw_error(ec, "close");
+    ModioAsio::detail::throw_error(ec, "close");
   }
 
   /// Close the socket.
   /**
    * This function is used to close the socket. Any asynchronous send, receive
    * or connect operations will be cancelled immediately, and will complete
-   * with the ASIO_NAMESPACE::error::operation_aborted error.
+   * with the ModioAsio::error::operation_aborted error.
    *
    * @param ec Set to indicate what error occurred, if any. Note that, even if
    * the function indicates an error, the underlying descriptor is closed.
    *
    * @par Example
    * @code
-   * ASIO_NAMESPACE::ip::tcp::socket socket(my_context);
+   * ModioAsio::ip::tcp::socket socket(my_context);
    * ...
-   * ASIO_NAMESPACE::error_code ec;
+   * ModioAsio::error_code ec;
    * socket.close(ec);
    * if (ec)
    * {
@@ -541,7 +541,7 @@ public:
    * @note For portable behaviour with respect to graceful closure of a
    * connected socket, call shutdown() before closing the socket.
    */
-  ASIO_SYNC_OP_VOID close(ASIO_NAMESPACE::error_code& ec)
+  ASIO_SYNC_OP_VOID close(ModioAsio::error_code& ec)
   {
     impl_.get_service().close(impl_.get_implementation(), ec);
     ASIO_SYNC_OP_VOID_RETURN(ec);
@@ -551,13 +551,13 @@ public:
   /**
    * This function causes all outstanding asynchronous connect, send and receive
    * operations to finish immediately, and the handlers for cancelled operations
-   * will be passed the ASIO_NAMESPACE::error::operation_aborted error. Ownership
+   * will be passed the ModioAsio::error::operation_aborted error. Ownership
    * of the native socket is then transferred to the caller.
    *
-   * @throws ASIO_NAMESPACE::system_error Thrown on failure.
+   * @throws ModioAsio::system_error Thrown on failure.
    *
    * @note This function is unsupported on Windows versions prior to Windows
-   * 8.1, and will fail with ASIO_NAMESPACE::error::operation_not_supported on
+   * 8.1, and will fail with ModioAsio::error::operation_not_supported on
    * these platforms.
    */
 #if defined(ASIO_MSVC) && (ASIO_MSVC >= 1400) \
@@ -568,10 +568,10 @@ public:
 #endif
   native_handle_type release()
   {
-    ASIO_NAMESPACE::error_code ec;
+    ModioAsio::error_code ec;
     native_handle_type s = impl_.get_service().release(
         impl_.get_implementation(), ec);
-    ASIO_NAMESPACE::detail::throw_error(ec, "release");
+    ModioAsio::detail::throw_error(ec, "release");
     return s;
   }
 
@@ -579,13 +579,13 @@ public:
   /**
    * This function causes all outstanding asynchronous connect, send and receive
    * operations to finish immediately, and the handlers for cancelled operations
-   * will be passed the ASIO_NAMESPACE::error::operation_aborted error. Ownership
+   * will be passed the ModioAsio::error::operation_aborted error. Ownership
    * of the native socket is then transferred to the caller.
    *
    * @param ec Set to indicate what error occurred, if any.
    *
    * @note This function is unsupported on Windows versions prior to Windows
-   * 8.1, and will fail with ASIO_NAMESPACE::error::operation_not_supported on
+   * 8.1, and will fail with ModioAsio::error::operation_not_supported on
    * these platforms.
    */
 #if defined(ASIO_MSVC) && (ASIO_MSVC >= 1400) \
@@ -594,7 +594,7 @@ public:
         "operation_not_supported when used on Windows versions "
         "prior to Windows 8.1."))
 #endif
-  native_handle_type release(ASIO_NAMESPACE::error_code& ec)
+  native_handle_type release(ModioAsio::error_code& ec)
   {
     return impl_.get_service().release(impl_.get_implementation(), ec);
   }
@@ -614,12 +614,12 @@ public:
   /**
    * This function causes all outstanding asynchronous connect, send and receive
    * operations to finish immediately, and the handlers for cancelled operations
-   * will be passed the ASIO_NAMESPACE::error::operation_aborted error.
+   * will be passed the ModioAsio::error::operation_aborted error.
    *
-   * @throws ASIO_NAMESPACE::system_error Thrown on failure.
+   * @throws ModioAsio::system_error Thrown on failure.
    *
    * @note Calls to cancel() will always fail with
-   * ASIO_NAMESPACE::error::operation_not_supported when run on Windows XP, Windows
+   * ModioAsio::error::operation_not_supported when run on Windows XP, Windows
    * Server 2003, and earlier versions of Windows, unless
    * ASIO_ENABLE_CANCELIO is defined. However, the CancelIo function has
    * two issues that should be considered before enabling its use:
@@ -653,21 +653,21 @@ public:
 #endif
   void cancel()
   {
-    ASIO_NAMESPACE::error_code ec;
+    ModioAsio::error_code ec;
     impl_.get_service().cancel(impl_.get_implementation(), ec);
-    ASIO_NAMESPACE::detail::throw_error(ec, "cancel");
+    ModioAsio::detail::throw_error(ec, "cancel");
   }
 
   /// Cancel all asynchronous operations associated with the socket.
   /**
    * This function causes all outstanding asynchronous connect, send and receive
    * operations to finish immediately, and the handlers for cancelled operations
-   * will be passed the ASIO_NAMESPACE::error::operation_aborted error.
+   * will be passed the ModioAsio::error::operation_aborted error.
    *
    * @param ec Set to indicate what error occurred, if any.
    *
    * @note Calls to cancel() will always fail with
-   * ASIO_NAMESPACE::error::operation_not_supported when run on Windows XP, Windows
+   * ModioAsio::error::operation_not_supported when run on Windows XP, Windows
    * Server 2003, and earlier versions of Windows, unless
    * ASIO_ENABLE_CANCELIO is defined. However, the CancelIo function has
    * two issues that should be considered before enabling its use:
@@ -699,7 +699,7 @@ public:
         "operation_not_supported when used on Windows XP, Windows Server 2003, "
         "or earlier. Consult documentation for details."))
 #endif
-  ASIO_SYNC_OP_VOID cancel(ASIO_NAMESPACE::error_code& ec)
+  ASIO_SYNC_OP_VOID cancel(ModioAsio::error_code& ec)
   {
     impl_.get_service().cancel(impl_.get_implementation(), ec);
     ASIO_SYNC_OP_VOID_RETURN(ec);
@@ -713,13 +713,13 @@ public:
    * @return A bool indicating whether the socket is at the out-of-band data
    * mark.
    *
-   * @throws ASIO_NAMESPACE::system_error Thrown on failure.
+   * @throws ModioAsio::system_error Thrown on failure.
    */
   bool at_mark() const
   {
-    ASIO_NAMESPACE::error_code ec;
+    ModioAsio::error_code ec;
     bool b = impl_.get_service().at_mark(impl_.get_implementation(), ec);
-    ASIO_NAMESPACE::detail::throw_error(ec, "at_mark");
+    ModioAsio::detail::throw_error(ec, "at_mark");
     return b;
   }
 
@@ -733,7 +733,7 @@ public:
    * @return A bool indicating whether the socket is at the out-of-band data
    * mark.
    */
-  bool at_mark(ASIO_NAMESPACE::error_code& ec) const
+  bool at_mark(ModioAsio::error_code& ec) const
   {
     return impl_.get_service().at_mark(impl_.get_implementation(), ec);
   }
@@ -746,14 +746,14 @@ public:
    * @return The number of bytes that may be read without blocking, or 0 if an
    * error occurs.
    *
-   * @throws ASIO_NAMESPACE::system_error Thrown on failure.
+   * @throws ModioAsio::system_error Thrown on failure.
    */
   std::size_t available() const
   {
-    ASIO_NAMESPACE::error_code ec;
+    ModioAsio::error_code ec;
     std::size_t s = impl_.get_service().available(
         impl_.get_implementation(), ec);
-    ASIO_NAMESPACE::detail::throw_error(ec, "available");
+    ModioAsio::detail::throw_error(ec, "available");
     return s;
   }
 
@@ -767,7 +767,7 @@ public:
    * @return The number of bytes that may be read without blocking, or 0 if an
    * error occurs.
    */
-  std::size_t available(ASIO_NAMESPACE::error_code& ec) const
+  std::size_t available(ModioAsio::error_code& ec) const
   {
     return impl_.get_service().available(impl_.get_implementation(), ec);
   }
@@ -780,21 +780,21 @@ public:
    * @param endpoint An endpoint on the local machine to which the socket will
    * be bound.
    *
-   * @throws ASIO_NAMESPACE::system_error Thrown on failure.
+   * @throws ModioAsio::system_error Thrown on failure.
    *
    * @par Example
    * @code
-   * ASIO_NAMESPACE::ip::tcp::socket socket(my_context);
-   * socket.open(ASIO_NAMESPACE::ip::tcp::v4());
-   * socket.bind(ASIO_NAMESPACE::ip::tcp::endpoint(
-   *       ASIO_NAMESPACE::ip::tcp::v4(), 12345));
+   * ModioAsio::ip::tcp::socket socket(my_context);
+   * socket.open(ModioAsio::ip::tcp::v4());
+   * socket.bind(ModioAsio::ip::tcp::endpoint(
+   *       ModioAsio::ip::tcp::v4(), 12345));
    * @endcode
    */
   void bind(const endpoint_type& endpoint)
   {
-    ASIO_NAMESPACE::error_code ec;
+    ModioAsio::error_code ec;
     impl_.get_service().bind(impl_.get_implementation(), endpoint, ec);
-    ASIO_NAMESPACE::detail::throw_error(ec, "bind");
+    ModioAsio::detail::throw_error(ec, "bind");
   }
 
   /// Bind the socket to the given local endpoint.
@@ -809,11 +809,11 @@ public:
    *
    * @par Example
    * @code
-   * ASIO_NAMESPACE::ip::tcp::socket socket(my_context);
-   * socket.open(ASIO_NAMESPACE::ip::tcp::v4());
-   * ASIO_NAMESPACE::error_code ec;
-   * socket.bind(ASIO_NAMESPACE::ip::tcp::endpoint(
-   *       ASIO_NAMESPACE::ip::tcp::v4(), 12345), ec);
+   * ModioAsio::ip::tcp::socket socket(my_context);
+   * socket.open(ModioAsio::ip::tcp::v4());
+   * ModioAsio::error_code ec;
+   * socket.bind(ModioAsio::ip::tcp::endpoint(
+   *       ModioAsio::ip::tcp::v4(), 12345), ec);
    * if (ec)
    * {
    *   // An error occurred.
@@ -821,7 +821,7 @@ public:
    * @endcode
    */
   ASIO_SYNC_OP_VOID bind(const endpoint_type& endpoint,
-      ASIO_NAMESPACE::error_code& ec)
+      ModioAsio::error_code& ec)
   {
     impl_.get_service().bind(impl_.get_implementation(), endpoint, ec);
     ASIO_SYNC_OP_VOID_RETURN(ec);
@@ -840,27 +840,27 @@ public:
    * @param peer_endpoint The remote endpoint to which the socket will be
    * connected.
    *
-   * @throws ASIO_NAMESPACE::system_error Thrown on failure.
+   * @throws ModioAsio::system_error Thrown on failure.
    *
    * @par Example
    * @code
-   * ASIO_NAMESPACE::ip::tcp::socket socket(my_context);
-   * ASIO_NAMESPACE::ip::tcp::endpoint endpoint(
-   *     ASIO_NAMESPACE::ip::address::from_string("1.2.3.4"), 12345);
+   * ModioAsio::ip::tcp::socket socket(my_context);
+   * ModioAsio::ip::tcp::endpoint endpoint(
+   *     ModioAsio::ip::address::from_string("1.2.3.4"), 12345);
    * socket.connect(endpoint);
    * @endcode
    */
   void connect(const endpoint_type& peer_endpoint)
   {
-    ASIO_NAMESPACE::error_code ec;
+    ModioAsio::error_code ec;
     if (!is_open())
     {
       impl_.get_service().open(impl_.get_implementation(),
           peer_endpoint.protocol(), ec);
-      ASIO_NAMESPACE::detail::throw_error(ec, "connect");
+      ModioAsio::detail::throw_error(ec, "connect");
     }
     impl_.get_service().connect(impl_.get_implementation(), peer_endpoint, ec);
-    ASIO_NAMESPACE::detail::throw_error(ec, "connect");
+    ModioAsio::detail::throw_error(ec, "connect");
   }
 
   /// Connect the socket to the specified endpoint.
@@ -880,10 +880,10 @@ public:
    *
    * @par Example
    * @code
-   * ASIO_NAMESPACE::ip::tcp::socket socket(my_context);
-   * ASIO_NAMESPACE::ip::tcp::endpoint endpoint(
-   *     ASIO_NAMESPACE::ip::address::from_string("1.2.3.4"), 12345);
-   * ASIO_NAMESPACE::error_code ec;
+   * ModioAsio::ip::tcp::socket socket(my_context);
+   * ModioAsio::ip::tcp::endpoint endpoint(
+   *     ModioAsio::ip::address::from_string("1.2.3.4"), 12345);
+   * ModioAsio::error_code ec;
    * socket.connect(endpoint, ec);
    * if (ec)
    * {
@@ -892,7 +892,7 @@ public:
    * @endcode
    */
   ASIO_SYNC_OP_VOID connect(const endpoint_type& peer_endpoint,
-      ASIO_NAMESPACE::error_code& ec)
+      ModioAsio::error_code& ec)
   {
     if (!is_open())
     {
@@ -927,19 +927,19 @@ public:
    * @ref yield_context, or a function object with the correct completion
    * signature. The function signature of the completion handler must be:
    * @code void handler(
-   *   const ASIO_NAMESPACE::error_code& error // Result of operation.
+   *   const ModioAsio::error_code& error // Result of operation.
    * ); @endcode
    * Regardless of whether the asynchronous operation completes immediately or
    * not, the completion handler will not be invoked from within this function.
    * On immediate completion, invocation of the handler will be performed in a
-   * manner equivalent to using ASIO_NAMESPACE::post().
+   * manner equivalent to using ModioAsio::post().
    *
    * @par Completion Signature
-   * @code void(ASIO_NAMESPACE::error_code) @endcode
+   * @code void(ModioAsio::error_code) @endcode
    *
    * @par Example
    * @code
-   * void connect_handler(const ASIO_NAMESPACE::error_code& error)
+   * void connect_handler(const ModioAsio::error_code& error)
    * {
    *   if (!error)
    *   {
@@ -949,15 +949,15 @@ public:
    *
    * ...
    *
-   * ASIO_NAMESPACE::ip::tcp::socket socket(my_context);
-   * ASIO_NAMESPACE::ip::tcp::endpoint endpoint(
-   *     ASIO_NAMESPACE::ip::address::from_string("1.2.3.4"), 12345);
+   * ModioAsio::ip::tcp::socket socket(my_context);
+   * ModioAsio::ip::tcp::endpoint endpoint(
+   *     ModioAsio::ip::address::from_string("1.2.3.4"), 12345);
    * socket.async_connect(endpoint, connect_handler);
    * @endcode
    *
    * @par Per-Operation Cancellation
    * On POSIX or Windows operating systems, this asynchronous operation supports
-   * cancellation for the following ASIO_NAMESPACE::cancellation_type values:
+   * cancellation for the following ModioAsio::cancellation_type values:
    *
    * @li @c cancellation_type::terminal
    *
@@ -966,26 +966,26 @@ public:
    * @li @c cancellation_type::total
    */
   template <
-      ASIO_COMPLETION_TOKEN_FOR(void (ASIO_NAMESPACE::error_code))
+      ASIO_COMPLETION_TOKEN_FOR(void (ModioAsio::error_code))
         ConnectToken ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(executor_type)>
   ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(ConnectToken,
-      void (ASIO_NAMESPACE::error_code))
+      void (ModioAsio::error_code))
   async_connect(const endpoint_type& peer_endpoint,
       ASIO_MOVE_ARG(ConnectToken) token
         ASIO_DEFAULT_COMPLETION_TOKEN(executor_type))
     ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
-      async_initiate<ConnectToken, void (ASIO_NAMESPACE::error_code)>(
+      async_initiate<ConnectToken, void (ModioAsio::error_code)>(
           declval<initiate_async_connect>(), token,
-          peer_endpoint, declval<ASIO_NAMESPACE::error_code&>())))
+          peer_endpoint, declval<ModioAsio::error_code&>())))
   {
-    ASIO_NAMESPACE::error_code open_ec;
+    ModioAsio::error_code open_ec;
     if (!is_open())
     {
       const protocol_type protocol = peer_endpoint.protocol();
       impl_.get_service().open(impl_.get_implementation(), protocol, open_ec);
     }
 
-    return async_initiate<ConnectToken, void (ASIO_NAMESPACE::error_code)>(
+    return async_initiate<ConnectToken, void (ModioAsio::error_code)>(
         initiate_async_connect(this), token, peer_endpoint, open_ec);
   }
 
@@ -995,40 +995,40 @@ public:
    *
    * @param option The new option value to be set on the socket.
    *
-   * @throws ASIO_NAMESPACE::system_error Thrown on failure.
+   * @throws ModioAsio::system_error Thrown on failure.
    *
    * @sa SettableSocketOption @n
-   * ASIO_NAMESPACE::socket_base::broadcast @n
-   * ASIO_NAMESPACE::socket_base::do_not_route @n
-   * ASIO_NAMESPACE::socket_base::keep_alive @n
-   * ASIO_NAMESPACE::socket_base::linger @n
-   * ASIO_NAMESPACE::socket_base::receive_buffer_size @n
-   * ASIO_NAMESPACE::socket_base::receive_low_watermark @n
-   * ASIO_NAMESPACE::socket_base::reuse_address @n
-   * ASIO_NAMESPACE::socket_base::send_buffer_size @n
-   * ASIO_NAMESPACE::socket_base::send_low_watermark @n
-   * ASIO_NAMESPACE::ip::multicast::join_group @n
-   * ASIO_NAMESPACE::ip::multicast::leave_group @n
-   * ASIO_NAMESPACE::ip::multicast::enable_loopback @n
-   * ASIO_NAMESPACE::ip::multicast::outbound_interface @n
-   * ASIO_NAMESPACE::ip::multicast::hops @n
-   * ASIO_NAMESPACE::ip::tcp::no_delay
+   * ModioAsio::socket_base::broadcast @n
+   * ModioAsio::socket_base::do_not_route @n
+   * ModioAsio::socket_base::keep_alive @n
+   * ModioAsio::socket_base::linger @n
+   * ModioAsio::socket_base::receive_buffer_size @n
+   * ModioAsio::socket_base::receive_low_watermark @n
+   * ModioAsio::socket_base::reuse_address @n
+   * ModioAsio::socket_base::send_buffer_size @n
+   * ModioAsio::socket_base::send_low_watermark @n
+   * ModioAsio::ip::multicast::join_group @n
+   * ModioAsio::ip::multicast::leave_group @n
+   * ModioAsio::ip::multicast::enable_loopback @n
+   * ModioAsio::ip::multicast::outbound_interface @n
+   * ModioAsio::ip::multicast::hops @n
+   * ModioAsio::ip::tcp::no_delay
    *
    * @par Example
    * Setting the IPPROTO_TCP/TCP_NODELAY option:
    * @code
-   * ASIO_NAMESPACE::ip::tcp::socket socket(my_context);
+   * ModioAsio::ip::tcp::socket socket(my_context);
    * ...
-   * ASIO_NAMESPACE::ip::tcp::no_delay option(true);
+   * ModioAsio::ip::tcp::no_delay option(true);
    * socket.set_option(option);
    * @endcode
    */
   template <typename SettableSocketOption>
   void set_option(const SettableSocketOption& option)
   {
-    ASIO_NAMESPACE::error_code ec;
+    ModioAsio::error_code ec;
     impl_.get_service().set_option(impl_.get_implementation(), option, ec);
-    ASIO_NAMESPACE::detail::throw_error(ec, "set_option");
+    ModioAsio::detail::throw_error(ec, "set_option");
   }
 
   /// Set an option on the socket.
@@ -1040,29 +1040,29 @@ public:
    * @param ec Set to indicate what error occurred, if any.
    *
    * @sa SettableSocketOption @n
-   * ASIO_NAMESPACE::socket_base::broadcast @n
-   * ASIO_NAMESPACE::socket_base::do_not_route @n
-   * ASIO_NAMESPACE::socket_base::keep_alive @n
-   * ASIO_NAMESPACE::socket_base::linger @n
-   * ASIO_NAMESPACE::socket_base::receive_buffer_size @n
-   * ASIO_NAMESPACE::socket_base::receive_low_watermark @n
-   * ASIO_NAMESPACE::socket_base::reuse_address @n
-   * ASIO_NAMESPACE::socket_base::send_buffer_size @n
-   * ASIO_NAMESPACE::socket_base::send_low_watermark @n
-   * ASIO_NAMESPACE::ip::multicast::join_group @n
-   * ASIO_NAMESPACE::ip::multicast::leave_group @n
-   * ASIO_NAMESPACE::ip::multicast::enable_loopback @n
-   * ASIO_NAMESPACE::ip::multicast::outbound_interface @n
-   * ASIO_NAMESPACE::ip::multicast::hops @n
-   * ASIO_NAMESPACE::ip::tcp::no_delay
+   * ModioAsio::socket_base::broadcast @n
+   * ModioAsio::socket_base::do_not_route @n
+   * ModioAsio::socket_base::keep_alive @n
+   * ModioAsio::socket_base::linger @n
+   * ModioAsio::socket_base::receive_buffer_size @n
+   * ModioAsio::socket_base::receive_low_watermark @n
+   * ModioAsio::socket_base::reuse_address @n
+   * ModioAsio::socket_base::send_buffer_size @n
+   * ModioAsio::socket_base::send_low_watermark @n
+   * ModioAsio::ip::multicast::join_group @n
+   * ModioAsio::ip::multicast::leave_group @n
+   * ModioAsio::ip::multicast::enable_loopback @n
+   * ModioAsio::ip::multicast::outbound_interface @n
+   * ModioAsio::ip::multicast::hops @n
+   * ModioAsio::ip::tcp::no_delay
    *
    * @par Example
    * Setting the IPPROTO_TCP/TCP_NODELAY option:
    * @code
-   * ASIO_NAMESPACE::ip::tcp::socket socket(my_context);
+   * ModioAsio::ip::tcp::socket socket(my_context);
    * ...
-   * ASIO_NAMESPACE::ip::tcp::no_delay option(true);
-   * ASIO_NAMESPACE::error_code ec;
+   * ModioAsio::ip::tcp::no_delay option(true);
+   * ModioAsio::error_code ec;
    * socket.set_option(option, ec);
    * if (ec)
    * {
@@ -1072,7 +1072,7 @@ public:
    */
   template <typename SettableSocketOption>
   ASIO_SYNC_OP_VOID set_option(const SettableSocketOption& option,
-      ASIO_NAMESPACE::error_code& ec)
+      ModioAsio::error_code& ec)
   {
     impl_.get_service().set_option(impl_.get_implementation(), option, ec);
     ASIO_SYNC_OP_VOID_RETURN(ec);
@@ -1084,31 +1084,31 @@ public:
    *
    * @param option The option value to be obtained from the socket.
    *
-   * @throws ASIO_NAMESPACE::system_error Thrown on failure.
+   * @throws ModioAsio::system_error Thrown on failure.
    *
    * @sa GettableSocketOption @n
-   * ASIO_NAMESPACE::socket_base::broadcast @n
-   * ASIO_NAMESPACE::socket_base::do_not_route @n
-   * ASIO_NAMESPACE::socket_base::keep_alive @n
-   * ASIO_NAMESPACE::socket_base::linger @n
-   * ASIO_NAMESPACE::socket_base::receive_buffer_size @n
-   * ASIO_NAMESPACE::socket_base::receive_low_watermark @n
-   * ASIO_NAMESPACE::socket_base::reuse_address @n
-   * ASIO_NAMESPACE::socket_base::send_buffer_size @n
-   * ASIO_NAMESPACE::socket_base::send_low_watermark @n
-   * ASIO_NAMESPACE::ip::multicast::join_group @n
-   * ASIO_NAMESPACE::ip::multicast::leave_group @n
-   * ASIO_NAMESPACE::ip::multicast::enable_loopback @n
-   * ASIO_NAMESPACE::ip::multicast::outbound_interface @n
-   * ASIO_NAMESPACE::ip::multicast::hops @n
-   * ASIO_NAMESPACE::ip::tcp::no_delay
+   * ModioAsio::socket_base::broadcast @n
+   * ModioAsio::socket_base::do_not_route @n
+   * ModioAsio::socket_base::keep_alive @n
+   * ModioAsio::socket_base::linger @n
+   * ModioAsio::socket_base::receive_buffer_size @n
+   * ModioAsio::socket_base::receive_low_watermark @n
+   * ModioAsio::socket_base::reuse_address @n
+   * ModioAsio::socket_base::send_buffer_size @n
+   * ModioAsio::socket_base::send_low_watermark @n
+   * ModioAsio::ip::multicast::join_group @n
+   * ModioAsio::ip::multicast::leave_group @n
+   * ModioAsio::ip::multicast::enable_loopback @n
+   * ModioAsio::ip::multicast::outbound_interface @n
+   * ModioAsio::ip::multicast::hops @n
+   * ModioAsio::ip::tcp::no_delay
    *
    * @par Example
    * Getting the value of the SOL_SOCKET/SO_KEEPALIVE option:
    * @code
-   * ASIO_NAMESPACE::ip::tcp::socket socket(my_context);
+   * ModioAsio::ip::tcp::socket socket(my_context);
    * ...
-   * ASIO_NAMESPACE::ip::tcp::socket::keep_alive option;
+   * ModioAsio::ip::tcp::socket::keep_alive option;
    * socket.get_option(option);
    * bool is_set = option.value();
    * @endcode
@@ -1116,9 +1116,9 @@ public:
   template <typename GettableSocketOption>
   void get_option(GettableSocketOption& option) const
   {
-    ASIO_NAMESPACE::error_code ec;
+    ModioAsio::error_code ec;
     impl_.get_service().get_option(impl_.get_implementation(), option, ec);
-    ASIO_NAMESPACE::detail::throw_error(ec, "get_option");
+    ModioAsio::detail::throw_error(ec, "get_option");
   }
 
   /// Get an option from the socket.
@@ -1130,29 +1130,29 @@ public:
    * @param ec Set to indicate what error occurred, if any.
    *
    * @sa GettableSocketOption @n
-   * ASIO_NAMESPACE::socket_base::broadcast @n
-   * ASIO_NAMESPACE::socket_base::do_not_route @n
-   * ASIO_NAMESPACE::socket_base::keep_alive @n
-   * ASIO_NAMESPACE::socket_base::linger @n
-   * ASIO_NAMESPACE::socket_base::receive_buffer_size @n
-   * ASIO_NAMESPACE::socket_base::receive_low_watermark @n
-   * ASIO_NAMESPACE::socket_base::reuse_address @n
-   * ASIO_NAMESPACE::socket_base::send_buffer_size @n
-   * ASIO_NAMESPACE::socket_base::send_low_watermark @n
-   * ASIO_NAMESPACE::ip::multicast::join_group @n
-   * ASIO_NAMESPACE::ip::multicast::leave_group @n
-   * ASIO_NAMESPACE::ip::multicast::enable_loopback @n
-   * ASIO_NAMESPACE::ip::multicast::outbound_interface @n
-   * ASIO_NAMESPACE::ip::multicast::hops @n
-   * ASIO_NAMESPACE::ip::tcp::no_delay
+   * ModioAsio::socket_base::broadcast @n
+   * ModioAsio::socket_base::do_not_route @n
+   * ModioAsio::socket_base::keep_alive @n
+   * ModioAsio::socket_base::linger @n
+   * ModioAsio::socket_base::receive_buffer_size @n
+   * ModioAsio::socket_base::receive_low_watermark @n
+   * ModioAsio::socket_base::reuse_address @n
+   * ModioAsio::socket_base::send_buffer_size @n
+   * ModioAsio::socket_base::send_low_watermark @n
+   * ModioAsio::ip::multicast::join_group @n
+   * ModioAsio::ip::multicast::leave_group @n
+   * ModioAsio::ip::multicast::enable_loopback @n
+   * ModioAsio::ip::multicast::outbound_interface @n
+   * ModioAsio::ip::multicast::hops @n
+   * ModioAsio::ip::tcp::no_delay
    *
    * @par Example
    * Getting the value of the SOL_SOCKET/SO_KEEPALIVE option:
    * @code
-   * ASIO_NAMESPACE::ip::tcp::socket socket(my_context);
+   * ModioAsio::ip::tcp::socket socket(my_context);
    * ...
-   * ASIO_NAMESPACE::ip::tcp::socket::keep_alive option;
-   * ASIO_NAMESPACE::error_code ec;
+   * ModioAsio::ip::tcp::socket::keep_alive option;
+   * ModioAsio::error_code ec;
    * socket.get_option(option, ec);
    * if (ec)
    * {
@@ -1163,7 +1163,7 @@ public:
    */
   template <typename GettableSocketOption>
   ASIO_SYNC_OP_VOID get_option(GettableSocketOption& option,
-      ASIO_NAMESPACE::error_code& ec) const
+      ModioAsio::error_code& ec) const
   {
     impl_.get_service().get_option(impl_.get_implementation(), option, ec);
     ASIO_SYNC_OP_VOID_RETURN(ec);
@@ -1175,18 +1175,18 @@ public:
    *
    * @param command The IO control command to be performed on the socket.
    *
-   * @throws ASIO_NAMESPACE::system_error Thrown on failure.
+   * @throws ModioAsio::system_error Thrown on failure.
    *
    * @sa IoControlCommand @n
-   * ASIO_NAMESPACE::socket_base::bytes_readable @n
-   * ASIO_NAMESPACE::socket_base::non_blocking_io
+   * ModioAsio::socket_base::bytes_readable @n
+   * ModioAsio::socket_base::non_blocking_io
    *
    * @par Example
    * Getting the number of bytes ready to read:
    * @code
-   * ASIO_NAMESPACE::ip::tcp::socket socket(my_context);
+   * ModioAsio::ip::tcp::socket socket(my_context);
    * ...
-   * ASIO_NAMESPACE::ip::tcp::socket::bytes_readable command;
+   * ModioAsio::ip::tcp::socket::bytes_readable command;
    * socket.io_control(command);
    * std::size_t bytes_readable = command.get();
    * @endcode
@@ -1194,9 +1194,9 @@ public:
   template <typename IoControlCommand>
   void io_control(IoControlCommand& command)
   {
-    ASIO_NAMESPACE::error_code ec;
+    ModioAsio::error_code ec;
     impl_.get_service().io_control(impl_.get_implementation(), command, ec);
-    ASIO_NAMESPACE::detail::throw_error(ec, "io_control");
+    ModioAsio::detail::throw_error(ec, "io_control");
   }
 
   /// Perform an IO control command on the socket.
@@ -1208,16 +1208,16 @@ public:
    * @param ec Set to indicate what error occurred, if any.
    *
    * @sa IoControlCommand @n
-   * ASIO_NAMESPACE::socket_base::bytes_readable @n
-   * ASIO_NAMESPACE::socket_base::non_blocking_io
+   * ModioAsio::socket_base::bytes_readable @n
+   * ModioAsio::socket_base::non_blocking_io
    *
    * @par Example
    * Getting the number of bytes ready to read:
    * @code
-   * ASIO_NAMESPACE::ip::tcp::socket socket(my_context);
+   * ModioAsio::ip::tcp::socket socket(my_context);
    * ...
-   * ASIO_NAMESPACE::ip::tcp::socket::bytes_readable command;
-   * ASIO_NAMESPACE::error_code ec;
+   * ModioAsio::ip::tcp::socket::bytes_readable command;
+   * ModioAsio::error_code ec;
    * socket.io_control(command, ec);
    * if (ec)
    * {
@@ -1228,7 +1228,7 @@ public:
    */
   template <typename IoControlCommand>
   ASIO_SYNC_OP_VOID io_control(IoControlCommand& command,
-      ASIO_NAMESPACE::error_code& ec)
+      ModioAsio::error_code& ec)
   {
     impl_.get_service().io_control(impl_.get_implementation(), command, ec);
     ASIO_SYNC_OP_VOID_RETURN(ec);
@@ -1237,13 +1237,13 @@ public:
   /// Gets the non-blocking mode of the socket.
   /**
    * @returns @c true if the socket's synchronous operations will fail with
-   * ASIO_NAMESPACE::error::would_block if they are unable to perform the requested
+   * ModioAsio::error::would_block if they are unable to perform the requested
    * operation immediately. If @c false, synchronous operations will block
    * until complete.
    *
    * @note The non-blocking mode has no effect on the behaviour of asynchronous
    * operations. Asynchronous operations will never fail with the error
-   * ASIO_NAMESPACE::error::would_block.
+   * ModioAsio::error::would_block.
    */
   bool non_blocking() const
   {
@@ -1253,27 +1253,27 @@ public:
   /// Sets the non-blocking mode of the socket.
   /**
    * @param mode If @c true, the socket's synchronous operations will fail with
-   * ASIO_NAMESPACE::error::would_block if they are unable to perform the requested
+   * ModioAsio::error::would_block if they are unable to perform the requested
    * operation immediately. If @c false, synchronous operations will block
    * until complete.
    *
-   * @throws ASIO_NAMESPACE::system_error Thrown on failure.
+   * @throws ModioAsio::system_error Thrown on failure.
    *
    * @note The non-blocking mode has no effect on the behaviour of asynchronous
    * operations. Asynchronous operations will never fail with the error
-   * ASIO_NAMESPACE::error::would_block.
+   * ModioAsio::error::would_block.
    */
   void non_blocking(bool mode)
   {
-    ASIO_NAMESPACE::error_code ec;
+    ModioAsio::error_code ec;
     impl_.get_service().non_blocking(impl_.get_implementation(), mode, ec);
-    ASIO_NAMESPACE::detail::throw_error(ec, "non_blocking");
+    ModioAsio::detail::throw_error(ec, "non_blocking");
   }
 
   /// Sets the non-blocking mode of the socket.
   /**
    * @param mode If @c true, the socket's synchronous operations will fail with
-   * ASIO_NAMESPACE::error::would_block if they are unable to perform the requested
+   * ModioAsio::error::would_block if they are unable to perform the requested
    * operation immediately. If @c false, synchronous operations will block
    * until complete.
    *
@@ -1281,10 +1281,10 @@ public:
    *
    * @note The non-blocking mode has no effect on the behaviour of asynchronous
    * operations. Asynchronous operations will never fail with the error
-   * ASIO_NAMESPACE::error::would_block.
+   * ModioAsio::error::would_block.
    */
   ASIO_SYNC_OP_VOID non_blocking(
-      bool mode, ASIO_NAMESPACE::error_code& ec)
+      bool mode, ModioAsio::error_code& ec)
   {
     impl_.get_service().non_blocking(impl_.get_implementation(), mode, ec);
     ASIO_SYNC_OP_VOID_RETURN(ec);
@@ -1297,7 +1297,7 @@ public:
    * object's synchronous operations.
    *
    * @returns @c true if the underlying socket is in non-blocking mode and
-   * direct system calls may fail with ASIO_NAMESPACE::error::would_block (or the
+   * direct system calls may fail with ModioAsio::error::would_block (or the
    * equivalent system error).
    *
    * @note The current non-blocking mode is cached by the socket object.
@@ -1320,7 +1320,7 @@ public:
    *
    *   // Function call operator meeting WriteHandler requirements.
    *   // Used as the handler for the async_write_some operation.
-   *   void operator()(ASIO_NAMESPACE::error_code ec, std::size_t)
+   *   void operator()(ModioAsio::error_code ec, std::size_t)
    *   {
    *     // Put the underlying socket into non-blocking mode.
    *     if (!ec)
@@ -1334,17 +1334,17 @@ public:
    *         // Try the system call.
    *         errno = 0;
    *         int n = ::sendfile(sock_.native_handle(), fd_, &offset_, 65536);
-   *         ec = ASIO_NAMESPACE::error_code(n < 0 ? errno : 0,
-   *             ASIO_NAMESPACE::error::get_system_category());
+   *         ec = ModioAsio::error_code(n < 0 ? errno : 0,
+   *             ModioAsio::error::get_system_category());
    *         total_bytes_transferred_ += ec ? 0 : n;
    *
    *         // Retry operation immediately if interrupted by signal.
-   *         if (ec == ASIO_NAMESPACE::error::interrupted)
+   *         if (ec == ModioAsio::error::interrupted)
    *           continue;
    *
    *         // Check if we need to run the operation again.
-   *         if (ec == ASIO_NAMESPACE::error::would_block
-   *             || ec == ASIO_NAMESPACE::error::try_again)
+   *         if (ec == ModioAsio::error::would_block
+   *             || ec == ModioAsio::error::try_again)
    *         {
    *           // We have to wait for the socket to become ready again.
    *           sock_.async_wait(tcp::socket::wait_write, *this);
@@ -1386,12 +1386,12 @@ public:
    * synchronous operations.
    *
    * @param mode If @c true, the underlying socket is put into non-blocking
-   * mode and direct system calls may fail with ASIO_NAMESPACE::error::would_block
+   * mode and direct system calls may fail with ModioAsio::error::would_block
    * (or the equivalent system error).
    *
-   * @throws ASIO_NAMESPACE::system_error Thrown on failure. If the @c mode is
+   * @throws ModioAsio::system_error Thrown on failure. If the @c mode is
    * @c false, but the current value of @c non_blocking() is @c true, this
-   * function fails with ASIO_NAMESPACE::error::invalid_argument, as the
+   * function fails with ModioAsio::error::invalid_argument, as the
    * combination does not make sense.
    *
    * @par Example
@@ -1410,7 +1410,7 @@ public:
    *
    *   // Function call operator meeting WriteHandler requirements.
    *   // Used as the handler for the async_write_some operation.
-   *   void operator()(ASIO_NAMESPACE::error_code ec, std::size_t)
+   *   void operator()(ModioAsio::error_code ec, std::size_t)
    *   {
    *     // Put the underlying socket into non-blocking mode.
    *     if (!ec)
@@ -1424,17 +1424,17 @@ public:
    *         // Try the system call.
    *         errno = 0;
    *         int n = ::sendfile(sock_.native_handle(), fd_, &offset_, 65536);
-   *         ec = ASIO_NAMESPACE::error_code(n < 0 ? errno : 0,
-   *             ASIO_NAMESPACE::error::get_system_category());
+   *         ec = ModioAsio::error_code(n < 0 ? errno : 0,
+   *             ModioAsio::error::get_system_category());
    *         total_bytes_transferred_ += ec ? 0 : n;
    *
    *         // Retry operation immediately if interrupted by signal.
-   *         if (ec == ASIO_NAMESPACE::error::interrupted)
+   *         if (ec == ModioAsio::error::interrupted)
    *           continue;
    *
    *         // Check if we need to run the operation again.
-   *         if (ec == ASIO_NAMESPACE::error::would_block
-   *             || ec == ASIO_NAMESPACE::error::try_again)
+   *         if (ec == ModioAsio::error::would_block
+   *             || ec == ModioAsio::error::try_again)
    *         {
    *           // We have to wait for the socket to become ready again.
    *           sock_.async_wait(tcp::socket::wait_write, *this);
@@ -1466,10 +1466,10 @@ public:
    */
   void native_non_blocking(bool mode)
   {
-    ASIO_NAMESPACE::error_code ec;
+    ModioAsio::error_code ec;
     impl_.get_service().native_non_blocking(
         impl_.get_implementation(), mode, ec);
-    ASIO_NAMESPACE::detail::throw_error(ec, "native_non_blocking");
+    ModioAsio::detail::throw_error(ec, "native_non_blocking");
   }
 
   /// Sets the non-blocking mode of the native socket implementation.
@@ -1479,12 +1479,12 @@ public:
    * synchronous operations.
    *
    * @param mode If @c true, the underlying socket is put into non-blocking
-   * mode and direct system calls may fail with ASIO_NAMESPACE::error::would_block
+   * mode and direct system calls may fail with ModioAsio::error::would_block
    * (or the equivalent system error).
    *
    * @param ec Set to indicate what error occurred, if any. If the @c mode is
    * @c false, but the current value of @c non_blocking() is @c true, this
-   * function fails with ASIO_NAMESPACE::error::invalid_argument, as the
+   * function fails with ModioAsio::error::invalid_argument, as the
    * combination does not make sense.
    *
    * @par Example
@@ -1503,7 +1503,7 @@ public:
    *
    *   // Function call operator meeting WriteHandler requirements.
    *   // Used as the handler for the async_write_some operation.
-   *   void operator()(ASIO_NAMESPACE::error_code ec, std::size_t)
+   *   void operator()(ModioAsio::error_code ec, std::size_t)
    *   {
    *     // Put the underlying socket into non-blocking mode.
    *     if (!ec)
@@ -1517,17 +1517,17 @@ public:
    *         // Try the system call.
    *         errno = 0;
    *         int n = ::sendfile(sock_.native_handle(), fd_, &offset_, 65536);
-   *         ec = ASIO_NAMESPACE::error_code(n < 0 ? errno : 0,
-   *             ASIO_NAMESPACE::error::get_system_category());
+   *         ec = ModioAsio::error_code(n < 0 ? errno : 0,
+   *             ModioAsio::error::get_system_category());
    *         total_bytes_transferred_ += ec ? 0 : n;
    *
    *         // Retry operation immediately if interrupted by signal.
-   *         if (ec == ASIO_NAMESPACE::error::interrupted)
+   *         if (ec == ModioAsio::error::interrupted)
    *           continue;
    *
    *         // Check if we need to run the operation again.
-   *         if (ec == ASIO_NAMESPACE::error::would_block
-   *             || ec == ASIO_NAMESPACE::error::try_again)
+   *         if (ec == ModioAsio::error::would_block
+   *             || ec == ModioAsio::error::try_again)
    *         {
    *           // We have to wait for the socket to become ready again.
    *           sock_.async_wait(tcp::socket::wait_write, *this);
@@ -1558,7 +1558,7 @@ public:
    * } @endcode
    */
   ASIO_SYNC_OP_VOID native_non_blocking(
-      bool mode, ASIO_NAMESPACE::error_code& ec)
+      bool mode, ModioAsio::error_code& ec)
   {
     impl_.get_service().native_non_blocking(
         impl_.get_implementation(), mode, ec);
@@ -1571,21 +1571,21 @@ public:
    *
    * @returns An object that represents the local endpoint of the socket.
    *
-   * @throws ASIO_NAMESPACE::system_error Thrown on failure.
+   * @throws ModioAsio::system_error Thrown on failure.
    *
    * @par Example
    * @code
-   * ASIO_NAMESPACE::ip::tcp::socket socket(my_context);
+   * ModioAsio::ip::tcp::socket socket(my_context);
    * ...
-   * ASIO_NAMESPACE::ip::tcp::endpoint endpoint = socket.local_endpoint();
+   * ModioAsio::ip::tcp::endpoint endpoint = socket.local_endpoint();
    * @endcode
    */
   endpoint_type local_endpoint() const
   {
-    ASIO_NAMESPACE::error_code ec;
+    ModioAsio::error_code ec;
     endpoint_type ep = impl_.get_service().local_endpoint(
         impl_.get_implementation(), ec);
-    ASIO_NAMESPACE::detail::throw_error(ec, "local_endpoint");
+    ModioAsio::detail::throw_error(ec, "local_endpoint");
     return ep;
   }
 
@@ -1600,17 +1600,17 @@ public:
    *
    * @par Example
    * @code
-   * ASIO_NAMESPACE::ip::tcp::socket socket(my_context);
+   * ModioAsio::ip::tcp::socket socket(my_context);
    * ...
-   * ASIO_NAMESPACE::error_code ec;
-   * ASIO_NAMESPACE::ip::tcp::endpoint endpoint = socket.local_endpoint(ec);
+   * ModioAsio::error_code ec;
+   * ModioAsio::ip::tcp::endpoint endpoint = socket.local_endpoint(ec);
    * if (ec)
    * {
    *   // An error occurred.
    * }
    * @endcode
    */
-  endpoint_type local_endpoint(ASIO_NAMESPACE::error_code& ec) const
+  endpoint_type local_endpoint(ModioAsio::error_code& ec) const
   {
     return impl_.get_service().local_endpoint(impl_.get_implementation(), ec);
   }
@@ -1621,21 +1621,21 @@ public:
    *
    * @returns An object that represents the remote endpoint of the socket.
    *
-   * @throws ASIO_NAMESPACE::system_error Thrown on failure.
+   * @throws ModioAsio::system_error Thrown on failure.
    *
    * @par Example
    * @code
-   * ASIO_NAMESPACE::ip::tcp::socket socket(my_context);
+   * ModioAsio::ip::tcp::socket socket(my_context);
    * ...
-   * ASIO_NAMESPACE::ip::tcp::endpoint endpoint = socket.remote_endpoint();
+   * ModioAsio::ip::tcp::endpoint endpoint = socket.remote_endpoint();
    * @endcode
    */
   endpoint_type remote_endpoint() const
   {
-    ASIO_NAMESPACE::error_code ec;
+    ModioAsio::error_code ec;
     endpoint_type ep = impl_.get_service().remote_endpoint(
         impl_.get_implementation(), ec);
-    ASIO_NAMESPACE::detail::throw_error(ec, "remote_endpoint");
+    ModioAsio::detail::throw_error(ec, "remote_endpoint");
     return ep;
   }
 
@@ -1650,17 +1650,17 @@ public:
    *
    * @par Example
    * @code
-   * ASIO_NAMESPACE::ip::tcp::socket socket(my_context);
+   * ModioAsio::ip::tcp::socket socket(my_context);
    * ...
-   * ASIO_NAMESPACE::error_code ec;
-   * ASIO_NAMESPACE::ip::tcp::endpoint endpoint = socket.remote_endpoint(ec);
+   * ModioAsio::error_code ec;
+   * ModioAsio::ip::tcp::endpoint endpoint = socket.remote_endpoint(ec);
    * if (ec)
    * {
    *   // An error occurred.
    * }
    * @endcode
    */
-  endpoint_type remote_endpoint(ASIO_NAMESPACE::error_code& ec) const
+  endpoint_type remote_endpoint(ModioAsio::error_code& ec) const
   {
     return impl_.get_service().remote_endpoint(impl_.get_implementation(), ec);
   }
@@ -1672,21 +1672,21 @@ public:
    *
    * @param what Determines what types of operation will no longer be allowed.
    *
-   * @throws ASIO_NAMESPACE::system_error Thrown on failure.
+   * @throws ModioAsio::system_error Thrown on failure.
    *
    * @par Example
    * Shutting down the send side of the socket:
    * @code
-   * ASIO_NAMESPACE::ip::tcp::socket socket(my_context);
+   * ModioAsio::ip::tcp::socket socket(my_context);
    * ...
-   * socket.shutdown(ASIO_NAMESPACE::ip::tcp::socket::shutdown_send);
+   * socket.shutdown(ModioAsio::ip::tcp::socket::shutdown_send);
    * @endcode
    */
   void shutdown(shutdown_type what)
   {
-    ASIO_NAMESPACE::error_code ec;
+    ModioAsio::error_code ec;
     impl_.get_service().shutdown(impl_.get_implementation(), what, ec);
-    ASIO_NAMESPACE::detail::throw_error(ec, "shutdown");
+    ModioAsio::detail::throw_error(ec, "shutdown");
   }
 
   /// Disable sends or receives on the socket.
@@ -1701,10 +1701,10 @@ public:
    * @par Example
    * Shutting down the send side of the socket:
    * @code
-   * ASIO_NAMESPACE::ip::tcp::socket socket(my_context);
+   * ModioAsio::ip::tcp::socket socket(my_context);
    * ...
-   * ASIO_NAMESPACE::error_code ec;
-   * socket.shutdown(ASIO_NAMESPACE::ip::tcp::socket::shutdown_send, ec);
+   * ModioAsio::error_code ec;
+   * socket.shutdown(ModioAsio::ip::tcp::socket::shutdown_send, ec);
    * if (ec)
    * {
    *   // An error occurred.
@@ -1712,7 +1712,7 @@ public:
    * @endcode
    */
   ASIO_SYNC_OP_VOID shutdown(shutdown_type what,
-      ASIO_NAMESPACE::error_code& ec)
+      ModioAsio::error_code& ec)
   {
     impl_.get_service().shutdown(impl_.get_implementation(), what, ec);
     ASIO_SYNC_OP_VOID_RETURN(ec);
@@ -1729,16 +1729,16 @@ public:
    * @par Example
    * Waiting for a socket to become readable.
    * @code
-   * ASIO_NAMESPACE::ip::tcp::socket socket(my_context);
+   * ModioAsio::ip::tcp::socket socket(my_context);
    * ...
-   * socket.wait(ASIO_NAMESPACE::ip::tcp::socket::wait_read);
+   * socket.wait(ModioAsio::ip::tcp::socket::wait_read);
    * @endcode
    */
   void wait(wait_type w)
   {
-    ASIO_NAMESPACE::error_code ec;
+    ModioAsio::error_code ec;
     impl_.get_service().wait(impl_.get_implementation(), w, ec);
-    ASIO_NAMESPACE::detail::throw_error(ec, "wait");
+    ModioAsio::detail::throw_error(ec, "wait");
   }
 
   /// Wait for the socket to become ready to read, ready to write, or to have
@@ -1754,13 +1754,13 @@ public:
    * @par Example
    * Waiting for a socket to become readable.
    * @code
-   * ASIO_NAMESPACE::ip::tcp::socket socket(my_context);
+   * ModioAsio::ip::tcp::socket socket(my_context);
    * ...
-   * ASIO_NAMESPACE::error_code ec;
-   * socket.wait(ASIO_NAMESPACE::ip::tcp::socket::wait_read, ec);
+   * ModioAsio::error_code ec;
+   * socket.wait(ModioAsio::ip::tcp::socket::wait_read, ec);
    * @endcode
    */
-  ASIO_SYNC_OP_VOID wait(wait_type w, ASIO_NAMESPACE::error_code& ec)
+  ASIO_SYNC_OP_VOID wait(wait_type w, ModioAsio::error_code& ec)
   {
     impl_.get_service().wait(impl_.get_implementation(), w, ec);
     ASIO_SYNC_OP_VOID_RETURN(ec);
@@ -1782,19 +1782,19 @@ public:
    * yield_context, or a function object with the correct completion signature.
    * The function signature of the completion handler must be:
    * @code void handler(
-   *   const ASIO_NAMESPACE::error_code& error // Result of operation.
+   *   const ModioAsio::error_code& error // Result of operation.
    * ); @endcode
    * Regardless of whether the asynchronous operation completes immediately or
    * not, the completion handler will not be invoked from within this function.
    * On immediate completion, invocation of the handler will be performed in a
-   * manner equivalent to using ASIO_NAMESPACE::post().
+   * manner equivalent to using ModioAsio::post().
    *
    * @par Completion Signature
-   * @code void(ASIO_NAMESPACE::error_code) @endcode
+   * @code void(ModioAsio::error_code) @endcode
    *
    * @par Example
    * @code
-   * void wait_handler(const ASIO_NAMESPACE::error_code& error)
+   * void wait_handler(const ModioAsio::error_code& error)
    * {
    *   if (!error)
    *   {
@@ -1804,14 +1804,14 @@ public:
    *
    * ...
    *
-   * ASIO_NAMESPACE::ip::tcp::socket socket(my_context);
+   * ModioAsio::ip::tcp::socket socket(my_context);
    * ...
-   * socket.async_wait(ASIO_NAMESPACE::ip::tcp::socket::wait_read, wait_handler);
+   * socket.async_wait(ModioAsio::ip::tcp::socket::wait_read, wait_handler);
    * @endcode
    *
    * @par Per-Operation Cancellation
    * On POSIX or Windows operating systems, this asynchronous operation supports
-   * cancellation for the following ASIO_NAMESPACE::cancellation_type values:
+   * cancellation for the following ModioAsio::cancellation_type values:
    *
    * @li @c cancellation_type::terminal
    *
@@ -1820,18 +1820,18 @@ public:
    * @li @c cancellation_type::total
    */
   template <
-      ASIO_COMPLETION_TOKEN_FOR(void (ASIO_NAMESPACE::error_code))
+      ASIO_COMPLETION_TOKEN_FOR(void (ModioAsio::error_code))
         WaitToken ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(executor_type)>
   ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(WaitToken,
-      void (ASIO_NAMESPACE::error_code))
+      void (ModioAsio::error_code))
   async_wait(wait_type w,
       ASIO_MOVE_ARG(WaitToken) token
         ASIO_DEFAULT_COMPLETION_TOKEN(executor_type))
     ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
-      async_initiate<WaitToken, void (ASIO_NAMESPACE::error_code)>(
+      async_initiate<WaitToken, void (ModioAsio::error_code)>(
           declval<initiate_async_wait>(), token, w)))
   {
-    return async_initiate<WaitToken, void (ASIO_NAMESPACE::error_code)>(
+    return async_initiate<WaitToken, void (ModioAsio::error_code)>(
         initiate_async_wait(this), token, w);
   }
 
@@ -1882,7 +1882,7 @@ private:
     template <typename ConnectHandler>
     void operator()(ASIO_MOVE_ARG(ConnectHandler) handler,
         const endpoint_type& peer_endpoint,
-        const ASIO_NAMESPACE::error_code& open_ec) const
+        const ModioAsio::error_code& open_ec) const
     {
       // If you get an error on the following line it means that your handler
       // does not meet the documented type requirements for a ConnectHandler.
@@ -1890,8 +1890,8 @@ private:
 
       if (open_ec)
       {
-          ASIO_NAMESPACE::post(self_->impl_.get_executor(),
-              ASIO_NAMESPACE::detail::bind_handler(
+          ModioAsio::post(self_->impl_.get_executor(),
+              ModioAsio::detail::bind_handler(
                 ASIO_MOVE_CAST(ConnectHandler)(handler), open_ec));
       }
       else
@@ -1940,7 +1940,7 @@ private:
   };
 };
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

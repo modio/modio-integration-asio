@@ -25,7 +25,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 win_event::win_event()
@@ -40,9 +40,9 @@ win_event::win_event()
   if (!events_[0])
   {
     DWORD last_error = ::GetLastError();
-    ASIO_NAMESPACE::error_code ec(last_error,
-        ASIO_NAMESPACE::error::get_system_category());
-    ASIO_NAMESPACE::detail::throw_error(ec, "event");
+    ModioAsio::error_code ec(last_error,
+        ModioAsio::error::get_system_category());
+    ModioAsio::detail::throw_error(ec, "event");
   }
 
 #if defined(ASIO_WINDOWS_APP)
@@ -54,9 +54,9 @@ win_event::win_event()
   {
     DWORD last_error = ::GetLastError();
     ::CloseHandle(events_[0]);
-    ASIO_NAMESPACE::error_code ec(last_error,
-        ASIO_NAMESPACE::error::get_system_category());
-    ASIO_NAMESPACE::detail::throw_error(ec, "event");
+    ModioAsio::error_code ec(last_error,
+        ModioAsio::error::get_system_category());
+    ModioAsio::detail::throw_error(ec, "event");
   }
 }
 
@@ -67,7 +67,7 @@ win_event::~win_event()
 }
 
 } // namespace detail
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

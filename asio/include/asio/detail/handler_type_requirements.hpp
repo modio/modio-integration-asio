@@ -53,7 +53,7 @@
 # include "asio/async_result.hpp"
 #endif // defined(ASIO_ENABLE_HANDLER_TYPE_REQUIREMENTS)
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 #if defined(ASIO_ENABLE_HANDLER_TYPE_REQUIREMENTS)
@@ -137,18 +137,18 @@ struct handler_type_requirements
       void()) asio_true_handler_type; \
   \
   ASIO_HANDLER_TYPE_REQUIREMENTS_ASSERT( \
-      sizeof(ASIO_NAMESPACE::detail::zero_arg_copyable_handler_test( \
-          ASIO_NAMESPACE::detail::clvref< \
+      sizeof(ModioAsio::detail::zero_arg_copyable_handler_test( \
+          ModioAsio::detail::clvref< \
             asio_true_handler_type>(), 0)) == 1, \
       "CompletionHandler type requirements not met") \
   \
-  typedef ASIO_NAMESPACE::detail::handler_type_requirements< \
+  typedef ModioAsio::detail::handler_type_requirements< \
       sizeof( \
-        ASIO_NAMESPACE::detail::argbyv( \
-          ASIO_NAMESPACE::detail::clvref< \
+        ModioAsio::detail::argbyv( \
+          ModioAsio::detail::clvref< \
             asio_true_handler_type>())) + \
       sizeof( \
-        ASIO_NAMESPACE::detail::rorlvref< \
+        ModioAsio::detail::rorlvref< \
           asio_true_handler_type>()(), \
         char(0))> ASIO_UNUSED_TYPEDEF
 
@@ -156,341 +156,341 @@ struct handler_type_requirements
     handler_type, handler) \
   \
   typedef ASIO_HANDLER_TYPE(handler_type, \
-      void(ASIO_NAMESPACE::error_code, std::size_t)) \
+      void(ModioAsio::error_code, std::size_t)) \
     asio_true_handler_type; \
   \
   ASIO_HANDLER_TYPE_REQUIREMENTS_ASSERT( \
-      sizeof(ASIO_NAMESPACE::detail::two_arg_handler_test( \
-          ASIO_NAMESPACE::detail::rvref< \
+      sizeof(ModioAsio::detail::two_arg_handler_test( \
+          ModioAsio::detail::rvref< \
             asio_true_handler_type>(), \
-          static_cast<const ASIO_NAMESPACE::error_code*>(0), \
+          static_cast<const ModioAsio::error_code*>(0), \
           static_cast<const std::size_t*>(0))) == 1, \
       "ReadHandler type requirements not met") \
   \
-  typedef ASIO_NAMESPACE::detail::handler_type_requirements< \
+  typedef ModioAsio::detail::handler_type_requirements< \
       sizeof( \
-        ASIO_NAMESPACE::detail::argbyv( \
-          ASIO_NAMESPACE::detail::rvref< \
+        ModioAsio::detail::argbyv( \
+          ModioAsio::detail::rvref< \
             asio_true_handler_type>())) + \
       sizeof( \
-        ASIO_NAMESPACE::detail::rorlvref< \
+        ModioAsio::detail::rorlvref< \
           asio_true_handler_type>()( \
-            ASIO_NAMESPACE::detail::lvref<const ASIO_NAMESPACE::error_code>(), \
-            ASIO_NAMESPACE::detail::lvref<const std::size_t>()), \
+            ModioAsio::detail::lvref<const ModioAsio::error_code>(), \
+            ModioAsio::detail::lvref<const std::size_t>()), \
         char(0))> ASIO_UNUSED_TYPEDEF
 
 #define ASIO_WRITE_HANDLER_CHECK( \
     handler_type, handler) \
   \
   typedef ASIO_HANDLER_TYPE(handler_type, \
-      void(ASIO_NAMESPACE::error_code, std::size_t)) \
+      void(ModioAsio::error_code, std::size_t)) \
     asio_true_handler_type; \
   \
   ASIO_HANDLER_TYPE_REQUIREMENTS_ASSERT( \
-      sizeof(ASIO_NAMESPACE::detail::two_arg_handler_test( \
-          ASIO_NAMESPACE::detail::rvref< \
+      sizeof(ModioAsio::detail::two_arg_handler_test( \
+          ModioAsio::detail::rvref< \
             asio_true_handler_type>(), \
-          static_cast<const ASIO_NAMESPACE::error_code*>(0), \
+          static_cast<const ModioAsio::error_code*>(0), \
           static_cast<const std::size_t*>(0))) == 1, \
       "WriteHandler type requirements not met") \
   \
-  typedef ASIO_NAMESPACE::detail::handler_type_requirements< \
+  typedef ModioAsio::detail::handler_type_requirements< \
       sizeof( \
-        ASIO_NAMESPACE::detail::argbyv( \
-          ASIO_NAMESPACE::detail::rvref< \
+        ModioAsio::detail::argbyv( \
+          ModioAsio::detail::rvref< \
             asio_true_handler_type>())) + \
       sizeof( \
-        ASIO_NAMESPACE::detail::rorlvref< \
+        ModioAsio::detail::rorlvref< \
           asio_true_handler_type>()( \
-            ASIO_NAMESPACE::detail::lvref<const ASIO_NAMESPACE::error_code>(), \
-            ASIO_NAMESPACE::detail::lvref<const std::size_t>()), \
+            ModioAsio::detail::lvref<const ModioAsio::error_code>(), \
+            ModioAsio::detail::lvref<const std::size_t>()), \
         char(0))> ASIO_UNUSED_TYPEDEF
 
 #define ASIO_ACCEPT_HANDLER_CHECK( \
     handler_type, handler) \
   \
   typedef ASIO_HANDLER_TYPE(handler_type, \
-      void(ASIO_NAMESPACE::error_code)) \
+      void(ModioAsio::error_code)) \
     asio_true_handler_type; \
   \
   ASIO_HANDLER_TYPE_REQUIREMENTS_ASSERT( \
-      sizeof(ASIO_NAMESPACE::detail::one_arg_handler_test( \
-          ASIO_NAMESPACE::detail::rvref< \
+      sizeof(ModioAsio::detail::one_arg_handler_test( \
+          ModioAsio::detail::rvref< \
             asio_true_handler_type>(), \
-          static_cast<const ASIO_NAMESPACE::error_code*>(0))) == 1, \
+          static_cast<const ModioAsio::error_code*>(0))) == 1, \
       "AcceptHandler type requirements not met") \
   \
-  typedef ASIO_NAMESPACE::detail::handler_type_requirements< \
+  typedef ModioAsio::detail::handler_type_requirements< \
       sizeof( \
-        ASIO_NAMESPACE::detail::argbyv( \
-          ASIO_NAMESPACE::detail::rvref< \
+        ModioAsio::detail::argbyv( \
+          ModioAsio::detail::rvref< \
             asio_true_handler_type>())) + \
       sizeof( \
-        ASIO_NAMESPACE::detail::rorlvref< \
+        ModioAsio::detail::rorlvref< \
           asio_true_handler_type>()( \
-            ASIO_NAMESPACE::detail::lvref<const ASIO_NAMESPACE::error_code>()), \
+            ModioAsio::detail::lvref<const ModioAsio::error_code>()), \
         char(0))> ASIO_UNUSED_TYPEDEF
 
 #define ASIO_MOVE_ACCEPT_HANDLER_CHECK( \
     handler_type, handler, socket_type) \
   \
   typedef ASIO_HANDLER_TYPE(handler_type, \
-      void(ASIO_NAMESPACE::error_code, socket_type)) \
+      void(ModioAsio::error_code, socket_type)) \
     asio_true_handler_type; \
   \
   ASIO_HANDLER_TYPE_REQUIREMENTS_ASSERT( \
-      sizeof(ASIO_NAMESPACE::detail::two_arg_move_handler_test( \
-          ASIO_NAMESPACE::detail::rvref< \
+      sizeof(ModioAsio::detail::two_arg_move_handler_test( \
+          ModioAsio::detail::rvref< \
             asio_true_handler_type>(), \
-          static_cast<const ASIO_NAMESPACE::error_code*>(0), \
+          static_cast<const ModioAsio::error_code*>(0), \
           static_cast<socket_type*>(0))) == 1, \
       "MoveAcceptHandler type requirements not met") \
   \
-  typedef ASIO_NAMESPACE::detail::handler_type_requirements< \
+  typedef ModioAsio::detail::handler_type_requirements< \
       sizeof( \
-        ASIO_NAMESPACE::detail::argbyv( \
-          ASIO_NAMESPACE::detail::rvref< \
+        ModioAsio::detail::argbyv( \
+          ModioAsio::detail::rvref< \
             asio_true_handler_type>())) + \
       sizeof( \
-        ASIO_NAMESPACE::detail::rorlvref< \
+        ModioAsio::detail::rorlvref< \
           asio_true_handler_type>()( \
-            ASIO_NAMESPACE::detail::lvref<const ASIO_NAMESPACE::error_code>(), \
-            ASIO_NAMESPACE::detail::rvref<socket_type>()), \
+            ModioAsio::detail::lvref<const ModioAsio::error_code>(), \
+            ModioAsio::detail::rvref<socket_type>()), \
         char(0))> ASIO_UNUSED_TYPEDEF
 
 #define ASIO_CONNECT_HANDLER_CHECK( \
     handler_type, handler) \
   \
   typedef ASIO_HANDLER_TYPE(handler_type, \
-      void(ASIO_NAMESPACE::error_code)) \
+      void(ModioAsio::error_code)) \
     asio_true_handler_type; \
   \
   ASIO_HANDLER_TYPE_REQUIREMENTS_ASSERT( \
-      sizeof(ASIO_NAMESPACE::detail::one_arg_handler_test( \
-          ASIO_NAMESPACE::detail::rvref< \
+      sizeof(ModioAsio::detail::one_arg_handler_test( \
+          ModioAsio::detail::rvref< \
             asio_true_handler_type>(), \
-          static_cast<const ASIO_NAMESPACE::error_code*>(0))) == 1, \
+          static_cast<const ModioAsio::error_code*>(0))) == 1, \
       "ConnectHandler type requirements not met") \
   \
-  typedef ASIO_NAMESPACE::detail::handler_type_requirements< \
+  typedef ModioAsio::detail::handler_type_requirements< \
       sizeof( \
-        ASIO_NAMESPACE::detail::argbyv( \
-          ASIO_NAMESPACE::detail::rvref< \
+        ModioAsio::detail::argbyv( \
+          ModioAsio::detail::rvref< \
             asio_true_handler_type>())) + \
       sizeof( \
-        ASIO_NAMESPACE::detail::rorlvref< \
+        ModioAsio::detail::rorlvref< \
           asio_true_handler_type>()( \
-            ASIO_NAMESPACE::detail::lvref<const ASIO_NAMESPACE::error_code>()), \
+            ModioAsio::detail::lvref<const ModioAsio::error_code>()), \
         char(0))> ASIO_UNUSED_TYPEDEF
 
 #define ASIO_RANGE_CONNECT_HANDLER_CHECK( \
     handler_type, handler, endpoint_type) \
   \
   typedef ASIO_HANDLER_TYPE(handler_type, \
-      void(ASIO_NAMESPACE::error_code, endpoint_type)) \
+      void(ModioAsio::error_code, endpoint_type)) \
     asio_true_handler_type; \
   \
   ASIO_HANDLER_TYPE_REQUIREMENTS_ASSERT( \
-      sizeof(ASIO_NAMESPACE::detail::two_arg_handler_test( \
-          ASIO_NAMESPACE::detail::rvref< \
+      sizeof(ModioAsio::detail::two_arg_handler_test( \
+          ModioAsio::detail::rvref< \
             asio_true_handler_type>(), \
-          static_cast<const ASIO_NAMESPACE::error_code*>(0), \
+          static_cast<const ModioAsio::error_code*>(0), \
           static_cast<const endpoint_type*>(0))) == 1, \
       "RangeConnectHandler type requirements not met") \
   \
-  typedef ASIO_NAMESPACE::detail::handler_type_requirements< \
+  typedef ModioAsio::detail::handler_type_requirements< \
       sizeof( \
-        ASIO_NAMESPACE::detail::argbyv( \
-          ASIO_NAMESPACE::detail::rvref< \
+        ModioAsio::detail::argbyv( \
+          ModioAsio::detail::rvref< \
             asio_true_handler_type>())) + \
       sizeof( \
-        ASIO_NAMESPACE::detail::rorlvref< \
+        ModioAsio::detail::rorlvref< \
           asio_true_handler_type>()( \
-            ASIO_NAMESPACE::detail::lvref<const ASIO_NAMESPACE::error_code>(), \
-            ASIO_NAMESPACE::detail::lvref<const endpoint_type>()), \
+            ModioAsio::detail::lvref<const ModioAsio::error_code>(), \
+            ModioAsio::detail::lvref<const endpoint_type>()), \
         char(0))> ASIO_UNUSED_TYPEDEF
 
 #define ASIO_ITERATOR_CONNECT_HANDLER_CHECK( \
     handler_type, handler, iter_type) \
   \
   typedef ASIO_HANDLER_TYPE(handler_type, \
-      void(ASIO_NAMESPACE::error_code, iter_type)) \
+      void(ModioAsio::error_code, iter_type)) \
     asio_true_handler_type; \
   \
   ASIO_HANDLER_TYPE_REQUIREMENTS_ASSERT( \
-      sizeof(ASIO_NAMESPACE::detail::two_arg_handler_test( \
-          ASIO_NAMESPACE::detail::rvref< \
+      sizeof(ModioAsio::detail::two_arg_handler_test( \
+          ModioAsio::detail::rvref< \
             asio_true_handler_type>(), \
-          static_cast<const ASIO_NAMESPACE::error_code*>(0), \
+          static_cast<const ModioAsio::error_code*>(0), \
           static_cast<const iter_type*>(0))) == 1, \
       "IteratorConnectHandler type requirements not met") \
   \
-  typedef ASIO_NAMESPACE::detail::handler_type_requirements< \
+  typedef ModioAsio::detail::handler_type_requirements< \
       sizeof( \
-        ASIO_NAMESPACE::detail::argbyv( \
-          ASIO_NAMESPACE::detail::rvref< \
+        ModioAsio::detail::argbyv( \
+          ModioAsio::detail::rvref< \
             asio_true_handler_type>())) + \
       sizeof( \
-        ASIO_NAMESPACE::detail::rorlvref< \
+        ModioAsio::detail::rorlvref< \
           asio_true_handler_type>()( \
-            ASIO_NAMESPACE::detail::lvref<const ASIO_NAMESPACE::error_code>(), \
-            ASIO_NAMESPACE::detail::lvref<const iter_type>()), \
+            ModioAsio::detail::lvref<const ModioAsio::error_code>(), \
+            ModioAsio::detail::lvref<const iter_type>()), \
         char(0))> ASIO_UNUSED_TYPEDEF
 
 #define ASIO_RESOLVE_HANDLER_CHECK( \
     handler_type, handler, range_type) \
   \
   typedef ASIO_HANDLER_TYPE(handler_type, \
-      void(ASIO_NAMESPACE::error_code, range_type)) \
+      void(ModioAsio::error_code, range_type)) \
     asio_true_handler_type; \
   \
   ASIO_HANDLER_TYPE_REQUIREMENTS_ASSERT( \
-      sizeof(ASIO_NAMESPACE::detail::two_arg_handler_test( \
-          ASIO_NAMESPACE::detail::rvref< \
+      sizeof(ModioAsio::detail::two_arg_handler_test( \
+          ModioAsio::detail::rvref< \
             asio_true_handler_type>(), \
-          static_cast<const ASIO_NAMESPACE::error_code*>(0), \
+          static_cast<const ModioAsio::error_code*>(0), \
           static_cast<const range_type*>(0))) == 1, \
       "ResolveHandler type requirements not met") \
   \
-  typedef ASIO_NAMESPACE::detail::handler_type_requirements< \
+  typedef ModioAsio::detail::handler_type_requirements< \
       sizeof( \
-        ASIO_NAMESPACE::detail::argbyv( \
-          ASIO_NAMESPACE::detail::rvref< \
+        ModioAsio::detail::argbyv( \
+          ModioAsio::detail::rvref< \
             asio_true_handler_type>())) + \
       sizeof( \
-        ASIO_NAMESPACE::detail::rorlvref< \
+        ModioAsio::detail::rorlvref< \
           asio_true_handler_type>()( \
-            ASIO_NAMESPACE::detail::lvref<const ASIO_NAMESPACE::error_code>(), \
-            ASIO_NAMESPACE::detail::lvref<const range_type>()), \
+            ModioAsio::detail::lvref<const ModioAsio::error_code>(), \
+            ModioAsio::detail::lvref<const range_type>()), \
         char(0))> ASIO_UNUSED_TYPEDEF
 
 #define ASIO_WAIT_HANDLER_CHECK( \
     handler_type, handler) \
   \
   typedef ASIO_HANDLER_TYPE(handler_type, \
-      void(ASIO_NAMESPACE::error_code)) \
+      void(ModioAsio::error_code)) \
     asio_true_handler_type; \
   \
   ASIO_HANDLER_TYPE_REQUIREMENTS_ASSERT( \
-      sizeof(ASIO_NAMESPACE::detail::one_arg_handler_test( \
-          ASIO_NAMESPACE::detail::rvref< \
+      sizeof(ModioAsio::detail::one_arg_handler_test( \
+          ModioAsio::detail::rvref< \
             asio_true_handler_type>(), \
-          static_cast<const ASIO_NAMESPACE::error_code*>(0))) == 1, \
+          static_cast<const ModioAsio::error_code*>(0))) == 1, \
       "WaitHandler type requirements not met") \
   \
-  typedef ASIO_NAMESPACE::detail::handler_type_requirements< \
+  typedef ModioAsio::detail::handler_type_requirements< \
       sizeof( \
-        ASIO_NAMESPACE::detail::argbyv( \
-          ASIO_NAMESPACE::detail::rvref< \
+        ModioAsio::detail::argbyv( \
+          ModioAsio::detail::rvref< \
             asio_true_handler_type>())) + \
       sizeof( \
-        ASIO_NAMESPACE::detail::rorlvref< \
+        ModioAsio::detail::rorlvref< \
           asio_true_handler_type>()( \
-            ASIO_NAMESPACE::detail::lvref<const ASIO_NAMESPACE::error_code>()), \
+            ModioAsio::detail::lvref<const ModioAsio::error_code>()), \
         char(0))> ASIO_UNUSED_TYPEDEF
 
 #define ASIO_SIGNAL_HANDLER_CHECK( \
     handler_type, handler) \
   \
   typedef ASIO_HANDLER_TYPE(handler_type, \
-      void(ASIO_NAMESPACE::error_code, int)) \
+      void(ModioAsio::error_code, int)) \
     asio_true_handler_type; \
   \
   ASIO_HANDLER_TYPE_REQUIREMENTS_ASSERT( \
-      sizeof(ASIO_NAMESPACE::detail::two_arg_handler_test( \
-          ASIO_NAMESPACE::detail::rvref< \
+      sizeof(ModioAsio::detail::two_arg_handler_test( \
+          ModioAsio::detail::rvref< \
             asio_true_handler_type>(), \
-          static_cast<const ASIO_NAMESPACE::error_code*>(0), \
+          static_cast<const ModioAsio::error_code*>(0), \
           static_cast<const int*>(0))) == 1, \
       "SignalHandler type requirements not met") \
   \
-  typedef ASIO_NAMESPACE::detail::handler_type_requirements< \
+  typedef ModioAsio::detail::handler_type_requirements< \
       sizeof( \
-        ASIO_NAMESPACE::detail::argbyv( \
-          ASIO_NAMESPACE::detail::rvref< \
+        ModioAsio::detail::argbyv( \
+          ModioAsio::detail::rvref< \
             asio_true_handler_type>())) + \
       sizeof( \
-        ASIO_NAMESPACE::detail::rorlvref< \
+        ModioAsio::detail::rorlvref< \
           asio_true_handler_type>()( \
-            ASIO_NAMESPACE::detail::lvref<const ASIO_NAMESPACE::error_code>(), \
-            ASIO_NAMESPACE::detail::lvref<const int>()), \
+            ModioAsio::detail::lvref<const ModioAsio::error_code>(), \
+            ModioAsio::detail::lvref<const int>()), \
         char(0))> ASIO_UNUSED_TYPEDEF
 
 #define ASIO_HANDSHAKE_HANDLER_CHECK( \
     handler_type, handler) \
   \
   typedef ASIO_HANDLER_TYPE(handler_type, \
-      void(ASIO_NAMESPACE::error_code)) \
+      void(ModioAsio::error_code)) \
     asio_true_handler_type; \
   \
   ASIO_HANDLER_TYPE_REQUIREMENTS_ASSERT( \
-      sizeof(ASIO_NAMESPACE::detail::one_arg_handler_test( \
-          ASIO_NAMESPACE::detail::rvref< \
+      sizeof(ModioAsio::detail::one_arg_handler_test( \
+          ModioAsio::detail::rvref< \
             asio_true_handler_type>(), \
-          static_cast<const ASIO_NAMESPACE::error_code*>(0))) == 1, \
+          static_cast<const ModioAsio::error_code*>(0))) == 1, \
       "HandshakeHandler type requirements not met") \
   \
-  typedef ASIO_NAMESPACE::detail::handler_type_requirements< \
+  typedef ModioAsio::detail::handler_type_requirements< \
       sizeof( \
-        ASIO_NAMESPACE::detail::argbyv( \
-          ASIO_NAMESPACE::detail::rvref< \
+        ModioAsio::detail::argbyv( \
+          ModioAsio::detail::rvref< \
             asio_true_handler_type>())) + \
       sizeof( \
-        ASIO_NAMESPACE::detail::rorlvref< \
+        ModioAsio::detail::rorlvref< \
           asio_true_handler_type>()( \
-            ASIO_NAMESPACE::detail::lvref<const ASIO_NAMESPACE::error_code>()), \
+            ModioAsio::detail::lvref<const ModioAsio::error_code>()), \
         char(0))> ASIO_UNUSED_TYPEDEF
 
 #define ASIO_BUFFERED_HANDSHAKE_HANDLER_CHECK( \
     handler_type, handler) \
   \
   typedef ASIO_HANDLER_TYPE(handler_type, \
-      void(ASIO_NAMESPACE::error_code, std::size_t)) \
+      void(ModioAsio::error_code, std::size_t)) \
     asio_true_handler_type; \
   \
   ASIO_HANDLER_TYPE_REQUIREMENTS_ASSERT( \
-      sizeof(ASIO_NAMESPACE::detail::two_arg_handler_test( \
-          ASIO_NAMESPACE::detail::rvref< \
+      sizeof(ModioAsio::detail::two_arg_handler_test( \
+          ModioAsio::detail::rvref< \
             asio_true_handler_type>(), \
-          static_cast<const ASIO_NAMESPACE::error_code*>(0), \
+          static_cast<const ModioAsio::error_code*>(0), \
           static_cast<const std::size_t*>(0))) == 1, \
       "BufferedHandshakeHandler type requirements not met") \
   \
-  typedef ASIO_NAMESPACE::detail::handler_type_requirements< \
+  typedef ModioAsio::detail::handler_type_requirements< \
       sizeof( \
-        ASIO_NAMESPACE::detail::argbyv( \
-          ASIO_NAMESPACE::detail::rvref< \
+        ModioAsio::detail::argbyv( \
+          ModioAsio::detail::rvref< \
             asio_true_handler_type>())) + \
       sizeof( \
-        ASIO_NAMESPACE::detail::rorlvref< \
+        ModioAsio::detail::rorlvref< \
           asio_true_handler_type>()( \
-          ASIO_NAMESPACE::detail::lvref<const ASIO_NAMESPACE::error_code>(), \
-          ASIO_NAMESPACE::detail::lvref<const std::size_t>()), \
+          ModioAsio::detail::lvref<const ModioAsio::error_code>(), \
+          ModioAsio::detail::lvref<const std::size_t>()), \
         char(0))> ASIO_UNUSED_TYPEDEF
 
 #define ASIO_SHUTDOWN_HANDLER_CHECK( \
     handler_type, handler) \
   \
   typedef ASIO_HANDLER_TYPE(handler_type, \
-      void(ASIO_NAMESPACE::error_code)) \
+      void(ModioAsio::error_code)) \
     asio_true_handler_type; \
   \
   ASIO_HANDLER_TYPE_REQUIREMENTS_ASSERT( \
-      sizeof(ASIO_NAMESPACE::detail::one_arg_handler_test( \
-          ASIO_NAMESPACE::detail::rvref< \
+      sizeof(ModioAsio::detail::one_arg_handler_test( \
+          ModioAsio::detail::rvref< \
             asio_true_handler_type>(), \
-          static_cast<const ASIO_NAMESPACE::error_code*>(0))) == 1, \
+          static_cast<const ModioAsio::error_code*>(0))) == 1, \
       "ShutdownHandler type requirements not met") \
   \
-  typedef ASIO_NAMESPACE::detail::handler_type_requirements< \
+  typedef ModioAsio::detail::handler_type_requirements< \
       sizeof( \
-        ASIO_NAMESPACE::detail::argbyv( \
-          ASIO_NAMESPACE::detail::rvref< \
+        ModioAsio::detail::argbyv( \
+          ModioAsio::detail::rvref< \
             asio_true_handler_type>())) + \
       sizeof( \
-        ASIO_NAMESPACE::detail::rorlvref< \
+        ModioAsio::detail::rorlvref< \
           asio_true_handler_type>()( \
-            ASIO_NAMESPACE::detail::lvref<const ASIO_NAMESPACE::error_code>()), \
+            ModioAsio::detail::lvref<const ModioAsio::error_code>()), \
         char(0))> ASIO_UNUSED_TYPEDEF
 
 #else // !defined(ASIO_ENABLE_HANDLER_TYPE_REQUIREMENTS)
@@ -554,6 +554,6 @@ struct handler_type_requirements
 #endif // !defined(ASIO_ENABLE_HANDLER_TYPE_REQUIREMENTS)
 
 } // namespace detail
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #endif // ASIO_DETAIL_HANDLER_TYPE_REQUIREMENTS_HPP

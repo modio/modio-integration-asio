@@ -21,7 +21,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace experimental {
 namespace detail {
 
@@ -63,7 +63,7 @@ struct associator<Associator,
   }
 };
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

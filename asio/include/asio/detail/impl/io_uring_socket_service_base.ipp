@@ -23,12 +23,12 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 io_uring_socket_service_base::io_uring_socket_service_base(
     execution_context& context)
-  : io_uring_service_(ASIO_NAMESPACE::use_service<io_uring_service>(context))
+  : io_uring_service_(ModioAsio::use_service<io_uring_service>(context))
 {
   io_uring_service_.init_task();
 }
@@ -86,15 +86,15 @@ void io_uring_socket_service_base::destroy(
           "socket", &impl, impl.socket_, "close"));
 
     io_uring_service_.deregister_io_object(impl.io_object_data_);
-    ASIO_NAMESPACE::error_code ignored_ec;
+    ModioAsio::error_code ignored_ec;
     socket_ops::close(impl.socket_, impl.state_, true, ignored_ec);
     io_uring_service_.cleanup_io_object(impl.io_object_data_);
   }
 }
 
-ASIO_NAMESPACE::error_code io_uring_socket_service_base::close(
+ModioAsio::error_code io_uring_socket_service_base::close(
     io_uring_socket_service_base::base_implementation_type& impl,
-    ASIO_NAMESPACE::error_code& ec)
+    ModioAsio::error_code& ec)
 {
   if (is_open(impl))
   {
@@ -122,11 +122,11 @@ ASIO_NAMESPACE::error_code io_uring_socket_service_base::close(
 
 socket_type io_uring_socket_service_base::release(
     io_uring_socket_service_base::base_implementation_type& impl,
-    ASIO_NAMESPACE::error_code& ec)
+    ModioAsio::error_code& ec)
 {
   if (!is_open(impl))
   {
-    ec = ASIO_NAMESPACE::error::bad_descriptor;
+    ec = ModioAsio::error::bad_descriptor;
     return invalid_socket;
   }
 
@@ -141,13 +141,13 @@ socket_type io_uring_socket_service_base::release(
   return sock;
 }
 
-ASIO_NAMESPACE::error_code io_uring_socket_service_base::cancel(
+ModioAsio::error_code io_uring_socket_service_base::cancel(
     io_uring_socket_service_base::base_implementation_type& impl,
-    ASIO_NAMESPACE::error_code& ec)
+    ModioAsio::error_code& ec)
 {
   if (!is_open(impl))
   {
-    ec = ASIO_NAMESPACE::error::bad_descriptor;
+    ec = ModioAsio::error::bad_descriptor;
     return ec;
   }
 
@@ -159,13 +159,13 @@ ASIO_NAMESPACE::error_code io_uring_socket_service_base::cancel(
   return ec;
 }
 
-ASIO_NAMESPACE::error_code io_uring_socket_service_base::do_open(
+ModioAsio::error_code io_uring_socket_service_base::do_open(
     io_uring_socket_service_base::base_implementation_type& impl,
-    int af, int type, int protocol, ASIO_NAMESPACE::error_code& ec)
+    int af, int type, int protocol, ModioAsio::error_code& ec)
 {
   if (is_open(impl))
   {
-    ec = ASIO_NAMESPACE::error::already_open;
+    ec = ModioAsio::error::already_open;
     return ec;
   }
 
@@ -186,14 +186,14 @@ ASIO_NAMESPACE::error_code io_uring_socket_service_base::do_open(
   return ec;
 }
 
-ASIO_NAMESPACE::error_code io_uring_socket_service_base::do_assign(
+ModioAsio::error_code io_uring_socket_service_base::do_assign(
     io_uring_socket_service_base::base_implementation_type& impl, int type,
     const io_uring_socket_service_base::native_handle_type& native_socket,
-    ASIO_NAMESPACE::error_code& ec)
+    ModioAsio::error_code& ec)
 {
   if (is_open(impl))
   {
-    ec = ASIO_NAMESPACE::error::already_open;
+    ec = ModioAsio::error::already_open;
     return ec;
   }
 
@@ -234,13 +234,13 @@ void io_uring_socket_service_base::start_accept_op(
     start_op(impl, io_uring_service::read_op, op, is_continuation, false);
   else
   {
-    op->ec_ = ASIO_NAMESPACE::error::already_open;
+    op->ec_ = ModioAsio::error::already_open;
     io_uring_service_.post_immediate_completion(op, is_continuation);
   }
 }
 
 } // namespace detail
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

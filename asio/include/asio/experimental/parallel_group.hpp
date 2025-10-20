@@ -22,7 +22,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace experimental {
 namespace detail {
 
@@ -45,7 +45,7 @@ struct parallel_group_signature;
 template <std::size_t N, typename R0, typename... Args0>
 struct parallel_group_signature<N, R0(Args0...)>
 {
-  typedef ASIO_NAMESPACE::detail::array<std::size_t, N> order_type;
+  typedef ModioAsio::detail::array<std::size_t, N> order_type;
   typedef R0 raw_type(Args0...);
   typedef R0 type(order_type, Args0...);
 };
@@ -55,7 +55,7 @@ template <std::size_t N,
     typename R1, typename... Args1>
 struct parallel_group_signature<N, R0(Args0...), R1(Args1...)>
 {
-  typedef ASIO_NAMESPACE::detail::array<std::size_t, N> order_type;
+  typedef ModioAsio::detail::array<std::size_t, N> order_type;
   typedef R0 raw_type(Args0..., Args1...);
   typedef R0 type(order_type, Args0..., Args1...);
 };
@@ -64,7 +64,7 @@ template <std::size_t N, typename Sig0,
     typename Sig1, typename... SigN>
 struct parallel_group_signature<N, Sig0, Sig1, SigN...>
 {
-  typedef ASIO_NAMESPACE::detail::array<std::size_t, N> order_type;
+  typedef ModioAsio::detail::array<std::size_t, N> order_type;
   typedef typename parallel_group_signature<N,
     typename parallel_group_signature<N, Sig0, Sig1>::raw_type,
       SigN...>::raw_type raw_type;
@@ -76,13 +76,13 @@ struct parallel_group_signature<N, Sig0, Sig1, SigN...>
 template <typename Condition, typename Handler,
     typename... Ops, std::size_t... I>
 void parallel_group_launch(Condition cancellation_condition, Handler handler,
-    std::tuple<Ops...>& ops, ASIO_NAMESPACE::detail::index_sequence<I...>);
+    std::tuple<Ops...>& ops, ModioAsio::detail::index_sequence<I...>);
 
 } // namespace detail
 
 /// A group of asynchronous operations that may be launched in parallel.
 /**
- * See the documentation for ASIO_NAMESPACE::experimental::make_parallel_group for
+ * See the documentation for ModioAsio::experimental::make_parallel_group for
  * a usage example.
  */
 template <typename... Ops>
@@ -96,7 +96,7 @@ private:
     {
       detail::parallel_group_launch(
           std::forward<Condition>(c), std::forward<Handler>(h),
-          ops, ASIO_NAMESPACE::detail::index_sequence_for<Ops...>());
+          ops, ModioAsio::detail::index_sequence_for<Ops...>());
     }
   };
 
@@ -121,8 +121,8 @@ public:
    * an operation within the group, that is used to determine whether to cancel
    * the remaining operations. The function object is passed the arguments of
    * the completed operation's handler. To trigger cancellation of the remaining
-   * operations, it must return a ASIO_NAMESPACE::cancellation_type value other
-   * than <tt>ASIO_NAMESPACE::cancellation_type::none</tt>.
+   * operations, it must return a ModioAsio::cancellation_type value other
+   * than <tt>ModioAsio::cancellation_type::none</tt>.
    *
    * @param token A @ref completion_token whose signature is comprised of
    * a @c std::array<std::size_t, N> indicating the completion order of the
@@ -130,10 +130,10 @@ public:
    *
    * The library provides the following @c cancellation_condition types:
    *
-   * @li ASIO_NAMESPACE::experimental::wait_for_all
-   * @li ASIO_NAMESPACE::experimental::wait_for_one
-   * @li ASIO_NAMESPACE::experimental::wait_for_one_error
-   * @li ASIO_NAMESPACE::experimental::wait_for_one_success
+   * @li ModioAsio::experimental::wait_for_all
+   * @li ModioAsio::experimental::wait_for_one
+   * @li ModioAsio::experimental::wait_for_one_error
+   * @li ModioAsio::experimental::wait_for_one_success
    */
   template <typename CancellationCondition,
       ASIO_COMPLETION_TOKEN_FOR(signature) CompletionToken>
@@ -141,11 +141,11 @@ public:
   async_wait(CancellationCondition cancellation_condition,
       CompletionToken&& token)
     ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
-      ASIO_NAMESPACE::async_initiate<CompletionToken, signature>(
+      ModioAsio::async_initiate<CompletionToken, signature>(
           declval<initiate_async_wait>(), token,
           std::move(cancellation_condition), std::move(ops_))))
   {
-    return ASIO_NAMESPACE::async_initiate<CompletionToken, signature>(
+    return ModioAsio::async_initiate<CompletionToken, signature>(
         initiate_async_wait(), token,
         std::move(cancellation_condition), std::move(ops_));
   }
@@ -154,17 +154,17 @@ public:
 /// Create a group of operations that may be launched in parallel.
 /**
  * For example:
- * @code ASIO_NAMESPACE::experimental::make_parallel_group(
+ * @code ModioAsio::experimental::make_parallel_group(
  *    [&](auto token)
  *    {
- *      return in.async_read_some(ASIO_NAMESPACE::buffer(data), token);
+ *      return in.async_read_some(ModioAsio::buffer(data), token);
  *    },
  *    [&](auto token)
  *    {
  *      return timer.async_wait(token);
  *    }
  *  ).async_wait(
- *    ASIO_NAMESPACE::experimental::wait_for_all(),
+ *    ModioAsio::experimental::wait_for_all(),
  *    [](
  *        std::array<std::size_t, 2> completion_order,
  *        std::error_code ec1, std::size_t n1,
@@ -196,7 +196,7 @@ make_parallel_group(Ops... ops)
 }
 
 } // namespace experimental
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

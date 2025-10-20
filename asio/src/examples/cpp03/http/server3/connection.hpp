@@ -31,28 +31,28 @@ class connection
 {
 public:
   /// Construct a connection with the given io_context.
-  explicit connection(ASIO_NAMESPACE::io_context& io_context,
+  explicit connection(ModioAsio::io_context& io_context,
       request_handler& handler);
 
   /// Get the socket associated with the connection.
-  ASIO_NAMESPACE::ip::tcp::socket& socket();
+  ModioAsio::ip::tcp::socket& socket();
 
   /// Start the first asynchronous operation for the connection.
   void start();
 
 private:
   /// Handle completion of a read operation.
-  void handle_read(const ASIO_NAMESPACE::error_code& e,
+  void handle_read(const ModioAsio::error_code& e,
       std::size_t bytes_transferred);
 
   /// Handle completion of a write operation.
-  void handle_write(const ASIO_NAMESPACE::error_code& e);
+  void handle_write(const ModioAsio::error_code& e);
 
   /// Strand to ensure the connection's handlers are not called concurrently.
-  ASIO_NAMESPACE::strand<ASIO_NAMESPACE::io_context::executor_type> strand_;
+  ModioAsio::strand<ModioAsio::io_context::executor_type> strand_;
 
   /// Socket for the connection.
-  ASIO_NAMESPACE::ip::tcp::socket socket_;
+  ModioAsio::ip::tcp::socket socket_;
 
   /// The handler used to process the incoming request.
   request_handler& request_handler_;

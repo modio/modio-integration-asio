@@ -28,7 +28,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 win_thread::~win_thread()
@@ -70,9 +70,9 @@ void win_thread::start_thread(func_base* arg, unsigned int stack_size)
   {
     DWORD last_error = ::GetLastError();
     delete arg;
-    ASIO_NAMESPACE::error_code ec(last_error,
-        ASIO_NAMESPACE::error::get_system_category());
-    ASIO_NAMESPACE::detail::throw_error(ec, "thread.entry_event");
+    ModioAsio::error_code ec(last_error,
+        ModioAsio::error::get_system_category());
+    ModioAsio::detail::throw_error(ec, "thread.entry_event");
   }
 
   arg->exit_event_ = exit_event_ = ::CreateEventW(0, true, false, 0);
@@ -80,9 +80,9 @@ void win_thread::start_thread(func_base* arg, unsigned int stack_size)
   {
     DWORD last_error = ::GetLastError();
     delete arg;
-    ASIO_NAMESPACE::error_code ec(last_error,
-        ASIO_NAMESPACE::error::get_system_category());
-    ASIO_NAMESPACE::detail::throw_error(ec, "thread.exit_event");
+    ModioAsio::error_code ec(last_error,
+        ModioAsio::error::get_system_category());
+    ModioAsio::detail::throw_error(ec, "thread.exit_event");
   }
 
   unsigned int thread_id = 0;
@@ -96,9 +96,9 @@ void win_thread::start_thread(func_base* arg, unsigned int stack_size)
       ::CloseHandle(entry_event);
     if (exit_event_)
       ::CloseHandle(exit_event_);
-    ASIO_NAMESPACE::error_code ec(last_error,
-        ASIO_NAMESPACE::error::get_system_category());
-    ASIO_NAMESPACE::detail::throw_error(ec, "thread");
+    ModioAsio::error_code ec(last_error,
+        ModioAsio::error::get_system_category());
+    ModioAsio::detail::throw_error(ec, "thread");
   }
 
   if (entry_event)
@@ -139,7 +139,7 @@ void __stdcall apc_function(ULONG_PTR) {}
 #endif
 
 } // namespace detail
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

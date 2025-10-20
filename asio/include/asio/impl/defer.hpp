@@ -27,7 +27,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 class initiate_defer
@@ -52,11 +52,11 @@ public:
         (get_associated_allocator)(handler));
 
     execution::execute(
-        ASIO_NAMESPACE::prefer(
-          ASIO_NAMESPACE::require(ex, execution::blocking.never),
+        ModioAsio::prefer(
+          ModioAsio::require(ex, execution::blocking.never),
           execution::relationship.continuation,
           execution::allocator(alloc)),
-        ASIO_NAMESPACE::detail::bind_handler(
+        ModioAsio::detail::bind_handler(
           ASIO_MOVE_CAST(CompletionHandler)(handler)));
   }
 
@@ -78,7 +78,7 @@ public:
     typename associated_allocator<handler_t>::type alloc(
         (get_associated_allocator)(handler));
 
-    ex.defer(ASIO_NAMESPACE::detail::bind_handler(
+    ex.defer(ModioAsio::detail::bind_handler(
           ASIO_MOVE_CAST(CompletionHandler)(handler)), alloc);
   }
 };
@@ -119,11 +119,11 @@ public:
         (get_associated_allocator)(handler));
 
     execution::execute(
-        ASIO_NAMESPACE::prefer(
-          ASIO_NAMESPACE::require(ex_, execution::blocking.never),
+        ModioAsio::prefer(
+          ModioAsio::require(ex_, execution::blocking.never),
           execution::relationship.continuation,
           execution::allocator(alloc)),
-        ASIO_NAMESPACE::detail::bind_handler(
+        ModioAsio::detail::bind_handler(
           ASIO_MOVE_CAST(CompletionHandler)(handler)));
   }
 
@@ -151,8 +151,8 @@ public:
         (get_associated_allocator)(handler));
 
     execution::execute(
-        ASIO_NAMESPACE::prefer(
-          ASIO_NAMESPACE::require(ex_, execution::blocking.never),
+        ModioAsio::prefer(
+          ModioAsio::require(ex_, execution::blocking.never),
           execution::relationship.continuation,
           execution::allocator(alloc)),
         detail::work_dispatcher<handler_t, handler_ex_t>(
@@ -178,7 +178,7 @@ public:
     typename associated_allocator<handler_t>::type alloc(
         (get_associated_allocator)(handler));
 
-    ex_.defer(ASIO_NAMESPACE::detail::bind_handler(
+    ex_.defer(ModioAsio::detail::bind_handler(
           ASIO_MOVE_CAST(CompletionHandler)(handler)), alloc);
   }
 
@@ -259,7 +259,7 @@ inline ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(NullaryToken, void()) defer(
           ctx.get_executor()), token);
 }
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

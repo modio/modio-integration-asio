@@ -48,7 +48,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace execution {
 namespace detail {
 
@@ -67,7 +67,7 @@ struct is_receiver_base :
 # define ASIO_EXECUTION_RECEIVER_ERROR_DEFAULT = std::exception_ptr
 #else // defined(ASIO_HAS_STD_EXCEPTION_PTR)
 # define ASIO_EXECUTION_RECEIVER_ERROR_DEFAULT \
-  = ::ASIO_NAMESPACE::error_code
+  = ::ModioAsio::error_code
 #endif // defined(ASIO_HAS_STD_EXCEPTION_PTR)
 
 /// The is_receiver trait detects whether a type T satisfies the
@@ -106,7 +106,7 @@ ASIO_CONSTEXPR const bool is_receiver_v = is_receiver<T, E>::value;
 template <typename T, typename E ASIO_EXECUTION_RECEIVER_ERROR_DEFAULT>
 ASIO_CONCEPT receiver = is_receiver<T, E>::value;
 
-#define ASIO_EXECUTION_RECEIVER ::ASIO_NAMESPACE::execution::receiver
+#define ASIO_EXECUTION_RECEIVER ::ModioAsio::execution::receiver
 
 #else // defined(ASIO_HAS_CONCEPTS)
 
@@ -152,10 +152,10 @@ template <typename T, typename... Vs>
 ASIO_CONCEPT receiver_of = is_receiver_of<T, Vs...>::value;
 
 #define ASIO_EXECUTION_RECEIVER_OF_0 \
-  ::ASIO_NAMESPACE::execution::receiver_of
+  ::ModioAsio::execution::receiver_of
 
 #define ASIO_EXECUTION_RECEIVER_OF_1(v) \
-  ::ASIO_NAMESPACE::execution::receiver_of<v>
+  ::ModioAsio::execution::receiver_of<v>
 
 #else // defined(ASIO_HAS_CONCEPTS)
 
@@ -273,7 +273,7 @@ ASIO_VARIADIC_GENERATE(ASIO_PRIVATE_NOTHROW_RECEIVER_OF_TRAITS_DEF)
        //   || defined(GENERATING_DOCUMENTATION)
 
 } // namespace execution
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

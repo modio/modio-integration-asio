@@ -21,7 +21,7 @@
 #include <variant>
 #include "asio/any_io_executor.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace experimental {
 namespace detail {
 
@@ -223,6 +223,6 @@ struct coro_traits<void() noexcept, void, Executor>
 #endif // defined(GENERATING_DOCUMENTATION)
 
 } // namespace experimental
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #endif // ASIO_EXPERIMENTAL_DETAIL_CORO_TRAITS_HPP

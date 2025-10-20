@@ -26,11 +26,11 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 namespace descriptor_ops {
 
-int open(const char* path, int flags, ASIO_NAMESPACE::error_code& ec)
+int open(const char* path, int flags, ModioAsio::error_code& ec)
 {
   int result = ::open(path, flags);
   get_last_error(ec, result < 0);
@@ -38,14 +38,14 @@ int open(const char* path, int flags, ASIO_NAMESPACE::error_code& ec)
 }
 
 int open(const char* path, int flags,
-    unsigned mode, ASIO_NAMESPACE::error_code& ec)
+    unsigned mode, ModioAsio::error_code& ec)
 {
   int result = ::open(path, flags, mode);
   get_last_error(ec, result < 0);
   return result;
 }
 
-int close(int d, state_type& state, ASIO_NAMESPACE::error_code& ec)
+int close(int d, state_type& state, ModioAsio::error_code& ec)
 {
   int result = 0;
   if (d != -1)
@@ -54,8 +54,8 @@ int close(int d, state_type& state, ASIO_NAMESPACE::error_code& ec)
     get_last_error(ec, result < 0);
 
     if (result != 0
-        && (ec == ASIO_NAMESPACE::error::would_block
-          || ec == ASIO_NAMESPACE::error::try_again))
+        && (ec == ModioAsio::error::would_block
+          || ec == ModioAsio::error::try_again))
     {
       // According to UNIX Network Programming Vol. 1, it is possible for
       // close() to fail with EWOULDBLOCK under certain circumstances. What
@@ -82,11 +82,11 @@ int close(int d, state_type& state, ASIO_NAMESPACE::error_code& ec)
 }
 
 bool set_user_non_blocking(int d, state_type& state,
-    bool value, ASIO_NAMESPACE::error_code& ec)
+    bool value, ModioAsio::error_code& ec)
 {
   if (d == -1)
   {
-    ec = ASIO_NAMESPACE::error::bad_descriptor;
+    ec = ModioAsio::error::bad_descriptor;
     return false;
   }
 
@@ -123,11 +123,11 @@ bool set_user_non_blocking(int d, state_type& state,
 }
 
 bool set_internal_non_blocking(int d, state_type& state,
-    bool value, ASIO_NAMESPACE::error_code& ec)
+    bool value, ModioAsio::error_code& ec)
 {
   if (d == -1)
   {
-    ec = ASIO_NAMESPACE::error::bad_descriptor;
+    ec = ModioAsio::error::bad_descriptor;
     return false;
   }
 
@@ -136,7 +136,7 @@ bool set_internal_non_blocking(int d, state_type& state,
     // It does not make sense to clear the internal non-blocking flag if the
     // user still wants non-blocking behaviour. Return an error and let the
     // caller figure out whether to update the user-set non-blocking flag.
-    ec = ASIO_NAMESPACE::error::invalid_argument;
+    ec = ModioAsio::error::invalid_argument;
     return false;
   }
 
@@ -168,18 +168,18 @@ bool set_internal_non_blocking(int d, state_type& state,
 }
 
 std::size_t sync_read(int d, state_type state, buf* bufs,
-    std::size_t count, bool all_empty, ASIO_NAMESPACE::error_code& ec)
+    std::size_t count, bool all_empty, ModioAsio::error_code& ec)
 {
   if (d == -1)
   {
-    ec = ASIO_NAMESPACE::error::bad_descriptor;
+    ec = ModioAsio::error::bad_descriptor;
     return 0;
   }
 
   // A request to read 0 bytes on a stream is a no-op.
   if (all_empty)
   {
-    ASIO_NAMESPACE::error::clear(ec);
+    ModioAsio::error::clear(ec);
     return 0;
   }
 
@@ -197,14 +197,14 @@ std::size_t sync_read(int d, state_type state, buf* bufs,
     // Check for EOF.
     if (bytes == 0)
     {
-      ec = ASIO_NAMESPACE::error::eof;
+      ec = ModioAsio::error::eof;
       return 0;
     }
 
     // Operation failed.
     if ((state & user_set_non_blocking)
-        || (ec != ASIO_NAMESPACE::error::would_block
-          && ec != ASIO_NAMESPACE::error::try_again))
+        || (ec != ModioAsio::error::would_block
+          && ec != ModioAsio::error::try_again))
       return 0;
 
     // Wait for descriptor to become ready.
@@ -214,18 +214,18 @@ std::size_t sync_read(int d, state_type state, buf* bufs,
 }
 
 std::size_t sync_read1(int d, state_type state, void* data,
-    std::size_t size, ASIO_NAMESPACE::error_code& ec)
+    std::size_t size, ModioAsio::error_code& ec)
 {
   if (d == -1)
   {
-    ec = ASIO_NAMESPACE::error::bad_descriptor;
+    ec = ModioAsio::error::bad_descriptor;
     return 0;
   }
 
   // A request to read 0 bytes on a stream is a no-op.
   if (size == 0)
   {
-    ASIO_NAMESPACE::error::clear(ec);
+    ModioAsio::error::clear(ec);
     return 0;
   }
 
@@ -243,14 +243,14 @@ std::size_t sync_read1(int d, state_type state, void* data,
     // Check for EOF.
     if (bytes == 0)
     {
-      ec = ASIO_NAMESPACE::error::eof;
+      ec = ModioAsio::error::eof;
       return 0;
     }
 
     // Operation failed.
     if ((state & user_set_non_blocking)
-        || (ec != ASIO_NAMESPACE::error::would_block
-          && ec != ASIO_NAMESPACE::error::try_again))
+        || (ec != ModioAsio::error::would_block
+          && ec != ModioAsio::error::try_again))
       return 0;
 
     // Wait for descriptor to become ready.
@@ -260,7 +260,7 @@ std::size_t sync_read1(int d, state_type state, void* data,
 }
 
 bool non_blocking_read(int d, buf* bufs, std::size_t count,
-    ASIO_NAMESPACE::error_code& ec, std::size_t& bytes_transferred)
+    ModioAsio::error_code& ec, std::size_t& bytes_transferred)
 {
   for (;;)
   {
@@ -271,7 +271,7 @@ bool non_blocking_read(int d, buf* bufs, std::size_t count,
     // Check for end of stream.
     if (bytes == 0)
     {
-      ec = ASIO_NAMESPACE::error::eof;
+      ec = ModioAsio::error::eof;
       return true;
     }
 
@@ -283,12 +283,12 @@ bool non_blocking_read(int d, buf* bufs, std::size_t count,
     }
 
     // Retry operation if interrupted by signal.
-    if (ec == ASIO_NAMESPACE::error::interrupted)
+    if (ec == ModioAsio::error::interrupted)
       continue;
 
     // Check if we need to run the operation again.
-    if (ec == ASIO_NAMESPACE::error::would_block
-        || ec == ASIO_NAMESPACE::error::try_again)
+    if (ec == ModioAsio::error::would_block
+        || ec == ModioAsio::error::try_again)
       return false;
 
     // Operation failed.
@@ -298,7 +298,7 @@ bool non_blocking_read(int d, buf* bufs, std::size_t count,
 }
 
 bool non_blocking_read1(int d, void* data, std::size_t size,
-    ASIO_NAMESPACE::error_code& ec, std::size_t& bytes_transferred)
+    ModioAsio::error_code& ec, std::size_t& bytes_transferred)
 {
   for (;;)
   {
@@ -309,7 +309,7 @@ bool non_blocking_read1(int d, void* data, std::size_t size,
     // Check for end of stream.
     if (bytes == 0)
     {
-      ec = ASIO_NAMESPACE::error::eof;
+      ec = ModioAsio::error::eof;
       return true;
     }
 
@@ -321,12 +321,12 @@ bool non_blocking_read1(int d, void* data, std::size_t size,
     }
 
     // Retry operation if interrupted by signal.
-    if (ec == ASIO_NAMESPACE::error::interrupted)
+    if (ec == ModioAsio::error::interrupted)
       continue;
 
     // Check if we need to run the operation again.
-    if (ec == ASIO_NAMESPACE::error::would_block
-        || ec == ASIO_NAMESPACE::error::try_again)
+    if (ec == ModioAsio::error::would_block
+        || ec == ModioAsio::error::try_again)
       return false;
 
     // Operation failed.
@@ -336,18 +336,18 @@ bool non_blocking_read1(int d, void* data, std::size_t size,
 }
 
 std::size_t sync_write(int d, state_type state, const buf* bufs,
-    std::size_t count, bool all_empty, ASIO_NAMESPACE::error_code& ec)
+    std::size_t count, bool all_empty, ModioAsio::error_code& ec)
 {
   if (d == -1)
   {
-    ec = ASIO_NAMESPACE::error::bad_descriptor;
+    ec = ModioAsio::error::bad_descriptor;
     return 0;
   }
 
   // A request to write 0 bytes on a stream is a no-op.
   if (all_empty)
   {
-    ASIO_NAMESPACE::error::clear(ec);
+    ModioAsio::error::clear(ec);
     return 0;
   }
 
@@ -364,8 +364,8 @@ std::size_t sync_write(int d, state_type state, const buf* bufs,
 
     // Operation failed.
     if ((state & user_set_non_blocking)
-        || (ec != ASIO_NAMESPACE::error::would_block
-          && ec != ASIO_NAMESPACE::error::try_again))
+        || (ec != ModioAsio::error::would_block
+          && ec != ModioAsio::error::try_again))
       return 0;
 
     // Wait for descriptor to become ready.
@@ -375,18 +375,18 @@ std::size_t sync_write(int d, state_type state, const buf* bufs,
 }
 
 std::size_t sync_write1(int d, state_type state, const void* data,
-    std::size_t size, ASIO_NAMESPACE::error_code& ec)
+    std::size_t size, ModioAsio::error_code& ec)
 {
   if (d == -1)
   {
-    ec = ASIO_NAMESPACE::error::bad_descriptor;
+    ec = ModioAsio::error::bad_descriptor;
     return 0;
   }
 
   // A request to write 0 bytes on a stream is a no-op.
   if (size == 0)
   {
-    ASIO_NAMESPACE::error::clear(ec);
+    ModioAsio::error::clear(ec);
     return 0;
   }
 
@@ -403,8 +403,8 @@ std::size_t sync_write1(int d, state_type state, const void* data,
 
     // Operation failed.
     if ((state & user_set_non_blocking)
-        || (ec != ASIO_NAMESPACE::error::would_block
-          && ec != ASIO_NAMESPACE::error::try_again))
+        || (ec != ModioAsio::error::would_block
+          && ec != ModioAsio::error::try_again))
       return 0;
 
     // Wait for descriptor to become ready.
@@ -414,7 +414,7 @@ std::size_t sync_write1(int d, state_type state, const void* data,
 }
 
 bool non_blocking_write(int d, const buf* bufs, std::size_t count,
-    ASIO_NAMESPACE::error_code& ec, std::size_t& bytes_transferred)
+    ModioAsio::error_code& ec, std::size_t& bytes_transferred)
 {
   for (;;)
   {
@@ -430,12 +430,12 @@ bool non_blocking_write(int d, const buf* bufs, std::size_t count,
     }
 
     // Retry operation if interrupted by signal.
-    if (ec == ASIO_NAMESPACE::error::interrupted)
+    if (ec == ModioAsio::error::interrupted)
       continue;
 
     // Check if we need to run the operation again.
-    if (ec == ASIO_NAMESPACE::error::would_block
-        || ec == ASIO_NAMESPACE::error::try_again)
+    if (ec == ModioAsio::error::would_block
+        || ec == ModioAsio::error::try_again)
       return false;
 
     // Operation failed.
@@ -445,7 +445,7 @@ bool non_blocking_write(int d, const buf* bufs, std::size_t count,
 }
 
 bool non_blocking_write1(int d, const void* data, std::size_t size,
-    ASIO_NAMESPACE::error_code& ec, std::size_t& bytes_transferred)
+    ModioAsio::error_code& ec, std::size_t& bytes_transferred)
 {
   for (;;)
   {
@@ -461,12 +461,12 @@ bool non_blocking_write1(int d, const void* data, std::size_t size,
     }
 
     // Retry operation if interrupted by signal.
-    if (ec == ASIO_NAMESPACE::error::interrupted)
+    if (ec == ModioAsio::error::interrupted)
       continue;
 
     // Check if we need to run the operation again.
-    if (ec == ASIO_NAMESPACE::error::would_block
-        || ec == ASIO_NAMESPACE::error::try_again)
+    if (ec == ModioAsio::error::would_block
+        || ec == ModioAsio::error::try_again)
       return false;
 
     // Operation failed.
@@ -478,18 +478,18 @@ bool non_blocking_write1(int d, const void* data, std::size_t size,
 #if defined(ASIO_HAS_FILE)
 
 std::size_t sync_read_at(int d, state_type state, uint64_t offset,
-    buf* bufs, std::size_t count, bool all_empty, ASIO_NAMESPACE::error_code& ec)
+    buf* bufs, std::size_t count, bool all_empty, ModioAsio::error_code& ec)
 {
   if (d == -1)
   {
-    ec = ASIO_NAMESPACE::error::bad_descriptor;
+    ec = ModioAsio::error::bad_descriptor;
     return 0;
   }
 
   // A request to read 0 bytes on a stream is a no-op.
   if (all_empty)
   {
-    ASIO_NAMESPACE::error::clear(ec);
+    ModioAsio::error::clear(ec);
     return 0;
   }
 
@@ -507,14 +507,14 @@ std::size_t sync_read_at(int d, state_type state, uint64_t offset,
     // Check for EOF.
     if (bytes == 0)
     {
-      ec = ASIO_NAMESPACE::error::eof;
+      ec = ModioAsio::error::eof;
       return 0;
     }
 
     // Operation failed.
     if ((state & user_set_non_blocking)
-        || (ec != ASIO_NAMESPACE::error::would_block
-          && ec != ASIO_NAMESPACE::error::try_again))
+        || (ec != ModioAsio::error::would_block
+          && ec != ModioAsio::error::try_again))
       return 0;
 
     // Wait for descriptor to become ready.
@@ -524,18 +524,18 @@ std::size_t sync_read_at(int d, state_type state, uint64_t offset,
 }
 
 std::size_t sync_read_at1(int d, state_type state, uint64_t offset,
-    void* data, std::size_t size, ASIO_NAMESPACE::error_code& ec)
+    void* data, std::size_t size, ModioAsio::error_code& ec)
 {
   if (d == -1)
   {
-    ec = ASIO_NAMESPACE::error::bad_descriptor;
+    ec = ModioAsio::error::bad_descriptor;
     return 0;
   }
 
   // A request to read 0 bytes on a stream is a no-op.
   if (size == 0)
   {
-    ASIO_NAMESPACE::error::clear(ec);
+    ModioAsio::error::clear(ec);
     return 0;
   }
 
@@ -553,14 +553,14 @@ std::size_t sync_read_at1(int d, state_type state, uint64_t offset,
     // Check for EOF.
     if (bytes == 0)
     {
-      ec = ASIO_NAMESPACE::error::eof;
+      ec = ModioAsio::error::eof;
       return 0;
     }
 
     // Operation failed.
     if ((state & user_set_non_blocking)
-        || (ec != ASIO_NAMESPACE::error::would_block
-          && ec != ASIO_NAMESPACE::error::try_again))
+        || (ec != ModioAsio::error::would_block
+          && ec != ModioAsio::error::try_again))
       return 0;
 
     // Wait for descriptor to become ready.
@@ -570,7 +570,7 @@ std::size_t sync_read_at1(int d, state_type state, uint64_t offset,
 }
 
 bool non_blocking_read_at(int d, uint64_t offset, buf* bufs, std::size_t count,
-    ASIO_NAMESPACE::error_code& ec, std::size_t& bytes_transferred)
+    ModioAsio::error_code& ec, std::size_t& bytes_transferred)
 {
   for (;;)
   {
@@ -581,7 +581,7 @@ bool non_blocking_read_at(int d, uint64_t offset, buf* bufs, std::size_t count,
     // Check for EOF.
     if (bytes == 0)
     {
-      ec = ASIO_NAMESPACE::error::eof;
+      ec = ModioAsio::error::eof;
       return true;
     }
 
@@ -593,12 +593,12 @@ bool non_blocking_read_at(int d, uint64_t offset, buf* bufs, std::size_t count,
     }
 
     // Retry operation if interrupted by signal.
-    if (ec == ASIO_NAMESPACE::error::interrupted)
+    if (ec == ModioAsio::error::interrupted)
       continue;
 
     // Check if we need to run the operation again.
-    if (ec == ASIO_NAMESPACE::error::would_block
-        || ec == ASIO_NAMESPACE::error::try_again)
+    if (ec == ModioAsio::error::would_block
+        || ec == ModioAsio::error::try_again)
       return false;
 
     // Operation failed.
@@ -608,7 +608,7 @@ bool non_blocking_read_at(int d, uint64_t offset, buf* bufs, std::size_t count,
 }
 
 bool non_blocking_read_at1(int d, uint64_t offset, void* data, std::size_t size,
-    ASIO_NAMESPACE::error_code& ec, std::size_t& bytes_transferred)
+    ModioAsio::error_code& ec, std::size_t& bytes_transferred)
 {
   for (;;)
   {
@@ -619,7 +619,7 @@ bool non_blocking_read_at1(int d, uint64_t offset, void* data, std::size_t size,
     // Check for EOF.
     if (bytes == 0)
     {
-      ec = ASIO_NAMESPACE::error::eof;
+      ec = ModioAsio::error::eof;
       return true;
     }
 
@@ -631,12 +631,12 @@ bool non_blocking_read_at1(int d, uint64_t offset, void* data, std::size_t size,
     }
 
     // Retry operation if interrupted by signal.
-    if (ec == ASIO_NAMESPACE::error::interrupted)
+    if (ec == ModioAsio::error::interrupted)
       continue;
 
     // Check if we need to run the operation again.
-    if (ec == ASIO_NAMESPACE::error::would_block
-        || ec == ASIO_NAMESPACE::error::try_again)
+    if (ec == ModioAsio::error::would_block
+        || ec == ModioAsio::error::try_again)
       return false;
 
     // Operation failed.
@@ -647,18 +647,18 @@ bool non_blocking_read_at1(int d, uint64_t offset, void* data, std::size_t size,
 
 std::size_t sync_write_at(int d, state_type state, uint64_t offset,
     const buf* bufs, std::size_t count, bool all_empty,
-    ASIO_NAMESPACE::error_code& ec)
+    ModioAsio::error_code& ec)
 {
   if (d == -1)
   {
-    ec = ASIO_NAMESPACE::error::bad_descriptor;
+    ec = ModioAsio::error::bad_descriptor;
     return 0;
   }
 
   // A request to write 0 bytes on a stream is a no-op.
   if (all_empty)
   {
-    ASIO_NAMESPACE::error::clear(ec);
+    ModioAsio::error::clear(ec);
     return 0;
   }
 
@@ -676,8 +676,8 @@ std::size_t sync_write_at(int d, state_type state, uint64_t offset,
 
     // Operation failed.
     if ((state & user_set_non_blocking)
-        || (ec != ASIO_NAMESPACE::error::would_block
-          && ec != ASIO_NAMESPACE::error::try_again))
+        || (ec != ModioAsio::error::would_block
+          && ec != ModioAsio::error::try_again))
       return 0;
 
     // Wait for descriptor to become ready.
@@ -687,18 +687,18 @@ std::size_t sync_write_at(int d, state_type state, uint64_t offset,
 }
 
 std::size_t sync_write_at1(int d, state_type state, uint64_t offset,
-    const void* data, std::size_t size, ASIO_NAMESPACE::error_code& ec)
+    const void* data, std::size_t size, ModioAsio::error_code& ec)
 {
   if (d == -1)
   {
-    ec = ASIO_NAMESPACE::error::bad_descriptor;
+    ec = ModioAsio::error::bad_descriptor;
     return 0;
   }
 
   // A request to write 0 bytes on a stream is a no-op.
   if (size == 0)
   {
-    ASIO_NAMESPACE::error::clear(ec);
+    ModioAsio::error::clear(ec);
     return 0;
   }
 
@@ -715,8 +715,8 @@ std::size_t sync_write_at1(int d, state_type state, uint64_t offset,
 
     // Operation failed.
     if ((state & user_set_non_blocking)
-        || (ec != ASIO_NAMESPACE::error::would_block
-          && ec != ASIO_NAMESPACE::error::try_again))
+        || (ec != ModioAsio::error::would_block
+          && ec != ModioAsio::error::try_again))
       return 0;
 
     // Wait for descriptor to become ready.
@@ -727,7 +727,7 @@ std::size_t sync_write_at1(int d, state_type state, uint64_t offset,
 
 bool non_blocking_write_at(int d, uint64_t offset,
     const buf* bufs, std::size_t count,
-    ASIO_NAMESPACE::error_code& ec, std::size_t& bytes_transferred)
+    ModioAsio::error_code& ec, std::size_t& bytes_transferred)
 {
   for (;;)
   {
@@ -744,12 +744,12 @@ bool non_blocking_write_at(int d, uint64_t offset,
     }
 
     // Retry operation if interrupted by signal.
-    if (ec == ASIO_NAMESPACE::error::interrupted)
+    if (ec == ModioAsio::error::interrupted)
       continue;
 
     // Check if we need to run the operation again.
-    if (ec == ASIO_NAMESPACE::error::would_block
-        || ec == ASIO_NAMESPACE::error::try_again)
+    if (ec == ModioAsio::error::would_block
+        || ec == ModioAsio::error::try_again)
       return false;
 
     // Operation failed.
@@ -760,7 +760,7 @@ bool non_blocking_write_at(int d, uint64_t offset,
 
 bool non_blocking_write_at1(int d, uint64_t offset,
     const void* data, std::size_t size,
-    ASIO_NAMESPACE::error_code& ec, std::size_t& bytes_transferred)
+    ModioAsio::error_code& ec, std::size_t& bytes_transferred)
 {
   for (;;)
   {
@@ -776,12 +776,12 @@ bool non_blocking_write_at1(int d, uint64_t offset,
     }
 
     // Retry operation if interrupted by signal.
-    if (ec == ASIO_NAMESPACE::error::interrupted)
+    if (ec == ModioAsio::error::interrupted)
       continue;
 
     // Check if we need to run the operation again.
-    if (ec == ASIO_NAMESPACE::error::would_block
-        || ec == ASIO_NAMESPACE::error::try_again)
+    if (ec == ModioAsio::error::would_block
+        || ec == ModioAsio::error::try_again)
       return false;
 
     // Operation failed.
@@ -793,11 +793,11 @@ bool non_blocking_write_at1(int d, uint64_t offset,
 #endif // defined(ASIO_HAS_FILE)
 
 int ioctl(int d, state_type& state, long cmd,
-    ioctl_arg_type* arg, ASIO_NAMESPACE::error_code& ec)
+    ioctl_arg_type* arg, ModioAsio::error_code& ec)
 {
   if (d == -1)
   {
-    ec = ASIO_NAMESPACE::error::bad_descriptor;
+    ec = ModioAsio::error::bad_descriptor;
     return -1;
   }
 
@@ -831,11 +831,11 @@ int ioctl(int d, state_type& state, long cmd,
   return result;
 }
 
-int fcntl(int d, int cmd, ASIO_NAMESPACE::error_code& ec)
+int fcntl(int d, int cmd, ModioAsio::error_code& ec)
 {
   if (d == -1)
   {
-    ec = ASIO_NAMESPACE::error::bad_descriptor;
+    ec = ModioAsio::error::bad_descriptor;
     return -1;
   }
 
@@ -844,11 +844,11 @@ int fcntl(int d, int cmd, ASIO_NAMESPACE::error_code& ec)
   return result;
 }
 
-int fcntl(int d, int cmd, long arg, ASIO_NAMESPACE::error_code& ec)
+int fcntl(int d, int cmd, long arg, ModioAsio::error_code& ec)
 {
   if (d == -1)
   {
-    ec = ASIO_NAMESPACE::error::bad_descriptor;
+    ec = ModioAsio::error::bad_descriptor;
     return -1;
   }
 
@@ -857,11 +857,11 @@ int fcntl(int d, int cmd, long arg, ASIO_NAMESPACE::error_code& ec)
   return result;
 }
 
-int poll_read(int d, state_type state, ASIO_NAMESPACE::error_code& ec)
+int poll_read(int d, state_type state, ModioAsio::error_code& ec)
 {
   if (d == -1)
   {
-    ec = ASIO_NAMESPACE::error::bad_descriptor;
+    ec = ModioAsio::error::bad_descriptor;
     return -1;
   }
 
@@ -874,15 +874,15 @@ int poll_read(int d, state_type state, ASIO_NAMESPACE::error_code& ec)
   get_last_error(ec, result < 0);
   if (result == 0)
     if (state & user_set_non_blocking)
-      ec = ASIO_NAMESPACE::error::would_block;
+      ec = ModioAsio::error::would_block;
   return result;
 }
 
-int poll_write(int d, state_type state, ASIO_NAMESPACE::error_code& ec)
+int poll_write(int d, state_type state, ModioAsio::error_code& ec)
 {
   if (d == -1)
   {
-    ec = ASIO_NAMESPACE::error::bad_descriptor;
+    ec = ModioAsio::error::bad_descriptor;
     return -1;
   }
 
@@ -895,15 +895,15 @@ int poll_write(int d, state_type state, ASIO_NAMESPACE::error_code& ec)
   get_last_error(ec, result < 0);
   if (result == 0)
     if (state & user_set_non_blocking)
-      ec = ASIO_NAMESPACE::error::would_block;
+      ec = ModioAsio::error::would_block;
   return result;
 }
 
-int poll_error(int d, state_type state, ASIO_NAMESPACE::error_code& ec)
+int poll_error(int d, state_type state, ModioAsio::error_code& ec)
 {
   if (d == -1)
   {
-    ec = ASIO_NAMESPACE::error::bad_descriptor;
+    ec = ModioAsio::error::bad_descriptor;
     return -1;
   }
 
@@ -916,13 +916,13 @@ int poll_error(int d, state_type state, ASIO_NAMESPACE::error_code& ec)
   get_last_error(ec, result < 0);
   if (result == 0)
     if (state & user_set_non_blocking)
-      ec = ASIO_NAMESPACE::error::would_block;
+      ec = ModioAsio::error::would_block;
   return result;
 }
 
 } // namespace descriptor_ops
 } // namespace detail
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

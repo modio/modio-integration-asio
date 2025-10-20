@@ -24,7 +24,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 // Helper template to determine the maximum number of prepared buffers.
@@ -82,7 +82,7 @@ public:
       next_elem_(0),
       next_elem_offset_(0)
   {
-    using ASIO_NAMESPACE::buffer_size;
+    using ModioAsio::buffer_size;
     total_size_ = buffer_size(buffers);
   }
 
@@ -97,15 +97,15 @@ public:
   {
     prepared_buffers_type result;
 
-    Buffer_Iterator next = ASIO_NAMESPACE::buffer_sequence_begin(buffers_);
-    Buffer_Iterator end = ASIO_NAMESPACE::buffer_sequence_end(buffers_);
+    Buffer_Iterator next = ModioAsio::buffer_sequence_begin(buffers_);
+    Buffer_Iterator end = ModioAsio::buffer_sequence_end(buffers_);
 
     std::advance(next, next_elem_);
     std::size_t elem_offset = next_elem_offset_;
     while (next != end && max_size > 0 && (result.count) < result.max_buffers)
     {
       Buffer next_buf = Buffer(*next) + elem_offset;
-      result.elems[result.count] = ASIO_NAMESPACE::buffer(next_buf, max_size);
+      result.elems[result.count] = ModioAsio::buffer(next_buf, max_size);
       max_size -= result.elems[result.count].size();
       elem_offset = 0;
       if (result.elems[result.count].size() > 0)
@@ -121,8 +121,8 @@ public:
   {
     total_consumed_ += size;
 
-    Buffer_Iterator next = ASIO_NAMESPACE::buffer_sequence_begin(buffers_);
-    Buffer_Iterator end = ASIO_NAMESPACE::buffer_sequence_end(buffers_);
+    Buffer_Iterator next = ModioAsio::buffer_sequence_begin(buffers_);
+    Buffer_Iterator end = ModioAsio::buffer_sequence_end(buffers_);
 
     std::advance(next, next_elem_);
     while (next != end && size > 0)
@@ -179,7 +179,7 @@ public:
   // Get the buffer for a single transfer, with a size.
   Buffer prepare(std::size_t max_size)
   {
-    return ASIO_NAMESPACE::buffer(buffer_ + total_consumed_, max_size);
+    return ModioAsio::buffer(buffer_ + total_consumed_, max_size);
   }
 
   // Consume the specified number of bytes from the buffers.
@@ -331,8 +331,8 @@ public:
     boost::array<Buffer, 2> result = {{
       Buffer(buffers_[0]), Buffer(buffers_[1]) }};
     std::size_t buffer0_size = result[0].size();
-    result[0] = ASIO_NAMESPACE::buffer(result[0] + total_consumed_, max_size);
-    result[1] = ASIO_NAMESPACE::buffer(
+    result[0] = ModioAsio::buffer(result[0] + total_consumed_, max_size);
+    result[1] = ModioAsio::buffer(
         result[1] + (total_consumed_ < buffer0_size
           ? 0 : total_consumed_ - buffer0_size),
         max_size - result[0].size());
@@ -383,8 +383,8 @@ public:
     std::array<Buffer, 2> result = {{
       Buffer(buffers_[0]), Buffer(buffers_[1]) }};
     std::size_t buffer0_size = result[0].size();
-    result[0] = ASIO_NAMESPACE::buffer(result[0] + total_consumed_, max_size);
-    result[1] = ASIO_NAMESPACE::buffer(
+    result[0] = ModioAsio::buffer(result[0] + total_consumed_, max_size);
+    result[1] = ModioAsio::buffer(
         result[1] + (total_consumed_ < buffer0_size
           ? 0 : total_consumed_ - buffer0_size),
         max_size - result[0].size());
@@ -414,7 +414,7 @@ private:
 // always passed through to the underlying read or write operation.
 template <typename Buffer>
 class consuming_buffers<Buffer, null_buffers, const mutable_buffer*>
-  : public ASIO_NAMESPACE::null_buffers
+  : public ModioAsio::null_buffers
 {
 public:
   consuming_buffers(const null_buffers&)
@@ -444,7 +444,7 @@ public:
 };
 
 } // namespace detail
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

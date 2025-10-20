@@ -28,7 +28,7 @@
 
 #if defined(GENERATING_DOCUMENTATION)
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace execution {
 
 /// A customisation point that creates a bulk sender.
@@ -41,7 +41,7 @@ namespace execution {
  * @li <tt>S.bulk_execute(F, N)</tt>, if that expression is valid. If the
  *   function selected does not execute <tt>N</tt> invocations of the function
  *   object <tt>F</tt> on the executor <tt>S</tt> in bulk with forward progress
- *   guarantee <tt>ASIO_NAMESPACE::query(S, execution::bulk_guarantee)</tt>, and
+ *   guarantee <tt>ModioAsio::query(S, execution::bulk_guarantee)</tt>, and
  *   the result of that function does not model <tt>sender<void></tt>, the
  *   program is ill-formed with no diagnostic required.
  *
@@ -51,14 +51,14 @@ namespace execution {
  *   declaration of <tt>execution::bulk_execute</tt>. If the function selected
  *   by overload resolution does not execute <tt>N</tt> invocations of the
  *   function object <tt>F</tt> on the executor <tt>S</tt> in bulk with forward
- *   progress guarantee <tt>ASIO_NAMESPACE::query(E,
+ *   progress guarantee <tt>ModioAsio::query(E,
  *   execution::bulk_guarantee)</tt>, and the result of that function does not
  *   model <tt>sender<void></tt>, the program is ill-formed with no diagnostic
  *   required.
  *
  * @li Otherwise, if the types <tt>F</tt> and
  *   <tt>executor_index_t<remove_cvref_t<S>></tt> model <tt>invocable</tt> and
- *   if <tt>ASIO_NAMESPACE::query(S, execution::bulk_guarantee)</tt> equals
+ *   if <tt>ModioAsio::query(S, execution::bulk_guarantee)</tt> equals
  *   <tt>execution::bulk_guarantee.unsequenced</tt>, then
  *
  *    - Evaluates <tt>DECAY_COPY(std::forward<decltype(F)>(F))</tt> on the
@@ -94,26 +94,26 @@ struct can_bulk_execute :
 };
 
 } // namespace execution
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #else // defined(GENERATING_DOCUMENTATION)
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace asio_execution_bulk_execute_fn {
 
-using ASIO_NAMESPACE::declval;
-using ASIO_NAMESPACE::enable_if;
-using ASIO_NAMESPACE::execution::bulk_guarantee_t;
-using ASIO_NAMESPACE::execution::detail::bulk_sender;
-using ASIO_NAMESPACE::execution::executor_index;
-using ASIO_NAMESPACE::execution::is_sender;
-using ASIO_NAMESPACE::is_convertible;
-using ASIO_NAMESPACE::is_same;
-using ASIO_NAMESPACE::remove_cvref;
-using ASIO_NAMESPACE::result_of;
-using ASIO_NAMESPACE::traits::bulk_execute_free;
-using ASIO_NAMESPACE::traits::bulk_execute_member;
-using ASIO_NAMESPACE::traits::static_require;
+using ModioAsio::declval;
+using ModioAsio::enable_if;
+using ModioAsio::execution::bulk_guarantee_t;
+using ModioAsio::execution::detail::bulk_sender;
+using ModioAsio::execution::executor_index;
+using ModioAsio::execution::is_sender;
+using ModioAsio::is_convertible;
+using ModioAsio::is_same;
+using ModioAsio::remove_cvref;
+using ModioAsio::result_of;
+using ModioAsio::traits::bulk_execute_free;
+using ModioAsio::traits::bulk_execute_member;
+using ModioAsio::traits::static_require;
 
 void bulk_execute();
 
@@ -339,23 +339,23 @@ template <typename T>
 const T static_instance<T>::instance = {};
 
 } // namespace asio_execution_bulk_execute_fn
-} // namespace ASIO_NAMESPACE
-namespace ASIO_NAMESPACE {
+} // namespace ModioAsio
+namespace ModioAsio {
 namespace execution {
 namespace {
 
 static ASIO_CONSTEXPR
-  const ASIO_NAMESPACE::asio_execution_bulk_execute_fn::impl& bulk_execute =
-    ASIO_NAMESPACE::asio_execution_bulk_execute_fn::static_instance<>::instance;
+  const ModioAsio::asio_execution_bulk_execute_fn::impl& bulk_execute =
+    ModioAsio::asio_execution_bulk_execute_fn::static_instance<>::instance;
 
 } // namespace
 
 template <typename S, typename F, typename N>
 struct can_bulk_execute :
   integral_constant<bool,
-    ASIO_NAMESPACE::asio_execution_bulk_execute_fn::call_traits<
+    ModioAsio::asio_execution_bulk_execute_fn::call_traits<
       S, void(F, N)>::overload !=
-        ASIO_NAMESPACE::asio_execution_bulk_execute_fn::ill_formed>
+        ModioAsio::asio_execution_bulk_execute_fn::ill_formed>
 {
 };
 
@@ -369,7 +369,7 @@ constexpr bool can_bulk_execute_v = can_bulk_execute<S, F, N>::value;
 template <typename S, typename F, typename N>
 struct is_nothrow_bulk_execute :
   integral_constant<bool,
-    ASIO_NAMESPACE::asio_execution_bulk_execute_fn::call_traits<
+    ModioAsio::asio_execution_bulk_execute_fn::call_traits<
       S, void(F, N)>::is_noexcept>
 {
 };
@@ -385,12 +385,12 @@ constexpr bool is_nothrow_bulk_execute_v
 template <typename S, typename F, typename N>
 struct bulk_execute_result
 {
-  typedef typename ASIO_NAMESPACE::asio_execution_bulk_execute_fn::call_traits<
+  typedef typename ModioAsio::asio_execution_bulk_execute_fn::call_traits<
       S, void(F, N)>::result_type type;
 };
 
 } // namespace execution
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #endif // defined(GENERATING_DOCUMENTATION)
 

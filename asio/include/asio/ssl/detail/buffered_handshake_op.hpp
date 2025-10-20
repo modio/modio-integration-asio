@@ -21,7 +21,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace ssl {
 namespace detail {
 
@@ -38,22 +38,22 @@ public:
       const ConstBufferSequence& buffers)
     : type_(type),
       buffers_(buffers),
-      total_buffer_size_(ASIO_NAMESPACE::buffer_size(buffers_))
+      total_buffer_size_(ModioAsio::buffer_size(buffers_))
   {
   }
 
   engine::want operator()(engine& eng,
-      ASIO_NAMESPACE::error_code& ec,
+      ModioAsio::error_code& ec,
       std::size_t& bytes_transferred) const
   {
     return this->process(eng, ec, bytes_transferred,
-        ASIO_NAMESPACE::buffer_sequence_begin(buffers_),
-        ASIO_NAMESPACE::buffer_sequence_end(buffers_));
+        ModioAsio::buffer_sequence_begin(buffers_),
+        ModioAsio::buffer_sequence_end(buffers_));
   }
 
   template <typename Handler>
   void call_handler(Handler& handler,
-      const ASIO_NAMESPACE::error_code& ec,
+      const ModioAsio::error_code& ec,
       const std::size_t& bytes_transferred) const
   {
     ASIO_MOVE_OR_LVALUE(Handler)(handler)(ec, bytes_transferred);
@@ -62,7 +62,7 @@ public:
 private:
   template <typename Iterator>
   engine::want process(engine& eng,
-      ASIO_NAMESPACE::error_code& ec,
+      ModioAsio::error_code& ec,
       std::size_t& bytes_transferred,
       Iterator begin, Iterator end) const
   {
@@ -112,7 +112,7 @@ private:
 
 } // namespace detail
 } // namespace ssl
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

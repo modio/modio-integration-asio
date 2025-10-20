@@ -25,12 +25,12 @@
 
 #include <boost/date_time/posix_time/posix_time_types.hpp>
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 
 /// Typedef for the typical usage of timer. Uses a UTC clock.
 typedef basic_deadline_timer<boost::posix_time::ptime> deadline_timer;
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #endif // defined(ASIO_HAS_BOOST_DATE_TIME)
        // || defined(GENERATING_DOCUMENTATION)

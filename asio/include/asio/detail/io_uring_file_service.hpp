@@ -30,7 +30,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 // Extend the io_uring_descriptor_service to provide file support.
@@ -90,14 +90,14 @@ public:
   }
 
   // Open the file using the specified path name.
-  ASIO_DECL ASIO_NAMESPACE::error_code open(implementation_type& impl,
+  ASIO_DECL ModioAsio::error_code open(implementation_type& impl,
       const char* path, file_base::flags open_flags,
-      ASIO_NAMESPACE::error_code& ec);
+      ModioAsio::error_code& ec);
 
   // Assign a native descriptor to a file implementation.
-  ASIO_NAMESPACE::error_code assign(implementation_type& impl,
+  ModioAsio::error_code assign(implementation_type& impl,
       const native_handle_type& native_descriptor,
-      ASIO_NAMESPACE::error_code& ec)
+      ModioAsio::error_code& ec)
   {
     return descriptor_service_.assign(impl, native_descriptor, ec);
   }
@@ -115,8 +115,8 @@ public:
   }
 
   // Destroy a file implementation.
-  ASIO_NAMESPACE::error_code close(implementation_type& impl,
-      ASIO_NAMESPACE::error_code& ec)
+  ModioAsio::error_code close(implementation_type& impl,
+      ModioAsio::error_code& ec)
   {
     return descriptor_service_.close(impl, ec);
   }
@@ -129,43 +129,43 @@ public:
 
   // Release ownership of the native descriptor representation.
   native_handle_type release(implementation_type& impl,
-      ASIO_NAMESPACE::error_code& ec)
+      ModioAsio::error_code& ec)
   {
     ec = success_ec_;
     return descriptor_service_.release(impl);
   }
 
   // Cancel all operations associated with the file.
-  ASIO_NAMESPACE::error_code cancel(implementation_type& impl,
-      ASIO_NAMESPACE::error_code& ec)
+  ModioAsio::error_code cancel(implementation_type& impl,
+      ModioAsio::error_code& ec)
   {
     return descriptor_service_.cancel(impl, ec);
   }
 
   // Get the size of the file.
   ASIO_DECL uint64_t size(const implementation_type& impl,
-      ASIO_NAMESPACE::error_code& ec) const;
+      ModioAsio::error_code& ec) const;
 
   // Alter the size of the file.
-  ASIO_DECL ASIO_NAMESPACE::error_code resize(implementation_type& impl,
-      uint64_t n, ASIO_NAMESPACE::error_code& ec);
+  ASIO_DECL ModioAsio::error_code resize(implementation_type& impl,
+      uint64_t n, ModioAsio::error_code& ec);
 
   // Synchronise the file to disk.
-  ASIO_DECL ASIO_NAMESPACE::error_code sync_all(implementation_type& impl,
-      ASIO_NAMESPACE::error_code& ec);
+  ASIO_DECL ModioAsio::error_code sync_all(implementation_type& impl,
+      ModioAsio::error_code& ec);
 
   // Synchronise the file data to disk.
-  ASIO_DECL ASIO_NAMESPACE::error_code sync_data(implementation_type& impl,
-      ASIO_NAMESPACE::error_code& ec);
+  ASIO_DECL ModioAsio::error_code sync_data(implementation_type& impl,
+      ModioAsio::error_code& ec);
 
   // Seek to a position in the file.
   ASIO_DECL uint64_t seek(implementation_type& impl, int64_t offset,
-      file_base::seek_basis whence, ASIO_NAMESPACE::error_code& ec);
+      file_base::seek_basis whence, ModioAsio::error_code& ec);
 
   // Write the given data. Returns the number of bytes written.
   template <typename ConstBufferSequence>
   size_t write_some(implementation_type& impl,
-      const ConstBufferSequence& buffers, ASIO_NAMESPACE::error_code& ec)
+      const ConstBufferSequence& buffers, ModioAsio::error_code& ec)
   {
     return descriptor_service_.write_some(impl, buffers, ec);
   }
@@ -184,7 +184,7 @@ public:
   // bytes written.
   template <typename ConstBufferSequence>
   size_t write_some_at(implementation_type& impl, uint64_t offset,
-      const ConstBufferSequence& buffers, ASIO_NAMESPACE::error_code& ec)
+      const ConstBufferSequence& buffers, ModioAsio::error_code& ec)
   {
     return descriptor_service_.write_some_at(impl, offset, buffers, ec);
   }
@@ -203,7 +203,7 @@ public:
   // Read some data. Returns the number of bytes read.
   template <typename MutableBufferSequence>
   size_t read_some(implementation_type& impl,
-      const MutableBufferSequence& buffers, ASIO_NAMESPACE::error_code& ec)
+      const MutableBufferSequence& buffers, ModioAsio::error_code& ec)
   {
     return descriptor_service_.read_some(impl, buffers, ec);
   }
@@ -222,7 +222,7 @@ public:
   // Read some data. Returns the number of bytes read.
   template <typename MutableBufferSequence>
   size_t read_some_at(implementation_type& impl, uint64_t offset,
-      const MutableBufferSequence& buffers, ASIO_NAMESPACE::error_code& ec)
+      const MutableBufferSequence& buffers, ModioAsio::error_code& ec)
   {
     return descriptor_service_.read_some_at(impl, offset, buffers, ec);
   }
@@ -244,11 +244,11 @@ private:
   descriptor_service descriptor_service_;
 
   // Cached success value to avoid accessing category singleton.
-  const ASIO_NAMESPACE::error_code success_ec_;
+  const ModioAsio::error_code success_ec_;
 };
 
 } // namespace detail
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

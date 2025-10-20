@@ -23,31 +23,31 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace ip {
 
 std::string host_name()
 {
   char name[1024];
-  ASIO_NAMESPACE::error_code ec;
-  if (ASIO_NAMESPACE::detail::socket_ops::gethostname(name, sizeof(name), ec) != 0)
+  ModioAsio::error_code ec;
+  if (ModioAsio::detail::socket_ops::gethostname(name, sizeof(name), ec) != 0)
   {
-    ASIO_NAMESPACE::detail::throw_error(ec);
+    ModioAsio::detail::throw_error(ec);
     return std::string();
   }
   return std::string(name);
 }
 
-std::string host_name(ASIO_NAMESPACE::error_code& ec)
+std::string host_name(ModioAsio::error_code& ec)
 {
   char name[1024];
-  if (ASIO_NAMESPACE::detail::socket_ops::gethostname(name, sizeof(name), ec) != 0)
+  if (ModioAsio::detail::socket_ops::gethostname(name, sizeof(name), ec) != 0)
     return std::string();
   return std::string(name);
 }
 
 } // namespace ip
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

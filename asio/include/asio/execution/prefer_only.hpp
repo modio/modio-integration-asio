@@ -24,7 +24,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 
 #if defined(GENERATING_DOCUMENTATION)
 
@@ -109,7 +109,7 @@ struct prefer_only_property
 template <typename InnerProperty>
 struct prefer_only_property<InnerProperty,
     typename void_type<
-      decltype(ASIO_NAMESPACE::declval<const InnerProperty>().value())
+      decltype(ModioAsio::declval<const InnerProperty>().value())
     >::type>
 {
   InnerProperty property;
@@ -121,8 +121,8 @@ struct prefer_only_property<InnerProperty,
 
   ASIO_CONSTEXPR auto value() const
     ASIO_NOEXCEPT_IF((
-      noexcept(ASIO_NAMESPACE::declval<const InnerProperty>().value())))
-    -> decltype(ASIO_NAMESPACE::declval<const InnerProperty>().value())
+      noexcept(ModioAsio::declval<const InnerProperty>().value())))
+    -> decltype(ModioAsio::declval<const InnerProperty>().value())
   {
     return property.value();
   }
@@ -231,7 +231,7 @@ struct prefer_only :
 #endif // !defined(ASIO_MSVC)
        //   && !defined(__clang__)
   {
-    return ASIO_NAMESPACE::prefer(ex, p.property);
+    return ModioAsio::prefer(ex, p.property);
   }
 
   template <typename Executor, typename Property>
@@ -251,7 +251,7 @@ struct prefer_only :
 #endif // !defined(ASIO_MSVC)
        //   && !defined(__clang__)
   {
-    return ASIO_NAMESPACE::query(ex, p.property);
+    return ModioAsio::query(ex, p.property);
   }
 };
 
@@ -324,7 +324,7 @@ struct query_free<T, execution::prefer_only<InnerProperty>,
 
 #endif // defined(GENERATING_DOCUMENTATION)
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

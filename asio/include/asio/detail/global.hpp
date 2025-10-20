@@ -29,7 +29,7 @@
 # error Only Windows, POSIX and std::call_once are supported!
 #endif
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 template <typename T>
@@ -47,6 +47,6 @@ inline T& global()
 }
 
 } // namespace detail
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #endif // ASIO_DETAIL_GLOBAL_HPP

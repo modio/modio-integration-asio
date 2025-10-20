@@ -23,7 +23,7 @@
 # include <boost/exception_ptr.hpp>
 #endif // defined(ASIO_HAS_STD_EXCEPTION_PTR)
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 
 #if defined(ASIO_HAS_STD_EXCEPTION_PTR)
 using std::exception_ptr;
@@ -35,6 +35,6 @@ using boost::current_exception;
 using boost::rethrow_exception;
 #endif // defined(ASIO_HAS_STD_EXCEPTION_PTR)
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #endif // ASIO_DETAIL_EXCEPTION_HPP

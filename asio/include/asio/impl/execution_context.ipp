@@ -21,10 +21,10 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 
 execution_context::execution_context()
-  : service_registry_(new ASIO_NAMESPACE::detail::service_registry(*this))
+  : service_registry_(new ModioAsio::detail::service_registry(*this))
 {
 }
 
@@ -46,7 +46,7 @@ void execution_context::destroy()
 }
 
 void execution_context::notify_fork(
-    ASIO_NAMESPACE::execution_context::fork_event event)
+    ModioAsio::execution_context::fork_event event)
 {
   service_registry_->notify_fork(event);
 }
@@ -75,7 +75,7 @@ invalid_service_owner::invalid_service_owner()
 {
 }
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

@@ -37,7 +37,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 
 #if defined(GENERATING_DOCUMENTATION)
 
@@ -91,11 +91,11 @@ public:
   /// Obtain a polymorphic wrapper with the specified property.
   /**
    * Do not call this function directly. It is intended for use with the
-   * ASIO_NAMESPACE::require and ASIO_NAMESPACE::prefer customisation points.
+   * ModioAsio::require and ModioAsio::prefer customisation points.
    *
    * For example:
    * @code execution::any_executor<execution::blocking_t::possibly_t> ex = ...;
-   * auto ex2 = ASIO_NAMESPACE::requre(ex, execution::blocking.possibly); @endcode
+   * auto ex2 = ModioAsio::requre(ex, execution::blocking.possibly); @endcode
    */
   template <typename Property>
   any_executor require(Property) const;
@@ -103,11 +103,11 @@ public:
   /// Obtain a polymorphic wrapper with the specified property.
   /**
    * Do not call this function directly. It is intended for use with the
-   * ASIO_NAMESPACE::prefer customisation point.
+   * ModioAsio::prefer customisation point.
    *
    * For example:
    * @code execution::any_executor<execution::blocking_t::possibly_t> ex = ...;
-   * auto ex2 = ASIO_NAMESPACE::prefer(ex, execution::blocking.possibly); @endcode
+   * auto ex2 = ModioAsio::prefer(ex, execution::blocking.possibly); @endcode
    */
   template <typename Property>
   any_executor prefer(Property) const;
@@ -115,11 +115,11 @@ public:
   /// Obtain the value associated with the specified property.
   /**
    * Do not call this function directly. It is intended for use with the
-   * ASIO_NAMESPACE::query customisation point.
+   * ModioAsio::query customisation point.
    *
    * For example:
    * @code execution::any_executor<execution::occupancy_t> ex = ...;
-   * size_t n = ASIO_NAMESPACE::query(ex, execution::occupancy); @endcode
+   * size_t n = ModioAsio::query(ex, execution::occupancy); @endcode
    */
   template <typename Property>
   typename Property::polymorphic_query_result_type query(Property) const;
@@ -133,7 +133,7 @@ public:
    * @code execution::any_executor<> ex = ...;
    * execution::execute(ex, my_function_object); @endcode
    *
-   * Throws ASIO_NAMESPACE::bad_executor if the polymorphic wrapper has no target.
+   * Throws ModioAsio::bad_executor if the polymorphic wrapper has no target.
    */
   template <typename Function>
   void execute(Function&& f) const;
@@ -512,15 +512,15 @@ public:
 
   template <ASIO_EXECUTION_EXECUTOR Executor>
   any_executor_base(Executor other, true_type)
-    : object_fns_(object_fns_table<ASIO_NAMESPACE::detail::shared_ptr<void> >()),
+    : object_fns_(object_fns_table<ModioAsio::detail::shared_ptr<void> >()),
       target_fns_(other.target_fns_)
   {
-    ASIO_NAMESPACE::detail::shared_ptr<Executor> p =
-      ASIO_NAMESPACE::detail::make_shared<Executor>(
+    ModioAsio::detail::shared_ptr<Executor> p =
+      ModioAsio::detail::make_shared<Executor>(
           ASIO_MOVE_CAST(Executor)(other));
     target_ = p->template target<void>();
-    new (&object_) ASIO_NAMESPACE::detail::shared_ptr<void>(
-        ASIO_MOVE_CAST(ASIO_NAMESPACE::detail::shared_ptr<Executor>)(p));
+    new (&object_) ModioAsio::detail::shared_ptr<void>(
+        ASIO_MOVE_CAST(ModioAsio::detail::shared_ptr<Executor>)(p));
   }
 
   any_executor_base(const any_executor_base& other) ASIO_NOEXCEPT
@@ -602,7 +602,7 @@ public:
   {
     if (target_fns_->blocking_execute != 0)
     {
-      ASIO_NAMESPACE::detail::non_const_lvalue<F> f2(f);
+      ModioAsio::detail::non_const_lvalue<F> f2(f);
       target_fns_->blocking_execute(*this, function_view(f2.value));
     }
     else
@@ -718,20 +718,20 @@ protected:
 
   static void destroy_shared(any_executor_base& ex)
   {
-    typedef ASIO_NAMESPACE::detail::shared_ptr<void> type;
+    typedef ModioAsio::detail::shared_ptr<void> type;
     ex.object<type>().~type();
   }
 
   static void copy_shared(any_executor_base& ex1, const any_executor_base& ex2)
   {
-    typedef ASIO_NAMESPACE::detail::shared_ptr<void> type;
+    typedef ModioAsio::detail::shared_ptr<void> type;
     new (&ex1.object_) type(ex2.object<type>());
     ex1.target_ = ex2.target_;
   }
 
   static void move_shared(any_executor_base& ex1, any_executor_base& ex2)
   {
-    typedef ASIO_NAMESPACE::detail::shared_ptr<void> type;
+    typedef ModioAsio::detail::shared_ptr<void> type;
     new (&ex1.object_) type(ASIO_MOVE_CAST(type)(ex2.object<type>()));
     ex1.target_ = ex2.target_;
     ex2.object<type>().~type();
@@ -739,14 +739,14 @@ protected:
 
   static const void* target_shared(const any_executor_base& ex)
   {
-    typedef ASIO_NAMESPACE::detail::shared_ptr<void> type;
+    typedef ModioAsio::detail::shared_ptr<void> type;
     return ex.object<type>().get();
   }
 
   template <typename Obj>
   static const object_fns* object_fns_table(
       typename enable_if<
-        is_same<Obj, ASIO_NAMESPACE::detail::shared_ptr<void> >::value
+        is_same<Obj, ModioAsio::detail::shared_ptr<void> >::value
       >::type* = 0)
   {
     static const object_fns fns =
@@ -790,7 +790,7 @@ protected:
   static const object_fns* object_fns_table(
       typename enable_if<
         !is_same<Obj, void>::value
-          && !is_same<Obj, ASIO_NAMESPACE::detail::shared_ptr<void> >::value
+          && !is_same<Obj, ModioAsio::detail::shared_ptr<void> >::value
       >::type* = 0)
   {
     static const object_fns fns =
@@ -803,8 +803,8 @@ protected:
     return &fns;
   }
 
-  typedef ASIO_NAMESPACE::detail::executor_function function;
-  typedef ASIO_NAMESPACE::detail::executor_function_view function_view;
+  typedef ModioAsio::detail::executor_function function;
+  typedef ModioAsio::detail::executor_function_view function_view;
 
   struct target_fns
   {
@@ -839,13 +839,13 @@ protected:
       ASIO_MOVE_ARG(function))
   {
     bad_executor ex;
-    ASIO_NAMESPACE::detail::throw_exception(ex);
+    ModioAsio::detail::throw_exception(ex);
   }
 
   static void blocking_execute_void(const any_executor_base&, function_view)
   {
     bad_executor ex;
-    ASIO_NAMESPACE::detail::throw_exception(ex);
+    ModioAsio::detail::throw_exception(ex);
   }
 
   template <typename Ex>
@@ -932,24 +932,24 @@ protected:
   static void query_fn_void(void*, const void*, const void*)
   {
     bad_executor ex;
-    ASIO_NAMESPACE::detail::throw_exception(ex);
+    ModioAsio::detail::throw_exception(ex);
   }
 
   template <typename Ex, class Prop>
   static void query_fn_non_void(void*, const void* ex, const void* prop,
       typename enable_if<
-        ASIO_NAMESPACE::can_query<const Ex&, const Prop&>::value
+        ModioAsio::can_query<const Ex&, const Prop&>::value
           && is_same<typename Prop::polymorphic_query_result_type, void>::value
       >::type*)
   {
-    ASIO_NAMESPACE::query(*static_cast<const Ex*>(ex),
+    ModioAsio::query(*static_cast<const Ex*>(ex),
         *static_cast<const Prop*>(prop));
   }
 
   template <typename Ex, class Prop>
   static void query_fn_non_void(void*, const void*, const void*,
       typename enable_if<
-        !ASIO_NAMESPACE::can_query<const Ex&, const Prop&>::value
+        !ModioAsio::can_query<const Ex&, const Prop&>::value
           && is_same<typename Prop::polymorphic_query_result_type, void>::value
       >::type*)
   {
@@ -958,7 +958,7 @@ protected:
   template <typename Ex, class Prop>
   static void query_fn_non_void(void* result, const void* ex, const void* prop,
       typename enable_if<
-        ASIO_NAMESPACE::can_query<const Ex&, const Prop&>::value
+        ModioAsio::can_query<const Ex&, const Prop&>::value
           && !is_same<typename Prop::polymorphic_query_result_type, void>::value
           && is_reference<typename Prop::polymorphic_query_result_type>::value
       >::type*)
@@ -966,14 +966,14 @@ protected:
     *static_cast<typename remove_reference<
       typename Prop::polymorphic_query_result_type>::type**>(result)
         = &static_cast<typename Prop::polymorphic_query_result_type>(
-            ASIO_NAMESPACE::query(*static_cast<const Ex*>(ex),
+            ModioAsio::query(*static_cast<const Ex*>(ex),
               *static_cast<const Prop*>(prop)));
   }
 
   template <typename Ex, class Prop>
   static void query_fn_non_void(void*, const void*, const void*,
       typename enable_if<
-        !ASIO_NAMESPACE::can_query<const Ex&, const Prop&>::value
+        !ModioAsio::can_query<const Ex&, const Prop&>::value
           && !is_same<typename Prop::polymorphic_query_result_type, void>::value
           && is_reference<typename Prop::polymorphic_query_result_type>::value
       >::type*)
@@ -984,21 +984,21 @@ protected:
   template <typename Ex, class Prop>
   static void query_fn_non_void(void* result, const void* ex, const void* prop,
       typename enable_if<
-        ASIO_NAMESPACE::can_query<const Ex&, const Prop&>::value
+        ModioAsio::can_query<const Ex&, const Prop&>::value
           && !is_same<typename Prop::polymorphic_query_result_type, void>::value
           && is_scalar<typename Prop::polymorphic_query_result_type>::value
       >::type*)
   {
     *static_cast<typename Prop::polymorphic_query_result_type*>(result)
       = static_cast<typename Prop::polymorphic_query_result_type>(
-          ASIO_NAMESPACE::query(*static_cast<const Ex*>(ex),
+          ModioAsio::query(*static_cast<const Ex*>(ex),
             *static_cast<const Prop*>(prop)));
   }
 
   template <typename Ex, class Prop>
   static void query_fn_non_void(void* result, const void*, const void*,
       typename enable_if<
-        !ASIO_NAMESPACE::can_query<const Ex&, const Prop&>::value
+        !ModioAsio::can_query<const Ex&, const Prop&>::value
           && !is_same<typename Prop::polymorphic_query_result_type, void>::value
           && is_scalar<typename Prop::polymorphic_query_result_type>::value
       >::type*)
@@ -1010,7 +1010,7 @@ protected:
   template <typename Ex, class Prop>
   static void query_fn_non_void(void* result, const void* ex, const void* prop,
       typename enable_if<
-        ASIO_NAMESPACE::can_query<const Ex&, const Prop&>::value
+        ModioAsio::can_query<const Ex&, const Prop&>::value
           && !is_same<typename Prop::polymorphic_query_result_type, void>::value
           && !is_reference<typename Prop::polymorphic_query_result_type>::value
           && !is_scalar<typename Prop::polymorphic_query_result_type>::value
@@ -1018,7 +1018,7 @@ protected:
   {
     *static_cast<typename Prop::polymorphic_query_result_type**>(result)
       = new typename Prop::polymorphic_query_result_type(
-          ASIO_NAMESPACE::query(*static_cast<const Ex*>(ex),
+          ModioAsio::query(*static_cast<const Ex*>(ex),
             *static_cast<const Prop*>(prop)));
   }
 
@@ -1060,7 +1060,7 @@ protected:
       >::type*)
   {
     bad_executor ex;
-    ASIO_NAMESPACE::detail::throw_exception(ex);
+    ModioAsio::detail::throw_exception(ex);
     return Poly();
   }
 
@@ -1070,7 +1070,7 @@ protected:
         !is_same<Ex, void>::value && Prop::is_requirable
       >::type*)
   {
-    return ASIO_NAMESPACE::require(*static_cast<const Ex*>(ex),
+    return ModioAsio::require(*static_cast<const Ex*>(ex),
         *static_cast<const Prop*>(prop));
   }
 
@@ -1093,7 +1093,7 @@ protected:
       >::type*)
   {
     bad_executor ex;
-    ASIO_NAMESPACE::detail::throw_exception(ex);
+    ModioAsio::detail::throw_exception(ex);
     return Poly();
   }
 
@@ -1103,7 +1103,7 @@ protected:
         !is_same<Ex, void>::value && Prop::is_preferable
       >::type*)
   {
-    return ASIO_NAMESPACE::prefer(*static_cast<const Ex*>(ex),
+    return ModioAsio::prefer(*static_cast<const Ex*>(ex),
         *static_cast<const Prop*>(prop));
   }
 
@@ -1135,7 +1135,7 @@ private:
   template <typename Executor>
   static execution::blocking_t query_blocking(const Executor& ex, true_type)
   {
-    return ASIO_NAMESPACE::query(ex, execution::blocking);
+    return ModioAsio::query(ex, execution::blocking);
   }
 
   template <typename Executor>
@@ -1154,21 +1154,21 @@ private:
   template <typename Executor>
   void construct_object(Executor& ex, false_type)
   {
-    object_fns_ = object_fns_table<ASIO_NAMESPACE::detail::shared_ptr<void> >();
-    ASIO_NAMESPACE::detail::shared_ptr<Executor> p =
-      ASIO_NAMESPACE::detail::make_shared<Executor>(
+    object_fns_ = object_fns_table<ModioAsio::detail::shared_ptr<void> >();
+    ModioAsio::detail::shared_ptr<Executor> p =
+      ModioAsio::detail::make_shared<Executor>(
           ASIO_MOVE_CAST(Executor)(ex));
     target_ = p.get();
-    new (&object_) ASIO_NAMESPACE::detail::shared_ptr<void>(
-        ASIO_MOVE_CAST(ASIO_NAMESPACE::detail::shared_ptr<Executor>)(p));
+    new (&object_) ModioAsio::detail::shared_ptr<void>(
+        ASIO_MOVE_CAST(ModioAsio::detail::shared_ptr<Executor>)(p));
   }
 
 /*private:*/public:
 //  template <typename...> friend class any_executor;
 
   typedef aligned_storage<
-      sizeof(ASIO_NAMESPACE::detail::shared_ptr<void>) + sizeof(void*),
-      alignment_of<ASIO_NAMESPACE::detail::shared_ptr<void> >::value
+      sizeof(ModioAsio::detail::shared_ptr<void>) + sizeof(void*),
+      alignment_of<ModioAsio::detail::shared_ptr<void> >::value
     >::type object_type;
 
   object_type object_;
@@ -1649,7 +1649,7 @@ public:
     typename found::query_result_type* result;
     prop_fns_[found::index].query(&result, object_fns_->target(*this),
         &static_cast<const typename found::type&>(p));
-    return *ASIO_NAMESPACE::detail::scoped_ptr<
+    return *ModioAsio::detail::scoped_ptr<
       typename found::query_result_type>(result);
   }
 
@@ -2064,7 +2064,7 @@ inline void swap(any_executor<SupportableProperties...>& a,
       typename found::query_result_type* result; \
       prop_fns_[found::index].query(&result, object_fns_->target(*this), \
           &static_cast<const typename found::type&>(p)); \
-      return *ASIO_NAMESPACE::detail::scoped_ptr< \
+      return *ModioAsio::detail::scoped_ptr< \
         typename found::query_result_type>(result); \
     } \
     \
@@ -2344,7 +2344,7 @@ struct prefer_member<
 
 #endif // defined(GENERATING_DOCUMENTATION)
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

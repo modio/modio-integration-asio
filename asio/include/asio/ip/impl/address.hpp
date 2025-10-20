@@ -21,31 +21,31 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace ip {
 
 #if !defined(ASIO_NO_DEPRECATED)
 
 inline address address::from_string(const char* str)
 {
-  return ASIO_NAMESPACE::ip::make_address(str);
+  return ModioAsio::ip::make_address(str);
 }
 
 inline address address::from_string(
-    const char* str, ASIO_NAMESPACE::error_code& ec)
+    const char* str, ModioAsio::error_code& ec)
 {
-  return ASIO_NAMESPACE::ip::make_address(str, ec);
+  return ModioAsio::ip::make_address(str, ec);
 }
 
 inline address address::from_string(const std::string& str)
 {
-  return ASIO_NAMESPACE::ip::make_address(str);
+  return ModioAsio::ip::make_address(str);
 }
 
 inline address address::from_string(
-    const std::string& str, ASIO_NAMESPACE::error_code& ec)
+    const std::string& str, ModioAsio::error_code& ec)
 {
-  return ASIO_NAMESPACE::ip::make_address(str, ec);
+  return ModioAsio::ip::make_address(str, ec);
 }
 
 #endif // !defined(ASIO_NO_DEPRECATED)
@@ -58,7 +58,7 @@ std::basic_ostream<Elem, Traits>& operator<<(
 }
 
 } // namespace ip
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

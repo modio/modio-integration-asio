@@ -20,7 +20,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 class signal_op
@@ -28,7 +28,7 @@ class signal_op
 {
 public:
   // The error code to be passed to the completion handler.
-  ASIO_NAMESPACE::error_code ec_;
+  ModioAsio::error_code ec_;
 
   // The operation key used for targeted cancellation.
   void* cancellation_key_;
@@ -46,7 +46,7 @@ protected:
 };
 
 } // namespace detail
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

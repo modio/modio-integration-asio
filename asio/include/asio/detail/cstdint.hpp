@@ -23,7 +23,7 @@
 # include <boost/cstdint.hpp>
 #endif // defined(ASIO_HAS_CSTDINT)
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 
 #if defined(ASIO_HAS_CSTDINT)
 using std::int16_t;
@@ -57,6 +57,6 @@ using boost::uintptr_t;
 using boost::uintmax_t;
 #endif // defined(ASIO_HAS_CSTDINT)
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #endif // ASIO_DETAIL_CSTDINT_HPP

@@ -66,7 +66,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 
 class mutable_buffer;
 class const_buffer;
@@ -82,7 +82,7 @@ class const_buffer;
  * The contents of a buffer may be accessed using the @c data() and @c size()
  * member functions:
  *
- * @code ASIO_NAMESPACE::mutable_buffer b1 = ...;
+ * @code ModioAsio::mutable_buffer b1 = ...;
  * std::size_t s1 = b1.size();
  * unsigned char* p1 = static_cast<unsigned char*>(b1.data());
  * @endcode
@@ -109,14 +109,14 @@ public:
 
 #if defined(ASIO_ENABLE_BUFFER_DEBUGGING)
   mutable_buffer(void* data, std::size_t size,
-      ASIO_NAMESPACE::detail::function<void()> debug_check)
+      ModioAsio::detail::function<void()> debug_check)
     : data_(data),
       size_(size),
       debug_check_(debug_check)
   {
   }
 
-  const ASIO_NAMESPACE::detail::function<void()>& get_debug_check() const
+  const ModioAsio::detail::function<void()>& get_debug_check() const
   {
     return debug_check_;
   }
@@ -152,7 +152,7 @@ private:
   std::size_t size_;
 
 #if defined(ASIO_ENABLE_BUFFER_DEBUGGING)
-  ASIO_NAMESPACE::detail::function<void()> debug_check_;
+  ModioAsio::detail::function<void()> debug_check_;
 #endif // ASIO_ENABLE_BUFFER_DEBUGGING
 };
 
@@ -178,7 +178,7 @@ public:
 
 #if defined(ASIO_ENABLE_BUFFER_DEBUGGING)
   mutable_buffers_1(void* data, std::size_t size,
-      ASIO_NAMESPACE::detail::function<void()> debug_check)
+      ModioAsio::detail::function<void()> debug_check)
     : mutable_buffer(data, size, debug_check)
   {
   }
@@ -216,7 +216,7 @@ public:
  * The contents of a buffer may be accessed using the @c data() and @c size()
  * member functions:
  *
- * @code ASIO_NAMESPACE::const_buffer b1 = ...;
+ * @code ModioAsio::const_buffer b1 = ...;
  * std::size_t s1 = b1.size();
  * const unsigned char* p1 = static_cast<const unsigned char*>(b1.data());
  * @endcode
@@ -253,14 +253,14 @@ public:
 
 #if defined(ASIO_ENABLE_BUFFER_DEBUGGING)
   const_buffer(const void* data, std::size_t size,
-      ASIO_NAMESPACE::detail::function<void()> debug_check)
+      ModioAsio::detail::function<void()> debug_check)
     : data_(data),
       size_(size),
       debug_check_(debug_check)
   {
   }
 
-  const ASIO_NAMESPACE::detail::function<void()>& get_debug_check() const
+  const ModioAsio::detail::function<void()>& get_debug_check() const
   {
     return debug_check_;
   }
@@ -296,7 +296,7 @@ private:
   std::size_t size_;
 
 #if defined(ASIO_ENABLE_BUFFER_DEBUGGING)
-  ASIO_NAMESPACE::detail::function<void()> debug_check_;
+  ModioAsio::detail::function<void()> debug_check_;
 #endif // ASIO_ENABLE_BUFFER_DEBUGGING
 };
 
@@ -322,7 +322,7 @@ public:
 
 #if defined(ASIO_ENABLE_BUFFER_DEBUGGING)
   const_buffers_1(const void* data, std::size_t size,
-      ASIO_NAMESPACE::detail::function<void()> debug_check)
+      ModioAsio::detail::function<void()> debug_check)
     : const_buffer(data, size, debug_check)
   {
   }
@@ -377,9 +377,9 @@ private:
   mutable_buffer buf_;
 };
 
-/** @defgroup buffer_sequence_begin ASIO_NAMESPACE::buffer_sequence_begin
+/** @defgroup buffer_sequence_begin ModioAsio::buffer_sequence_begin
  *
- * @brief The ASIO_NAMESPACE::buffer_sequence_begin function returns an iterator
+ * @brief The ModioAsio::buffer_sequence_begin function returns an iterator
  * pointing to the first element in a buffer sequence.
  */
 /*@{*/
@@ -454,9 +454,9 @@ inline typename C::const_iterator buffer_sequence_begin(const C& c,
 
 /*@}*/
 
-/** @defgroup buffer_sequence_end ASIO_NAMESPACE::buffer_sequence_end
+/** @defgroup buffer_sequence_end ModioAsio::buffer_sequence_end
  *
- * @brief The ASIO_NAMESPACE::buffer_sequence_end function returns an iterator
+ * @brief The ModioAsio::buffer_sequence_end function returns an iterator
  * pointing to one past the end element in a buffer sequence.
  */
 /*@{*/
@@ -580,8 +580,8 @@ inline std::size_t buffer_size(multiple_buffers,
  * buffer sequence, as if computed as follows:
  *
  * @code size_t total_size = 0;
- * auto i = ASIO_NAMESPACE::buffer_sequence_begin(buffers);
- * auto end = ASIO_NAMESPACE::buffer_sequence_end(buffers);
+ * auto i = ModioAsio::buffer_sequence_begin(buffers);
+ * auto end = ModioAsio::buffer_sequence_end(buffers);
  * for (; i != end; ++i)
  * {
  *   const_buffer b(*i);
@@ -597,31 +597,31 @@ inline std::size_t buffer_size(const BufferSequence& b) ASIO_NOEXCEPT
 {
   return detail::buffer_size(
       detail::buffer_sequence_cardinality<BufferSequence>(),
-      ASIO_NAMESPACE::buffer_sequence_begin(b),
-      ASIO_NAMESPACE::buffer_sequence_end(b));
+      ModioAsio::buffer_sequence_begin(b),
+      ModioAsio::buffer_sequence_end(b));
 }
 
 #if !defined(ASIO_NO_DEPRECATED)
 
-/** @defgroup buffer_cast ASIO_NAMESPACE::buffer_cast
+/** @defgroup buffer_cast ModioAsio::buffer_cast
  *
  * @brief (Deprecated: Use the @c data() member function.) The
- * ASIO_NAMESPACE::buffer_cast function is used to obtain a pointer to the
+ * ModioAsio::buffer_cast function is used to obtain a pointer to the
  * underlying memory region associated with a buffer.
  *
  * @par Examples:
  *
  * To access the memory of a non-modifiable buffer, use:
- * @code ASIO_NAMESPACE::const_buffer b1 = ...;
- * const unsigned char* p1 = ASIO_NAMESPACE::buffer_cast<const unsigned char*>(b1);
+ * @code ModioAsio::const_buffer b1 = ...;
+ * const unsigned char* p1 = ModioAsio::buffer_cast<const unsigned char*>(b1);
  * @endcode
  *
  * To access the memory of a modifiable buffer, use:
- * @code ASIO_NAMESPACE::mutable_buffer b2 = ...;
- * unsigned char* p2 = ASIO_NAMESPACE::buffer_cast<unsigned char*>(b2);
+ * @code ModioAsio::mutable_buffer b2 = ...;
+ * unsigned char* p2 = ModioAsio::buffer_cast<unsigned char*>(b2);
  * @endcode
  *
- * The ASIO_NAMESPACE::buffer_cast function permits violations of type safety, so
+ * The ModioAsio::buffer_cast function permits violations of type safety, so
  * uses of it in application code should be carefully considered.
  */
 /*@{*/
@@ -732,9 +732,9 @@ private:
 } // namespace detail
 #endif // ASIO_ENABLE_BUFFER_DEBUGGING
 
-/** @defgroup buffer ASIO_NAMESPACE::buffer
+/** @defgroup buffer ModioAsio::buffer
  *
- * @brief The ASIO_NAMESPACE::buffer function is used to create a buffer object to
+ * @brief The ModioAsio::buffer function is used to create a buffer object to
  * represent raw memory, an array of POD elements, a vector of POD elements,
  * or a std::string.
  *
@@ -750,9 +750,9 @@ private:
  * The simplest use case involves reading or writing a single buffer of a
  * specified size:
  *
- * @code sock.send(ASIO_NAMESPACE::buffer(data, size)); @endcode
+ * @code sock.send(ModioAsio::buffer(data, size)); @endcode
  *
- * In the above example, the return value of ASIO_NAMESPACE::buffer meets the
+ * In the above example, the return value of ModioAsio::buffer meets the
  * requirements of the ConstBufferSequence concept so that it may be directly
  * passed to the socket's write function. A buffer created for modifiable
  * memory also meets the requirements of the MutableBufferSequence concept.
@@ -762,16 +762,16 @@ private:
  * overruns by automatically determining the size of the buffer:
  *
  * @code char d1[128];
- * size_t bytes_transferred = sock.receive(ASIO_NAMESPACE::buffer(d1));
+ * size_t bytes_transferred = sock.receive(ModioAsio::buffer(d1));
  *
  * std::vector<char> d2(128);
- * bytes_transferred = sock.receive(ASIO_NAMESPACE::buffer(d2));
+ * bytes_transferred = sock.receive(ModioAsio::buffer(d2));
  *
  * std::array<char, 128> d3;
- * bytes_transferred = sock.receive(ASIO_NAMESPACE::buffer(d3));
+ * bytes_transferred = sock.receive(ModioAsio::buffer(d3));
  *
  * boost::array<char, 128> d4;
- * bytes_transferred = sock.receive(ASIO_NAMESPACE::buffer(d4)); @endcode
+ * bytes_transferred = sock.receive(ModioAsio::buffer(d4)); @endcode
  *
  * In all three cases above, the buffers created are exactly 128 bytes long.
  * Note that a vector is @e never automatically resized when creating or using
@@ -783,11 +783,11 @@ private:
  * The contents of a buffer may be accessed using the @c data() and @c size()
  * member functions:
  *
- * @code ASIO_NAMESPACE::mutable_buffer b1 = ...;
+ * @code ModioAsio::mutable_buffer b1 = ...;
  * std::size_t s1 = b1.size();
  * unsigned char* p1 = static_cast<unsigned char*>(b1.data());
  *
- * ASIO_NAMESPACE::const_buffer b2 = ...;
+ * ModioAsio::const_buffer b2 = ...;
  * std::size_t s2 = b2.size();
  * const void* p2 = b2.data(); @endcode
  *
@@ -810,8 +810,8 @@ private:
  *
  * @code vector<const_buffer> buffers = ...;
  *
- * vector<unsigned char> data(ASIO_NAMESPACE::buffer_size(buffers));
- * ASIO_NAMESPACE::buffer_copy(ASIO_NAMESPACE::buffer(data), buffers); @endcode
+ * vector<unsigned char> data(ModioAsio::buffer_size(buffers));
+ * ModioAsio::buffer_copy(ModioAsio::buffer(data), buffers); @endcode
  *
  * Note that @ref buffer_copy is implemented in terms of @c memcpy, and
  * consequently it cannot be used to copy between overlapping memory regions.
@@ -823,12 +823,12 @@ private:
  * valid until it is no longer required for an I/O operation. When the memory
  * is no longer available, the buffer is said to have been invalidated.
  *
- * For the ASIO_NAMESPACE::buffer overloads that accept an argument of type
+ * For the ModioAsio::buffer overloads that accept an argument of type
  * std::vector, the buffer objects returned are invalidated by any vector
  * operation that also invalidates all references, pointers and iterators
  * referring to the elements in the sequence (C++ Std, 23.2.4)
  *
- * For the ASIO_NAMESPACE::buffer overloads that accept an argument of type
+ * For the ModioAsio::buffer overloads that accept an argument of type
  * std::basic_string, the buffer objects returned are invalidated according to
  * the rules defined for invalidation of references, pointers and iterators
  * referring to elements of the sequence (C++ Std, 21.3).
@@ -843,13 +843,13 @@ private:
  *
  * A buffer object @c b1 created using:
  *
- * @code b1 = ASIO_NAMESPACE::buffer(a); @endcode
+ * @code b1 = ModioAsio::buffer(a); @endcode
  *
  * represents the entire array, <tt>{ 'a', 'b', 'c', 'd', 'e' }</tt>. An
- * optional second argument to the ASIO_NAMESPACE::buffer function may be used to
+ * optional second argument to the ModioAsio::buffer function may be used to
  * limit the size, in bytes, of the buffer:
  *
- * @code b2 = ASIO_NAMESPACE::buffer(a, 3); @endcode
+ * @code b2 = ModioAsio::buffer(a, 3); @endcode
  *
  * such that @c b2 represents the data <tt>{ 'a', 'b', 'c' }</tt>. Even if the
  * size argument exceeds the actual size of the array, the size of the buffer
@@ -866,7 +866,7 @@ private:
  * Both an offset and size may be specified to create a buffer that corresponds
  * to a specific range of bytes within an existing buffer:
  *
- * @code b4 = ASIO_NAMESPACE::buffer(b1 + 1, 3); @endcode
+ * @code b4 = ModioAsio::buffer(b1 + 1, 3); @endcode
  *
  * so that @c b4 will refer to the bytes <tt>{ 'b', 'c', 'd' }</tt>.
  *
@@ -882,15 +882,15 @@ private:
  * boost::array<char, 128> d3;
  *
  * boost::array<mutable_buffer, 3> bufs1 = {
- *   ASIO_NAMESPACE::buffer(d1),
- *   ASIO_NAMESPACE::buffer(d2),
- *   ASIO_NAMESPACE::buffer(d3) };
+ *   ModioAsio::buffer(d1),
+ *   ModioAsio::buffer(d2),
+ *   ModioAsio::buffer(d3) };
  * bytes_transferred = sock.receive(bufs1);
  *
  * std::vector<const_buffer> bufs2;
- * bufs2.push_back(ASIO_NAMESPACE::buffer(d1));
- * bufs2.push_back(ASIO_NAMESPACE::buffer(d2));
- * bufs2.push_back(ASIO_NAMESPACE::buffer(d3));
+ * bufs2.push_back(ModioAsio::buffer(d1));
+ * bufs2.push_back(ModioAsio::buffer(d2));
+ * bufs2.push_back(ModioAsio::buffer(d3));
  * bytes_transferred = sock.send(bufs2); @endcode
  */
 /*@{*/
@@ -1092,9 +1092,9 @@ ASIO_NODISCARD inline
 typename detail::buffer_types<PodType>::container_type
 buffer(boost::array<PodType, N>& data) ASIO_NOEXCEPT
 {
-  typedef typename ASIO_NAMESPACE::detail::buffer_types<PodType>::buffer_type
+  typedef typename ModioAsio::detail::buffer_types<PodType>::buffer_type
     buffer_type;
-  typedef typename ASIO_NAMESPACE::detail::buffer_types<PodType>::container_type
+  typedef typename ModioAsio::detail::buffer_types<PodType>::container_type
     container_type;
   return container_type(
       buffer_type(data.c_array(), data.size() * sizeof(PodType)));
@@ -1106,9 +1106,9 @@ typename detail::buffer_types<PodType>::container_type
 buffer(boost::array<PodType, N>& data,
     std::size_t max_size_in_bytes) ASIO_NOEXCEPT
 {
-  typedef typename ASIO_NAMESPACE::detail::buffer_types<PodType>::buffer_type
+  typedef typename ModioAsio::detail::buffer_types<PodType>::buffer_type
     buffer_type;
-  typedef typename ASIO_NAMESPACE::detail::buffer_types<PodType>::container_type
+  typedef typename ModioAsio::detail::buffer_types<PodType>::container_type
     container_type;
   return container_type(
       buffer_type(data.c_array(),
@@ -1826,7 +1826,7 @@ public:
    */
   const_buffers_type data() const ASIO_NOEXCEPT
   {
-    return const_buffers_type(ASIO_NAMESPACE::buffer(string_, size_));
+    return const_buffers_type(ModioAsio::buffer(string_, size_));
   }
 #endif // !defined(ASIO_NO_DYNAMIC_BUFFER_V1)
 
@@ -1847,8 +1847,8 @@ public:
    */
   mutable_buffers_type data(std::size_t pos, std::size_t n) ASIO_NOEXCEPT
   {
-    return mutable_buffers_type(ASIO_NAMESPACE::buffer(
-          ASIO_NAMESPACE::buffer(string_, max_size_) + pos, n));
+    return mutable_buffers_type(ModioAsio::buffer(
+          ModioAsio::buffer(string_, max_size_) + pos, n));
   }
 
   /// @b DynamicBuffer_v2: Get a sequence of buffers that represents the
@@ -1866,8 +1866,8 @@ public:
   const_buffers_type data(std::size_t pos,
       std::size_t n) const ASIO_NOEXCEPT
   {
-    return const_buffers_type(ASIO_NAMESPACE::buffer(
-          ASIO_NAMESPACE::buffer(string_, max_size_) + pos, n));
+    return const_buffers_type(ModioAsio::buffer(
+          ModioAsio::buffer(string_, max_size_) + pos, n));
   }
 
 #if !defined(ASIO_NO_DYNAMIC_BUFFER_V1)
@@ -1892,7 +1892,7 @@ public:
     if (size() > max_size() || max_size() - size() < n)
     {
       std::length_error ex("dynamic_string_buffer too long");
-      ASIO_NAMESPACE::detail::throw_exception(ex);
+      ModioAsio::detail::throw_exception(ex);
     }
 
     if (size_ == (std::numeric_limits<std::size_t>::max)())
@@ -1900,7 +1900,7 @@ public:
 
     string_.resize(size_ + n);
 
-    return ASIO_NAMESPACE::buffer(ASIO_NAMESPACE::buffer(string_) + size_, n);
+    return ModioAsio::buffer(ModioAsio::buffer(string_) + size_, n);
   }
 
   /// @b DynamicBuffer_v1: Move bytes from the output sequence to the input
@@ -1935,7 +1935,7 @@ public:
     if (size() > max_size() || max_size() - size() < n)
     {
       std::length_error ex("dynamic_string_buffer too long");
-      ASIO_NAMESPACE::detail::throw_exception(ex);
+      ModioAsio::detail::throw_exception(ex);
     }
 
     string_.resize(size() + n);
@@ -2099,7 +2099,7 @@ public:
    */
   const_buffers_type data() const ASIO_NOEXCEPT
   {
-    return const_buffers_type(ASIO_NAMESPACE::buffer(vector_, size_));
+    return const_buffers_type(ModioAsio::buffer(vector_, size_));
   }
 #endif // !defined(ASIO_NO_DYNAMIC_BUFFER_V1)
 
@@ -2120,8 +2120,8 @@ public:
    */
   mutable_buffers_type data(std::size_t pos, std::size_t n) ASIO_NOEXCEPT
   {
-    return mutable_buffers_type(ASIO_NAMESPACE::buffer(
-          ASIO_NAMESPACE::buffer(vector_, max_size_) + pos, n));
+    return mutable_buffers_type(ModioAsio::buffer(
+          ModioAsio::buffer(vector_, max_size_) + pos, n));
   }
 
   /// @b DynamicBuffer_v2: Get a sequence of buffers that represents the
@@ -2139,8 +2139,8 @@ public:
   const_buffers_type data(std::size_t pos,
       std::size_t n) const ASIO_NOEXCEPT
   {
-    return const_buffers_type(ASIO_NAMESPACE::buffer(
-          ASIO_NAMESPACE::buffer(vector_, max_size_) + pos, n));
+    return const_buffers_type(ModioAsio::buffer(
+          ModioAsio::buffer(vector_, max_size_) + pos, n));
   }
 
 #if !defined(ASIO_NO_DYNAMIC_BUFFER_V1)
@@ -2165,7 +2165,7 @@ public:
     if (size () > max_size() || max_size() - size() < n)
     {
       std::length_error ex("dynamic_vector_buffer too long");
-      ASIO_NAMESPACE::detail::throw_exception(ex);
+      ModioAsio::detail::throw_exception(ex);
     }
 
     if (size_ == (std::numeric_limits<std::size_t>::max)())
@@ -2173,7 +2173,7 @@ public:
 
     vector_.resize(size_ + n);
 
-    return ASIO_NAMESPACE::buffer(ASIO_NAMESPACE::buffer(vector_) + size_, n);
+    return ModioAsio::buffer(ModioAsio::buffer(vector_) + size_, n);
   }
 
   /// @b DynamicBuffer_v1: Move bytes from the output sequence to the input
@@ -2208,7 +2208,7 @@ public:
     if (size() > max_size() || max_size() - size() < n)
     {
       std::length_error ex("dynamic_vector_buffer too long");
-      ASIO_NAMESPACE::detail::throw_exception(ex);
+      ModioAsio::detail::throw_exception(ex);
     }
 
     vector_.resize(size() + n);
@@ -2260,9 +2260,9 @@ private:
   const std::size_t max_size_;
 };
 
-/** @defgroup dynamic_buffer ASIO_NAMESPACE::dynamic_buffer
+/** @defgroup dynamic_buffer ModioAsio::dynamic_buffer
  *
- * @brief The ASIO_NAMESPACE::dynamic_buffer function is used to create a
+ * @brief The ModioAsio::dynamic_buffer function is used to create a
  * dynamically resized buffer from a @c std::basic_string or @c std::vector.
  */
 /*@{*/
@@ -2320,9 +2320,9 @@ dynamic_vector_buffer<Elem, Allocator> dynamic_buffer(
 
 /*@}*/
 
-/** @defgroup buffer_copy ASIO_NAMESPACE::buffer_copy
+/** @defgroup buffer_copy ModioAsio::buffer_copy
  *
- * @brief The ASIO_NAMESPACE::buffer_copy function is used to copy bytes from a
+ * @brief The ModioAsio::buffer_copy function is used to copy bytes from a
  * source buffer (or buffer sequence) to a target buffer (or buffer sequence).
  *
  * The @c buffer_copy function is available in two forms:
@@ -2377,7 +2377,7 @@ inline std::size_t buffer_copy(one_buffer, one_buffer,
     std::size_t max_bytes_to_copy) ASIO_NOEXCEPT
 {
   return (buffer_copy_1)(*target_begin,
-      ASIO_NAMESPACE::buffer(*source_begin, max_bytes_to_copy));
+      ModioAsio::buffer(*source_begin, max_bytes_to_copy));
 }
 
 template <typename TargetIterator, typename SourceIterator>
@@ -2391,7 +2391,7 @@ std::size_t buffer_copy(one_buffer, multiple_buffers,
   SourceIterator source_iter = source_begin;
 
   for (mutable_buffer target_buffer(
-        ASIO_NAMESPACE::buffer(*target_begin, max_bytes_to_copy));
+        ModioAsio::buffer(*target_begin, max_bytes_to_copy));
       target_buffer.size() && source_iter != source_end; ++source_iter)
   {
     const_buffer source_buffer(*source_iter);
@@ -2414,7 +2414,7 @@ std::size_t buffer_copy(multiple_buffers, one_buffer,
   TargetIterator target_iter = target_begin;
 
   for (const_buffer source_buffer(
-        ASIO_NAMESPACE::buffer(*source_begin, max_bytes_to_copy));
+        ModioAsio::buffer(*source_begin, max_bytes_to_copy));
       source_buffer.size() && target_iter != target_end; ++target_iter)
   {
     mutable_buffer target_buffer(*target_iter);
@@ -2494,7 +2494,7 @@ std::size_t buffer_copy(multiple_buffers, multiple_buffers,
       const_buffer(*source_iter) + source_buffer_offset;
 
     std::size_t bytes_copied = (buffer_copy_1)(
-        target_buffer, ASIO_NAMESPACE::buffer(source_buffer,
+        target_buffer, ModioAsio::buffer(source_buffer,
           max_bytes_to_copy - total_bytes_copied));
     total_bytes_copied += bytes_copied;
 
@@ -2546,10 +2546,10 @@ inline std::size_t buffer_copy(const MutableBufferSequence& target,
   return detail::buffer_copy(
       detail::buffer_sequence_cardinality<MutableBufferSequence>(),
       detail::buffer_sequence_cardinality<ConstBufferSequence>(),
-      ASIO_NAMESPACE::buffer_sequence_begin(target),
-      ASIO_NAMESPACE::buffer_sequence_end(target),
-      ASIO_NAMESPACE::buffer_sequence_begin(source),
-      ASIO_NAMESPACE::buffer_sequence_end(source));
+      ModioAsio::buffer_sequence_begin(target),
+      ModioAsio::buffer_sequence_end(target),
+      ModioAsio::buffer_sequence_begin(source),
+      ModioAsio::buffer_sequence_end(source));
 }
 
 /// Copies a limited number of bytes from a source buffer sequence to a target
@@ -2584,21 +2584,21 @@ inline std::size_t buffer_copy(const MutableBufferSequence& target,
   return detail::buffer_copy(
       detail::buffer_sequence_cardinality<MutableBufferSequence>(),
       detail::buffer_sequence_cardinality<ConstBufferSequence>(),
-      ASIO_NAMESPACE::buffer_sequence_begin(target),
-      ASIO_NAMESPACE::buffer_sequence_end(target),
-      ASIO_NAMESPACE::buffer_sequence_begin(source),
-      ASIO_NAMESPACE::buffer_sequence_end(source), max_bytes_to_copy);
+      ModioAsio::buffer_sequence_begin(target),
+      ModioAsio::buffer_sequence_end(target),
+      ModioAsio::buffer_sequence_begin(source),
+      ModioAsio::buffer_sequence_end(source), max_bytes_to_copy);
 }
 
 /*@}*/
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 #include "asio/detail/is_buffer_sequence.hpp"
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 
 /// Trait to determine whether a type satisfies the MutableBufferSequence
 /// requirements.
@@ -2607,7 +2607,7 @@ struct is_mutable_buffer_sequence
 #if defined(GENERATING_DOCUMENTATION)
   : integral_constant<bool, automatically_determined>
 #else // defined(GENERATING_DOCUMENTATION)
-  : ASIO_NAMESPACE::detail::is_buffer_sequence<T, mutable_buffer>
+  : ModioAsio::detail::is_buffer_sequence<T, mutable_buffer>
 #endif // defined(GENERATING_DOCUMENTATION)
 {
 };
@@ -2619,7 +2619,7 @@ struct is_const_buffer_sequence
 #if defined(GENERATING_DOCUMENTATION)
   : integral_constant<bool, automatically_determined>
 #else // defined(GENERATING_DOCUMENTATION)
-  : ASIO_NAMESPACE::detail::is_buffer_sequence<T, const_buffer>
+  : ModioAsio::detail::is_buffer_sequence<T, const_buffer>
 #endif // defined(GENERATING_DOCUMENTATION)
 {
 };
@@ -2632,7 +2632,7 @@ struct is_dynamic_buffer_v1
 #if defined(GENERATING_DOCUMENTATION)
   : integral_constant<bool, automatically_determined>
 #else // defined(GENERATING_DOCUMENTATION)
-  : ASIO_NAMESPACE::detail::is_dynamic_buffer_v1<T>
+  : ModioAsio::detail::is_dynamic_buffer_v1<T>
 #endif // defined(GENERATING_DOCUMENTATION)
 {
 };
@@ -2645,7 +2645,7 @@ struct is_dynamic_buffer_v2
 #if defined(GENERATING_DOCUMENTATION)
   : integral_constant<bool, automatically_determined>
 #else // defined(GENERATING_DOCUMENTATION)
-  : ASIO_NAMESPACE::detail::is_dynamic_buffer_v2<T>
+  : ModioAsio::detail::is_dynamic_buffer_v2<T>
 #endif // defined(GENERATING_DOCUMENTATION)
 {
 };
@@ -2662,14 +2662,14 @@ struct is_dynamic_buffer
 #if defined(GENERATING_DOCUMENTATION)
   : integral_constant<bool, automatically_determined>
 #elif defined(ASIO_NO_DYNAMIC_BUFFER_V1)
-  : ASIO_NAMESPACE::is_dynamic_buffer_v2<T>
+  : ModioAsio::is_dynamic_buffer_v2<T>
 #else // defined(ASIO_NO_DYNAMIC_BUFFER_V1)
-  : ASIO_NAMESPACE::is_dynamic_buffer_v1<T>
+  : ModioAsio::is_dynamic_buffer_v1<T>
 #endif // defined(ASIO_NO_DYNAMIC_BUFFER_V1)
 {
 };
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

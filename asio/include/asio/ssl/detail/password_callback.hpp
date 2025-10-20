@@ -23,7 +23,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace ssl {
 namespace detail {
 
@@ -59,7 +59,7 @@ private:
 
 } // namespace detail
 } // namespace ssl
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

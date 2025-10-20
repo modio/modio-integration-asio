@@ -20,7 +20,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 class resolver_service_base::work_scheduler_runner
@@ -33,7 +33,7 @@ public:
 
   void operator()()
   {
-    ASIO_NAMESPACE::error_code ec;
+    ModioAsio::error_code ec;
     work_scheduler_.run(ec);
   }
 
@@ -42,7 +42,7 @@ private:
 };
 
 resolver_service_base::resolver_service_base(execution_context& context)
-  : scheduler_(ASIO_NAMESPACE::use_service<scheduler_impl>(context)),
+  : scheduler_(ModioAsio::use_service<scheduler_impl>(context)),
     work_scheduler_(new scheduler_impl(context, -1, false)),
     work_thread_(0)
 {
@@ -135,23 +135,23 @@ void resolver_service_base::start_resolve_op(resolve_op* op)
   }
   else
   {
-    op->ec_ = ASIO_NAMESPACE::error::operation_not_supported;
+    op->ec_ = ModioAsio::error::operation_not_supported;
     scheduler_.post_immediate_completion(op, false);
   }
 }
 
 void resolver_service_base::start_work_thread()
 {
-  ASIO_NAMESPACE::detail::mutex::scoped_lock lock(mutex_);
+  ModioAsio::detail::mutex::scoped_lock lock(mutex_);
   if (!work_thread_.get())
   {
-    work_thread_.reset(new ASIO_NAMESPACE::detail::thread(
+    work_thread_.reset(new ModioAsio::detail::thread(
           work_scheduler_runner(*work_scheduler_)));
   }
 }
 
 } // namespace detail
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

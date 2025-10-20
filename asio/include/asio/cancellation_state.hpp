@@ -24,7 +24,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 
 /// A simple cancellation signal propagation filter.
 template <cancellation_type_t Mask>
@@ -108,15 +108,15 @@ public:
    * @param filter A function object that is used to transform incoming
    * cancellation signals as they are received from the parent slot. This
    * function object must have the signature:
-   * @code ASIO_NAMESPACE::cancellation_type_t filter(
-   *     ASIO_NAMESPACE::cancellation_type_t); @endcode
+   * @code ModioAsio::cancellation_type_t filter(
+   *     ModioAsio::cancellation_type_t); @endcode
    *
    * The library provides the following pre-defined cancellation filters:
    *
-   * @li ASIO_NAMESPACE::disable_cancellation
-   * @li ASIO_NAMESPACE::enable_terminal_cancellation
-   * @li ASIO_NAMESPACE::enable_partial_cancellation
-   * @li ASIO_NAMESPACE::enable_total_cancellation
+   * @li ModioAsio::disable_cancellation
+   * @li ModioAsio::enable_terminal_cancellation
+   * @li ModioAsio::enable_partial_cancellation
+   * @li ModioAsio::enable_total_cancellation
    */
   template <typename CancellationSlot, typename Filter>
   ASIO_CONSTEXPR cancellation_state(CancellationSlot slot, Filter filter)
@@ -134,21 +134,21 @@ public:
    * @param in_filter A function object that is used to transform incoming
    * cancellation signals as they are received from the parent slot. This
    * function object must have the signature:
-   * @code ASIO_NAMESPACE::cancellation_type_t in_filter(
-   *     ASIO_NAMESPACE::cancellation_type_t); @endcode
+   * @code ModioAsio::cancellation_type_t in_filter(
+   *     ModioAsio::cancellation_type_t); @endcode
    *
    * @param out_filter A function object that is used to transform outcoming
    * cancellation signals as they are relayed to the child slot. This function
    * object must have the signature:
-   * @code ASIO_NAMESPACE::cancellation_type_t out_filter(
-   *     ASIO_NAMESPACE::cancellation_type_t); @endcode
+   * @code ModioAsio::cancellation_type_t out_filter(
+   *     ModioAsio::cancellation_type_t); @endcode
    *
    * The library provides the following pre-defined cancellation filters:
    *
-   * @li ASIO_NAMESPACE::disable_cancellation
-   * @li ASIO_NAMESPACE::enable_terminal_cancellation
-   * @li ASIO_NAMESPACE::enable_partial_cancellation
-   * @li ASIO_NAMESPACE::enable_total_cancellation
+   * @li ModioAsio::disable_cancellation
+   * @li ModioAsio::enable_terminal_cancellation
+   * @li ModioAsio::enable_partial_cancellation
+   * @li ModioAsio::enable_total_cancellation
    */
   template <typename CancellationSlot, typename InFilter, typename OutFilter>
   ASIO_CONSTEXPR cancellation_state(CancellationSlot slot,
@@ -228,7 +228,7 @@ private:
   impl_base* impl_;
 };
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

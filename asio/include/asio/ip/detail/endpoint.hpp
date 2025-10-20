@@ -24,7 +24,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace ip {
 namespace detail {
 
@@ -40,7 +40,7 @@ public:
       unsigned short port_num) ASIO_NOEXCEPT;
 
   // Construct an endpoint using an address and port number.
-  ASIO_DECL endpoint(const ASIO_NAMESPACE::ip::address& addr,
+  ASIO_DECL endpoint(const ModioAsio::ip::address& addr,
       unsigned short port_num) ASIO_NOEXCEPT;
 
   // Copy constructor.
@@ -57,13 +57,13 @@ public:
   }
 
   // Get the underlying endpoint in the native type.
-  ASIO_NAMESPACE::detail::socket_addr_type* data() ASIO_NOEXCEPT
+  ModioAsio::detail::socket_addr_type* data() ASIO_NOEXCEPT
   {
     return &data_.base;
   }
 
   // Get the underlying endpoint in the native type.
-  const ASIO_NAMESPACE::detail::socket_addr_type* data() const ASIO_NOEXCEPT
+  const ModioAsio::detail::socket_addr_type* data() const ASIO_NOEXCEPT
   {
     return &data_.base;
   }
@@ -72,9 +72,9 @@ public:
   std::size_t size() const ASIO_NOEXCEPT
   {
     if (is_v4())
-      return sizeof(ASIO_NAMESPACE::detail::sockaddr_in4_type);
+      return sizeof(ModioAsio::detail::sockaddr_in4_type);
     else
-      return sizeof(ASIO_NAMESPACE::detail::sockaddr_in6_type);
+      return sizeof(ModioAsio::detail::sockaddr_in6_type);
   }
 
   // Set the underlying size of the endpoint in the native type.
@@ -93,11 +93,11 @@ public:
   ASIO_DECL void port(unsigned short port_num) ASIO_NOEXCEPT;
 
   // Get the IP address associated with the endpoint.
-  ASIO_DECL ASIO_NAMESPACE::ip::address address() const ASIO_NOEXCEPT;
+  ASIO_DECL ModioAsio::ip::address address() const ASIO_NOEXCEPT;
 
   // Set the IP address associated with the endpoint.
   ASIO_DECL void address(
-      const ASIO_NAMESPACE::ip::address& addr) ASIO_NOEXCEPT;
+      const ModioAsio::ip::address& addr) ASIO_NOEXCEPT;
 
   // Compare two endpoints for equality.
   ASIO_DECL friend bool operator==(const endpoint& e1,
@@ -122,15 +122,15 @@ private:
   // The underlying IP socket address.
   union data_union
   {
-    ASIO_NAMESPACE::detail::socket_addr_type base;
-    ASIO_NAMESPACE::detail::sockaddr_in4_type v4;
-    ASIO_NAMESPACE::detail::sockaddr_in6_type v6;
+    ModioAsio::detail::socket_addr_type base;
+    ModioAsio::detail::sockaddr_in4_type v4;
+    ModioAsio::detail::sockaddr_in6_type v6;
   } data_;
 };
 
 } // namespace detail
 } // namespace ip
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

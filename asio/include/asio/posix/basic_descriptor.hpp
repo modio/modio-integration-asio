@@ -42,7 +42,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace posix {
 
 /// Provides POSIX descriptor functionality.
@@ -129,16 +129,16 @@ public:
    *
    * @param native_descriptor A native descriptor.
    *
-   * @throws ASIO_NAMESPACE::system_error Thrown on failure.
+   * @throws ModioAsio::system_error Thrown on failure.
    */
   basic_descriptor(const executor_type& ex,
       const native_handle_type& native_descriptor)
     : impl_(0, ex)
   {
-    ASIO_NAMESPACE::error_code ec;
+    ModioAsio::error_code ec;
     impl_.get_service().assign(impl_.get_implementation(),
         native_descriptor, ec);
-    ASIO_NAMESPACE::detail::throw_error(ec, "assign");
+    ModioAsio::detail::throw_error(ec, "assign");
   }
 
   /// Construct a descriptor on an existing native descriptor.
@@ -152,7 +152,7 @@ public:
    *
    * @param native_descriptor A native descriptor.
    *
-   * @throws ASIO_NAMESPACE::system_error Thrown on failure.
+   * @throws ModioAsio::system_error Thrown on failure.
    */
   template <typename ExecutionContext>
   basic_descriptor(ExecutionContext& context,
@@ -162,10 +162,10 @@ public:
       >::type = 0)
     : impl_(0, 0, context)
   {
-    ASIO_NAMESPACE::error_code ec;
+    ModioAsio::error_code ec;
     impl_.get_service().assign(impl_.get_implementation(),
         native_descriptor, ec);
-    ASIO_NAMESPACE::detail::throw_error(ec, "assign");
+    ModioAsio::detail::throw_error(ec, "assign");
   }
 
 #if defined(ASIO_HAS_MOVE) || defined(GENERATING_DOCUMENTATION)
@@ -291,14 +291,14 @@ public:
    *
    * @param native_descriptor A native descriptor.
    *
-   * @throws ASIO_NAMESPACE::system_error Thrown on failure.
+   * @throws ModioAsio::system_error Thrown on failure.
    */
   void assign(const native_handle_type& native_descriptor)
   {
-    ASIO_NAMESPACE::error_code ec;
+    ModioAsio::error_code ec;
     impl_.get_service().assign(impl_.get_implementation(),
         native_descriptor, ec);
-    ASIO_NAMESPACE::detail::throw_error(ec, "assign");
+    ModioAsio::detail::throw_error(ec, "assign");
   }
 
   /// Assign an existing native descriptor to the descriptor.
@@ -310,7 +310,7 @@ public:
    * @param ec Set to indicate what error occurred, if any.
    */
   ASIO_SYNC_OP_VOID assign(const native_handle_type& native_descriptor,
-      ASIO_NAMESPACE::error_code& ec)
+      ModioAsio::error_code& ec)
   {
     impl_.get_service().assign(
         impl_.get_implementation(), native_descriptor, ec);
@@ -327,28 +327,28 @@ public:
   /**
    * This function is used to close the descriptor. Any asynchronous read or
    * write operations will be cancelled immediately, and will complete with the
-   * ASIO_NAMESPACE::error::operation_aborted error.
+   * ModioAsio::error::operation_aborted error.
    *
-   * @throws ASIO_NAMESPACE::system_error Thrown on failure. Note that, even if
+   * @throws ModioAsio::system_error Thrown on failure. Note that, even if
    * the function indicates an error, the underlying descriptor is closed.
    */
   void close()
   {
-    ASIO_NAMESPACE::error_code ec;
+    ModioAsio::error_code ec;
     impl_.get_service().close(impl_.get_implementation(), ec);
-    ASIO_NAMESPACE::detail::throw_error(ec, "close");
+    ModioAsio::detail::throw_error(ec, "close");
   }
 
   /// Close the descriptor.
   /**
    * This function is used to close the descriptor. Any asynchronous read or
    * write operations will be cancelled immediately, and will complete with the
-   * ASIO_NAMESPACE::error::operation_aborted error.
+   * ModioAsio::error::operation_aborted error.
    *
    * @param ec Set to indicate what error occurred, if any. Note that, even if
    * the function indicates an error, the underlying descriptor is closed.
    */
-  ASIO_SYNC_OP_VOID close(ASIO_NAMESPACE::error_code& ec)
+  ASIO_SYNC_OP_VOID close(ModioAsio::error_code& ec)
   {
     impl_.get_service().close(impl_.get_implementation(), ec);
     ASIO_SYNC_OP_VOID_RETURN(ec);
@@ -373,7 +373,7 @@ public:
    *
    * All outstanding asynchronous read or write operations will finish
    * immediately, and the handlers for cancelled operations will be passed the
-   * ASIO_NAMESPACE::error::operation_aborted error.
+   * ModioAsio::error::operation_aborted error.
    */
   native_handle_type release()
   {
@@ -384,26 +384,26 @@ public:
   /**
    * This function causes all outstanding asynchronous read or write operations
    * to finish immediately, and the handlers for cancelled operations will be
-   * passed the ASIO_NAMESPACE::error::operation_aborted error.
+   * passed the ModioAsio::error::operation_aborted error.
    *
-   * @throws ASIO_NAMESPACE::system_error Thrown on failure.
+   * @throws ModioAsio::system_error Thrown on failure.
    */
   void cancel()
   {
-    ASIO_NAMESPACE::error_code ec;
+    ModioAsio::error_code ec;
     impl_.get_service().cancel(impl_.get_implementation(), ec);
-    ASIO_NAMESPACE::detail::throw_error(ec, "cancel");
+    ModioAsio::detail::throw_error(ec, "cancel");
   }
 
   /// Cancel all asynchronous operations associated with the descriptor.
   /**
    * This function causes all outstanding asynchronous read or write operations
    * to finish immediately, and the handlers for cancelled operations will be
-   * passed the ASIO_NAMESPACE::error::operation_aborted error.
+   * passed the ModioAsio::error::operation_aborted error.
    *
    * @param ec Set to indicate what error occurred, if any.
    */
-  ASIO_SYNC_OP_VOID cancel(ASIO_NAMESPACE::error_code& ec)
+  ASIO_SYNC_OP_VOID cancel(ModioAsio::error_code& ec)
   {
     impl_.get_service().cancel(impl_.get_implementation(), ec);
     ASIO_SYNC_OP_VOID_RETURN(ec);
@@ -415,18 +415,18 @@ public:
    *
    * @param command The IO control command to be performed on the descriptor.
    *
-   * @throws ASIO_NAMESPACE::system_error Thrown on failure.
+   * @throws ModioAsio::system_error Thrown on failure.
    *
    * @sa IoControlCommand @n
-   * ASIO_NAMESPACE::posix::descriptor_base::bytes_readable @n
-   * ASIO_NAMESPACE::posix::descriptor_base::non_blocking_io
+   * ModioAsio::posix::descriptor_base::bytes_readable @n
+   * ModioAsio::posix::descriptor_base::non_blocking_io
    *
    * @par Example
    * Getting the number of bytes ready to read:
    * @code
-   * ASIO_NAMESPACE::posix::stream_descriptor descriptor(my_context);
+   * ModioAsio::posix::stream_descriptor descriptor(my_context);
    * ...
-   * ASIO_NAMESPACE::posix::stream_descriptor::bytes_readable command;
+   * ModioAsio::posix::stream_descriptor::bytes_readable command;
    * descriptor.io_control(command);
    * std::size_t bytes_readable = command.get();
    * @endcode
@@ -434,9 +434,9 @@ public:
   template <typename IoControlCommand>
   void io_control(IoControlCommand& command)
   {
-    ASIO_NAMESPACE::error_code ec;
+    ModioAsio::error_code ec;
     impl_.get_service().io_control(impl_.get_implementation(), command, ec);
-    ASIO_NAMESPACE::detail::throw_error(ec, "io_control");
+    ModioAsio::detail::throw_error(ec, "io_control");
   }
 
   /// Perform an IO control command on the descriptor.
@@ -448,16 +448,16 @@ public:
    * @param ec Set to indicate what error occurred, if any.
    *
    * @sa IoControlCommand @n
-   * ASIO_NAMESPACE::posix::descriptor_base::bytes_readable @n
-   * ASIO_NAMESPACE::posix::descriptor_base::non_blocking_io
+   * ModioAsio::posix::descriptor_base::bytes_readable @n
+   * ModioAsio::posix::descriptor_base::non_blocking_io
    *
    * @par Example
    * Getting the number of bytes ready to read:
    * @code
-   * ASIO_NAMESPACE::posix::stream_descriptor descriptor(my_context);
+   * ModioAsio::posix::stream_descriptor descriptor(my_context);
    * ...
-   * ASIO_NAMESPACE::posix::stream_descriptor::bytes_readable command;
-   * ASIO_NAMESPACE::error_code ec;
+   * ModioAsio::posix::stream_descriptor::bytes_readable command;
+   * ModioAsio::error_code ec;
    * descriptor.io_control(command, ec);
    * if (ec)
    * {
@@ -468,7 +468,7 @@ public:
    */
   template <typename IoControlCommand>
   ASIO_SYNC_OP_VOID io_control(IoControlCommand& command,
-      ASIO_NAMESPACE::error_code& ec)
+      ModioAsio::error_code& ec)
   {
     impl_.get_service().io_control(impl_.get_implementation(), command, ec);
     ASIO_SYNC_OP_VOID_RETURN(ec);
@@ -477,13 +477,13 @@ public:
   /// Gets the non-blocking mode of the descriptor.
   /**
    * @returns @c true if the descriptor's synchronous operations will fail with
-   * ASIO_NAMESPACE::error::would_block if they are unable to perform the requested
+   * ModioAsio::error::would_block if they are unable to perform the requested
    * operation immediately. If @c false, synchronous operations will block
    * until complete.
    *
    * @note The non-blocking mode has no effect on the behaviour of asynchronous
    * operations. Asynchronous operations will never fail with the error
-   * ASIO_NAMESPACE::error::would_block.
+   * ModioAsio::error::would_block.
    */
   bool non_blocking() const
   {
@@ -493,27 +493,27 @@ public:
   /// Sets the non-blocking mode of the descriptor.
   /**
    * @param mode If @c true, the descriptor's synchronous operations will fail
-   * with ASIO_NAMESPACE::error::would_block if they are unable to perform the
+   * with ModioAsio::error::would_block if they are unable to perform the
    * requested operation immediately. If @c false, synchronous operations will
    * block until complete.
    *
-   * @throws ASIO_NAMESPACE::system_error Thrown on failure.
+   * @throws ModioAsio::system_error Thrown on failure.
    *
    * @note The non-blocking mode has no effect on the behaviour of asynchronous
    * operations. Asynchronous operations will never fail with the error
-   * ASIO_NAMESPACE::error::would_block.
+   * ModioAsio::error::would_block.
    */
   void non_blocking(bool mode)
   {
-    ASIO_NAMESPACE::error_code ec;
+    ModioAsio::error_code ec;
     impl_.get_service().non_blocking(impl_.get_implementation(), mode, ec);
-    ASIO_NAMESPACE::detail::throw_error(ec, "non_blocking");
+    ModioAsio::detail::throw_error(ec, "non_blocking");
   }
 
   /// Sets the non-blocking mode of the descriptor.
   /**
    * @param mode If @c true, the descriptor's synchronous operations will fail
-   * with ASIO_NAMESPACE::error::would_block if they are unable to perform the
+   * with ModioAsio::error::would_block if they are unable to perform the
    * requested operation immediately. If @c false, synchronous operations will
    * block until complete.
    *
@@ -521,10 +521,10 @@ public:
    *
    * @note The non-blocking mode has no effect on the behaviour of asynchronous
    * operations. Asynchronous operations will never fail with the error
-   * ASIO_NAMESPACE::error::would_block.
+   * ModioAsio::error::would_block.
    */
   ASIO_SYNC_OP_VOID non_blocking(
-      bool mode, ASIO_NAMESPACE::error_code& ec)
+      bool mode, ModioAsio::error_code& ec)
   {
     impl_.get_service().non_blocking(impl_.get_implementation(), mode, ec);
     ASIO_SYNC_OP_VOID_RETURN(ec);
@@ -537,7 +537,7 @@ public:
    * descriptor object's synchronous operations.
    *
    * @returns @c true if the underlying descriptor is in non-blocking mode and
-   * direct system calls may fail with ASIO_NAMESPACE::error::would_block (or the
+   * direct system calls may fail with ModioAsio::error::would_block (or the
    * equivalent system error).
    *
    * @note The current non-blocking mode is cached by the descriptor object.
@@ -557,20 +557,20 @@ public:
    * object's synchronous operations.
    *
    * @param mode If @c true, the underlying descriptor is put into non-blocking
-   * mode and direct system calls may fail with ASIO_NAMESPACE::error::would_block
+   * mode and direct system calls may fail with ModioAsio::error::would_block
    * (or the equivalent system error).
    *
-   * @throws ASIO_NAMESPACE::system_error Thrown on failure. If the @c mode is
+   * @throws ModioAsio::system_error Thrown on failure. If the @c mode is
    * @c false, but the current value of @c non_blocking() is @c true, this
-   * function fails with ASIO_NAMESPACE::error::invalid_argument, as the
+   * function fails with ModioAsio::error::invalid_argument, as the
    * combination does not make sense.
    */
   void native_non_blocking(bool mode)
   {
-    ASIO_NAMESPACE::error_code ec;
+    ModioAsio::error_code ec;
     impl_.get_service().native_non_blocking(
         impl_.get_implementation(), mode, ec);
-    ASIO_NAMESPACE::detail::throw_error(ec, "native_non_blocking");
+    ModioAsio::detail::throw_error(ec, "native_non_blocking");
   }
 
   /// Sets the non-blocking mode of the native descriptor implementation.
@@ -580,16 +580,16 @@ public:
    * object's synchronous operations.
    *
    * @param mode If @c true, the underlying descriptor is put into non-blocking
-   * mode and direct system calls may fail with ASIO_NAMESPACE::error::would_block
+   * mode and direct system calls may fail with ModioAsio::error::would_block
    * (or the equivalent system error).
    *
    * @param ec Set to indicate what error occurred, if any. If the @c mode is
    * @c false, but the current value of @c non_blocking() is @c true, this
-   * function fails with ASIO_NAMESPACE::error::invalid_argument, as the
+   * function fails with ModioAsio::error::invalid_argument, as the
    * combination does not make sense.
    */
   ASIO_SYNC_OP_VOID native_non_blocking(
-      bool mode, ASIO_NAMESPACE::error_code& ec)
+      bool mode, ModioAsio::error_code& ec)
   {
     impl_.get_service().native_non_blocking(
         impl_.get_implementation(), mode, ec);
@@ -607,16 +607,16 @@ public:
    * @par Example
    * Waiting for a descriptor to become readable.
    * @code
-   * ASIO_NAMESPACE::posix::stream_descriptor descriptor(my_context);
+   * ModioAsio::posix::stream_descriptor descriptor(my_context);
    * ...
-   * descriptor.wait(ASIO_NAMESPACE::posix::stream_descriptor::wait_read);
+   * descriptor.wait(ModioAsio::posix::stream_descriptor::wait_read);
    * @endcode
    */
   void wait(wait_type w)
   {
-    ASIO_NAMESPACE::error_code ec;
+    ModioAsio::error_code ec;
     impl_.get_service().wait(impl_.get_implementation(), w, ec);
-    ASIO_NAMESPACE::detail::throw_error(ec, "wait");
+    ModioAsio::detail::throw_error(ec, "wait");
   }
 
   /// Wait for the descriptor to become ready to read, ready to write, or to
@@ -632,13 +632,13 @@ public:
    * @par Example
    * Waiting for a descriptor to become readable.
    * @code
-   * ASIO_NAMESPACE::posix::stream_descriptor descriptor(my_context);
+   * ModioAsio::posix::stream_descriptor descriptor(my_context);
    * ...
-   * ASIO_NAMESPACE::error_code ec;
-   * descriptor.wait(ASIO_NAMESPACE::posix::stream_descriptor::wait_read, ec);
+   * ModioAsio::error_code ec;
+   * descriptor.wait(ModioAsio::posix::stream_descriptor::wait_read, ec);
    * @endcode
    */
-  ASIO_SYNC_OP_VOID wait(wait_type w, ASIO_NAMESPACE::error_code& ec)
+  ASIO_SYNC_OP_VOID wait(wait_type w, ModioAsio::error_code& ec)
   {
     impl_.get_service().wait(impl_.get_implementation(), w, ec);
     ASIO_SYNC_OP_VOID_RETURN(ec);
@@ -660,19 +660,19 @@ public:
    * @ref yield_context, or a function object with the correct completion
    * signature. The function signature of the completion handler must be:
    * @code void handler(
-   *   const ASIO_NAMESPACE::error_code& error // Result of operation.
+   *   const ModioAsio::error_code& error // Result of operation.
    * ); @endcode
    * Regardless of whether the asynchronous operation completes immediately or
    * not, the completion handler will not be invoked from within this function.
    * On immediate completion, invocation of the handler will be performed in a
-   * manner equivalent to using ASIO_NAMESPACE::post().
+   * manner equivalent to using ModioAsio::post().
    *
    * @par Completion Signature
-   * @code void(ASIO_NAMESPACE::error_code) @endcode
+   * @code void(ModioAsio::error_code) @endcode
    *
    * @par Example
    * @code
-   * void wait_handler(const ASIO_NAMESPACE::error_code& error)
+   * void wait_handler(const ModioAsio::error_code& error)
    * {
    *   if (!error)
    *   {
@@ -682,16 +682,16 @@ public:
    *
    * ...
    *
-   * ASIO_NAMESPACE::posix::stream_descriptor descriptor(my_context);
+   * ModioAsio::posix::stream_descriptor descriptor(my_context);
    * ...
    * descriptor.async_wait(
-   *     ASIO_NAMESPACE::posix::stream_descriptor::wait_read,
+   *     ModioAsio::posix::stream_descriptor::wait_read,
    *     wait_handler);
    * @endcode
    *
    * @par Per-Operation Cancellation
    * This asynchronous operation supports cancellation for the following
-   * ASIO_NAMESPACE::cancellation_type values:
+   * ModioAsio::cancellation_type values:
    *
    * @li @c cancellation_type::terminal
    *
@@ -700,18 +700,18 @@ public:
    * @li @c cancellation_type::total
    */
   template <
-      ASIO_COMPLETION_TOKEN_FOR(void (ASIO_NAMESPACE::error_code))
+      ASIO_COMPLETION_TOKEN_FOR(void (ModioAsio::error_code))
         WaitToken ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(executor_type)>
   ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(WaitToken,
-      void (ASIO_NAMESPACE::error_code))
+      void (ModioAsio::error_code))
   async_wait(wait_type w,
       ASIO_MOVE_ARG(WaitToken) token
         ASIO_DEFAULT_COMPLETION_TOKEN(executor_type))
     ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
-      async_initiate<WaitToken, void (ASIO_NAMESPACE::error_code)>(
+      async_initiate<WaitToken, void (ModioAsio::error_code)>(
           declval<initiate_async_wait>(), token, w)))
   {
-    return async_initiate<WaitToken, void (ASIO_NAMESPACE::error_code)>(
+    return async_initiate<WaitToken, void (ModioAsio::error_code)>(
         initiate_async_wait(this), token, w);
   }
 
@@ -771,7 +771,7 @@ private:
 };
 
 } // namespace posix
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

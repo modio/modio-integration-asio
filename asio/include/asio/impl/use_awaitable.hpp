@@ -21,7 +21,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 template <typename Executor, typename T>
@@ -74,13 +74,13 @@ public:
 };
 
 template <typename Executor>
-class awaitable_handler<Executor, ASIO_NAMESPACE::error_code>
+class awaitable_handler<Executor, ModioAsio::error_code>
   : public awaitable_handler_base<Executor, void>
 {
 public:
   using awaitable_handler_base<Executor, void>::awaitable_handler_base;
 
-  void operator()(const ASIO_NAMESPACE::error_code& ec)
+  void operator()(const ModioAsio::error_code& ec)
   {
     this->frame()->attach_thread(this);
     if (ec)
@@ -132,14 +132,14 @@ public:
 };
 
 template <typename Executor, typename T>
-class awaitable_handler<Executor, ASIO_NAMESPACE::error_code, T>
+class awaitable_handler<Executor, ModioAsio::error_code, T>
   : public awaitable_handler_base<Executor, T>
 {
 public:
   using awaitable_handler_base<Executor, T>::awaitable_handler_base;
 
   template <typename Arg>
-  void operator()(const ASIO_NAMESPACE::error_code& ec, Arg&& arg)
+  void operator()(const ModioAsio::error_code& ec, Arg&& arg)
   {
     this->frame()->attach_thread(this);
     if (ec)
@@ -193,7 +193,7 @@ public:
 };
 
 template <typename Executor, typename... Ts>
-class awaitable_handler<Executor, ASIO_NAMESPACE::error_code, Ts...>
+class awaitable_handler<Executor, ModioAsio::error_code, Ts...>
   : public awaitable_handler_base<Executor, std::tuple<Ts...>>
 {
 public:
@@ -201,7 +201,7 @@ public:
     std::tuple<Ts...>>::awaitable_handler_base;
 
   template <typename... Args>
-  void operator()(const ASIO_NAMESPACE::error_code& ec, Args&&... args)
+  void operator()(const ModioAsio::error_code& ec, Args&&... args)
   {
     this->frame()->attach_thread(this);
     if (ec)
@@ -294,7 +294,7 @@ public:
 
 #endif // !defined(GENERATING_DOCUMENTATION)
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

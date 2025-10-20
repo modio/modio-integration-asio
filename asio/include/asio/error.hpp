@@ -20,9 +20,9 @@
 #include "asio/system_error.hpp"
 
 
-inline const ASIO_NAMESPACE::error_category& get_system_category()
+inline const ModioAsio::error_category& get_system_category()
 {
-	return ASIO_NAMESPACE::system_category();
+	return ModioAsio::system_category();
 }
 
 #if !defined(ASIO_DISABLE_SOCKETS)
@@ -69,10 +69,10 @@ inline const ASIO_NAMESPACE::error_category& get_system_category()
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace error {
 
-inline const ASIO_NAMESPACE::error_category& get_system_category();
+inline const ModioAsio::error_category& get_system_category();
 
 	enum basic_errors
 {
@@ -265,33 +265,33 @@ enum misc_errors
        //   && defined(ASIO_HAS_BOOST_CONFIG)
        //   && (BOOST_VERSION >= 107900)
 
-inline void clear(ASIO_NAMESPACE::error_code& ec)
+inline void clear(ModioAsio::error_code& ec)
 {
   ec.assign(0, ec.category());
 }
 
-inline const ASIO_NAMESPACE::error_category& get_system_category()
+inline const ModioAsio::error_category& get_system_category()
 {
-  return ASIO_NAMESPACE::system_category();
+  return ModioAsio::system_category();
 }
 
 
 #if !defined(ASIO_WINDOWS) && !defined(__CYGWIN__)
 
 extern ASIO_DECL
-const ASIO_NAMESPACE::error_category& get_netdb_category();
+const ModioAsio::error_category& get_netdb_category();
 
 extern ASIO_DECL
-const ASIO_NAMESPACE::error_category& get_addrinfo_category();
+const ModioAsio::error_category& get_addrinfo_category();
 
 #else // !defined(ASIO_WINDOWS) && !defined(__CYGWIN__)
 
-inline const ASIO_NAMESPACE::error_category& get_netdb_category()
+inline const ModioAsio::error_category& get_netdb_category()
 {
   return get_system_category();
 }
 
-inline const ASIO_NAMESPACE::error_category& get_addrinfo_category()
+inline const ModioAsio::error_category& get_addrinfo_category()
 {
   return get_system_category();
 }
@@ -299,39 +299,39 @@ inline const ASIO_NAMESPACE::error_category& get_addrinfo_category()
 #endif // !defined(ASIO_WINDOWS) && !defined(__CYGWIN__)
 
 extern ASIO_DECL
-const ASIO_NAMESPACE::error_category& get_misc_category();
+const ModioAsio::error_category& get_misc_category();
 
-static const ASIO_NAMESPACE::error_category&
+static const ModioAsio::error_category&
   system_category ASIO_UNUSED_VARIABLE
-  = ASIO_NAMESPACE::error::get_system_category();
-static const ASIO_NAMESPACE::error_category&
+  = ModioAsio::error::get_system_category();
+static const ModioAsio::error_category&
   netdb_category ASIO_UNUSED_VARIABLE
-  = ASIO_NAMESPACE::error::get_netdb_category();
-static const ASIO_NAMESPACE::error_category&
+  = ModioAsio::error::get_netdb_category();
+static const ModioAsio::error_category&
   addrinfo_category ASIO_UNUSED_VARIABLE
-  = ASIO_NAMESPACE::error::get_addrinfo_category();
-static const ASIO_NAMESPACE::error_category&
+  = ModioAsio::error::get_addrinfo_category();
+static const ModioAsio::error_category&
   misc_category ASIO_UNUSED_VARIABLE
-  = ASIO_NAMESPACE::error::get_misc_category();
+  = ModioAsio::error::get_misc_category();
 
 } // namespace error
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #if defined(ASIO_HAS_STD_SYSTEM_ERROR)
 namespace std {
 
 
-template<> struct is_error_code_enum<ASIO_NAMESPACE::error::netdb_errors>
+template<> struct is_error_code_enum<ModioAsio::error::netdb_errors>
 {
   static const bool value = true;
 };
 
-template<> struct is_error_code_enum<ASIO_NAMESPACE::error::addrinfo_errors>
+template<> struct is_error_code_enum<ModioAsio::error::addrinfo_errors>
 {
   static const bool value = true;
 };
 
-template<> struct is_error_code_enum<ASIO_NAMESPACE::error::misc_errors>
+template<> struct is_error_code_enum<ModioAsio::error::misc_errors>
 {
   static const bool value = true;
 };
@@ -339,24 +339,24 @@ template<> struct is_error_code_enum<ASIO_NAMESPACE::error::misc_errors>
 } // namespace std
 #endif // defined(ASIO_HAS_STD_SYSTEM_ERROR)
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace error {
 
-inline ASIO_NAMESPACE::error_code make_error_code(netdb_errors e)
+inline ModioAsio::error_code make_error_code(netdb_errors e)
 {
-  return ASIO_NAMESPACE::error_code(
+  return ModioAsio::error_code(
       static_cast<int>(e), get_netdb_category());
 }
 
-inline ASIO_NAMESPACE::error_code make_error_code(addrinfo_errors e)
+inline ModioAsio::error_code make_error_code(addrinfo_errors e)
 {
-  return ASIO_NAMESPACE::error_code(
+  return ModioAsio::error_code(
       static_cast<int>(e), get_addrinfo_category());
 }
 
-inline ASIO_NAMESPACE::error_code make_error_code(misc_errors e)
+inline ModioAsio::error_code make_error_code(misc_errors e)
 {
-  return ASIO_NAMESPACE::error_code(
+  return ModioAsio::error_code(
       static_cast<int>(e), get_misc_category());
 }
 
@@ -377,7 +377,7 @@ namespace resolver_errc {
   const error::netdb_errors try_again = error::host_not_found_try_again;
   using error::service_not_found;
 } // namespace resolver_errc
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 
@@ -391,7 +391,7 @@ namespace resolver_errc {
 # include "asio/impl/error.ipp"
 #endif // defined(ASIO_HEADER_ONLY)
 #else
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace error {
 
 enum basic_errors
@@ -401,16 +401,16 @@ enum basic_errors
 };
 
 } // namespace error
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #endif
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace error {
 
-inline ASIO_NAMESPACE::error_code make_error_code(basic_errors e)
+inline ModioAsio::error_code make_error_code(basic_errors e)
 {
-  return ASIO_NAMESPACE::error_code(
+  return ModioAsio::error_code(
       static_cast<int>(e), get_system_category());
 }
 
@@ -420,7 +420,7 @@ inline ASIO_NAMESPACE::error_code make_error_code(basic_errors e)
 #if defined(ASIO_HAS_STD_SYSTEM_ERROR)
 namespace std {
 
-template<> struct is_error_code_enum<ASIO_NAMESPACE::error::basic_errors>
+template<> struct is_error_code_enum<ModioAsio::error::basic_errors>
 {
   static const bool value = true;
 };

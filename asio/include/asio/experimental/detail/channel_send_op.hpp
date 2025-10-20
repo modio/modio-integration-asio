@@ -25,7 +25,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace experimental {
 namespace detail {
 
@@ -84,7 +84,7 @@ public:
   {
     // Take ownership of the operation object.
     channel_send_op* o(static_cast<channel_send_op*>(base));
-    ptr p = { ASIO_NAMESPACE::detail::addressof(o->handler_), o, o };
+    ptr p = { ModioAsio::detail::addressof(o->handler_), o, o };
 
     ASIO_HANDLER_COMPLETION((*o));
 
@@ -93,7 +93,7 @@ public:
         ASIO_MOVE_CAST2(channel_operation::handler_work<
           Handler, IoExecutor>)(o->work_));
 
-    ASIO_NAMESPACE::error_code ec;
+    ModioAsio::error_code ec;
     switch (a)
     {
     case channel_operation::cancel_op:
@@ -112,9 +112,9 @@ public:
     // with the handler. Consequently, a local copy of the handler is required
     // to ensure that any owning sub-object remains valid until after we have
     // deallocated the memory here.
-    ASIO_NAMESPACE::detail::binder1<Handler, ASIO_NAMESPACE::error_code>
+    ModioAsio::detail::binder1<Handler, ModioAsio::error_code>
       handler(o->handler_, ec);
-    p.h = ASIO_NAMESPACE::detail::addressof(handler.handler_);
+    p.h = ModioAsio::detail::addressof(handler.handler_);
     p.reset();
 
     // Post the completion if required.
@@ -133,7 +133,7 @@ private:
 
 } // namespace detail
 } // namespace experimental
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

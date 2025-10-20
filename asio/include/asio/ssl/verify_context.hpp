@@ -22,7 +22,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace ssl {
 
 /// A simple wrapper around the X509_STORE_CTX type, used during verification of
@@ -60,7 +60,7 @@ private:
 };
 
 } // namespace ssl
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

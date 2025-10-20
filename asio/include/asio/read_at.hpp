@@ -28,7 +28,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 template <typename> class initiate_async_read_at;
@@ -39,7 +39,7 @@ template <typename> class initiate_async_read_at_streambuf;
 } // namespace detail
 
 /**
- * @defgroup read_at ASIO_NAMESPACE::read_at
+ * @defgroup read_at ModioAsio::read_at
  *
  * @brief The @c read_at function is a composed operation that reads a certain
  * amount of data at the specified offset before returning.
@@ -72,19 +72,19 @@ template <typename> class initiate_async_read_at_streambuf;
  *
  * @returns The number of bytes transferred.
  *
- * @throws ASIO_NAMESPACE::system_error Thrown on failure.
+ * @throws ModioAsio::system_error Thrown on failure.
  *
  * @par Example
  * To read into a single data buffer use the @ref buffer function as follows:
- * @code ASIO_NAMESPACE::read_at(d, 42, ASIO_NAMESPACE::buffer(data, size)); @endcode
+ * @code ModioAsio::read_at(d, 42, ModioAsio::buffer(data, size)); @endcode
  * See the @ref buffer documentation for information on reading into multiple
  * buffers in one go, and how to use it with arrays, boost::array or
  * std::vector.
  *
  * @note This overload is equivalent to calling:
- * @code ASIO_NAMESPACE::read_at(
+ * @code ModioAsio::read_at(
  *     d, 42, buffers,
- *     ASIO_NAMESPACE::transfer_all()); @endcode
+ *     ModioAsio::transfer_all()); @endcode
  */
 template <typename SyncRandomAccessReadDevice, typename MutableBufferSequence>
 std::size_t read_at(SyncRandomAccessReadDevice& d,
@@ -120,21 +120,21 @@ std::size_t read_at(SyncRandomAccessReadDevice& d,
  *
  * @par Example
  * To read into a single data buffer use the @ref buffer function as follows:
- * @code ASIO_NAMESPACE::read_at(d, 42,
- *     ASIO_NAMESPACE::buffer(data, size), ec); @endcode
+ * @code ModioAsio::read_at(d, 42,
+ *     ModioAsio::buffer(data, size), ec); @endcode
  * See the @ref buffer documentation for information on reading into multiple
  * buffers in one go, and how to use it with arrays, boost::array or
  * std::vector.
  *
  * @note This overload is equivalent to calling:
- * @code ASIO_NAMESPACE::read_at(
+ * @code ModioAsio::read_at(
  *     d, 42, buffers,
- *     ASIO_NAMESPACE::transfer_all(), ec); @endcode
+ *     ModioAsio::transfer_all(), ec); @endcode
  */
 template <typename SyncRandomAccessReadDevice, typename MutableBufferSequence>
 std::size_t read_at(SyncRandomAccessReadDevice& d,
     uint64_t offset, const MutableBufferSequence& buffers,
-    ASIO_NAMESPACE::error_code& ec);
+    ModioAsio::error_code& ec);
 
 /// Attempt to read a certain amount of data at the specified offset before
 /// returning.
@@ -165,7 +165,7 @@ std::size_t read_at(SyncRandomAccessReadDevice& d,
  * must be:
  * @code std::size_t completion_condition(
  *   // Result of latest read_some_at operation.
- *   const ASIO_NAMESPACE::error_code& error,
+ *   const ModioAsio::error_code& error,
  *
  *   // Number of bytes transferred so far.
  *   std::size_t bytes_transferred
@@ -176,12 +176,12 @@ std::size_t read_at(SyncRandomAccessReadDevice& d,
  *
  * @returns The number of bytes transferred.
  *
- * @throws ASIO_NAMESPACE::system_error Thrown on failure.
+ * @throws ModioAsio::system_error Thrown on failure.
  *
  * @par Example
  * To read into a single data buffer use the @ref buffer function as follows:
- * @code ASIO_NAMESPACE::read_at(d, 42, ASIO_NAMESPACE::buffer(data, size),
- *     ASIO_NAMESPACE::transfer_at_least(32)); @endcode
+ * @code ModioAsio::read_at(d, 42, ModioAsio::buffer(data, size),
+ *     ModioAsio::transfer_at_least(32)); @endcode
  * See the @ref buffer documentation for information on reading into multiple
  * buffers in one go, and how to use it with arrays, boost::array or
  * std::vector.
@@ -221,7 +221,7 @@ std::size_t read_at(SyncRandomAccessReadDevice& d,
  * must be:
  * @code std::size_t completion_condition(
  *   // Result of latest read_some_at operation.
- *   const ASIO_NAMESPACE::error_code& error,
+ *   const ModioAsio::error_code& error,
  *
  *   // Number of bytes transferred so far.
  *   std::size_t bytes_transferred
@@ -239,7 +239,7 @@ template <typename SyncRandomAccessReadDevice, typename MutableBufferSequence,
     typename CompletionCondition>
 std::size_t read_at(SyncRandomAccessReadDevice& d,
     uint64_t offset, const MutableBufferSequence& buffers,
-    CompletionCondition completion_condition, ASIO_NAMESPACE::error_code& ec);
+    CompletionCondition completion_condition, ModioAsio::error_code& ec);
 
 #if !defined(ASIO_NO_EXTENSIONS)
 #if !defined(ASIO_NO_IOSTREAM)
@@ -265,12 +265,12 @@ std::size_t read_at(SyncRandomAccessReadDevice& d,
  *
  * @returns The number of bytes transferred.
  *
- * @throws ASIO_NAMESPACE::system_error Thrown on failure.
+ * @throws ModioAsio::system_error Thrown on failure.
  *
  * @note This overload is equivalent to calling:
- * @code ASIO_NAMESPACE::read_at(
+ * @code ModioAsio::read_at(
  *     d, 42, b,
- *     ASIO_NAMESPACE::transfer_all()); @endcode
+ *     ModioAsio::transfer_all()); @endcode
  */
 template <typename SyncRandomAccessReadDevice, typename Allocator>
 std::size_t read_at(SyncRandomAccessReadDevice& d,
@@ -300,14 +300,14 @@ std::size_t read_at(SyncRandomAccessReadDevice& d,
  * @returns The number of bytes transferred.
  *
  * @note This overload is equivalent to calling:
- * @code ASIO_NAMESPACE::read_at(
+ * @code ModioAsio::read_at(
  *     d, 42, b,
- *     ASIO_NAMESPACE::transfer_all(), ec); @endcode
+ *     ModioAsio::transfer_all(), ec); @endcode
  */
 template <typename SyncRandomAccessReadDevice, typename Allocator>
 std::size_t read_at(SyncRandomAccessReadDevice& d,
     uint64_t offset, basic_streambuf<Allocator>& b,
-    ASIO_NAMESPACE::error_code& ec);
+    ModioAsio::error_code& ec);
 
 /// Attempt to read a certain amount of data at the specified offset before
 /// returning.
@@ -333,7 +333,7 @@ std::size_t read_at(SyncRandomAccessReadDevice& d,
  * must be:
  * @code std::size_t completion_condition(
  *   // Result of latest read_some_at operation.
- *   const ASIO_NAMESPACE::error_code& error,
+ *   const ModioAsio::error_code& error,
  *
  *   // Number of bytes transferred so far.
  *   std::size_t bytes_transferred
@@ -344,7 +344,7 @@ std::size_t read_at(SyncRandomAccessReadDevice& d,
  *
  * @returns The number of bytes transferred.
  *
- * @throws ASIO_NAMESPACE::system_error Thrown on failure.
+ * @throws ModioAsio::system_error Thrown on failure.
  */
 template <typename SyncRandomAccessReadDevice, typename Allocator,
     typename CompletionCondition>
@@ -376,7 +376,7 @@ std::size_t read_at(SyncRandomAccessReadDevice& d,
  * must be:
  * @code std::size_t completion_condition(
  *   // Result of latest read_some_at operation.
- *   const ASIO_NAMESPACE::error_code& error,
+ *   const ModioAsio::error_code& error,
  *
  *   // Number of bytes transferred so far.
  *   std::size_t bytes_transferred
@@ -394,14 +394,14 @@ template <typename SyncRandomAccessReadDevice, typename Allocator,
     typename CompletionCondition>
 std::size_t read_at(SyncRandomAccessReadDevice& d,
     uint64_t offset, basic_streambuf<Allocator>& b,
-    CompletionCondition completion_condition, ASIO_NAMESPACE::error_code& ec);
+    CompletionCondition completion_condition, ModioAsio::error_code& ec);
 
 #endif // !defined(ASIO_NO_IOSTREAM)
 #endif // !defined(ASIO_NO_EXTENSIONS)
 
 /*@}*/
 /**
- * @defgroup async_read_at ASIO_NAMESPACE::async_read_at
+ * @defgroup async_read_at ModioAsio::async_read_at
  *
  * @brief The @c async_read_at function is a composed asynchronous operation
  * that reads a certain amount of data at the specified offset.
@@ -443,7 +443,7 @@ std::size_t read_at(SyncRandomAccessReadDevice& d,
  * signature. The function signature of the completion handler must be:
  * @code void handler(
  *   // Result of operation.
- *   const ASIO_NAMESPACE::error_code& error,
+ *   const ModioAsio::error_code& error,
  *
  *   // Number of bytes copied into the buffers. If an error
  *   // occurred, this will be the number of bytes successfully
@@ -453,29 +453,29 @@ std::size_t read_at(SyncRandomAccessReadDevice& d,
  * Regardless of whether the asynchronous operation completes immediately or
  * not, the completion handler will not be invoked from within this function.
  * On immediate completion, invocation of the handler will be performed in a
- * manner equivalent to using ASIO_NAMESPACE::post().
+ * manner equivalent to using ModioAsio::post().
  *
  * @par Completion Signature
- * @code void(ASIO_NAMESPACE::error_code, std::size_t) @endcode
+ * @code void(ModioAsio::error_code, std::size_t) @endcode
  *
  * @par Example
  * To read into a single data buffer use the @ref buffer function as follows:
  * @code
- * ASIO_NAMESPACE::async_read_at(d, 42, ASIO_NAMESPACE::buffer(data, size), handler);
+ * ModioAsio::async_read_at(d, 42, ModioAsio::buffer(data, size), handler);
  * @endcode
  * See the @ref buffer documentation for information on reading into multiple
  * buffers in one go, and how to use it with arrays, boost::array or
  * std::vector.
  *
  * @note This overload is equivalent to calling:
- * @code ASIO_NAMESPACE::async_read_at(
+ * @code ModioAsio::async_read_at(
  *     d, 42, buffers,
- *     ASIO_NAMESPACE::transfer_all(),
+ *     ModioAsio::transfer_all(),
  *     handler); @endcode
  *
  * @par Per-Operation Cancellation
  * This asynchronous operation supports cancellation for the following
- * ASIO_NAMESPACE::cancellation_type values:
+ * ModioAsio::cancellation_type values:
  *
  * @li @c cancellation_type::terminal
  *
@@ -485,12 +485,12 @@ std::size_t read_at(SyncRandomAccessReadDevice& d,
  * async_read_some_at operation.
  */
 template <typename AsyncRandomAccessReadDevice, typename MutableBufferSequence,
-    ASIO_COMPLETION_TOKEN_FOR(void (ASIO_NAMESPACE::error_code,
+    ASIO_COMPLETION_TOKEN_FOR(void (ModioAsio::error_code,
       std::size_t)) ReadToken
         ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(
           typename AsyncRandomAccessReadDevice::executor_type)>
 ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(ReadToken,
-    void (ASIO_NAMESPACE::error_code, std::size_t))
+    void (ModioAsio::error_code, std::size_t))
 async_read_at(AsyncRandomAccessReadDevice& d, uint64_t offset,
     const MutableBufferSequence& buffers,
     ASIO_MOVE_ARG(ReadToken) token
@@ -498,7 +498,7 @@ async_read_at(AsyncRandomAccessReadDevice& d, uint64_t offset,
         typename AsyncRandomAccessReadDevice::executor_type))
   ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
     async_initiate<ReadToken,
-      void (ASIO_NAMESPACE::error_code, std::size_t)>(
+      void (ModioAsio::error_code, std::size_t)>(
         declval<detail::initiate_async_read_at<AsyncRandomAccessReadDevice> >(),
         token, offset, buffers, transfer_all())));
 
@@ -532,7 +532,7 @@ async_read_at(AsyncRandomAccessReadDevice& d, uint64_t offset,
  * must be:
  * @code std::size_t completion_condition(
  *   // Result of latest async_read_some_at operation.
- *   const ASIO_NAMESPACE::error_code& error,
+ *   const ModioAsio::error_code& error,
  *
  *   // Number of bytes transferred so far.
  *   std::size_t bytes_transferred
@@ -548,7 +548,7 @@ async_read_at(AsyncRandomAccessReadDevice& d, uint64_t offset,
  * signature. The function signature of the completion handler must be:
  * @code void handler(
  *   // Result of operation.
- *   const ASIO_NAMESPACE::error_code& error,
+ *   const ModioAsio::error_code& error,
  *
  *   // Number of bytes copied into the buffers. If an error
  *   // occurred, this will be the number of bytes successfully
@@ -558,16 +558,16 @@ async_read_at(AsyncRandomAccessReadDevice& d, uint64_t offset,
  * Regardless of whether the asynchronous operation completes immediately or
  * not, the completion handler will not be invoked from within this function.
  * On immediate completion, invocation of the handler will be performed in a
- * manner equivalent to using ASIO_NAMESPACE::post().
+ * manner equivalent to using ModioAsio::post().
  *
  * @par Completion Signature
- * @code void(ASIO_NAMESPACE::error_code, std::size_t) @endcode
+ * @code void(ModioAsio::error_code, std::size_t) @endcode
  *
  * @par Example
  * To read into a single data buffer use the @ref buffer function as follows:
- * @code ASIO_NAMESPACE::async_read_at(d, 42,
- *     ASIO_NAMESPACE::buffer(data, size),
- *     ASIO_NAMESPACE::transfer_at_least(32),
+ * @code ModioAsio::async_read_at(d, 42,
+ *     ModioAsio::buffer(data, size),
+ *     ModioAsio::transfer_at_least(32),
  *     handler); @endcode
  * See the @ref buffer documentation for information on reading into multiple
  * buffers in one go, and how to use it with arrays, boost::array or
@@ -575,7 +575,7 @@ async_read_at(AsyncRandomAccessReadDevice& d, uint64_t offset,
  *
  * @par Per-Operation Cancellation
  * This asynchronous operation supports cancellation for the following
- * ASIO_NAMESPACE::cancellation_type values:
+ * ModioAsio::cancellation_type values:
  *
  * @li @c cancellation_type::terminal
  *
@@ -586,12 +586,12 @@ async_read_at(AsyncRandomAccessReadDevice& d, uint64_t offset,
  */
 template <typename AsyncRandomAccessReadDevice,
     typename MutableBufferSequence, typename CompletionCondition,
-    ASIO_COMPLETION_TOKEN_FOR(void (ASIO_NAMESPACE::error_code,
+    ASIO_COMPLETION_TOKEN_FOR(void (ModioAsio::error_code,
       std::size_t)) ReadToken
         ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(
           typename AsyncRandomAccessReadDevice::executor_type)>
 ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(ReadToken,
-    void (ASIO_NAMESPACE::error_code, std::size_t))
+    void (ModioAsio::error_code, std::size_t))
 async_read_at(AsyncRandomAccessReadDevice& d,
     uint64_t offset, const MutableBufferSequence& buffers,
     CompletionCondition completion_condition,
@@ -600,7 +600,7 @@ async_read_at(AsyncRandomAccessReadDevice& d,
         typename AsyncRandomAccessReadDevice::executor_type))
   ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
     async_initiate<ReadToken,
-      void (ASIO_NAMESPACE::error_code, std::size_t)>(
+      void (ModioAsio::error_code, std::size_t)>(
         declval<detail::initiate_async_read_at<AsyncRandomAccessReadDevice> >(),
         token, offset, buffers,
         ASIO_MOVE_CAST(CompletionCondition)(completion_condition))));
@@ -638,7 +638,7 @@ async_read_at(AsyncRandomAccessReadDevice& d,
  * signature. The function signature of the completion handler must be:
  * @code void handler(
  *   // Result of operation.
- *   const ASIO_NAMESPACE::error_code& error,
+ *   const ModioAsio::error_code& error,
  *
  *   // Number of bytes copied into the buffers. If an error
  *   // occurred, this will be the number of bytes successfully
@@ -648,20 +648,20 @@ async_read_at(AsyncRandomAccessReadDevice& d,
  * Regardless of whether the asynchronous operation completes immediately or
  * not, the completion handler will not be invoked from within this function.
  * On immediate completion, invocation of the handler will be performed in a
- * manner equivalent to using ASIO_NAMESPACE::post().
+ * manner equivalent to using ModioAsio::post().
  *
  * @par Completion Signature
- * @code void(ASIO_NAMESPACE::error_code, std::size_t) @endcode
+ * @code void(ModioAsio::error_code, std::size_t) @endcode
  *
  * @note This overload is equivalent to calling:
- * @code ASIO_NAMESPACE::async_read_at(
+ * @code ModioAsio::async_read_at(
  *     d, 42, b,
- *     ASIO_NAMESPACE::transfer_all(),
+ *     ModioAsio::transfer_all(),
  *     handler); @endcode
  *
  * @par Per-Operation Cancellation
  * This asynchronous operation supports cancellation for the following
- * ASIO_NAMESPACE::cancellation_type values:
+ * ModioAsio::cancellation_type values:
  *
  * @li @c cancellation_type::terminal
  *
@@ -671,12 +671,12 @@ async_read_at(AsyncRandomAccessReadDevice& d,
  * async_read_some_at operation.
  */
 template <typename AsyncRandomAccessReadDevice, typename Allocator,
-    ASIO_COMPLETION_TOKEN_FOR(void (ASIO_NAMESPACE::error_code,
+    ASIO_COMPLETION_TOKEN_FOR(void (ModioAsio::error_code,
       std::size_t)) ReadToken
         ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(
           typename AsyncRandomAccessReadDevice::executor_type)>
 ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(ReadToken,
-    void (ASIO_NAMESPACE::error_code, std::size_t))
+    void (ModioAsio::error_code, std::size_t))
 async_read_at(AsyncRandomAccessReadDevice& d,
     uint64_t offset, basic_streambuf<Allocator>& b,
     ASIO_MOVE_ARG(ReadToken) token
@@ -684,7 +684,7 @@ async_read_at(AsyncRandomAccessReadDevice& d,
         typename AsyncRandomAccessReadDevice::executor_type))
   ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
     async_initiate<ReadToken,
-      void (ASIO_NAMESPACE::error_code, std::size_t)>(
+      void (ModioAsio::error_code, std::size_t)>(
         declval<detail::initiate_async_read_at_streambuf<
           AsyncRandomAccessReadDevice> >(),
         token, offset, &b, transfer_all())));
@@ -717,7 +717,7 @@ async_read_at(AsyncRandomAccessReadDevice& d,
  * must be:
  * @code std::size_t completion_condition(
  *   // Result of latest async_read_some_at operation.
- *   const ASIO_NAMESPACE::error_code& error,
+ *   const ModioAsio::error_code& error,
  *
  *   // Number of bytes transferred so far.
  *   std::size_t bytes_transferred
@@ -733,7 +733,7 @@ async_read_at(AsyncRandomAccessReadDevice& d,
  * signature. The function signature of the completion handler must be:
  * @code void handler(
  *   // Result of operation.
- *   const ASIO_NAMESPACE::error_code& error,
+ *   const ModioAsio::error_code& error,
  *
  *   // Number of bytes copied into the buffers. If an error
  *   // occurred, this will be the number of bytes successfully
@@ -743,14 +743,14 @@ async_read_at(AsyncRandomAccessReadDevice& d,
  * Regardless of whether the asynchronous operation completes immediately or
  * not, the completion handler will not be invoked from within this function.
  * On immediate completion, invocation of the handler will be performed in a
- * manner equivalent to using ASIO_NAMESPACE::post().
+ * manner equivalent to using ModioAsio::post().
  *
  * @par Completion Signature
- * @code void(ASIO_NAMESPACE::error_code, std::size_t) @endcode
+ * @code void(ModioAsio::error_code, std::size_t) @endcode
  *
  * @par Per-Operation Cancellation
  * This asynchronous operation supports cancellation for the following
- * ASIO_NAMESPACE::cancellation_type values:
+ * ModioAsio::cancellation_type values:
  *
  * @li @c cancellation_type::terminal
  *
@@ -761,12 +761,12 @@ async_read_at(AsyncRandomAccessReadDevice& d,
  */
 template <typename AsyncRandomAccessReadDevice,
     typename Allocator, typename CompletionCondition,
-    ASIO_COMPLETION_TOKEN_FOR(void (ASIO_NAMESPACE::error_code,
+    ASIO_COMPLETION_TOKEN_FOR(void (ModioAsio::error_code,
       std::size_t)) ReadToken
         ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(
           typename AsyncRandomAccessReadDevice::executor_type)>
 ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(ReadToken,
-    void (ASIO_NAMESPACE::error_code, std::size_t))
+    void (ModioAsio::error_code, std::size_t))
 async_read_at(AsyncRandomAccessReadDevice& d,
     uint64_t offset, basic_streambuf<Allocator>& b,
     CompletionCondition completion_condition,
@@ -775,7 +775,7 @@ async_read_at(AsyncRandomAccessReadDevice& d,
         typename AsyncRandomAccessReadDevice::executor_type))
   ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
     async_initiate<ReadToken,
-      void (ASIO_NAMESPACE::error_code, std::size_t)>(
+      void (ModioAsio::error_code, std::size_t)>(
         declval<detail::initiate_async_read_at_streambuf<
           AsyncRandomAccessReadDevice> >(),
         token, offset, &b,
@@ -786,7 +786,7 @@ async_read_at(AsyncRandomAccessReadDevice& d,
 
 /*@}*/
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

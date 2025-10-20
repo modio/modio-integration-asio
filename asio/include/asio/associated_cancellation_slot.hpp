@@ -22,7 +22,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 
 template <typename T, typename CancellationSlot>
 struct associated_cancellation_slot;
@@ -171,7 +171,7 @@ struct associated_cancellation_slot_forwarding_base<T, S,
 };
 
 } // namespace detail
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

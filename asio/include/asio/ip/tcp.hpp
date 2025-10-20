@@ -28,12 +28,12 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace ip {
 
 /// Encapsulates the flags needed for TCP.
 /**
- * The ASIO_NAMESPACE::ip::tcp class contains flags necessary for TCP sockets.
+ * The ModioAsio::ip::tcp class contains flags necessary for TCP sockets.
  *
  * @par Thread Safety
  * @e Distinct @e objects: Safe.@n
@@ -99,18 +99,18 @@ public:
    * @par Examples
    * Setting the option:
    * @code
-   * ASIO_NAMESPACE::ip::tcp::socket socket(my_context);
+   * ModioAsio::ip::tcp::socket socket(my_context);
    * ...
-   * ASIO_NAMESPACE::ip::tcp::no_delay option(true);
+   * ModioAsio::ip::tcp::no_delay option(true);
    * socket.set_option(option);
    * @endcode
    *
    * @par
    * Getting the current option value:
    * @code
-   * ASIO_NAMESPACE::ip::tcp::socket socket(my_context);
+   * ModioAsio::ip::tcp::socket socket(my_context);
    * ...
-   * ASIO_NAMESPACE::ip::tcp::no_delay option;
+   * ModioAsio::ip::tcp::no_delay option;
    * socket.get_option(option);
    * bool is_set = option.value();
    * @endcode
@@ -121,7 +121,7 @@ public:
 #if defined(GENERATING_DOCUMENTATION)
   typedef implementation_defined no_delay;
 #else
-  typedef ASIO_NAMESPACE::detail::socket_option::boolean<
+  typedef ModioAsio::detail::socket_option::boolean<
     ASIO_OS_DEF(IPPROTO_TCP), ASIO_OS_DEF(TCP_NODELAY)> no_delay;
 #endif
 
@@ -148,7 +148,7 @@ private:
 };
 
 } // namespace ip
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

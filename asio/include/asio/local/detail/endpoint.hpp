@@ -27,7 +27,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace local {
 namespace detail {
 
@@ -65,13 +65,13 @@ public:
   }
 
   // Get the underlying endpoint in the native type.
-  ASIO_NAMESPACE::detail::socket_addr_type* data()
+  ModioAsio::detail::socket_addr_type* data()
   {
     return &data_.base;
   }
 
   // Get the underlying endpoint in the native type.
-  const ASIO_NAMESPACE::detail::socket_addr_type* data() const
+  const ModioAsio::detail::socket_addr_type* data() const
   {
     return &data_.base;
   }
@@ -80,7 +80,7 @@ public:
   std::size_t size() const
   {
     return path_length_
-      + offsetof(ASIO_NAMESPACE::detail::sockaddr_un_type, sun_path);
+      + offsetof(ModioAsio::detail::sockaddr_un_type, sun_path);
   }
 
   // Set the underlying size of the endpoint in the native type.
@@ -89,7 +89,7 @@ public:
   // Get the capacity of the endpoint in the native type.
   std::size_t capacity() const
   {
-    return sizeof(ASIO_NAMESPACE::detail::sockaddr_un_type);
+    return sizeof(ModioAsio::detail::sockaddr_un_type);
   }
 
   // Get the path associated with the endpoint.
@@ -113,8 +113,8 @@ private:
   // The underlying UNIX socket address.
   union data_union
   {
-    ASIO_NAMESPACE::detail::socket_addr_type base;
-    ASIO_NAMESPACE::detail::sockaddr_un_type local;
+    ModioAsio::detail::socket_addr_type base;
+    ModioAsio::detail::sockaddr_un_type local;
   } data_;
 
   // The length of the path associated with the endpoint.
@@ -126,7 +126,7 @@ private:
 
 } // namespace detail
 } // namespace local
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

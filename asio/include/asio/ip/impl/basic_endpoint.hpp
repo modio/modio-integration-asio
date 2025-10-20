@@ -21,7 +21,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace ip {
 
 template <typename Elem, typename Traits, typename InternetProtocol>
@@ -29,12 +29,12 @@ std::basic_ostream<Elem, Traits>& operator<<(
     std::basic_ostream<Elem, Traits>& os,
     const basic_endpoint<InternetProtocol>& endpoint)
 {
-  ASIO_NAMESPACE::ip::detail::endpoint tmp_ep(endpoint.address(), endpoint.port());
+  ModioAsio::ip::detail::endpoint tmp_ep(endpoint.address(), endpoint.port());
   return os << tmp_ep.to_string().c_str();
 }
 
 } // namespace ip
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

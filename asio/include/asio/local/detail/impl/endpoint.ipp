@@ -28,7 +28,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace local {
 namespace detail {
 
@@ -57,10 +57,10 @@ endpoint::endpoint(string_view path_name)
 
 void endpoint::resize(std::size_t new_size)
 {
-  if (new_size > sizeof(ASIO_NAMESPACE::detail::sockaddr_un_type))
+  if (new_size > sizeof(ModioAsio::detail::sockaddr_un_type))
   {
-    ASIO_NAMESPACE::error_code ec(ASIO_NAMESPACE::error::invalid_argument);
-    ASIO_NAMESPACE::detail::throw_error(ec);
+    ModioAsio::error_code ec(ModioAsio::error::invalid_argument);
+    ModioAsio::detail::throw_error(ec);
   }
   else if (new_size == 0)
   {
@@ -69,7 +69,7 @@ void endpoint::resize(std::size_t new_size)
   else
   {
     path_length_ = new_size
-      - offsetof(ASIO_NAMESPACE::detail::sockaddr_un_type, sun_path);
+      - offsetof(ModioAsio::detail::sockaddr_un_type, sun_path);
 
     // The path returned by the operating system may be NUL-terminated.
     if (path_length_ > 0 && data_.local.sun_path[path_length_ - 1] == 0)
@@ -108,12 +108,12 @@ void endpoint::init(const char* path_name, std::size_t path_length)
   if (path_length > sizeof(data_.local.sun_path) - 1)
   {
     // The buffer is not large enough to store this address.
-    ASIO_NAMESPACE::error_code ec(ASIO_NAMESPACE::error::name_too_long);
-    ASIO_NAMESPACE::detail::throw_error(ec);
+    ModioAsio::error_code ec(ModioAsio::error::name_too_long);
+    ModioAsio::detail::throw_error(ec);
   }
 
   using namespace std; // For memset and memcpy.
-  memset(&data_.local, 0, sizeof(ASIO_NAMESPACE::detail::sockaddr_un_type));
+  memset(&data_.local, 0, sizeof(ModioAsio::detail::sockaddr_un_type));
   data_.local.sun_family = AF_UNIX;
   if (path_length > 0)
     memcpy(data_.local.sun_path, path_name, path_length);
@@ -122,7 +122,7 @@ void endpoint::init(const char* path_name, std::size_t path_length)
 
 } // namespace detail
 } // namespace local
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

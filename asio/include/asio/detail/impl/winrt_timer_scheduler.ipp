@@ -24,7 +24,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 winrt_timer_scheduler::winrt_timer_scheduler(execution_context& context)
@@ -37,7 +37,7 @@ winrt_timer_scheduler::winrt_timer_scheduler(execution_context& context)
     stop_thread_(false),
     shutdown_(false)
 {
-  thread_ = new ASIO_NAMESPACE::detail::thread(
+  thread_ = new ModioAsio::detail::thread(
       bind_handler(&winrt_timer_scheduler::call_run_thread, this));
 }
 
@@ -48,7 +48,7 @@ winrt_timer_scheduler::~winrt_timer_scheduler()
 
 void winrt_timer_scheduler::shutdown()
 {
-  ASIO_NAMESPACE::detail::mutex::scoped_lock lock(mutex_);
+  ModioAsio::detail::mutex::scoped_lock lock(mutex_);
   shutdown_ = true;
   stop_thread_ = true;
   event_.signal(lock);
@@ -76,7 +76,7 @@ void winrt_timer_scheduler::init_task()
 
 void winrt_timer_scheduler::run_thread()
 {
-  ASIO_NAMESPACE::detail::mutex::scoped_lock lock(mutex_);
+  ModioAsio::detail::mutex::scoped_lock lock(mutex_);
   while (!stop_thread_)
   {
     const long max_wait_duration = 5 * 60 * 1000000;
@@ -112,7 +112,7 @@ void winrt_timer_scheduler::do_remove_timer_queue(timer_queue_base& queue)
 }
 
 } // namespace detail
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

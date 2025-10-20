@@ -25,7 +25,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 
 /// A @ref completion_token adapter used to specify that the completion handler
 /// arguments should be combined into a single tuple argument.
@@ -126,7 +126,7 @@ as_tuple(ASIO_MOVE_ARG(CompletionToken) completion_token)
       ASIO_MOVE_CAST(CompletionToken)(completion_token));
 }
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

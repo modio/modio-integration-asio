@@ -29,7 +29,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 
 class executor;
 class io_context;
@@ -63,14 +63,14 @@ class handler_work_base
 {
 public:
   explicit handler_work_base(int, int, const Executor& ex) ASIO_NOEXCEPT
-    : executor_(ASIO_NAMESPACE::prefer(ex, execution::outstanding_work.tracked))
+    : executor_(ModioAsio::prefer(ex, execution::outstanding_work.tracked))
   {
   }
 
   template <typename OtherExecutor>
   handler_work_base(bool /*base1_owns_work*/, const Executor& ex,
       const OtherExecutor& /*candidate*/) ASIO_NOEXCEPT
-    : executor_(ASIO_NAMESPACE::prefer(ex, execution::outstanding_work.tracked))
+    : executor_(ModioAsio::prefer(ex, execution::outstanding_work.tracked))
   {
   }
 
@@ -95,7 +95,7 @@ public:
   void dispatch(Function& function, Handler& handler)
   {
     execution::execute(
-        ASIO_NAMESPACE::prefer(executor_,
+        ModioAsio::prefer(executor_,
           execution::blocking.possibly,
           execution::allocator((get_associated_allocator)(handler))),
         ASIO_MOVE_CAST(Function)(function));
@@ -179,7 +179,7 @@ public:
   void dispatch(Function& function, Handler& handler)
   {
     executor_.dispatch(ASIO_MOVE_CAST(Function)(function),
-        ASIO_NAMESPACE::get_associated_allocator(handler));
+        ModioAsio::get_associated_allocator(handler));
   }
 
 private:
@@ -212,7 +212,7 @@ public:
     // When using a native implementation, I/O completion handlers are
     // already dispatched according to the execution context's executor's
     // rules. We can call the function directly.
-    ASIO_NAMESPACE::asio_handler_invoke_helpers::invoke(function, handler);
+    ModioAsio::asio_handler_invoke_helpers::invoke(function, handler);
   }
 };
 
@@ -278,7 +278,7 @@ public:
   void dispatch(Function& function, Handler& handler)
   {
     executor_.dispatch(ASIO_MOVE_CAST(Function)(function),
-        ASIO_NAMESPACE::get_associated_allocator(handler));
+        ModioAsio::get_associated_allocator(handler));
   }
 
 private:
@@ -317,9 +317,9 @@ public:
     : executor_(
         ex.target_type() == typeid(typename IoContext::executor_type)
           ? executor_type()
-          : ASIO_NAMESPACE::prefer(ex, execution::outstanding_work.tracked))
+          : ModioAsio::prefer(ex, execution::outstanding_work.tracked))
 #else // !defined(ASIO_NO_TYPEID)
-    : executor_(ASIO_NAMESPACE::prefer(ex, execution::outstanding_work.tracked))
+    : executor_(ModioAsio::prefer(ex, execution::outstanding_work.tracked))
 #endif // !defined(ASIO_NO_TYPEID)
   {
   }
@@ -329,14 +329,14 @@ public:
     : executor_(
         !base1_owns_work && ex == candidate
           ? executor_type()
-          : ASIO_NAMESPACE::prefer(ex, execution::outstanding_work.tracked))
+          : ModioAsio::prefer(ex, execution::outstanding_work.tracked))
   {
   }
 
   template <typename OtherExecutor>
   handler_work_base(bool /*base1_owns_work*/, const executor_type& ex,
       const OtherExecutor& /*candidate*/) ASIO_NOEXCEPT
-    : executor_(ASIO_NAMESPACE::prefer(ex, execution::outstanding_work.tracked))
+    : executor_(ModioAsio::prefer(ex, execution::outstanding_work.tracked))
   {
   }
 
@@ -361,7 +361,7 @@ public:
   void dispatch(Function& function, Handler&)
   {
     execution::execute(
-        ASIO_NAMESPACE::prefer(executor_, execution::blocking.possibly),
+        ModioAsio::prefer(executor_, execution::blocking.possibly),
         ASIO_MOVE_CAST(Function)(function));
   }
 
@@ -392,9 +392,9 @@ public:
     : executor_(
         ex.target_type() == typeid(typename IoContext::executor_type)
           ? executor_type()
-          : ASIO_NAMESPACE::prefer(ex, execution::outstanding_work.tracked))
+          : ModioAsio::prefer(ex, execution::outstanding_work.tracked))
 #else // !defined(ASIO_NO_TYPEID)
-    : executor_(ASIO_NAMESPACE::prefer(ex, execution::outstanding_work.tracked))
+    : executor_(ModioAsio::prefer(ex, execution::outstanding_work.tracked))
 #endif // !defined(ASIO_NO_TYPEID)
   {
   }
@@ -404,14 +404,14 @@ public:
     : executor_(
         !base1_owns_work && ex == candidate
           ? executor_type()
-          : ASIO_NAMESPACE::prefer(ex, execution::outstanding_work.tracked))
+          : ModioAsio::prefer(ex, execution::outstanding_work.tracked))
   {
   }
 
   template <typename OtherExecutor>
   handler_work_base(bool /*base1_owns_work*/, const executor_type& ex,
       const OtherExecutor& /*candidate*/) ASIO_NOEXCEPT
-    : executor_(ASIO_NAMESPACE::prefer(ex, execution::outstanding_work.tracked))
+    : executor_(ModioAsio::prefer(ex, execution::outstanding_work.tracked))
   {
   }
 
@@ -436,7 +436,7 @@ public:
   void dispatch(Function& function, Handler&)
   {
     execution::execute(
-        ASIO_NAMESPACE::prefer(executor_, execution::blocking.possibly),
+        ModioAsio::prefer(executor_, execution::blocking.possibly),
         ASIO_MOVE_CAST(Function)(function));
   }
 
@@ -460,7 +460,7 @@ public:
   handler_work(Handler& handler, const IoExecutor& io_ex) ASIO_NOEXCEPT
     : base1_type(0, 0, io_ex),
       base2_type(base1_type::owns_work(),
-          ASIO_NAMESPACE::get_associated_executor(handler, io_ex), io_ex)
+          ModioAsio::get_associated_executor(handler, io_ex), io_ex)
   {
   }
 
@@ -472,7 +472,7 @@ public:
       // When using a native implementation, I/O completion handlers are
       // already dispatched according to the execution context's executor's
       // rules. We can call the function directly.
-      ASIO_NAMESPACE::asio_handler_invoke_helpers::invoke(function, handler);
+      ModioAsio::asio_handler_invoke_helpers::invoke(function, handler);
     }
     else
     {
@@ -508,7 +508,7 @@ public:
       // When using a native implementation, I/O completion handlers are
       // already dispatched according to the execution context's executor's
       // rules. We can call the function directly.
-      ASIO_NAMESPACE::asio_handler_invoke_helpers::invoke(function, handler);
+      ModioAsio::asio_handler_invoke_helpers::invoke(function, handler);
     }
     else
     {
@@ -518,7 +518,7 @@ public:
 };
 
 } // namespace detail
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

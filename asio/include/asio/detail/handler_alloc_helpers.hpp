@@ -28,26 +28,26 @@
 // Calls to asio_handler_allocate and asio_handler_deallocate must be made from
 // a namespace that does not contain any overloads of these functions. The
 // asio_handler_alloc_helpers namespace is defined here for that purpose.
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace asio_handler_alloc_helpers {
 
 #if defined(ASIO_NO_DEPRECATED)
 template <typename Handler>
 inline void error_if_hooks_are_defined(Handler& h)
 {
-  using ASIO_NAMESPACE::asio_handler_allocate;
+  using ModioAsio::asio_handler_allocate;
   // If you get an error here it is because some of your handlers still
   // overload asio_handler_allocate, but this hook is no longer used.
-  (void)static_cast<ASIO_NAMESPACE::asio_handler_allocate_is_no_longer_used>(
+  (void)static_cast<ModioAsio::asio_handler_allocate_is_no_longer_used>(
     asio_handler_allocate(static_cast<std::size_t>(0),
-      ASIO_NAMESPACE::detail::addressof(h)));
+      ModioAsio::detail::addressof(h)));
 
-  using ASIO_NAMESPACE::asio_handler_deallocate;
+  using ModioAsio::asio_handler_deallocate;
   // If you get an error here it is because some of your handlers still
   // overload asio_handler_deallocate, but this hook is no longer used.
-  (void)static_cast<ASIO_NAMESPACE::asio_handler_deallocate_is_no_longer_used>(
+  (void)static_cast<ModioAsio::asio_handler_deallocate_is_no_longer_used>(
     asio_handler_deallocate(static_cast<void*>(0),
-      static_cast<std::size_t>(0), ASIO_NAMESPACE::detail::addressof(h)));
+      static_cast<std::size_t>(0), ModioAsio::detail::addressof(h)));
 }
 #endif // defined(ASIO_NO_DEPRECATED)
 
@@ -62,16 +62,16 @@ inline void* allocate(std::size_t s, Handler& h,
   (void)&error_if_hooks_are_defined<Handler>;
   (void)h;
 # if !defined(ASIO_DISABLE_SMALL_BLOCK_RECYCLING)
-  return ASIO_NAMESPACE::detail::thread_info_base::allocate(
-      ASIO_NAMESPACE::detail::thread_context::top_of_thread_call_stack(),
+  return ModioAsio::detail::thread_info_base::allocate(
+      ModioAsio::detail::thread_context::top_of_thread_call_stack(),
       s, align);
 # else // !defined(ASIO_DISABLE_SMALL_BLOCK_RECYCLING)
   return aligned_new(align, s);
 # endif // !defined(ASIO_DISABLE_SMALL_BLOCK_RECYCLING)
 #else
   (void)align;
-  using ASIO_NAMESPACE::asio_handler_allocate;
-  return asio_handler_allocate(s, ASIO_NAMESPACE::detail::addressof(h));
+  using ModioAsio::asio_handler_allocate;
+  return asio_handler_allocate(s, ModioAsio::detail::addressof(h));
 #endif
 }
 
@@ -85,22 +85,22 @@ inline void deallocate(void* p, std::size_t s, Handler& h)
   (void)&error_if_hooks_are_defined<Handler>;
   (void)h;
 #if !defined(ASIO_DISABLE_SMALL_BLOCK_RECYCLING)
-  ASIO_NAMESPACE::detail::thread_info_base::deallocate(
-      ASIO_NAMESPACE::detail::thread_context::top_of_thread_call_stack(), p, s);
+  ModioAsio::detail::thread_info_base::deallocate(
+      ModioAsio::detail::thread_context::top_of_thread_call_stack(), p, s);
 #else // !defined(ASIO_DISABLE_SMALL_BLOCK_RECYCLING)
   (void)s;
   aligned_delete(p);
 #endif // !defined(ASIO_DISABLE_SMALL_BLOCK_RECYCLING)
 #else
-  using ASIO_NAMESPACE::asio_handler_deallocate;
-  asio_handler_deallocate(p, s, ASIO_NAMESPACE::detail::addressof(h));
+  using ModioAsio::asio_handler_deallocate;
+  asio_handler_deallocate(p, s, ModioAsio::detail::addressof(h));
 #endif
 }
 
 } // namespace asio_handler_alloc_helpers
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 template <typename Handler, typename T>
@@ -129,13 +129,13 @@ public:
   T* allocate(std::size_t n)
   {
     return static_cast<T*>(
-        ASIO_NAMESPACE::asio_handler_alloc_helpers::allocate(
+        ModioAsio::asio_handler_alloc_helpers::allocate(
           sizeof(T) * n, handler_, ASIO_ALIGNOF(T)));
   }
 
   void deallocate(T* p, std::size_t n)
   {
-    ASIO_NAMESPACE::asio_handler_alloc_helpers::deallocate(p, sizeof(T) * n, handler_);
+    ModioAsio::asio_handler_alloc_helpers::deallocate(p, sizeof(T) * n, handler_);
   }
 
 //private:
@@ -192,7 +192,7 @@ struct get_hook_allocator<Handler, std::allocator<T> >
 };
 
 } // namespace detail
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #define ASIO_DEFINE_HANDLER_PTR(op) \
   struct ptr \
@@ -206,14 +206,14 @@ struct get_hook_allocator<Handler, std::allocator<T> >
     } \
     static op* allocate(Handler& handler) \
     { \
-      typedef typename ::ASIO_NAMESPACE::associated_allocator< \
+      typedef typename ::ModioAsio::associated_allocator< \
         Handler>::type associated_allocator_type; \
-      typedef typename ::ASIO_NAMESPACE::detail::get_hook_allocator< \
+      typedef typename ::ModioAsio::detail::get_hook_allocator< \
         Handler, associated_allocator_type>::type hook_allocator_type; \
       ASIO_REBIND_ALLOC(hook_allocator_type, op) a( \
-            ::ASIO_NAMESPACE::detail::get_hook_allocator< \
+            ::ModioAsio::detail::get_hook_allocator< \
               Handler, associated_allocator_type>::get( \
-                handler, ::ASIO_NAMESPACE::get_associated_allocator(handler))); \
+                handler, ::ModioAsio::get_associated_allocator(handler))); \
       return a.allocate(1); \
     } \
     void reset() \
@@ -225,14 +225,14 @@ struct get_hook_allocator<Handler, std::allocator<T> >
       } \
       if (v) \
       { \
-        typedef typename ::ASIO_NAMESPACE::associated_allocator< \
+        typedef typename ::ModioAsio::associated_allocator< \
           Handler>::type associated_allocator_type; \
-        typedef typename ::ASIO_NAMESPACE::detail::get_hook_allocator< \
+        typedef typename ::ModioAsio::detail::get_hook_allocator< \
           Handler, associated_allocator_type>::type hook_allocator_type; \
         ASIO_REBIND_ALLOC(hook_allocator_type, op) a( \
-              ::ASIO_NAMESPACE::detail::get_hook_allocator< \
+              ::ModioAsio::detail::get_hook_allocator< \
                 Handler, associated_allocator_type>::get( \
-                  *h, ::ASIO_NAMESPACE::get_associated_allocator(*h))); \
+                  *h, ::ModioAsio::get_associated_allocator(*h))); \
         a.deallocate(static_cast<op*>(v), 1); \
         v = 0; \
       } \
@@ -252,10 +252,10 @@ struct get_hook_allocator<Handler, std::allocator<T> >
     } \
     static op* allocate(const Alloc& a) \
     { \
-      typedef typename ::ASIO_NAMESPACE::detail::get_recycling_allocator< \
+      typedef typename ::ModioAsio::detail::get_recycling_allocator< \
         Alloc, purpose>::type recycling_allocator_type; \
       ASIO_REBIND_ALLOC(recycling_allocator_type, op) a1( \
-            ::ASIO_NAMESPACE::detail::get_recycling_allocator< \
+            ::ModioAsio::detail::get_recycling_allocator< \
               Alloc, purpose>::get(a)); \
       return a1.allocate(1); \
     } \
@@ -268,10 +268,10 @@ struct get_hook_allocator<Handler, std::allocator<T> >
       } \
       if (v) \
       { \
-        typedef typename ::ASIO_NAMESPACE::detail::get_recycling_allocator< \
+        typedef typename ::ModioAsio::detail::get_recycling_allocator< \
           Alloc, purpose>::type recycling_allocator_type; \
         ASIO_REBIND_ALLOC(recycling_allocator_type, op) a1( \
-              ::ASIO_NAMESPACE::detail::get_recycling_allocator< \
+              ::ModioAsio::detail::get_recycling_allocator< \
                 Alloc, purpose>::get(*a)); \
         a1.deallocate(static_cast<op*>(v), 1); \
         v = 0; \
@@ -282,7 +282,7 @@ struct get_hook_allocator<Handler, std::allocator<T> >
 
 #define ASIO_DEFINE_HANDLER_ALLOCATOR_PTR(op) \
   ASIO_DEFINE_TAGGED_HANDLER_ALLOCATOR_PTR( \
-      ::ASIO_NAMESPACE::detail::thread_info_base::default_tag, op ) \
+      ::ModioAsio::detail::thread_info_base::default_tag, op ) \
   /**/
 
 #include "asio/detail/pop_options.hpp"

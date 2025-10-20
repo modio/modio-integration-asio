@@ -27,7 +27,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace generic {
 namespace detail {
 
@@ -44,10 +44,10 @@ endpoint::endpoint(const void* sock_addr,
 
 void endpoint::resize(std::size_t new_size)
 {
-  if (new_size > sizeof(ASIO_NAMESPACE::detail::sockaddr_storage_type))
+  if (new_size > sizeof(ModioAsio::detail::sockaddr_storage_type))
   {
-    ASIO_NAMESPACE::error_code ec(ASIO_NAMESPACE::error::invalid_argument);
-    ASIO_NAMESPACE::detail::throw_error(ec);
+    ModioAsio::error_code ec(ModioAsio::error::invalid_argument);
+    ModioAsio::detail::throw_error(ec);
   }
   else
   {
@@ -86,14 +86,14 @@ bool operator<(const endpoint& e1, const endpoint& e2)
 void endpoint::init(const void* sock_addr,
     std::size_t sock_addr_size, int sock_protocol)
 {
-  if (sock_addr_size > sizeof(ASIO_NAMESPACE::detail::sockaddr_storage_type))
+  if (sock_addr_size > sizeof(ModioAsio::detail::sockaddr_storage_type))
   {
-    ASIO_NAMESPACE::error_code ec(ASIO_NAMESPACE::error::invalid_argument);
-    ASIO_NAMESPACE::detail::throw_error(ec);
+    ModioAsio::error_code ec(ModioAsio::error::invalid_argument);
+    ModioAsio::detail::throw_error(ec);
   }
 
   using namespace std; // For memset and memcpy.
-  memset(&data_.generic, 0, sizeof(ASIO_NAMESPACE::detail::sockaddr_storage_type));
+  memset(&data_.generic, 0, sizeof(ModioAsio::detail::sockaddr_storage_type));
   if (sock_addr_size > 0)
     memcpy(&data_.generic, sock_addr, sock_addr_size);
 
@@ -103,7 +103,7 @@ void endpoint::init(const void* sock_addr,
 
 } // namespace detail
 } // namespace generic
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

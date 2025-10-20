@@ -23,7 +23,7 @@
 # include <boost/chrono/system_clocks.hpp>
 #endif // defined(ASIO_HAS_BOOST_CHRONO)
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace chrono {
 
 #if defined(ASIO_HAS_STD_CHRONO)
@@ -61,6 +61,6 @@ using boost::chrono::high_resolution_clock;
 #endif // defined(ASIO_HAS_BOOST_CHRONO)
 
 } // namespace chrono
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #endif // ASIO_DETAIL_CHRONO_HPP

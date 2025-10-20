@@ -21,14 +21,14 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace error {
 
 #if !defined(ASIO_WINDOWS) && !defined(__CYGWIN__)
 
 namespace detail {
 
-class netdb_category : public ASIO_NAMESPACE::error_category
+class netdb_category : public ModioAsio::error_category
 {
 public:
   const char* name() const ASIO_ERROR_CATEGORY_NOEXCEPT
@@ -52,7 +52,7 @@ public:
 
 } // namespace detail
 
-const ASIO_NAMESPACE::error_category& get_netdb_category()
+const ModioAsio::error_category& get_netdb_category()
 {
   static detail::netdb_category instance;
   return instance;
@@ -60,7 +60,7 @@ const ASIO_NAMESPACE::error_category& get_netdb_category()
 
 namespace detail {
 
-class addrinfo_category : public ASIO_NAMESPACE::error_category
+class addrinfo_category : public ModioAsio::error_category
 {
 public:
   const char* name() const ASIO_ERROR_CATEGORY_NOEXCEPT
@@ -80,7 +80,7 @@ public:
 
 } // namespace detail
 
-const ASIO_NAMESPACE::error_category& get_addrinfo_category()
+const ModioAsio::error_category& get_addrinfo_category()
 {
   static detail::addrinfo_category instance;
   return instance;
@@ -90,7 +90,7 @@ const ASIO_NAMESPACE::error_category& get_addrinfo_category()
 
 namespace detail {
 
-class misc_category : public ASIO_NAMESPACE::error_category
+class misc_category : public ModioAsio::error_category
 {
 public:
   const char* name() const ASIO_ERROR_CATEGORY_NOEXCEPT
@@ -114,14 +114,14 @@ public:
 
 } // namespace detail
 
-const ASIO_NAMESPACE::error_category& get_misc_category()
+const ModioAsio::error_category& get_misc_category()
 {
   static detail::misc_category instance;
   return instance;
 }
 
 } // namespace error
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

@@ -30,7 +30,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 
 #if defined(GENERATING_DOCUMENTATION)
 
@@ -411,7 +411,7 @@ struct bulk_guarantee_t
 #endif // defined(ASIO_MSVC)
 #endif // !defined(__clang__)
   {
-    return ASIO_NAMESPACE::query(ex, unsequenced_t());
+    return ModioAsio::query(ex, unsequenced_t());
   }
 
   template <typename Executor>
@@ -434,7 +434,7 @@ struct bulk_guarantee_t
 #endif // defined(ASIO_MSVC)
 #endif // !defined(__clang__)
   {
-    return ASIO_NAMESPACE::query(ex, sequenced_t());
+    return ModioAsio::query(ex, sequenced_t());
   }
 
   template <typename Executor>
@@ -459,7 +459,7 @@ struct bulk_guarantee_t
 #endif // defined(ASIO_MSVC)
 #endif // !defined(__clang__)
   {
-    return ASIO_NAMESPACE::query(ex, parallel_t());
+    return ModioAsio::query(ex, parallel_t());
   }
 
   ASIO_STATIC_CONSTEXPR_DEFAULT_INIT(unsequenced_t, unsequenced);
@@ -1208,7 +1208,7 @@ struct static_require<T, execution::bulk_guarantee_t::parallel_t,
 
 #endif // defined(GENERATING_DOCUMENTATION)
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

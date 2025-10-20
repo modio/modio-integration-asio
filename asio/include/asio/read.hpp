@@ -28,7 +28,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 template <typename> class initiate_async_read;
@@ -40,7 +40,7 @@ template <typename> class initiate_async_read_dynbuf_v2;
 } // namespace detail
 
 /**
- * @defgroup read ASIO_NAMESPACE::read
+ * @defgroup read ModioAsio::read
  *
  * @brief The @c read function is a composed operation that reads a certain
  * amount of data from a stream before returning.
@@ -69,19 +69,19 @@ template <typename> class initiate_async_read_dynbuf_v2;
  *
  * @returns The number of bytes transferred.
  *
- * @throws ASIO_NAMESPACE::system_error Thrown on failure.
+ * @throws ModioAsio::system_error Thrown on failure.
  *
  * @par Example
  * To read into a single data buffer use the @ref buffer function as follows:
- * @code ASIO_NAMESPACE::read(s, ASIO_NAMESPACE::buffer(data, size)); @endcode
+ * @code ModioAsio::read(s, ModioAsio::buffer(data, size)); @endcode
  * See the @ref buffer documentation for information on reading into multiple
  * buffers in one go, and how to use it with arrays, boost::array or
  * std::vector.
  *
  * @note This overload is equivalent to calling:
- * @code ASIO_NAMESPACE::read(
+ * @code ModioAsio::read(
  *     s, buffers,
- *     ASIO_NAMESPACE::transfer_all()); @endcode
+ *     ModioAsio::transfer_all()); @endcode
  */
 template <typename SyncReadStream, typename MutableBufferSequence>
 std::size_t read(SyncReadStream& s, const MutableBufferSequence& buffers,
@@ -115,19 +115,19 @@ std::size_t read(SyncReadStream& s, const MutableBufferSequence& buffers,
  *
  * @par Example
  * To read into a single data buffer use the @ref buffer function as follows:
- * @code ASIO_NAMESPACE::read(s, ASIO_NAMESPACE::buffer(data, size), ec); @endcode
+ * @code ModioAsio::read(s, ModioAsio::buffer(data, size), ec); @endcode
  * See the @ref buffer documentation for information on reading into multiple
  * buffers in one go, and how to use it with arrays, boost::array or
  * std::vector.
  *
  * @note This overload is equivalent to calling:
- * @code ASIO_NAMESPACE::read(
+ * @code ModioAsio::read(
  *     s, buffers,
- *     ASIO_NAMESPACE::transfer_all(), ec); @endcode
+ *     ModioAsio::transfer_all(), ec); @endcode
  */
 template <typename SyncReadStream, typename MutableBufferSequence>
 std::size_t read(SyncReadStream& s, const MutableBufferSequence& buffers,
-    ASIO_NAMESPACE::error_code& ec,
+    ModioAsio::error_code& ec,
     typename constraint<
       is_mutable_buffer_sequence<MutableBufferSequence>::value
     >::type = 0);
@@ -157,7 +157,7 @@ std::size_t read(SyncReadStream& s, const MutableBufferSequence& buffers,
  * must be:
  * @code std::size_t completion_condition(
  *   // Result of latest read_some operation.
- *   const ASIO_NAMESPACE::error_code& error,
+ *   const ModioAsio::error_code& error,
  *
  *   // Number of bytes transferred so far.
  *   std::size_t bytes_transferred
@@ -168,12 +168,12 @@ std::size_t read(SyncReadStream& s, const MutableBufferSequence& buffers,
  *
  * @returns The number of bytes transferred.
  *
- * @throws ASIO_NAMESPACE::system_error Thrown on failure.
+ * @throws ModioAsio::system_error Thrown on failure.
  *
  * @par Example
  * To read into a single data buffer use the @ref buffer function as follows:
- * @code ASIO_NAMESPACE::read(s, ASIO_NAMESPACE::buffer(data, size),
- *     ASIO_NAMESPACE::transfer_at_least(32)); @endcode
+ * @code ModioAsio::read(s, ModioAsio::buffer(data, size),
+ *     ModioAsio::transfer_at_least(32)); @endcode
  * See the @ref buffer documentation for information on reading into multiple
  * buffers in one go, and how to use it with arrays, boost::array or
  * std::vector.
@@ -211,7 +211,7 @@ std::size_t read(SyncReadStream& s, const MutableBufferSequence& buffers,
  * must be:
  * @code std::size_t completion_condition(
  *   // Result of latest read_some operation.
- *   const ASIO_NAMESPACE::error_code& error,
+ *   const ModioAsio::error_code& error,
  *
  *   // Number of bytes transferred so far.
  *   std::size_t bytes_transferred
@@ -228,7 +228,7 @@ std::size_t read(SyncReadStream& s, const MutableBufferSequence& buffers,
 template <typename SyncReadStream, typename MutableBufferSequence,
     typename CompletionCondition>
 std::size_t read(SyncReadStream& s, const MutableBufferSequence& buffers,
-    CompletionCondition completion_condition, ASIO_NAMESPACE::error_code& ec,
+    CompletionCondition completion_condition, ModioAsio::error_code& ec,
     typename constraint<
       is_mutable_buffer_sequence<MutableBufferSequence>::value
     >::type = 0);
@@ -255,12 +255,12 @@ std::size_t read(SyncReadStream& s, const MutableBufferSequence& buffers,
  *
  * @returns The number of bytes transferred.
  *
- * @throws ASIO_NAMESPACE::system_error Thrown on failure.
+ * @throws ModioAsio::system_error Thrown on failure.
  *
  * @note This overload is equivalent to calling:
- * @code ASIO_NAMESPACE::read(
+ * @code ModioAsio::read(
  *     s, buffers,
- *     ASIO_NAMESPACE::transfer_all()); @endcode
+ *     ModioAsio::transfer_all()); @endcode
  */
 template <typename SyncReadStream, typename DynamicBuffer_v1>
 std::size_t read(SyncReadStream& s,
@@ -294,14 +294,14 @@ std::size_t read(SyncReadStream& s,
  * @returns The number of bytes transferred.
  *
  * @note This overload is equivalent to calling:
- * @code ASIO_NAMESPACE::read(
+ * @code ModioAsio::read(
  *     s, buffers,
- *     ASIO_NAMESPACE::transfer_all(), ec); @endcode
+ *     ModioAsio::transfer_all(), ec); @endcode
  */
 template <typename SyncReadStream, typename DynamicBuffer_v1>
 std::size_t read(SyncReadStream& s,
     ASIO_MOVE_ARG(DynamicBuffer_v1) buffers,
-    ASIO_NAMESPACE::error_code& ec,
+    ModioAsio::error_code& ec,
     typename constraint<
       is_dynamic_buffer_v1<typename decay<DynamicBuffer_v1>::type>::value
     >::type = 0,
@@ -332,7 +332,7 @@ std::size_t read(SyncReadStream& s,
  * must be:
  * @code std::size_t completion_condition(
  *   // Result of latest read_some operation.
- *   const ASIO_NAMESPACE::error_code& error,
+ *   const ModioAsio::error_code& error,
  *
  *   // Number of bytes transferred so far.
  *   std::size_t bytes_transferred
@@ -343,7 +343,7 @@ std::size_t read(SyncReadStream& s,
  *
  * @returns The number of bytes transferred.
  *
- * @throws ASIO_NAMESPACE::system_error Thrown on failure.
+ * @throws ModioAsio::system_error Thrown on failure.
  */
 template <typename SyncReadStream, typename DynamicBuffer_v1,
     typename CompletionCondition>
@@ -380,7 +380,7 @@ std::size_t read(SyncReadStream& s,
  * must be:
  * @code std::size_t completion_condition(
  *   // Result of latest read_some operation.
- *   const ASIO_NAMESPACE::error_code& error,
+ *   const ModioAsio::error_code& error,
  *
  *   // Number of bytes transferred so far.
  *   std::size_t bytes_transferred
@@ -398,7 +398,7 @@ template <typename SyncReadStream, typename DynamicBuffer_v1,
     typename CompletionCondition>
 std::size_t read(SyncReadStream& s,
     ASIO_MOVE_ARG(DynamicBuffer_v1) buffers,
-    CompletionCondition completion_condition, ASIO_NAMESPACE::error_code& ec,
+    CompletionCondition completion_condition, ModioAsio::error_code& ec,
     typename constraint<
       is_dynamic_buffer_v1<typename decay<DynamicBuffer_v1>::type>::value
     >::type = 0,
@@ -428,12 +428,12 @@ std::size_t read(SyncReadStream& s,
  *
  * @returns The number of bytes transferred.
  *
- * @throws ASIO_NAMESPACE::system_error Thrown on failure.
+ * @throws ModioAsio::system_error Thrown on failure.
  *
  * @note This overload is equivalent to calling:
- * @code ASIO_NAMESPACE::read(
+ * @code ModioAsio::read(
  *     s, b,
- *     ASIO_NAMESPACE::transfer_all()); @endcode
+ *     ModioAsio::transfer_all()); @endcode
  */
 template <typename SyncReadStream, typename Allocator>
 std::size_t read(SyncReadStream& s, basic_streambuf<Allocator>& b);
@@ -460,13 +460,13 @@ std::size_t read(SyncReadStream& s, basic_streambuf<Allocator>& b);
  * @returns The number of bytes transferred.
  *
  * @note This overload is equivalent to calling:
- * @code ASIO_NAMESPACE::read(
+ * @code ModioAsio::read(
  *     s, b,
- *     ASIO_NAMESPACE::transfer_all(), ec); @endcode
+ *     ModioAsio::transfer_all(), ec); @endcode
  */
 template <typename SyncReadStream, typename Allocator>
 std::size_t read(SyncReadStream& s, basic_streambuf<Allocator>& b,
-    ASIO_NAMESPACE::error_code& ec);
+    ModioAsio::error_code& ec);
 
 /// Attempt to read a certain amount of data from a stream before returning.
 /**
@@ -490,7 +490,7 @@ std::size_t read(SyncReadStream& s, basic_streambuf<Allocator>& b,
  * must be:
  * @code std::size_t completion_condition(
  *   // Result of latest read_some operation.
- *   const ASIO_NAMESPACE::error_code& error,
+ *   const ModioAsio::error_code& error,
  *
  *   // Number of bytes transferred so far.
  *   std::size_t bytes_transferred
@@ -501,7 +501,7 @@ std::size_t read(SyncReadStream& s, basic_streambuf<Allocator>& b,
  *
  * @returns The number of bytes transferred.
  *
- * @throws ASIO_NAMESPACE::system_error Thrown on failure.
+ * @throws ModioAsio::system_error Thrown on failure.
  */
 template <typename SyncReadStream, typename Allocator,
     typename CompletionCondition>
@@ -530,7 +530,7 @@ std::size_t read(SyncReadStream& s, basic_streambuf<Allocator>& b,
  * must be:
  * @code std::size_t completion_condition(
  *   // Result of latest read_some operation.
- *   const ASIO_NAMESPACE::error_code& error,
+ *   const ModioAsio::error_code& error,
  *
  *   // Number of bytes transferred so far.
  *   std::size_t bytes_transferred
@@ -547,7 +547,7 @@ std::size_t read(SyncReadStream& s, basic_streambuf<Allocator>& b,
 template <typename SyncReadStream, typename Allocator,
     typename CompletionCondition>
 std::size_t read(SyncReadStream& s, basic_streambuf<Allocator>& b,
-    CompletionCondition completion_condition, ASIO_NAMESPACE::error_code& ec);
+    CompletionCondition completion_condition, ModioAsio::error_code& ec);
 
 #endif // !defined(ASIO_NO_IOSTREAM)
 #endif // !defined(ASIO_NO_EXTENSIONS)
@@ -573,12 +573,12 @@ std::size_t read(SyncReadStream& s, basic_streambuf<Allocator>& b,
  *
  * @returns The number of bytes transferred.
  *
- * @throws ASIO_NAMESPACE::system_error Thrown on failure.
+ * @throws ModioAsio::system_error Thrown on failure.
  *
  * @note This overload is equivalent to calling:
- * @code ASIO_NAMESPACE::read(
+ * @code ModioAsio::read(
  *     s, buffers,
- *     ASIO_NAMESPACE::transfer_all()); @endcode
+ *     ModioAsio::transfer_all()); @endcode
  */
 template <typename SyncReadStream, typename DynamicBuffer_v2>
 std::size_t read(SyncReadStream& s, DynamicBuffer_v2 buffers,
@@ -608,13 +608,13 @@ std::size_t read(SyncReadStream& s, DynamicBuffer_v2 buffers,
  * @returns The number of bytes transferred.
  *
  * @note This overload is equivalent to calling:
- * @code ASIO_NAMESPACE::read(
+ * @code ModioAsio::read(
  *     s, buffers,
- *     ASIO_NAMESPACE::transfer_all(), ec); @endcode
+ *     ModioAsio::transfer_all(), ec); @endcode
  */
 template <typename SyncReadStream, typename DynamicBuffer_v2>
 std::size_t read(SyncReadStream& s, DynamicBuffer_v2 buffers,
-    ASIO_NAMESPACE::error_code& ec,
+    ModioAsio::error_code& ec,
     typename constraint<
       is_dynamic_buffer_v2<DynamicBuffer_v2>::value
     >::type = 0);
@@ -642,7 +642,7 @@ std::size_t read(SyncReadStream& s, DynamicBuffer_v2 buffers,
  * must be:
  * @code std::size_t completion_condition(
  *   // Result of latest read_some operation.
- *   const ASIO_NAMESPACE::error_code& error,
+ *   const ModioAsio::error_code& error,
  *
  *   // Number of bytes transferred so far.
  *   std::size_t bytes_transferred
@@ -653,7 +653,7 @@ std::size_t read(SyncReadStream& s, DynamicBuffer_v2 buffers,
  *
  * @returns The number of bytes transferred.
  *
- * @throws ASIO_NAMESPACE::system_error Thrown on failure.
+ * @throws ModioAsio::system_error Thrown on failure.
  */
 template <typename SyncReadStream, typename DynamicBuffer_v2,
     typename CompletionCondition>
@@ -686,7 +686,7 @@ std::size_t read(SyncReadStream& s, DynamicBuffer_v2 buffers,
  * must be:
  * @code std::size_t completion_condition(
  *   // Result of latest read_some operation.
- *   const ASIO_NAMESPACE::error_code& error,
+ *   const ModioAsio::error_code& error,
  *
  *   // Number of bytes transferred so far.
  *   std::size_t bytes_transferred
@@ -703,14 +703,14 @@ std::size_t read(SyncReadStream& s, DynamicBuffer_v2 buffers,
 template <typename SyncReadStream, typename DynamicBuffer_v2,
     typename CompletionCondition>
 std::size_t read(SyncReadStream& s, DynamicBuffer_v2 buffers,
-    CompletionCondition completion_condition, ASIO_NAMESPACE::error_code& ec,
+    CompletionCondition completion_condition, ModioAsio::error_code& ec,
     typename constraint<
       is_dynamic_buffer_v2<DynamicBuffer_v2>::value
     >::type = 0);
 
 /*@}*/
 /**
- * @defgroup async_read ASIO_NAMESPACE::async_read
+ * @defgroup async_read ModioAsio::async_read
  *
  * @brief The @c async_read function is a composed asynchronous operation that
  * reads a certain amount of data from a stream before completion.
@@ -752,7 +752,7 @@ std::size_t read(SyncReadStream& s, DynamicBuffer_v2 buffers,
  * signature. The function signature of the completion handler must be:
  * @code void handler(
  *   // Result of operation.
- *   const ASIO_NAMESPACE::error_code& error,
+ *   const ModioAsio::error_code& error,
  *
  *   // Number of bytes copied into the buffers. If an error
  *   // occurred, this will be the number of bytes successfully
@@ -762,29 +762,29 @@ std::size_t read(SyncReadStream& s, DynamicBuffer_v2 buffers,
  * Regardless of whether the asynchronous operation completes immediately or
  * not, the completion handler will not be invoked from within this function.
  * On immediate completion, invocation of the handler will be performed in a
- * manner equivalent to using ASIO_NAMESPACE::post().
+ * manner equivalent to using ModioAsio::post().
  *
  * @par Completion Signature
- * @code void(ASIO_NAMESPACE::error_code, std::size_t) @endcode
+ * @code void(ModioAsio::error_code, std::size_t) @endcode
  *
  * @par Example
  * To read into a single data buffer use the @ref buffer function as follows:
  * @code
- * ASIO_NAMESPACE::async_read(s, ASIO_NAMESPACE::buffer(data, size), handler);
+ * ModioAsio::async_read(s, ModioAsio::buffer(data, size), handler);
  * @endcode
  * See the @ref buffer documentation for information on reading into multiple
  * buffers in one go, and how to use it with arrays, boost::array or
  * std::vector.
  *
  * @note This overload is equivalent to calling:
- * @code ASIO_NAMESPACE::async_read(
+ * @code ModioAsio::async_read(
  *     s, buffers,
- *     ASIO_NAMESPACE::transfer_all(),
+ *     ModioAsio::transfer_all(),
  *     handler); @endcode
  *
  * @par Per-Operation Cancellation
  * This asynchronous operation supports cancellation for the following
- * ASIO_NAMESPACE::cancellation_type values:
+ * ModioAsio::cancellation_type values:
  *
  * @li @c cancellation_type::terminal
  *
@@ -794,12 +794,12 @@ std::size_t read(SyncReadStream& s, DynamicBuffer_v2 buffers,
  * @c async_read_some operation.
  */
 template <typename AsyncReadStream, typename MutableBufferSequence,
-    ASIO_COMPLETION_TOKEN_FOR(void (ASIO_NAMESPACE::error_code,
+    ASIO_COMPLETION_TOKEN_FOR(void (ModioAsio::error_code,
       std::size_t)) ReadToken
         ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(
           typename AsyncReadStream::executor_type)>
 ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(ReadToken,
-    void (ASIO_NAMESPACE::error_code, std::size_t))
+    void (ModioAsio::error_code, std::size_t))
 async_read(AsyncReadStream& s, const MutableBufferSequence& buffers,
     ASIO_MOVE_ARG(ReadToken) token
       ASIO_DEFAULT_COMPLETION_TOKEN(
@@ -809,7 +809,7 @@ async_read(AsyncReadStream& s, const MutableBufferSequence& buffers,
     >::type = 0)
   ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
     async_initiate<ReadToken,
-      void (ASIO_NAMESPACE::error_code, std::size_t)>(
+      void (ModioAsio::error_code, std::size_t)>(
         declval<detail::initiate_async_read<AsyncReadStream> >(),
         token, buffers, transfer_all())));
 
@@ -840,7 +840,7 @@ async_read(AsyncReadStream& s, const MutableBufferSequence& buffers,
  * must be:
  * @code std::size_t completion_condition(
  *   // Result of latest async_read_some operation.
- *   const ASIO_NAMESPACE::error_code& error,
+ *   const ModioAsio::error_code& error,
  *
  *   // Number of bytes transferred so far.
  *   std::size_t bytes_transferred
@@ -856,7 +856,7 @@ async_read(AsyncReadStream& s, const MutableBufferSequence& buffers,
  * signature. The function signature of the completion handler must be:
  * @code void handler(
  *   // Result of operation.
- *   const ASIO_NAMESPACE::error_code& error,
+ *   const ModioAsio::error_code& error,
  *
  *   // Number of bytes copied into the buffers. If an error
  *   // occurred, this will be the number of bytes successfully
@@ -866,16 +866,16 @@ async_read(AsyncReadStream& s, const MutableBufferSequence& buffers,
  * Regardless of whether the asynchronous operation completes immediately or
  * not, the completion handler will not be invoked from within this function.
  * On immediate completion, invocation of the handler will be performed in a
- * manner equivalent to using ASIO_NAMESPACE::post().
+ * manner equivalent to using ModioAsio::post().
  *
  * @par Completion Signature
- * @code void(ASIO_NAMESPACE::error_code, std::size_t) @endcode
+ * @code void(ModioAsio::error_code, std::size_t) @endcode
  *
  * @par Example
  * To read into a single data buffer use the @ref buffer function as follows:
- * @code ASIO_NAMESPACE::async_read(s,
- *     ASIO_NAMESPACE::buffer(data, size),
- *     ASIO_NAMESPACE::transfer_at_least(32),
+ * @code ModioAsio::async_read(s,
+ *     ModioAsio::buffer(data, size),
+ *     ModioAsio::transfer_at_least(32),
  *     handler); @endcode
  * See the @ref buffer documentation for information on reading into multiple
  * buffers in one go, and how to use it with arrays, boost::array or
@@ -883,7 +883,7 @@ async_read(AsyncReadStream& s, const MutableBufferSequence& buffers,
  *
  * @par Per-Operation Cancellation
  * This asynchronous operation supports cancellation for the following
- * ASIO_NAMESPACE::cancellation_type values:
+ * ModioAsio::cancellation_type values:
  *
  * @li @c cancellation_type::terminal
  *
@@ -894,12 +894,12 @@ async_read(AsyncReadStream& s, const MutableBufferSequence& buffers,
  */
 template <typename AsyncReadStream,
     typename MutableBufferSequence, typename CompletionCondition,
-    ASIO_COMPLETION_TOKEN_FOR(void (ASIO_NAMESPACE::error_code,
+    ASIO_COMPLETION_TOKEN_FOR(void (ModioAsio::error_code,
       std::size_t)) ReadToken
         ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(
           typename AsyncReadStream::executor_type)>
 ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(ReadToken,
-    void (ASIO_NAMESPACE::error_code, std::size_t))
+    void (ModioAsio::error_code, std::size_t))
 async_read(AsyncReadStream& s, const MutableBufferSequence& buffers,
     CompletionCondition completion_condition,
     ASIO_MOVE_ARG(ReadToken) token
@@ -910,7 +910,7 @@ async_read(AsyncReadStream& s, const MutableBufferSequence& buffers,
     >::type = 0)
   ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
     async_initiate<ReadToken,
-      void (ASIO_NAMESPACE::error_code, std::size_t)>(
+      void (ModioAsio::error_code, std::size_t)>(
         declval<detail::initiate_async_read<AsyncReadStream> >(),
         token, buffers,
         ASIO_MOVE_CAST(CompletionCondition)(completion_condition))));
@@ -951,7 +951,7 @@ async_read(AsyncReadStream& s, const MutableBufferSequence& buffers,
  * signature. The function signature of the completion handler must be:
  * @code void handler(
  *   // Result of operation.
- *   const ASIO_NAMESPACE::error_code& error,
+ *   const ModioAsio::error_code& error,
  *
  *   // Number of bytes copied into the buffers. If an error
  *   // occurred, this will be the number of bytes successfully
@@ -961,20 +961,20 @@ async_read(AsyncReadStream& s, const MutableBufferSequence& buffers,
  * Regardless of whether the asynchronous operation completes immediately or
  * not, the completion handler will not be invoked from within this function.
  * On immediate completion, invocation of the handler will be performed in a
- * manner equivalent to using ASIO_NAMESPACE::post().
+ * manner equivalent to using ModioAsio::post().
  *
  * @par Completion Signature
- * @code void(ASIO_NAMESPACE::error_code, std::size_t) @endcode
+ * @code void(ModioAsio::error_code, std::size_t) @endcode
  *
  * @note This overload is equivalent to calling:
- * @code ASIO_NAMESPACE::async_read(
+ * @code ModioAsio::async_read(
  *     s, buffers,
- *     ASIO_NAMESPACE::transfer_all(),
+ *     ModioAsio::transfer_all(),
  *     handler); @endcode
  *
  * @par Per-Operation Cancellation
  * This asynchronous operation supports cancellation for the following
- * ASIO_NAMESPACE::cancellation_type values:
+ * ModioAsio::cancellation_type values:
  *
  * @li @c cancellation_type::terminal
  *
@@ -984,12 +984,12 @@ async_read(AsyncReadStream& s, const MutableBufferSequence& buffers,
  * @c async_read_some operation.
  */
 template <typename AsyncReadStream, typename DynamicBuffer_v1,
-    ASIO_COMPLETION_TOKEN_FOR(void (ASIO_NAMESPACE::error_code,
+    ASIO_COMPLETION_TOKEN_FOR(void (ModioAsio::error_code,
       std::size_t)) ReadToken
         ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(
           typename AsyncReadStream::executor_type)>
 ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(ReadToken,
-    void (ASIO_NAMESPACE::error_code, std::size_t))
+    void (ModioAsio::error_code, std::size_t))
 async_read(AsyncReadStream& s,
     ASIO_MOVE_ARG(DynamicBuffer_v1) buffers,
     ASIO_MOVE_ARG(ReadToken) token
@@ -1003,7 +1003,7 @@ async_read(AsyncReadStream& s,
     >::type = 0)
   ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
     async_initiate<ReadToken,
-      void (ASIO_NAMESPACE::error_code, std::size_t)>(
+      void (ModioAsio::error_code, std::size_t)>(
         declval<detail::initiate_async_read_dynbuf_v1<AsyncReadStream> >(),
         token, ASIO_MOVE_CAST(DynamicBuffer_v1)(buffers),
         transfer_all())));
@@ -1040,7 +1040,7 @@ async_read(AsyncReadStream& s,
  * must be:
  * @code std::size_t completion_condition(
  *   // Result of latest async_read_some operation.
- *   const ASIO_NAMESPACE::error_code& error,
+ *   const ModioAsio::error_code& error,
  *
  *   // Number of bytes transferred so far.
  *   std::size_t bytes_transferred
@@ -1056,7 +1056,7 @@ async_read(AsyncReadStream& s,
  * signature. The function signature of the completion handler must be:
  * @code void handler(
  *   // Result of operation.
- *   const ASIO_NAMESPACE::error_code& error,
+ *   const ModioAsio::error_code& error,
  *
  *   // Number of bytes copied into the buffers. If an error
  *   // occurred, this will be the number of bytes successfully
@@ -1066,14 +1066,14 @@ async_read(AsyncReadStream& s,
  * Regardless of whether the asynchronous operation completes immediately or
  * not, the completion handler will not be invoked from within this function.
  * On immediate completion, invocation of the handler will be performed in a
- * manner equivalent to using ASIO_NAMESPACE::post().
+ * manner equivalent to using ModioAsio::post().
  *
  * @par Completion Signature
- * @code void(ASIO_NAMESPACE::error_code, std::size_t) @endcode
+ * @code void(ModioAsio::error_code, std::size_t) @endcode
  *
  * @par Per-Operation Cancellation
  * This asynchronous operation supports cancellation for the following
- * ASIO_NAMESPACE::cancellation_type values:
+ * ModioAsio::cancellation_type values:
  *
  * @li @c cancellation_type::terminal
  *
@@ -1084,12 +1084,12 @@ async_read(AsyncReadStream& s,
  */
 template <typename AsyncReadStream,
     typename DynamicBuffer_v1, typename CompletionCondition,
-    ASIO_COMPLETION_TOKEN_FOR(void (ASIO_NAMESPACE::error_code,
+    ASIO_COMPLETION_TOKEN_FOR(void (ModioAsio::error_code,
       std::size_t)) ReadToken
         ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(
           typename AsyncReadStream::executor_type)>
 ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(ReadToken,
-    void (ASIO_NAMESPACE::error_code, std::size_t))
+    void (ModioAsio::error_code, std::size_t))
 async_read(AsyncReadStream& s,
     ASIO_MOVE_ARG(DynamicBuffer_v1) buffers,
     CompletionCondition completion_condition,
@@ -1104,7 +1104,7 @@ async_read(AsyncReadStream& s,
     >::type = 0)
   ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
     async_initiate<ReadToken,
-      void (ASIO_NAMESPACE::error_code, std::size_t)>(
+      void (ModioAsio::error_code, std::size_t)>(
         declval<detail::initiate_async_read_dynbuf_v1<AsyncReadStream> >(),
         token, ASIO_MOVE_CAST(DynamicBuffer_v1)(buffers),
         ASIO_MOVE_CAST(CompletionCondition)(completion_condition))));
@@ -1144,7 +1144,7 @@ async_read(AsyncReadStream& s,
  * signature. The function signature of the completion handler must be:
  * @code void handler(
  *   // Result of operation.
- *   const ASIO_NAMESPACE::error_code& error,
+ *   const ModioAsio::error_code& error,
  *
  *   // Number of bytes copied into the buffers. If an error
  *   // occurred, this will be the number of bytes successfully
@@ -1154,20 +1154,20 @@ async_read(AsyncReadStream& s,
  * Regardless of whether the asynchronous operation completes immediately or
  * not, the completion handler will not be invoked from within this function.
  * On immediate completion, invocation of the handler will be performed in a
- * manner equivalent to using ASIO_NAMESPACE::post().
+ * manner equivalent to using ModioAsio::post().
  *
  * @par Completion Signature
- * @code void(ASIO_NAMESPACE::error_code, std::size_t) @endcode
+ * @code void(ModioAsio::error_code, std::size_t) @endcode
  *
  * @note This overload is equivalent to calling:
- * @code ASIO_NAMESPACE::async_read(
+ * @code ModioAsio::async_read(
  *     s, b,
- *     ASIO_NAMESPACE::transfer_all(),
+ *     ModioAsio::transfer_all(),
  *     handler); @endcode
  *
  * @par Per-Operation Cancellation
  * This asynchronous operation supports cancellation for the following
- * ASIO_NAMESPACE::cancellation_type values:
+ * ModioAsio::cancellation_type values:
  *
  * @li @c cancellation_type::terminal
  *
@@ -1177,12 +1177,12 @@ async_read(AsyncReadStream& s,
  * @c async_read_some operation.
  */
 template <typename AsyncReadStream, typename Allocator,
-    ASIO_COMPLETION_TOKEN_FOR(void (ASIO_NAMESPACE::error_code,
+    ASIO_COMPLETION_TOKEN_FOR(void (ModioAsio::error_code,
       std::size_t)) ReadToken
         ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(
           typename AsyncReadStream::executor_type)>
 ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(ReadToken,
-    void (ASIO_NAMESPACE::error_code, std::size_t))
+    void (ModioAsio::error_code, std::size_t))
 async_read(AsyncReadStream& s, basic_streambuf<Allocator>& b,
     ASIO_MOVE_ARG(ReadToken) token
       ASIO_DEFAULT_COMPLETION_TOKEN(
@@ -1221,7 +1221,7 @@ async_read(AsyncReadStream& s, basic_streambuf<Allocator>& b,
  * must be:
  * @code std::size_t completion_condition(
  *   // Result of latest async_read_some operation.
- *   const ASIO_NAMESPACE::error_code& error,
+ *   const ModioAsio::error_code& error,
  *
  *   // Number of bytes transferred so far.
  *   std::size_t bytes_transferred
@@ -1237,7 +1237,7 @@ async_read(AsyncReadStream& s, basic_streambuf<Allocator>& b,
  * signature. The function signature of the completion handler must be:
  * @code void handler(
  *   // Result of operation.
- *   const ASIO_NAMESPACE::error_code& error,
+ *   const ModioAsio::error_code& error,
  *
  *   // Number of bytes copied into the buffers. If an error
  *   // occurred, this will be the number of bytes successfully
@@ -1247,14 +1247,14 @@ async_read(AsyncReadStream& s, basic_streambuf<Allocator>& b,
  * Regardless of whether the asynchronous operation completes immediately or
  * not, the completion handler will not be invoked from within this function.
  * On immediate completion, invocation of the handler will be performed in a
- * manner equivalent to using ASIO_NAMESPACE::post().
+ * manner equivalent to using ModioAsio::post().
  *
  * @par Completion Signature
- * @code void(ASIO_NAMESPACE::error_code, std::size_t) @endcode
+ * @code void(ModioAsio::error_code, std::size_t) @endcode
  *
  * @par Per-Operation Cancellation
  * This asynchronous operation supports cancellation for the following
- * ASIO_NAMESPACE::cancellation_type values:
+ * ModioAsio::cancellation_type values:
  *
  * @li @c cancellation_type::terminal
  *
@@ -1265,12 +1265,12 @@ async_read(AsyncReadStream& s, basic_streambuf<Allocator>& b,
  */
 template <typename AsyncReadStream,
     typename Allocator, typename CompletionCondition,
-    ASIO_COMPLETION_TOKEN_FOR(void (ASIO_NAMESPACE::error_code,
+    ASIO_COMPLETION_TOKEN_FOR(void (ModioAsio::error_code,
       std::size_t)) ReadToken
         ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(
           typename AsyncReadStream::executor_type)>
 ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(ReadToken,
-    void (ASIO_NAMESPACE::error_code, std::size_t))
+    void (ModioAsio::error_code, std::size_t))
 async_read(AsyncReadStream& s, basic_streambuf<Allocator>& b,
     CompletionCondition completion_condition,
     ASIO_MOVE_ARG(ReadToken) token
@@ -1319,7 +1319,7 @@ async_read(AsyncReadStream& s, basic_streambuf<Allocator>& b,
  * signature. The function signature of the completion handler must be:
  * @code void handler(
  *   // Result of operation.
- *   const ASIO_NAMESPACE::error_code& error,
+ *   const ModioAsio::error_code& error,
  *
  *   // Number of bytes copied into the buffers. If an error
  *   // occurred, this will be the number of bytes successfully
@@ -1329,20 +1329,20 @@ async_read(AsyncReadStream& s, basic_streambuf<Allocator>& b,
  * Regardless of whether the asynchronous operation completes immediately or
  * not, the completion handler will not be invoked from within this function.
  * On immediate completion, invocation of the handler will be performed in a
- * manner equivalent to using ASIO_NAMESPACE::post().
+ * manner equivalent to using ModioAsio::post().
  *
  * @par Completion Signature
- * @code void(ASIO_NAMESPACE::error_code, std::size_t) @endcode
+ * @code void(ModioAsio::error_code, std::size_t) @endcode
  *
  * @note This overload is equivalent to calling:
- * @code ASIO_NAMESPACE::async_read(
+ * @code ModioAsio::async_read(
  *     s, buffers,
- *     ASIO_NAMESPACE::transfer_all(),
+ *     ModioAsio::transfer_all(),
  *     handler); @endcode
  *
  * @par Per-Operation Cancellation
  * This asynchronous operation supports cancellation for the following
- * ASIO_NAMESPACE::cancellation_type values:
+ * ModioAsio::cancellation_type values:
  *
  * @li @c cancellation_type::terminal
  *
@@ -1352,12 +1352,12 @@ async_read(AsyncReadStream& s, basic_streambuf<Allocator>& b,
  * @c async_read_some operation.
  */
 template <typename AsyncReadStream, typename DynamicBuffer_v2,
-    ASIO_COMPLETION_TOKEN_FOR(void (ASIO_NAMESPACE::error_code,
+    ASIO_COMPLETION_TOKEN_FOR(void (ModioAsio::error_code,
       std::size_t)) ReadToken
         ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(
           typename AsyncReadStream::executor_type)>
 ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(ReadToken,
-    void (ASIO_NAMESPACE::error_code, std::size_t))
+    void (ModioAsio::error_code, std::size_t))
 async_read(AsyncReadStream& s, DynamicBuffer_v2 buffers,
     ASIO_MOVE_ARG(ReadToken) token
       ASIO_DEFAULT_COMPLETION_TOKEN(
@@ -1367,7 +1367,7 @@ async_read(AsyncReadStream& s, DynamicBuffer_v2 buffers,
     >::type = 0)
   ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
     async_initiate<ReadToken,
-      void (ASIO_NAMESPACE::error_code, std::size_t)>(
+      void (ModioAsio::error_code, std::size_t)>(
         declval<detail::initiate_async_read_dynbuf_v2<AsyncReadStream> >(),
         token, ASIO_MOVE_CAST(DynamicBuffer_v2)(buffers),
         transfer_all())));
@@ -1404,7 +1404,7 @@ async_read(AsyncReadStream& s, DynamicBuffer_v2 buffers,
  * must be:
  * @code std::size_t completion_condition(
  *   // Result of latest async_read_some operation.
- *   const ASIO_NAMESPACE::error_code& error,
+ *   const ModioAsio::error_code& error,
  *
  *   // Number of bytes transferred so far.
  *   std::size_t bytes_transferred
@@ -1420,7 +1420,7 @@ async_read(AsyncReadStream& s, DynamicBuffer_v2 buffers,
  * signature. The function signature of the completion handler must be:
  * @code void handler(
  *   // Result of operation.
- *   const ASIO_NAMESPACE::error_code& error,
+ *   const ModioAsio::error_code& error,
  *
  *   // Number of bytes copied into the buffers. If an error
  *   // occurred, this will be the number of bytes successfully
@@ -1430,14 +1430,14 @@ async_read(AsyncReadStream& s, DynamicBuffer_v2 buffers,
  * Regardless of whether the asynchronous operation completes immediately or
  * not, the completion handler will not be invoked from within this function.
  * On immediate completion, invocation of the handler will be performed in a
- * manner equivalent to using ASIO_NAMESPACE::post().
+ * manner equivalent to using ModioAsio::post().
  *
  * @par Completion Signature
- * @code void(ASIO_NAMESPACE::error_code, std::size_t) @endcode
+ * @code void(ModioAsio::error_code, std::size_t) @endcode
  *
  * @par Per-Operation Cancellation
  * This asynchronous operation supports cancellation for the following
- * ASIO_NAMESPACE::cancellation_type values:
+ * ModioAsio::cancellation_type values:
  *
  * @li @c cancellation_type::terminal
  *
@@ -1448,12 +1448,12 @@ async_read(AsyncReadStream& s, DynamicBuffer_v2 buffers,
  */
 template <typename AsyncReadStream,
     typename DynamicBuffer_v2, typename CompletionCondition,
-    ASIO_COMPLETION_TOKEN_FOR(void (ASIO_NAMESPACE::error_code,
+    ASIO_COMPLETION_TOKEN_FOR(void (ModioAsio::error_code,
       std::size_t)) ReadToken
         ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(
           typename AsyncReadStream::executor_type)>
 ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(ReadToken,
-    void (ASIO_NAMESPACE::error_code, std::size_t))
+    void (ModioAsio::error_code, std::size_t))
 async_read(AsyncReadStream& s, DynamicBuffer_v2 buffers,
     CompletionCondition completion_condition,
     ASIO_MOVE_ARG(ReadToken) token
@@ -1464,14 +1464,14 @@ async_read(AsyncReadStream& s, DynamicBuffer_v2 buffers,
     >::type = 0)
   ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
     async_initiate<ReadToken,
-      void (ASIO_NAMESPACE::error_code, std::size_t)>(
+      void (ModioAsio::error_code, std::size_t)>(
         declval<detail::initiate_async_read_dynbuf_v2<AsyncReadStream> >(),
         token, ASIO_MOVE_CAST(DynamicBuffer_v2)(buffers),
         ASIO_MOVE_CAST(CompletionCondition)(completion_condition))));
 
 /*@}*/
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

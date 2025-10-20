@@ -32,7 +32,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 // Base class for all spawn()-ed thread implementations.
@@ -126,8 +126,8 @@ public:
 
 protected:
   spawned_thread_base** owner_; // Points to data member in active handler.
-  ASIO_NAMESPACE::cancellation_slot parent_cancellation_slot_;
-  ASIO_NAMESPACE::cancellation_state cancellation_state_;
+  ModioAsio::cancellation_slot parent_cancellation_slot_;
+  ModioAsio::cancellation_state cancellation_state_;
   bool has_context_switched_;
   bool throw_if_cancelled_;
 
@@ -227,7 +227,7 @@ public:
   /**
    * Let <tt>P</tt> be the cancellation slot associated with the current
    * coroutine's @ref spawn completion handler. Assigns a new
-   * ASIO_NAMESPACE::cancellation_state object <tt>S</tt>, constructed as
+   * ModioAsio::cancellation_state object <tt>S</tt>, constructed as
    * <tt>S(P)</tt>, into the current coroutine's cancellation state object.
    */
   void reset_cancellation_state() const
@@ -239,7 +239,7 @@ public:
   /**
    * Let <tt>P</tt> be the cancellation slot associated with the current
    * coroutine's @ref spawn completion handler. Assigns a new
-   * ASIO_NAMESPACE::cancellation_state object <tt>S</tt>, constructed as <tt>S(P,
+   * ModioAsio::cancellation_state object <tt>S</tt>, constructed as <tt>S(P,
    * std::forward<Filter>(filter))</tt>, into the current coroutine's
    * cancellation state object.
    */
@@ -254,7 +254,7 @@ public:
   /**
    * Let <tt>P</tt> be the cancellation slot associated with the current
    * coroutine's @ref spawn completion handler. Assigns a new
-   * ASIO_NAMESPACE::cancellation_state object <tt>S</tt>, constructed as <tt>S(P,
+   * ModioAsio::cancellation_state object <tt>S</tt>, constructed as <tt>S(P,
    * std::forward<InFilter>(in_filter),
    * std::forward<OutFilter>(out_filter))</tt>, into the current coroutine's
    * cancellation state object.
@@ -307,7 +307,7 @@ public:
    *   ...
    * } @endcode
    */
-  basic_yield_context operator[](ASIO_NAMESPACE::error_code& ec) const
+  basic_yield_context operator[](ModioAsio::error_code& ec) const
   {
     basic_yield_context tmp(*this);
     tmp.ec_ = &ec;
@@ -326,7 +326,7 @@ public:
 
   detail::spawned_thread_base* spawned_thread_;
   Executor executor_;
-  ASIO_NAMESPACE::error_code* ec_;
+  ModioAsio::error_code* ec_;
 #endif // !defined(GENERATING_DOCUMENTATION)
 };
 
@@ -335,7 +335,7 @@ public:
 typedef basic_yield_context<any_io_executor> yield_context;
 
 /**
- * @defgroup spawn ASIO_NAMESPACE::spawn
+ * @defgroup spawn ModioAsio::spawn
  *
  * @brief Start a new stackful coroutine.
  *
@@ -343,11 +343,11 @@ typedef basic_yield_context<any_io_executor> yield_context;
  * library. This function enables programs to implement asynchronous logic in a
  * synchronous manner, as illustrated by the following example:
  *
- * @code ASIO_NAMESPACE::spawn(my_strand, do_echo, ASIO_NAMESPACE::detached);
+ * @code ModioAsio::spawn(my_strand, do_echo, ModioAsio::detached);
  *
  * // ...
  *
- * void do_echo(ASIO_NAMESPACE::yield_context yield)
+ * void do_echo(ModioAsio::yield_context yield)
  * {
  *   try
  *   {
@@ -356,10 +356,10 @@ typedef basic_yield_context<any_io_executor> yield_context;
  *     {
  *       std::size_t length =
  *         my_socket.async_read_some(
- *           ASIO_NAMESPACE::buffer(data), yield);
+ *           ModioAsio::buffer(data), yield);
  *
- *       ASIO_NAMESPACE::async_write(my_socket,
- *           ASIO_NAMESPACE::buffer(data, length), yield);
+ *       ModioAsio::async_write(my_socket,
+ *           ModioAsio::buffer(data, length), yield);
  *     }
  *   }
  *   catch (std::exception& e)
@@ -861,7 +861,7 @@ void spawn(const strand<Executor>& ex,
  * @param attributes Boost.Coroutine attributes used to customise the coroutine.
  */
 template <typename Function>
-void spawn(const ASIO_NAMESPACE::io_context::strand& s,
+void spawn(const ModioAsio::io_context::strand& s,
     ASIO_MOVE_ARG(Function) function,
     const boost::coroutines::attributes& attributes
       = boost::coroutines::attributes());
@@ -895,7 +895,7 @@ void spawn(ExecutionContext& ctx,
 
 /*@}*/
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

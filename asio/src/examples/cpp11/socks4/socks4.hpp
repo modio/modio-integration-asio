@@ -29,7 +29,7 @@ public:
     bind = 0x02
   };
 
-  request(command_type cmd, const ASIO_NAMESPACE::ip::tcp::endpoint& endpoint,
+  request(command_type cmd, const ModioAsio::ip::tcp::endpoint& endpoint,
       const std::string& user_id)
     : version_(version),
       command_(cmd),
@@ -37,10 +37,10 @@ public:
       null_byte_(0)
   {
     // Only IPv4 is supported by the SOCKS 4 protocol.
-    if (endpoint.protocol() != ASIO_NAMESPACE::ip::tcp::v4())
+    if (endpoint.protocol() != ModioAsio::ip::tcp::v4())
     {
-      throw ASIO_NAMESPACE::system_error(
-          ASIO_NAMESPACE::error::address_family_not_supported);
+      throw ModioAsio::system_error(
+          ModioAsio::error::address_family_not_supported);
     }
 
     // Convert port number to network byte order.
@@ -52,18 +52,18 @@ public:
     address_ = endpoint.address().to_v4().to_bytes();
   }
 
-  std::array<ASIO_NAMESPACE::const_buffer, 7> buffers() const
+  std::array<ModioAsio::const_buffer, 7> buffers() const
   {
     return
     {
       {
-        ASIO_NAMESPACE::buffer(&version_, 1),
-        ASIO_NAMESPACE::buffer(&command_, 1),
-        ASIO_NAMESPACE::buffer(&port_high_byte_, 1),
-        ASIO_NAMESPACE::buffer(&port_low_byte_, 1),
-        ASIO_NAMESPACE::buffer(address_),
-        ASIO_NAMESPACE::buffer(user_id_),
-        ASIO_NAMESPACE::buffer(&null_byte_, 1)
+        ModioAsio::buffer(&version_, 1),
+        ModioAsio::buffer(&command_, 1),
+        ModioAsio::buffer(&port_high_byte_, 1),
+        ModioAsio::buffer(&port_low_byte_, 1),
+        ModioAsio::buffer(address_),
+        ModioAsio::buffer(user_id_),
+        ModioAsio::buffer(&null_byte_, 1)
       }
     };
   }
@@ -73,7 +73,7 @@ private:
   unsigned char command_;
   unsigned char port_high_byte_;
   unsigned char port_low_byte_;
-  ASIO_NAMESPACE::ip::address_v4::bytes_type address_;
+  ModioAsio::ip::address_v4::bytes_type address_;
   std::string user_id_;
   unsigned char null_byte_;
 };
@@ -95,16 +95,16 @@ public:
   {
   }
 
-  std::array<ASIO_NAMESPACE::mutable_buffer, 5> buffers()
+  std::array<ModioAsio::mutable_buffer, 5> buffers()
   {
     return
     {
       {
-        ASIO_NAMESPACE::buffer(&null_byte_, 1),
-        ASIO_NAMESPACE::buffer(&status_, 1),
-        ASIO_NAMESPACE::buffer(&port_high_byte_, 1),
-        ASIO_NAMESPACE::buffer(&port_low_byte_, 1),
-        ASIO_NAMESPACE::buffer(address_)
+        ModioAsio::buffer(&null_byte_, 1),
+        ModioAsio::buffer(&status_, 1),
+        ModioAsio::buffer(&port_high_byte_, 1),
+        ModioAsio::buffer(&port_low_byte_, 1),
+        ModioAsio::buffer(address_)
       }
     };
   }
@@ -119,15 +119,15 @@ public:
     return status_;
   }
 
-  ASIO_NAMESPACE::ip::tcp::endpoint endpoint() const
+  ModioAsio::ip::tcp::endpoint endpoint() const
   {
     unsigned short port = port_high_byte_;
     port = (port << 8) & 0xff00;
     port = port | port_low_byte_;
 
-    ASIO_NAMESPACE::ip::address_v4 address(address_);
+    ModioAsio::ip::address_v4 address(address_);
 
-    return ASIO_NAMESPACE::ip::tcp::endpoint(address, port);
+    return ModioAsio::ip::tcp::endpoint(address, port);
   }
 
 private:
@@ -135,7 +135,7 @@ private:
   unsigned char status_;
   unsigned char port_high_byte_;
   unsigned char port_low_byte_;
-  ASIO_NAMESPACE::ip::address_v4::bytes_type address_;
+  ModioAsio::ip::address_v4::bytes_type address_;
 };
 
 } // namespace socks4

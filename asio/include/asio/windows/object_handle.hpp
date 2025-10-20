@@ -23,14 +23,14 @@
 
 #include "asio/windows/basic_object_handle.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace windows {
 
 /// Typedef for the typical usage of an object handle.
 typedef basic_object_handle<> object_handle;
 
 } // namespace windows
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #endif // defined(ASIO_HAS_WINDOWS_OBJECT_HANDLE)
        //   || defined(GENERATING_DOCUMENTATION)

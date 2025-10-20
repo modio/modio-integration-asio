@@ -26,7 +26,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace ssl {
 namespace detail {
 
@@ -78,46 +78,46 @@ public:
   ASIO_DECL SSL* native_handle();
 
   // Set the peer verification mode.
-  ASIO_DECL ASIO_NAMESPACE::error_code set_verify_mode(
-      verify_mode v, ASIO_NAMESPACE::error_code& ec);
+  ASIO_DECL ModioAsio::error_code set_verify_mode(
+      verify_mode v, ModioAsio::error_code& ec);
 
   // Set the peer verification depth.
-  ASIO_DECL ASIO_NAMESPACE::error_code set_verify_depth(
-      int depth, ASIO_NAMESPACE::error_code& ec);
+  ASIO_DECL ModioAsio::error_code set_verify_depth(
+      int depth, ModioAsio::error_code& ec);
 
   // Set a peer certificate verification callback.
-  ASIO_DECL ASIO_NAMESPACE::error_code set_verify_callback(
-      verify_callback_base* callback, ASIO_NAMESPACE::error_code& ec);
+  ASIO_DECL ModioAsio::error_code set_verify_callback(
+      verify_callback_base* callback, ModioAsio::error_code& ec);
 
   // Perform an SSL handshake using either SSL_connect (client-side) or
   // SSL_accept (server-side).
   ASIO_DECL want handshake(
-      stream_base::handshake_type type, ASIO_NAMESPACE::error_code& ec);
+      stream_base::handshake_type type, ModioAsio::error_code& ec);
 
   // Perform a graceful shutdown of the SSL session.
-  ASIO_DECL want shutdown(ASIO_NAMESPACE::error_code& ec);
+  ASIO_DECL want shutdown(ModioAsio::error_code& ec);
 
   // Write bytes to the SSL session.
-  ASIO_DECL want write(const ASIO_NAMESPACE::const_buffer& data,
-      ASIO_NAMESPACE::error_code& ec, std::size_t& bytes_transferred);
+  ASIO_DECL want write(const ModioAsio::const_buffer& data,
+      ModioAsio::error_code& ec, std::size_t& bytes_transferred);
 
   // Read bytes from the SSL session.
-  ASIO_DECL want read(const ASIO_NAMESPACE::mutable_buffer& data,
-      ASIO_NAMESPACE::error_code& ec, std::size_t& bytes_transferred);
+  ASIO_DECL want read(const ModioAsio::mutable_buffer& data,
+      ModioAsio::error_code& ec, std::size_t& bytes_transferred);
 
   // Get output data to be written to the transport.
-  ASIO_DECL ASIO_NAMESPACE::mutable_buffer get_output(
-      const ASIO_NAMESPACE::mutable_buffer& data);
+  ASIO_DECL ModioAsio::mutable_buffer get_output(
+      const ModioAsio::mutable_buffer& data);
 
   // Put input data that was read from the transport.
-  ASIO_DECL ASIO_NAMESPACE::const_buffer put_input(
-      const ASIO_NAMESPACE::const_buffer& data);
+  ASIO_DECL ModioAsio::const_buffer put_input(
+      const ModioAsio::const_buffer& data);
 
   // Map an error::eof code returned by the underlying transport according to
   // the type and state of the SSL session. Returns a const reference to the
   // error code object, suitable for passing to a completion handler.
-  ASIO_DECL const ASIO_NAMESPACE::error_code& map_error_code(
-      ASIO_NAMESPACE::error_code& ec) const;
+  ASIO_DECL const ModioAsio::error_code& map_error_code(
+      ModioAsio::error_code& ec) const;
 
 private:
   // Disallow copying and assignment.
@@ -131,14 +131,14 @@ private:
 #if (OPENSSL_VERSION_NUMBER < 0x10000000L)
   // The SSL_accept function may not be thread safe. This mutex is used to
   // protect all calls to the SSL_accept function.
-  ASIO_DECL static ASIO_NAMESPACE::detail::static_mutex& accept_mutex();
+  ASIO_DECL static ModioAsio::detail::static_mutex& accept_mutex();
 #endif // (OPENSSL_VERSION_NUMBER < 0x10000000L)
 
   // Perform one operation. Returns >= 0 on success or error, want_read if the
   // operation needs more input, or want_write if it needs to write some output
   // before the operation can complete.
   ASIO_DECL want perform(int (engine::* op)(void*, std::size_t),
-      void* data, std::size_t length, ASIO_NAMESPACE::error_code& ec,
+      void* data, std::size_t length, ModioAsio::error_code& ec,
       std::size_t* bytes_transferred);
 
   // Adapt the SSL_accept function to the signature needed for perform().
@@ -162,7 +162,7 @@ private:
 
 } // namespace detail
 } // namespace ssl
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

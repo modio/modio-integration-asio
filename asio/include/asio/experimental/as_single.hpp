@@ -20,7 +20,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace experimental {
 
 /// A @ref completion_token adapter used to specify that the completion handler
@@ -127,7 +127,7 @@ as_single(ASIO_MOVE_ARG(CompletionToken) completion_token)
 }
 
 } // namespace experimental
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

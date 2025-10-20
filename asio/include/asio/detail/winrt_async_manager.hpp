@@ -33,7 +33,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 class winrt_async_manager
@@ -65,12 +65,12 @@ public:
   }
 
   void sync(winrt::Windows::Foundation::IAsyncAction action,
-      ASIO_NAMESPACE::error_code& ec)
+      ModioAsio::error_code& ec)
   {
     using namespace winrt::Windows::Foundation;
     using winrt::Windows::Foundation::AsyncStatus;
 
-    auto promise = std::make_shared<std::promise<ASIO_NAMESPACE::error_code>>();
+    auto promise = std::make_shared<std::promise<ModioAsio::error_code>>();
     auto future = promise->get_future();
 
     action.Completed() = AsyncActionCompletedHandler(
@@ -79,14 +79,14 @@ public:
         switch (status)
         {
         case AsyncStatus::Canceled:
-          promise->set_value(ASIO_NAMESPACE::error::operation_aborted);
+          promise->set_value(ModioAsio::error::operation_aborted);
           break;
         case AsyncStatus::Error:
         case AsyncStatus::Completed:
         default:
-          ASIO_NAMESPACE::error_code ec(
+          ModioAsio::error_code ec(
               action.ErrorCode(),
-              ASIO_NAMESPACE::system_category());
+              ModioAsio::system_category());
           promise->set_value(ec);
           break;
         }
@@ -97,12 +97,12 @@ public:
 
   template <typename TResult>
   TResult sync(winrt::Windows::Foundation::IAsyncOperation<TResult> operation,
-      ASIO_NAMESPACE::error_code& ec)
+      ModioAsio::error_code& ec)
   {
     using namespace winrt::Windows::Foundation;
     using winrt::Windows::Foundation::AsyncStatus;
 
-    auto promise = std::make_shared<std::promise<ASIO_NAMESPACE::error_code>>();
+    auto promise = std::make_shared<std::promise<ModioAsio::error_code>>();
     auto future = promise->get_future();
 
     operation->Completed = ref new AsyncOperationCompletedHandler<TResult>(
@@ -111,14 +111,14 @@ public:
         switch (status)
         {
         case AsyncStatus::Canceled:
-          promise->set_value(ASIO_NAMESPACE::error::operation_aborted);
+          promise->set_value(ModioAsio::error::operation_aborted);
           break;
         case AsyncStatus::Error:
         case AsyncStatus::Completed:
         default:
-          ASIO_NAMESPACE::error_code ec(
+          ModioAsio::error_code ec(
               operation->ErrorCode(),
-              ASIO_NAMESPACE::system_category());
+              ModioAsio::system_category());
           promise->set_value(ec);
           break;
         }
@@ -132,12 +132,12 @@ public:
   TResult sync(
       winrt::Windows::Foundation::IAsyncOperationWithProgress<
         TResult, TProgress> operation,
-      ASIO_NAMESPACE::error_code& ec)
+      ModioAsio::error_code& ec)
   {
     using namespace winrt::Windows::Foundation;
     using winrt::Windows::Foundation::AsyncStatus;
 
-    auto promise = std::make_shared<std::promise<ASIO_NAMESPACE::error_code>>();
+    auto promise = std::make_shared<std::promise<ModioAsio::error_code>>();
     auto future = promise->get_future();
 
     operation->Completed
@@ -148,16 +148,16 @@ public:
           switch (status)
           {
           case AsyncStatus::Canceled:
-            promise->set_value(ASIO_NAMESPACE::error::operation_aborted);
+            promise->set_value(ModioAsio::error::operation_aborted);
             break;
           case AsyncStatus::Started:
             break;
           case AsyncStatus::Error:
           case AsyncStatus::Completed:
           default:
-            ASIO_NAMESPACE::error_code ec(
+            ModioAsio::error_code ec(
                 operation->ErrorCode(),
-                ASIO_NAMESPACE::system_category());
+                ModioAsio::system_category());
             promise->set_value(ec);
             break;
           }
@@ -179,16 +179,16 @@ public:
         switch (status)
         {
         case AsyncStatus::Canceled:
-          handler->ec_ = ASIO_NAMESPACE::error::operation_aborted;
+          handler->ec_ = ModioAsio::error::operation_aborted;
           break;
         case AsyncStatus::Started:
           return;
         case AsyncStatus::Completed:
         case AsyncStatus::Error:
         default:
-          handler->ec_ = ASIO_NAMESPACE::error_code(
+          handler->ec_ = ModioAsio::error_code(
               action.ErrorCode(),
-              ASIO_NAMESPACE::system_category());
+              ModioAsio::system_category());
           break;
         }
         scheduler_.post_deferred_completion(handler);
@@ -214,7 +214,7 @@ public:
         switch (status)
         {
         case AsyncStatus::Canceled:
-          handler->ec_ = ASIO_NAMESPACE::error::operation_aborted;
+          handler->ec_ = ModioAsio::error::operation_aborted;
           break;
         case AsyncStatus::Started:
           return;
@@ -223,9 +223,9 @@ public:
           // Fall through.
         case AsyncStatus::Error:
         default:
-          handler->ec_ = ASIO_NAMESPACE::error_code(
+          handler->ec_ = ModioAsio::error_code(
               operation.ErrorCode(),
-              ASIO_NAMESPACE::system_category());
+              ModioAsio::system_category());
           break;
         }
         scheduler_.post_deferred_completion(handler);
@@ -255,7 +255,7 @@ public:
           switch (status)
           {
           case AsyncStatus::Canceled:
-            handler->ec_ = ASIO_NAMESPACE::error::operation_aborted;
+            handler->ec_ = ModioAsio::error::operation_aborted;
             break;
           case AsyncStatus::Started:
             return;
@@ -264,9 +264,9 @@ public:
             // Fall through.
           case AsyncStatus::Error:
           default:
-            handler->ec_ = ASIO_NAMESPACE::error_code(
+            handler->ec_ = ModioAsio::error_code(
                 operation.ErrorCode(),
-                ASIO_NAMESPACE::system_category());
+                ModioAsio::system_category());
             break;
           }
           scheduler_.post_deferred_completion(handler);
@@ -296,7 +296,7 @@ private:
 };
 
 } // namespace detail
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

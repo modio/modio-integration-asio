@@ -17,11 +17,11 @@
 
 #include "asio/detail/config.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 
 class execution_context;
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #if defined(ASIO_CUSTOM_HANDLER_TRACKING)
 # include ASIO_CUSTOM_HANDLER_TRACKING
@@ -34,7 +34,7 @@ class execution_context;
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 #if defined(ASIO_CUSTOM_HANDLER_TRACKING)
@@ -129,19 +129,19 @@ public:
     ASIO_DECL void invocation_begin();
 
     // Records that handler is to be invoked with one arguments.
-    ASIO_DECL void invocation_begin(const ASIO_NAMESPACE::error_code& ec);
+    ASIO_DECL void invocation_begin(const ModioAsio::error_code& ec);
 
     // Constructor records that handler is to be invoked with two arguments.
     ASIO_DECL void invocation_begin(
-        const ASIO_NAMESPACE::error_code& ec, std::size_t bytes_transferred);
+        const ModioAsio::error_code& ec, std::size_t bytes_transferred);
 
     // Constructor records that handler is to be invoked with two arguments.
     ASIO_DECL void invocation_begin(
-        const ASIO_NAMESPACE::error_code& ec, int signal_number);
+        const ModioAsio::error_code& ec, int signal_number);
 
     // Constructor records that handler is to be invoked with two arguments.
     ASIO_DECL void invocation_begin(
-        const ASIO_NAMESPACE::error_code& ec, const char* arg);
+        const ModioAsio::error_code& ec, const char* arg);
 
     // Record that handler invocation has ended.
     ASIO_DECL void invocation_end();
@@ -173,12 +173,12 @@ public:
   // Record a reactor-based operation that is associated with a handler.
   ASIO_DECL static void reactor_operation(
       const tracked_handler& h, const char* op_name,
-      const ASIO_NAMESPACE::error_code& ec);
+      const ModioAsio::error_code& ec);
 
   // Record a reactor-based operation that is associated with a handler.
   ASIO_DECL static void reactor_operation(
       const tracked_handler& h, const char* op_name,
-      const ASIO_NAMESPACE::error_code& ec, std::size_t bytes_transferred);
+      const ModioAsio::error_code& ec, std::size_t bytes_transferred);
 
   // Write a line of output.
   ASIO_DECL static void write_line(const char* format, ...);
@@ -189,22 +189,22 @@ private:
 };
 
 # define ASIO_INHERIT_TRACKED_HANDLER \
-  : public ASIO_NAMESPACE::detail::handler_tracking::tracked_handler
+  : public ModioAsio::detail::handler_tracking::tracked_handler
 
 # define ASIO_ALSO_INHERIT_TRACKED_HANDLER \
-  , public ASIO_NAMESPACE::detail::handler_tracking::tracked_handler
+  , public ModioAsio::detail::handler_tracking::tracked_handler
 
 # define ASIO_HANDLER_TRACKING_INIT \
-  ASIO_NAMESPACE::detail::handler_tracking::init()
+  ModioAsio::detail::handler_tracking::init()
 
 # define ASIO_HANDLER_LOCATION(args) \
-  ASIO_NAMESPACE::detail::handler_tracking::location tracked_location args
+  ModioAsio::detail::handler_tracking::location tracked_location args
 
 # define ASIO_HANDLER_CREATION(args) \
-  ASIO_NAMESPACE::detail::handler_tracking::creation args
+  ModioAsio::detail::handler_tracking::creation args
 
 # define ASIO_HANDLER_COMPLETION(args) \
-  ASIO_NAMESPACE::detail::handler_tracking::completion tracked_completion args
+  ModioAsio::detail::handler_tracking::completion tracked_completion args
 
 # define ASIO_HANDLER_INVOCATION_BEGIN(args) \
   tracked_completion.invocation_begin args
@@ -213,23 +213,23 @@ private:
   tracked_completion.invocation_end()
 
 # define ASIO_HANDLER_OPERATION(args) \
-  ASIO_NAMESPACE::detail::handler_tracking::operation args
+  ModioAsio::detail::handler_tracking::operation args
 
 # define ASIO_HANDLER_REACTOR_REGISTRATION(args) \
-  ASIO_NAMESPACE::detail::handler_tracking::reactor_registration args
+  ModioAsio::detail::handler_tracking::reactor_registration args
 
 # define ASIO_HANDLER_REACTOR_DEREGISTRATION(args) \
-  ASIO_NAMESPACE::detail::handler_tracking::reactor_deregistration args
+  ModioAsio::detail::handler_tracking::reactor_deregistration args
 
 # define ASIO_HANDLER_REACTOR_READ_EVENT 1
 # define ASIO_HANDLER_REACTOR_WRITE_EVENT 2
 # define ASIO_HANDLER_REACTOR_ERROR_EVENT 4
 
 # define ASIO_HANDLER_REACTOR_EVENTS(args) \
-  ASIO_NAMESPACE::detail::handler_tracking::reactor_events args
+  ModioAsio::detail::handler_tracking::reactor_events args
 
 # define ASIO_HANDLER_REACTOR_OPERATION(args) \
-  ASIO_NAMESPACE::detail::handler_tracking::reactor_operation args
+  ModioAsio::detail::handler_tracking::reactor_operation args
 
 #else // defined(ASIO_ENABLE_HANDLER_TRACKING)
 
@@ -253,7 +253,7 @@ private:
 #endif // defined(ASIO_ENABLE_HANDLER_TRACKING)
 
 } // namespace detail
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

@@ -26,7 +26,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 void winsock_init_base::startup(data& d,
@@ -66,14 +66,14 @@ void winsock_init_base::throw_on_error(data& d)
   long result = ::InterlockedExchangeAdd(&d.result_, 0);
   if (result != 0)
   {
-    ASIO_NAMESPACE::error_code ec(result,
-        ASIO_NAMESPACE::error::get_system_category());
-    ASIO_NAMESPACE::detail::throw_error(ec, "winsock");
+    ModioAsio::error_code ec(result,
+        ModioAsio::error::get_system_category());
+    ModioAsio::detail::throw_error(ec, "winsock");
   }
 }
 
 } // namespace detail
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

@@ -22,7 +22,7 @@
 #include "asio/basic_waitable_timer.hpp"
 #include "asio/detail/chrono.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 
 /// Typedef for a timer based on the system clock.
 /**
@@ -35,7 +35,7 @@ namespace ASIO_NAMESPACE {
  */
 typedef basic_waitable_timer<chrono::system_clock> system_timer;
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #endif // defined(ASIO_HAS_CHRONO) || defined(GENERATING_DOCUMENTATION)
 

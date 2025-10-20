@@ -18,7 +18,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 
 inline serial_port_base::baud_rate::baud_rate(unsigned int rate)
   : value_(rate)
@@ -52,7 +52,7 @@ inline unsigned int serial_port_base::character_size::value() const
   return value_;
 }
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

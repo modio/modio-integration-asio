@@ -39,7 +39,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 class io_uring_socket_service_base
@@ -89,12 +89,12 @@ public:
   }
 
   // Destroy a socket implementation.
-  ASIO_DECL ASIO_NAMESPACE::error_code close(
-      base_implementation_type& impl, ASIO_NAMESPACE::error_code& ec);
+  ASIO_DECL ModioAsio::error_code close(
+      base_implementation_type& impl, ModioAsio::error_code& ec);
 
   // Release ownership of the socket.
   ASIO_DECL socket_type release(
-      base_implementation_type& impl, ASIO_NAMESPACE::error_code& ec);
+      base_implementation_type& impl, ModioAsio::error_code& ec);
 
   // Get the native socket representation.
   native_handle_type native_handle(base_implementation_type& impl)
@@ -103,26 +103,26 @@ public:
   }
 
   // Cancel all operations associated with the socket.
-  ASIO_DECL ASIO_NAMESPACE::error_code cancel(
-      base_implementation_type& impl, ASIO_NAMESPACE::error_code& ec);
+  ASIO_DECL ModioAsio::error_code cancel(
+      base_implementation_type& impl, ModioAsio::error_code& ec);
 
   // Determine whether the socket is at the out-of-band data mark.
   bool at_mark(const base_implementation_type& impl,
-      ASIO_NAMESPACE::error_code& ec) const
+      ModioAsio::error_code& ec) const
   {
     return socket_ops::sockatmark(impl.socket_, ec);
   }
 
   // Determine the number of bytes available for reading.
   std::size_t available(const base_implementation_type& impl,
-      ASIO_NAMESPACE::error_code& ec) const
+      ModioAsio::error_code& ec) const
   {
     return socket_ops::available(impl.socket_, ec);
   }
 
   // Place the socket into the state where it will listen for new connections.
-  ASIO_NAMESPACE::error_code listen(base_implementation_type& impl,
-      int backlog, ASIO_NAMESPACE::error_code& ec)
+  ModioAsio::error_code listen(base_implementation_type& impl,
+      int backlog, ModioAsio::error_code& ec)
   {
     socket_ops::listen(impl.socket_, backlog, ec);
     return ec;
@@ -130,8 +130,8 @@ public:
 
   // Perform an IO control command on the socket.
   template <typename IO_Control_Command>
-  ASIO_NAMESPACE::error_code io_control(base_implementation_type& impl,
-      IO_Control_Command& command, ASIO_NAMESPACE::error_code& ec)
+  ModioAsio::error_code io_control(base_implementation_type& impl,
+      IO_Control_Command& command, ModioAsio::error_code& ec)
   {
     socket_ops::ioctl(impl.socket_, impl.state_, command.name(),
         static_cast<ioctl_arg_type*>(command.data()), ec);
@@ -145,8 +145,8 @@ public:
   }
 
   // Sets the non-blocking mode of the socket.
-  ASIO_NAMESPACE::error_code non_blocking(base_implementation_type& impl,
-      bool mode, ASIO_NAMESPACE::error_code& ec)
+  ModioAsio::error_code non_blocking(base_implementation_type& impl,
+      bool mode, ModioAsio::error_code& ec)
   {
     socket_ops::set_user_non_blocking(impl.socket_, impl.state_, mode, ec);
     return ec;
@@ -159,8 +159,8 @@ public:
   }
 
   // Sets the non-blocking mode of the native socket implementation.
-  ASIO_NAMESPACE::error_code native_non_blocking(base_implementation_type& impl,
-      bool mode, ASIO_NAMESPACE::error_code& ec)
+  ModioAsio::error_code native_non_blocking(base_implementation_type& impl,
+      bool mode, ModioAsio::error_code& ec)
   {
     socket_ops::set_internal_non_blocking(impl.socket_, impl.state_, mode, ec);
     return ec;
@@ -168,8 +168,8 @@ public:
 
   // Wait for the socket to become ready to read, ready to write, or to have
   // pending error conditions.
-  ASIO_NAMESPACE::error_code wait(base_implementation_type& impl,
-      socket_base::wait_type w, ASIO_NAMESPACE::error_code& ec)
+  ModioAsio::error_code wait(base_implementation_type& impl,
+      socket_base::wait_type w, ModioAsio::error_code& ec)
   {
     switch (w)
     {
@@ -183,7 +183,7 @@ public:
       socket_ops::poll_error(impl.socket_, impl.state_, -1, ec);
       break;
     default:
-      ec = ASIO_NAMESPACE::error::invalid_argument;
+      ec = ModioAsio::error::invalid_argument;
       break;
     }
 
@@ -197,10 +197,10 @@ public:
       socket_base::wait_type w, Handler& handler, const IoExecutor& io_ex)
   {
     bool is_continuation =
-      ASIO_NAMESPACE::asio_handler_cont_helpers::is_continuation(handler);
+      ModioAsio::asio_handler_cont_helpers::is_continuation(handler);
 
     typename associated_cancellation_slot<Handler>::type slot
-      = ASIO_NAMESPACE::get_associated_cancellation_slot(handler);
+      = ModioAsio::get_associated_cancellation_slot(handler);
 
     int op_type;
     int poll_flags;
@@ -226,7 +226,7 @@ public:
 
     // Allocate and construct an operation to wrap the handler.
     typedef io_uring_wait_op<Handler, IoExecutor> op;
-    typename op::ptr p = { ASIO_NAMESPACE::detail::addressof(handler),
+    typename op::ptr p = { ModioAsio::detail::addressof(handler),
       op::ptr::allocate(handler), 0 };
     p.p = new (p.v) op(success_ec_, impl.socket_,
         poll_flags, handler, io_ex);
@@ -250,9 +250,9 @@ public:
   template <typename ConstBufferSequence>
   size_t send(base_implementation_type& impl,
       const ConstBufferSequence& buffers,
-      socket_base::message_flags flags, ASIO_NAMESPACE::error_code& ec)
+      socket_base::message_flags flags, ModioAsio::error_code& ec)
   {
-    typedef buffer_sequence_adapter<ASIO_NAMESPACE::const_buffer,
+    typedef buffer_sequence_adapter<ModioAsio::const_buffer,
         ConstBufferSequence> bufs_type;
 
     if (bufs_type::is_single_buffer)
@@ -271,7 +271,7 @@ public:
 
   // Wait until data can be sent without blocking.
   size_t send(base_implementation_type& impl, const null_buffers&,
-      socket_base::message_flags, ASIO_NAMESPACE::error_code& ec)
+      socket_base::message_flags, ModioAsio::error_code& ec)
   {
     // Wait for socket to become ready.
     socket_ops::poll_write(impl.socket_, impl.state_, -1, ec);
@@ -287,15 +287,15 @@ public:
       Handler& handler, const IoExecutor& io_ex)
   {
     bool is_continuation =
-      ASIO_NAMESPACE::asio_handler_cont_helpers::is_continuation(handler);
+      ModioAsio::asio_handler_cont_helpers::is_continuation(handler);
 
     typename associated_cancellation_slot<Handler>::type slot
-      = ASIO_NAMESPACE::get_associated_cancellation_slot(handler);
+      = ModioAsio::get_associated_cancellation_slot(handler);
 
     // Allocate and construct an operation to wrap the handler.
     typedef io_uring_socket_send_op<
         ConstBufferSequence, Handler, IoExecutor> op;
-    typename op::ptr p = { ASIO_NAMESPACE::detail::addressof(handler),
+    typename op::ptr p = { ModioAsio::detail::addressof(handler),
       op::ptr::allocate(handler), 0 };
     p.p = new (p.v) op(success_ec_, impl.socket_,
         impl.state_, buffers, flags, handler, io_ex);
@@ -313,7 +313,7 @@ public:
 
     start_op(impl, io_uring_service::write_op, p.p, is_continuation,
         ((impl.state_ & socket_ops::stream_oriented)
-          && buffer_sequence_adapter<ASIO_NAMESPACE::const_buffer,
+          && buffer_sequence_adapter<ModioAsio::const_buffer,
             ConstBufferSequence>::all_empty(buffers)));
     p.v = p.p = 0;
   }
@@ -324,14 +324,14 @@ public:
       socket_base::message_flags, Handler& handler, const IoExecutor& io_ex)
   {
     bool is_continuation =
-      ASIO_NAMESPACE::asio_handler_cont_helpers::is_continuation(handler);
+      ModioAsio::asio_handler_cont_helpers::is_continuation(handler);
 
     typename associated_cancellation_slot<Handler>::type slot
-      = ASIO_NAMESPACE::get_associated_cancellation_slot(handler);
+      = ModioAsio::get_associated_cancellation_slot(handler);
 
     // Allocate and construct an operation to wrap the handler.
     typedef io_uring_null_buffers_op<Handler, IoExecutor> op;
-    typename op::ptr p = { ASIO_NAMESPACE::detail::addressof(handler),
+    typename op::ptr p = { ModioAsio::detail::addressof(handler),
       op::ptr::allocate(handler), 0 };
     p.p = new (p.v) op(success_ec_, impl.socket_, POLLOUT, handler, io_ex);
 
@@ -354,9 +354,9 @@ public:
   template <typename MutableBufferSequence>
   size_t receive(base_implementation_type& impl,
       const MutableBufferSequence& buffers,
-      socket_base::message_flags flags, ASIO_NAMESPACE::error_code& ec)
+      socket_base::message_flags flags, ModioAsio::error_code& ec)
   {
-    typedef buffer_sequence_adapter<ASIO_NAMESPACE::mutable_buffer,
+    typedef buffer_sequence_adapter<ModioAsio::mutable_buffer,
         MutableBufferSequence> bufs_type;
 
     if (bufs_type::is_single_buffer)
@@ -375,7 +375,7 @@ public:
 
   // Wait until data can be received without blocking.
   size_t receive(base_implementation_type& impl, const null_buffers&,
-      socket_base::message_flags, ASIO_NAMESPACE::error_code& ec)
+      socket_base::message_flags, ModioAsio::error_code& ec)
   {
     // Wait for socket to become ready.
     socket_ops::poll_read(impl.socket_, impl.state_, -1, ec);
@@ -392,18 +392,18 @@ public:
       Handler& handler, const IoExecutor& io_ex)
   {
     bool is_continuation =
-      ASIO_NAMESPACE::asio_handler_cont_helpers::is_continuation(handler);
+      ModioAsio::asio_handler_cont_helpers::is_continuation(handler);
 
     int op_type = (flags & socket_base::message_out_of_band)
       ? io_uring_service::except_op : io_uring_service::read_op;
 
     typename associated_cancellation_slot<Handler>::type slot
-      = ASIO_NAMESPACE::get_associated_cancellation_slot(handler);
+      = ModioAsio::get_associated_cancellation_slot(handler);
 
     // Allocate and construct an operation to wrap the handler.
     typedef io_uring_socket_recv_op<
         MutableBufferSequence, Handler, IoExecutor> op;
-    typename op::ptr p = { ASIO_NAMESPACE::detail::addressof(handler),
+    typename op::ptr p = { ModioAsio::detail::addressof(handler),
       op::ptr::allocate(handler), 0 };
     p.p = new (p.v) op(success_ec_, impl.socket_,
         impl.state_, buffers, flags, handler, io_ex);
@@ -421,7 +421,7 @@ public:
 
     start_op(impl, op_type, p.p, is_continuation,
         ((impl.state_ & socket_ops::stream_oriented)
-          && buffer_sequence_adapter<ASIO_NAMESPACE::mutable_buffer,
+          && buffer_sequence_adapter<ModioAsio::mutable_buffer,
             MutableBufferSequence>::all_empty(buffers)));
     p.v = p.p = 0;
   }
@@ -433,7 +433,7 @@ public:
       Handler& handler, const IoExecutor& io_ex)
   {
     bool is_continuation =
-      ASIO_NAMESPACE::asio_handler_cont_helpers::is_continuation(handler);
+      ModioAsio::asio_handler_cont_helpers::is_continuation(handler);
 
     int op_type;
     int poll_flags;
@@ -449,11 +449,11 @@ public:
     }
 
     typename associated_cancellation_slot<Handler>::type slot
-      = ASIO_NAMESPACE::get_associated_cancellation_slot(handler);
+      = ModioAsio::get_associated_cancellation_slot(handler);
 
     // Allocate and construct an operation to wrap the handler.
     typedef io_uring_null_buffers_op<Handler, IoExecutor> op;
-    typename op::ptr p = { ASIO_NAMESPACE::detail::addressof(handler),
+    typename op::ptr p = { ModioAsio::detail::addressof(handler),
       op::ptr::allocate(handler), 0 };
     p.p = new (p.v) op(success_ec_, impl.socket_, poll_flags, handler, io_ex);
 
@@ -478,9 +478,9 @@ public:
   size_t receive_with_flags(base_implementation_type& impl,
       const MutableBufferSequence& buffers,
       socket_base::message_flags in_flags,
-      socket_base::message_flags& out_flags, ASIO_NAMESPACE::error_code& ec)
+      socket_base::message_flags& out_flags, ModioAsio::error_code& ec)
   {
-    buffer_sequence_adapter<ASIO_NAMESPACE::mutable_buffer,
+    buffer_sequence_adapter<ModioAsio::mutable_buffer,
         MutableBufferSequence> bufs(buffers);
 
     return socket_ops::sync_recvmsg(impl.socket_, impl.state_,
@@ -490,7 +490,7 @@ public:
   // Wait until data can be received without blocking.
   size_t receive_with_flags(base_implementation_type& impl,
       const null_buffers&, socket_base::message_flags,
-      socket_base::message_flags& out_flags, ASIO_NAMESPACE::error_code& ec)
+      socket_base::message_flags& out_flags, ModioAsio::error_code& ec)
   {
     // Wait for socket to become ready.
     socket_ops::poll_read(impl.socket_, impl.state_, -1, ec);
@@ -512,18 +512,18 @@ public:
       const IoExecutor& io_ex)
   {
     bool is_continuation =
-      ASIO_NAMESPACE::asio_handler_cont_helpers::is_continuation(handler);
+      ModioAsio::asio_handler_cont_helpers::is_continuation(handler);
 
     int op_type = (in_flags & socket_base::message_out_of_band)
       ? io_uring_service::except_op : io_uring_service::read_op;
 
     typename associated_cancellation_slot<Handler>::type slot
-      = ASIO_NAMESPACE::get_associated_cancellation_slot(handler);
+      = ModioAsio::get_associated_cancellation_slot(handler);
 
     // Allocate and construct an operation to wrap the handler.
     typedef io_uring_socket_recvmsg_op<
         MutableBufferSequence, Handler, IoExecutor> op;
-    typename op::ptr p = { ASIO_NAMESPACE::detail::addressof(handler),
+    typename op::ptr p = { ModioAsio::detail::addressof(handler),
       op::ptr::allocate(handler), 0 };
     p.p = new (p.v) op(success_ec_, impl.socket_, impl.state_,
         buffers, in_flags, out_flags, handler, io_ex);
@@ -551,7 +551,7 @@ public:
       const IoExecutor& io_ex)
   {
     bool is_continuation =
-      ASIO_NAMESPACE::asio_handler_cont_helpers::is_continuation(handler);
+      ModioAsio::asio_handler_cont_helpers::is_continuation(handler);
 
     int op_type;
     int poll_flags;
@@ -567,11 +567,11 @@ public:
     }
 
     typename associated_cancellation_slot<Handler>::type slot
-      = ASIO_NAMESPACE::get_associated_cancellation_slot(handler);
+      = ModioAsio::get_associated_cancellation_slot(handler);
 
     // Allocate and construct an operation to wrap the handler.
     typedef io_uring_null_buffers_op<Handler, IoExecutor> op;
-    typename op::ptr p = { ASIO_NAMESPACE::detail::addressof(handler),
+    typename op::ptr p = { ModioAsio::detail::addressof(handler),
       op::ptr::allocate(handler), 0 };
     p.p = new (p.v) op(success_ec_, impl.socket_, poll_flags, handler, io_ex);
 
@@ -596,14 +596,14 @@ public:
 
 protected:
   // Open a new socket implementation.
-  ASIO_DECL ASIO_NAMESPACE::error_code do_open(
+  ASIO_DECL ModioAsio::error_code do_open(
       base_implementation_type& impl, int af,
-      int type, int protocol, ASIO_NAMESPACE::error_code& ec);
+      int type, int protocol, ModioAsio::error_code& ec);
 
   // Assign a native socket to a socket implementation.
-  ASIO_DECL ASIO_NAMESPACE::error_code do_assign(
+  ASIO_DECL ModioAsio::error_code do_assign(
       base_implementation_type& impl, int type,
-      const native_handle_type& native_socket, ASIO_NAMESPACE::error_code& ec);
+      const native_handle_type& native_socket, ModioAsio::error_code& ec);
 
   // Start the asynchronous read or write operation.
   ASIO_DECL void start_op(base_implementation_type& impl, int op_type,
@@ -646,11 +646,11 @@ protected:
   io_uring_service& io_uring_service_;
 
   // Cached success value to avoid accessing category singleton.
-  const ASIO_NAMESPACE::error_code success_ec_;
+  const ModioAsio::error_code success_ec_;
 };
 
 } // namespace detail
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

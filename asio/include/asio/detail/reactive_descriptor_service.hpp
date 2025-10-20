@@ -41,7 +41,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 class reactive_descriptor_service :
@@ -53,7 +53,7 @@ public:
 
   // The implementation type of the descriptor.
   class implementation_type
-    : private ASIO_NAMESPACE::detail::noncopyable
+    : private ModioAsio::detail::noncopyable
   {
   public:
     // Default constructor.
@@ -99,9 +99,9 @@ public:
   ASIO_DECL void destroy(implementation_type& impl);
 
   // Assign a native descriptor to a descriptor implementation.
-  ASIO_DECL ASIO_NAMESPACE::error_code assign(implementation_type& impl,
+  ASIO_DECL ModioAsio::error_code assign(implementation_type& impl,
       const native_handle_type& native_descriptor,
-      ASIO_NAMESPACE::error_code& ec);
+      ModioAsio::error_code& ec);
 
   // Determine whether the descriptor is open.
   bool is_open(const implementation_type& impl) const
@@ -110,8 +110,8 @@ public:
   }
 
   // Destroy a descriptor implementation.
-  ASIO_DECL ASIO_NAMESPACE::error_code close(implementation_type& impl,
-      ASIO_NAMESPACE::error_code& ec);
+  ASIO_DECL ModioAsio::error_code close(implementation_type& impl,
+      ModioAsio::error_code& ec);
 
   // Get the native descriptor representation.
   native_handle_type native_handle(const implementation_type& impl) const
@@ -124,20 +124,20 @@ public:
 
   // Release ownership of the native descriptor representation.
   native_handle_type release(implementation_type& impl,
-      ASIO_NAMESPACE::error_code& ec)
+      ModioAsio::error_code& ec)
   {
     ec = success_ec_;
     return release(impl);
   }
 
   // Cancel all operations associated with the descriptor.
-  ASIO_DECL ASIO_NAMESPACE::error_code cancel(implementation_type& impl,
-      ASIO_NAMESPACE::error_code& ec);
+  ASIO_DECL ModioAsio::error_code cancel(implementation_type& impl,
+      ModioAsio::error_code& ec);
 
   // Perform an IO control command on the descriptor.
   template <typename IO_Control_Command>
-  ASIO_NAMESPACE::error_code io_control(implementation_type& impl,
-      IO_Control_Command& command, ASIO_NAMESPACE::error_code& ec)
+  ModioAsio::error_code io_control(implementation_type& impl,
+      IO_Control_Command& command, ModioAsio::error_code& ec)
   {
     descriptor_ops::ioctl(impl.descriptor_, impl.state_,
         command.name(), static_cast<ioctl_arg_type*>(command.data()), ec);
@@ -152,8 +152,8 @@ public:
   }
 
   // Sets the non-blocking mode of the descriptor.
-  ASIO_NAMESPACE::error_code non_blocking(implementation_type& impl,
-      bool mode, ASIO_NAMESPACE::error_code& ec)
+  ModioAsio::error_code non_blocking(implementation_type& impl,
+      bool mode, ModioAsio::error_code& ec)
   {
     descriptor_ops::set_user_non_blocking(
         impl.descriptor_, impl.state_, mode, ec);
@@ -168,8 +168,8 @@ public:
   }
 
   // Sets the non-blocking mode of the native descriptor implementation.
-  ASIO_NAMESPACE::error_code native_non_blocking(implementation_type& impl,
-      bool mode, ASIO_NAMESPACE::error_code& ec)
+  ModioAsio::error_code native_non_blocking(implementation_type& impl,
+      bool mode, ModioAsio::error_code& ec)
   {
     descriptor_ops::set_internal_non_blocking(
         impl.descriptor_, impl.state_, mode, ec);
@@ -178,8 +178,8 @@ public:
 
   // Wait for the descriptor to become ready to read, ready to write, or to have
   // pending error conditions.
-  ASIO_NAMESPACE::error_code wait(implementation_type& impl,
-      posix::descriptor_base::wait_type w, ASIO_NAMESPACE::error_code& ec)
+  ModioAsio::error_code wait(implementation_type& impl,
+      posix::descriptor_base::wait_type w, ModioAsio::error_code& ec)
   {
     switch (w)
     {
@@ -193,7 +193,7 @@ public:
       descriptor_ops::poll_error(impl.descriptor_, impl.state_, ec);
       break;
     default:
-      ec = ASIO_NAMESPACE::error::invalid_argument;
+      ec = ModioAsio::error::invalid_argument;
       break;
     }
 
@@ -209,14 +209,14 @@ public:
       Handler& handler, const IoExecutor& io_ex)
   {
     bool is_continuation =
-      ASIO_NAMESPACE::asio_handler_cont_helpers::is_continuation(handler);
+      ModioAsio::asio_handler_cont_helpers::is_continuation(handler);
 
     typename associated_cancellation_slot<Handler>::type slot
-      = ASIO_NAMESPACE::get_associated_cancellation_slot(handler);
+      = ModioAsio::get_associated_cancellation_slot(handler);
 
     // Allocate and construct an operation to wrap the handler.
     typedef reactive_wait_op<Handler, IoExecutor> op;
-    typename op::ptr p = { ASIO_NAMESPACE::detail::addressof(handler),
+    typename op::ptr p = { ModioAsio::detail::addressof(handler),
       op::ptr::allocate(handler), 0 };
     p.p = new (p.v) op(success_ec_, handler, io_ex);
 
@@ -236,7 +236,7 @@ public:
         op_type = reactor::except_op;
         break;
       default:
-        p.p->ec_ = ASIO_NAMESPACE::error::invalid_argument;
+        p.p->ec_ = ModioAsio::error::invalid_argument;
         reactor_.post_immediate_completion(p.p, is_continuation);
         p.v = p.p = 0;
         return;
@@ -257,9 +257,9 @@ public:
   // Write some data to the descriptor.
   template <typename ConstBufferSequence>
   size_t write_some(implementation_type& impl,
-      const ConstBufferSequence& buffers, ASIO_NAMESPACE::error_code& ec)
+      const ConstBufferSequence& buffers, ModioAsio::error_code& ec)
   {
-    typedef buffer_sequence_adapter<ASIO_NAMESPACE::const_buffer,
+    typedef buffer_sequence_adapter<ModioAsio::const_buffer,
         ConstBufferSequence> bufs_type;
 
     size_t n;
@@ -283,7 +283,7 @@ public:
 
   // Wait until data can be written without blocking.
   size_t write_some(implementation_type& impl,
-      const null_buffers&, ASIO_NAMESPACE::error_code& ec)
+      const null_buffers&, ModioAsio::error_code& ec)
   {
     // Wait for descriptor to become ready.
     descriptor_ops::poll_write(impl.descriptor_, impl.state_, ec);
@@ -299,14 +299,14 @@ public:
       const IoExecutor& io_ex)
   {
     bool is_continuation =
-      ASIO_NAMESPACE::asio_handler_cont_helpers::is_continuation(handler);
+      ModioAsio::asio_handler_cont_helpers::is_continuation(handler);
 
     typename associated_cancellation_slot<Handler>::type slot
-      = ASIO_NAMESPACE::get_associated_cancellation_slot(handler);
+      = ModioAsio::get_associated_cancellation_slot(handler);
 
     // Allocate and construct an operation to wrap the handler.
     typedef descriptor_write_op<ConstBufferSequence, Handler, IoExecutor> op;
-    typename op::ptr p = { ASIO_NAMESPACE::detail::addressof(handler),
+    typename op::ptr p = { ModioAsio::detail::addressof(handler),
       op::ptr::allocate(handler), 0 };
     p.p = new (p.v) op(success_ec_, impl.descriptor_, buffers, handler, io_ex);
 
@@ -323,7 +323,7 @@ public:
           &impl, impl.descriptor_, "async_write_some"));
 
     start_op(impl, reactor::write_op, p.p, is_continuation, true,
-        buffer_sequence_adapter<ASIO_NAMESPACE::const_buffer,
+        buffer_sequence_adapter<ModioAsio::const_buffer,
           ConstBufferSequence>::all_empty(buffers));
     p.v = p.p = 0;
   }
@@ -334,14 +334,14 @@ public:
       const null_buffers&, Handler& handler, const IoExecutor& io_ex)
   {
     bool is_continuation =
-      ASIO_NAMESPACE::asio_handler_cont_helpers::is_continuation(handler);
+      ModioAsio::asio_handler_cont_helpers::is_continuation(handler);
 
     typename associated_cancellation_slot<Handler>::type slot
-      = ASIO_NAMESPACE::get_associated_cancellation_slot(handler);
+      = ModioAsio::get_associated_cancellation_slot(handler);
 
     // Allocate and construct an operation to wrap the handler.
     typedef reactive_null_buffers_op<Handler, IoExecutor> op;
-    typename op::ptr p = { ASIO_NAMESPACE::detail::addressof(handler),
+    typename op::ptr p = { ModioAsio::detail::addressof(handler),
       op::ptr::allocate(handler), 0 };
     p.p = new (p.v) op(success_ec_, handler, io_ex);
 
@@ -364,9 +364,9 @@ public:
   // Read some data from the stream. Returns the number of bytes read.
   template <typename MutableBufferSequence>
   size_t read_some(implementation_type& impl,
-      const MutableBufferSequence& buffers, ASIO_NAMESPACE::error_code& ec)
+      const MutableBufferSequence& buffers, ModioAsio::error_code& ec)
   {
-    typedef buffer_sequence_adapter<ASIO_NAMESPACE::mutable_buffer,
+    typedef buffer_sequence_adapter<ModioAsio::mutable_buffer,
         MutableBufferSequence> bufs_type;
 
     size_t n;
@@ -390,7 +390,7 @@ public:
 
   // Wait until data can be read without blocking.
   size_t read_some(implementation_type& impl,
-      const null_buffers&, ASIO_NAMESPACE::error_code& ec)
+      const null_buffers&, ModioAsio::error_code& ec)
   {
     // Wait for descriptor to become ready.
     descriptor_ops::poll_read(impl.descriptor_, impl.state_, ec);
@@ -407,14 +407,14 @@ public:
       Handler& handler, const IoExecutor& io_ex)
   {
     bool is_continuation =
-      ASIO_NAMESPACE::asio_handler_cont_helpers::is_continuation(handler);
+      ModioAsio::asio_handler_cont_helpers::is_continuation(handler);
 
     typename associated_cancellation_slot<Handler>::type slot
-      = ASIO_NAMESPACE::get_associated_cancellation_slot(handler);
+      = ModioAsio::get_associated_cancellation_slot(handler);
 
     // Allocate and construct an operation to wrap the handler.
     typedef descriptor_read_op<MutableBufferSequence, Handler, IoExecutor> op;
-    typename op::ptr p = { ASIO_NAMESPACE::detail::addressof(handler),
+    typename op::ptr p = { ModioAsio::detail::addressof(handler),
       op::ptr::allocate(handler), 0 };
     p.p = new (p.v) op(success_ec_, impl.descriptor_, buffers, handler, io_ex);
 
@@ -431,7 +431,7 @@ public:
           &impl, impl.descriptor_, "async_read_some"));
 
     start_op(impl, reactor::read_op, p.p, is_continuation, true,
-        buffer_sequence_adapter<ASIO_NAMESPACE::mutable_buffer,
+        buffer_sequence_adapter<ModioAsio::mutable_buffer,
           MutableBufferSequence>::all_empty(buffers));
     p.v = p.p = 0;
   }
@@ -442,14 +442,14 @@ public:
       const null_buffers&, Handler& handler, const IoExecutor& io_ex)
   {
     bool is_continuation =
-      ASIO_NAMESPACE::asio_handler_cont_helpers::is_continuation(handler);
+      ModioAsio::asio_handler_cont_helpers::is_continuation(handler);
 
     typename associated_cancellation_slot<Handler>::type slot
-      = ASIO_NAMESPACE::get_associated_cancellation_slot(handler);
+      = ModioAsio::get_associated_cancellation_slot(handler);
 
     // Allocate and construct an operation to wrap the handler.
     typedef reactive_null_buffers_op<Handler, IoExecutor> op;
-    typename op::ptr p = { ASIO_NAMESPACE::detail::addressof(handler),
+    typename op::ptr p = { ModioAsio::detail::addressof(handler),
       op::ptr::allocate(handler), 0 };
     p.p = new (p.v) op(success_ec_, handler, io_ex);
 
@@ -510,11 +510,11 @@ private:
   reactor& reactor_;
 
   // Cached success value to avoid accessing category singleton.
-  const ASIO_NAMESPACE::error_code success_ec_;
+  const ModioAsio::error_code success_ec_;
 };
 
 } // namespace detail
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

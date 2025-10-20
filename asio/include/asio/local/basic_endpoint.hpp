@@ -29,12 +29,12 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace local {
 
 /// Describes an endpoint for a UNIX socket.
 /**
- * The ASIO_NAMESPACE::local::basic_endpoint class template describes an endpoint
+ * The ModioAsio::local::basic_endpoint class template describes an endpoint
  * that may be associated with a particular UNIX socket.
  *
  * @par Thread Safety
@@ -56,7 +56,7 @@ public:
 #if defined(GENERATING_DOCUMENTATION)
   typedef implementation_defined data_type;
 #else
-  typedef ASIO_NAMESPACE::detail::socket_addr_type data_type;
+  typedef ModioAsio::detail::socket_addr_type data_type;
 #endif
 
   /// Default constructor.
@@ -212,7 +212,7 @@ public:
 
 private:
   // The underlying UNIX domain endpoint.
-  ASIO_NAMESPACE::local::detail::endpoint impl_;
+  ModioAsio::local::detail::endpoint impl_;
 };
 
 /// Output an endpoint as a string.
@@ -225,7 +225,7 @@ private:
  *
  * @return The output stream.
  *
- * @relates ASIO_NAMESPACE::local::basic_endpoint
+ * @relates ModioAsio::local::basic_endpoint
  */
 template <typename Elem, typename Traits, typename Protocol>
 std::basic_ostream<Elem, Traits>& operator<<(
@@ -237,7 +237,7 @@ std::basic_ostream<Elem, Traits>& operator<<(
 }
 
 } // namespace local
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

@@ -26,12 +26,12 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace local {
 
 /// Encapsulates the flags needed for datagram-oriented UNIX sockets.
 /**
- * The ASIO_NAMESPACE::local::datagram_protocol class contains flags necessary for
+ * The ModioAsio::local::datagram_protocol class contains flags necessary for
  * datagram-oriented UNIX domain sockets.
  *
  * @par Thread Safety
@@ -70,7 +70,7 @@ public:
 };
 
 } // namespace local
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

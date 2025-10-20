@@ -33,7 +33,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 
 #if defined(GENERATING_DOCUMENTATION)
 
@@ -421,7 +421,7 @@ struct blocking_t
 #endif // defined(ASIO_MSVC)
 #endif // !defined(__clang__)
   {
-    return ASIO_NAMESPACE::query(ex, possibly_t());
+    return ModioAsio::query(ex, possibly_t());
   }
 
   template <typename Executor>
@@ -443,7 +443,7 @@ struct blocking_t
 #endif // defined(ASIO_MSVC)
 #endif // !defined(__clang__)
   {
-    return ASIO_NAMESPACE::query(ex, always_t());
+    return ModioAsio::query(ex, always_t());
   }
 
   template <typename Executor>
@@ -468,7 +468,7 @@ struct blocking_t
 #endif // defined(ASIO_MSVC)
 #endif // !defined(__clang__)
   {
-    return ASIO_NAMESPACE::query(ex, never_t());
+    return ModioAsio::query(ex, never_t());
   }
 
   ASIO_STATIC_CONSTEXPR_DEFAULT_INIT(possibly_t, possibly);
@@ -689,7 +689,7 @@ public:
     ASIO_NOEXCEPT_IF((
       is_nothrow_query<const Executor&, Property>::value))
   {
-    return ASIO_NAMESPACE::query(executor_, p);
+    return ModioAsio::query(executor_, p);
   }
 
   template <int I>
@@ -698,7 +698,7 @@ public:
     typename require_result<const Executor&, possibly_t<I> >::type
   >::type require(possibly_t<I>) const ASIO_NOEXCEPT
   {
-    return ASIO_NAMESPACE::require(executor_, possibly_t<I>());
+    return ModioAsio::require(executor_, possibly_t<I>());
   }
 
   template <int I>
@@ -707,7 +707,7 @@ public:
     typename require_result<const Executor&, never_t<I> >::type
   >::type require(never_t<I>) const ASIO_NOEXCEPT
   {
-    return ASIO_NAMESPACE::require(executor_, never_t<I>());
+    return ModioAsio::require(executor_, never_t<I>());
   }
 
   template <typename Property>
@@ -722,7 +722,7 @@ public:
   {
     return adapter<typename decay<
       typename require_result<const Executor&, Property>::type
-        >::type>(0, ASIO_NAMESPACE::require(executor_, p));
+        >::type>(0, ModioAsio::require(executor_, p));
   }
 
   template <typename Property>
@@ -737,7 +737,7 @@ public:
   {
     return adapter<typename decay<
       typename prefer_result<const Executor&, Property>::type
-        >::type>(0, ASIO_NAMESPACE::prefer(executor_, p));
+        >::type>(0, ModioAsio::prefer(executor_, p));
   }
 
   template <typename Function>
@@ -1544,7 +1544,7 @@ struct prefer_member<
 
 #endif // defined(GENERATING_DOCUMENTATION)
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

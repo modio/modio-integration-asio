@@ -21,7 +21,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 
 /// A @ref completion_token type used to specify that an asynchronous operation
 /// is detached.
@@ -30,9 +30,9 @@ namespace ASIO_NAMESPACE {
  * detached. That is, there is no completion handler waiting for the
  * operation's result. A detached_t object may be passed as a handler to an
  * asynchronous operation, typically using the special value
- * @c ASIO_NAMESPACE::detached. For example:
+ * @c ModioAsio::detached. For example:
  *
- * @code my_socket.async_send(my_buffer, ASIO_NAMESPACE::detached);
+ * @code my_socket.async_send(my_buffer, ModioAsio::detached);
  * @endcode
  */
 class detached_t
@@ -96,7 +96,7 @@ public:
 /// A @ref completion_token object used to specify that an asynchronous
 /// operation is detached.
 /**
- * See the documentation for ASIO_NAMESPACE::detached_t for a usage example.
+ * See the documentation for ModioAsio::detached_t for a usage example.
  */
 #if defined(ASIO_HAS_CONSTEXPR) || defined(GENERATING_DOCUMENTATION)
 constexpr detached_t detached;
@@ -104,7 +104,7 @@ constexpr detached_t detached;
 __declspec(selectany) detached_t detached;
 #endif
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

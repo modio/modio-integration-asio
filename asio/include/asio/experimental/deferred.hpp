@@ -20,16 +20,16 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace experimental {
 
 #if !defined(ASIO_NO_DEPRECATED)
-using ASIO_NAMESPACE::deferred_t;
-using ASIO_NAMESPACE::deferred;
+using ModioAsio::deferred_t;
+using ModioAsio::deferred;
 #endif // !defined(ASIO_NO_DEPRECATED)
 
 } // namespace experimental
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

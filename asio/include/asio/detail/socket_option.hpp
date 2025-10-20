@@ -23,7 +23,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 namespace socket_option {
 
@@ -121,7 +121,7 @@ public:
     default:
       {
         std::length_error ex("boolean socket option resize");
-        ASIO_NAMESPACE::detail::throw_exception(ex);
+        ModioAsio::detail::throw_exception(ex);
       }
     }
   }
@@ -202,7 +202,7 @@ public:
     if (s != sizeof(value_))
     {
       std::length_error ex("integer socket option resize");
-      ASIO_NAMESPACE::detail::throw_exception(ex);
+      ModioAsio::detail::throw_exception(ex);
     }
   }
 
@@ -299,7 +299,7 @@ public:
     if (s != sizeof(value_))
     {
       std::length_error ex("linger socket option resize");
-      ASIO_NAMESPACE::detail::throw_exception(ex);
+      ModioAsio::detail::throw_exception(ex);
     }
   }
 
@@ -309,7 +309,7 @@ private:
 
 } // namespace socket_option
 } // namespace detail
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

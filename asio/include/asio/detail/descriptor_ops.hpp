@@ -29,7 +29,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 namespace descriptor_ops {
 
@@ -52,119 +52,119 @@ enum
 typedef unsigned char state_type;
 
 inline void get_last_error(
-    ASIO_NAMESPACE::error_code& ec, bool is_error_condition)
+    ModioAsio::error_code& ec, bool is_error_condition)
 {
   if (!is_error_condition)
   {
-    ASIO_NAMESPACE::error::clear(ec);
+    ModioAsio::error::clear(ec);
   }
   else
   {
-    ec = ASIO_NAMESPACE::error_code(errno,
-        ASIO_NAMESPACE::error::get_system_category());
+    ec = ModioAsio::error_code(errno,
+        ModioAsio::error::get_system_category());
   }
 }
 
 ASIO_DECL int open(const char* path, int flags,
-    ASIO_NAMESPACE::error_code& ec);
+    ModioAsio::error_code& ec);
 
 ASIO_DECL int open(const char* path, int flags, unsigned mode,
-    ASIO_NAMESPACE::error_code& ec);
+    ModioAsio::error_code& ec);
 
 ASIO_DECL int close(int d, state_type& state,
-    ASIO_NAMESPACE::error_code& ec);
+    ModioAsio::error_code& ec);
 
 ASIO_DECL bool set_user_non_blocking(int d,
-    state_type& state, bool value, ASIO_NAMESPACE::error_code& ec);
+    state_type& state, bool value, ModioAsio::error_code& ec);
 
 ASIO_DECL bool set_internal_non_blocking(int d,
-    state_type& state, bool value, ASIO_NAMESPACE::error_code& ec);
+    state_type& state, bool value, ModioAsio::error_code& ec);
 
 typedef iovec buf;
 
 ASIO_DECL std::size_t sync_read(int d, state_type state, buf* bufs,
-    std::size_t count, bool all_empty, ASIO_NAMESPACE::error_code& ec);
+    std::size_t count, bool all_empty, ModioAsio::error_code& ec);
 
 ASIO_DECL std::size_t sync_read1(int d, state_type state, void* data,
-    std::size_t size, ASIO_NAMESPACE::error_code& ec);
+    std::size_t size, ModioAsio::error_code& ec);
 
 ASIO_DECL bool non_blocking_read(int d, buf* bufs, std::size_t count,
-    ASIO_NAMESPACE::error_code& ec, std::size_t& bytes_transferred);
+    ModioAsio::error_code& ec, std::size_t& bytes_transferred);
 
 ASIO_DECL bool non_blocking_read1(int d, void* data, std::size_t size,
-    ASIO_NAMESPACE::error_code& ec, std::size_t& bytes_transferred);
+    ModioAsio::error_code& ec, std::size_t& bytes_transferred);
 
 ASIO_DECL std::size_t sync_write(int d, state_type state,
     const buf* bufs, std::size_t count, bool all_empty,
-    ASIO_NAMESPACE::error_code& ec);
+    ModioAsio::error_code& ec);
 
 ASIO_DECL std::size_t sync_write1(int d, state_type state,
-    const void* data, std::size_t size, ASIO_NAMESPACE::error_code& ec);
+    const void* data, std::size_t size, ModioAsio::error_code& ec);
 
 ASIO_DECL bool non_blocking_write(int d,
     const buf* bufs, std::size_t count,
-    ASIO_NAMESPACE::error_code& ec, std::size_t& bytes_transferred);
+    ModioAsio::error_code& ec, std::size_t& bytes_transferred);
 
 ASIO_DECL bool non_blocking_write1(int d,
     const void* data, std::size_t size,
-    ASIO_NAMESPACE::error_code& ec, std::size_t& bytes_transferred);
+    ModioAsio::error_code& ec, std::size_t& bytes_transferred);
 
 #if defined(ASIO_HAS_FILE)
 
 ASIO_DECL std::size_t sync_read_at(int d, state_type state,
     uint64_t offset, buf* bufs, std::size_t count, bool all_empty,
-    ASIO_NAMESPACE::error_code& ec);
+    ModioAsio::error_code& ec);
 
 ASIO_DECL std::size_t sync_read_at1(int d, state_type state,
     uint64_t offset, void* data, std::size_t size,
-    ASIO_NAMESPACE::error_code& ec);
+    ModioAsio::error_code& ec);
 
 ASIO_DECL bool non_blocking_read_at(int d, uint64_t offset,
-    buf* bufs, std::size_t count, ASIO_NAMESPACE::error_code& ec,
+    buf* bufs, std::size_t count, ModioAsio::error_code& ec,
     std::size_t& bytes_transferred);
 
 ASIO_DECL bool non_blocking_read_at1(int d, uint64_t offset,
-    void* data, std::size_t size, ASIO_NAMESPACE::error_code& ec,
+    void* data, std::size_t size, ModioAsio::error_code& ec,
     std::size_t& bytes_transferred);
 
 ASIO_DECL std::size_t sync_write_at(int d, state_type state,
     uint64_t offset, const buf* bufs, std::size_t count, bool all_empty,
-    ASIO_NAMESPACE::error_code& ec);
+    ModioAsio::error_code& ec);
 
 ASIO_DECL std::size_t sync_write_at1(int d, state_type state,
     uint64_t offset, const void* data, std::size_t size,
-    ASIO_NAMESPACE::error_code& ec);
+    ModioAsio::error_code& ec);
 
 ASIO_DECL bool non_blocking_write_at(int d,
     uint64_t offset, const buf* bufs, std::size_t count,
-    ASIO_NAMESPACE::error_code& ec, std::size_t& bytes_transferred);
+    ModioAsio::error_code& ec, std::size_t& bytes_transferred);
 
 ASIO_DECL bool non_blocking_write_at1(int d,
     uint64_t offset, const void* data, std::size_t size,
-    ASIO_NAMESPACE::error_code& ec, std::size_t& bytes_transferred);
+    ModioAsio::error_code& ec, std::size_t& bytes_transferred);
 
 #endif // defined(ASIO_HAS_FILE)
 
 ASIO_DECL int ioctl(int d, state_type& state, long cmd,
-    ioctl_arg_type* arg, ASIO_NAMESPACE::error_code& ec);
+    ioctl_arg_type* arg, ModioAsio::error_code& ec);
 
-ASIO_DECL int fcntl(int d, int cmd, ASIO_NAMESPACE::error_code& ec);
+ASIO_DECL int fcntl(int d, int cmd, ModioAsio::error_code& ec);
 
 ASIO_DECL int fcntl(int d, int cmd,
-    long arg, ASIO_NAMESPACE::error_code& ec);
+    long arg, ModioAsio::error_code& ec);
 
 ASIO_DECL int poll_read(int d,
-    state_type state, ASIO_NAMESPACE::error_code& ec);
+    state_type state, ModioAsio::error_code& ec);
 
 ASIO_DECL int poll_write(int d,
-    state_type state, ASIO_NAMESPACE::error_code& ec);
+    state_type state, ModioAsio::error_code& ec);
 
 ASIO_DECL int poll_error(int d,
-    state_type state, ASIO_NAMESPACE::error_code& ec);
+    state_type state, ModioAsio::error_code& ec);
 
 } // namespace descriptor_ops
 } // namespace detail
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

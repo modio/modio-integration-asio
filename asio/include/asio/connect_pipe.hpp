@@ -26,7 +26,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 #if defined(ASIO_HAS_IOCP)
@@ -36,7 +36,7 @@ typedef int native_pipe_handle;
 #endif // defined(ASIO_HAS_IOCP)
 
 ASIO_DECL void create_pipe(native_pipe_handle p[2],
-    ASIO_NAMESPACE::error_code& ec);
+    ModioAsio::error_code& ec);
 
 ASIO_DECL void close_pipe(native_pipe_handle p);
 
@@ -48,7 +48,7 @@ ASIO_DECL void close_pipe(native_pipe_handle p);
  *
  * @param write_end The write end of the pipe.
  *
- * @throws ASIO_NAMESPACE::system_error Thrown on failure.
+ * @throws ModioAsio::system_error Thrown on failure.
  */
 template <typename Executor1, typename Executor2>
 void connect_pipe(basic_readable_pipe<Executor1>& read_end,
@@ -60,15 +60,15 @@ void connect_pipe(basic_readable_pipe<Executor1>& read_end,
  *
  * @param write_end The write end of the pipe.
  *
- * @throws ASIO_NAMESPACE::system_error Thrown on failure.
+ * @throws ModioAsio::system_error Thrown on failure.
  *
  * @param ec Set to indicate what error occurred, if any.
  */
 template <typename Executor1, typename Executor2>
 ASIO_SYNC_OP_VOID connect_pipe(basic_readable_pipe<Executor1>& read_end,
-    basic_writable_pipe<Executor2>& write_end, ASIO_NAMESPACE::error_code& ec);
+    basic_writable_pipe<Executor2>& write_end, ModioAsio::error_code& ec);
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

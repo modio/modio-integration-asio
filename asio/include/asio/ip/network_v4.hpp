@@ -24,12 +24,12 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace ip {
 
 /// Represents an IPv4 network.
 /**
- * The ASIO_NAMESPACE::ip::network_v4 class provides the ability to use and
+ * The ModioAsio::ip::network_v4 class provides the ability to use and
  * manipulate IP version 4 networks.
  *
  * @par Thread Safety
@@ -138,7 +138,7 @@ public:
   ASIO_DECL std::string to_string() const;
 
   /// Get the network as an address in dotted decimal format.
-  ASIO_DECL std::string to_string(ASIO_NAMESPACE::error_code& ec) const;
+  ASIO_DECL std::string to_string(ModioAsio::error_code& ec) const;
 
   /// Compare two networks for equality.
   friend bool operator==(const network_v4& a, const network_v4& b)
@@ -190,7 +190,7 @@ ASIO_DECL network_v4 make_network_v4(const char* str);
  * @relates network_v4
  */
 ASIO_DECL network_v4 make_network_v4(
-    const char* str, ASIO_NAMESPACE::error_code& ec);
+    const char* str, ModioAsio::error_code& ec);
 
 /// Create an IPv4 network from a string containing IP address and prefix
 /// length.
@@ -205,7 +205,7 @@ ASIO_DECL network_v4 make_network_v4(const std::string& str);
  * @relates network_v4
  */
 ASIO_DECL network_v4 make_network_v4(
-    const std::string& str, ASIO_NAMESPACE::error_code& ec);
+    const std::string& str, ModioAsio::error_code& ec);
 
 #if defined(ASIO_HAS_STRING_VIEW) \
   || defined(GENERATING_DOCUMENTATION)
@@ -223,7 +223,7 @@ ASIO_DECL network_v4 make_network_v4(string_view str);
  * @relates network_v4
  */
 ASIO_DECL network_v4 make_network_v4(
-    string_view str, ASIO_NAMESPACE::error_code& ec);
+    string_view str, ModioAsio::error_code& ec);
 
 #endif // defined(ASIO_HAS_STRING_VIEW)
        //  || defined(GENERATING_DOCUMENTATION)
@@ -240,7 +240,7 @@ ASIO_DECL network_v4 make_network_v4(
  *
  * @return The output stream.
  *
- * @relates ASIO_NAMESPACE::ip::address_v4
+ * @relates ModioAsio::ip::address_v4
  */
 template <typename Elem, typename Traits>
 std::basic_ostream<Elem, Traits>& operator<<(
@@ -249,7 +249,7 @@ std::basic_ostream<Elem, Traits>& operator<<(
 #endif // !defined(ASIO_NO_IOSTREAM)
 
 } // namespace ip
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

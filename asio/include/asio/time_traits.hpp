@@ -24,7 +24,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 
 /// Time traits suitable for use with the deadline timer.
 template <typename Time>
@@ -76,7 +76,7 @@ struct time_traits<boost::posix_time::ptime>
   }
 };
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

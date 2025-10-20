@@ -20,7 +20,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 
 /// A special type, similar to std::nothrow_t, used to disambiguate
 /// constructors that accept executor arguments.
@@ -42,7 +42,7 @@ struct executor_arg_t
 /// A special value, similar to std::nothrow, used to disambiguate constructors
 /// that accept executor arguments.
 /**
- * See ASIO_NAMESPACE::executor_arg_t and ASIO_NAMESPACE::uses_executor
+ * See ModioAsio::executor_arg_t and ModioAsio::uses_executor
  * for more information.
  */
 #if defined(ASIO_HAS_CONSTEXPR) || defined(GENERATING_DOCUMENTATION)
@@ -64,7 +64,7 @@ __declspec(selectany) executor_arg_t executor_arg;
 template <typename T, typename Executor>
 struct uses_executor : false_type {};
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

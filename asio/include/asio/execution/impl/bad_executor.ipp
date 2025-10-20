@@ -20,7 +20,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace execution {
 
 bad_executor::bad_executor() ASIO_NOEXCEPT
@@ -33,7 +33,7 @@ const char* bad_executor::what() const ASIO_NOEXCEPT_OR_NOTHROW
 }
 
 } // namespace execution
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

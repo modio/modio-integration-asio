@@ -32,12 +32,12 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace ip {
 
 /// An iterator over the entries produced by a resolver.
 /**
- * The ASIO_NAMESPACE::ip::basic_resolver_iterator class template is used to define
+ * The ModioAsio::ip::basic_resolver_iterator class template is used to define
  * iterators over the results returned by a resolver.
  *
  * The iterator's value_type, obtained when the iterator is dereferenced, is:
@@ -179,13 +179,13 @@ protected:
   }
 
   typedef std::vector<basic_resolver_entry<InternetProtocol> > values_type;
-  typedef ASIO_NAMESPACE::detail::shared_ptr<values_type> values_ptr_type;
+  typedef ModioAsio::detail::shared_ptr<values_type> values_ptr_type;
   values_ptr_type values_;
   std::size_t index_;
 };
 
 } // namespace ip
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

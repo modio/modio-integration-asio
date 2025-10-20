@@ -26,19 +26,19 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace generic {
 
 /// Encapsulates the flags needed for a generic stream-oriented socket.
 /**
- * The ASIO_NAMESPACE::generic::stream_protocol class contains flags necessary for
+ * The ModioAsio::generic::stream_protocol class contains flags necessary for
  * stream-oriented sockets of any address family and protocol.
  *
  * @par Examples
  * Constructing using a native address family and socket protocol:
  * @code stream_protocol p(AF_INET, IPPROTO_TCP); @endcode
  * Constructing from a specific protocol type:
- * @code stream_protocol p(ASIO_NAMESPACE::ip::tcp::v4()); @endcode
+ * @code stream_protocol p(ModioAsio::ip::tcp::v4()); @endcode
  *
  * @par Thread Safety
  * @e Distinct @e objects: Safe.@n
@@ -69,7 +69,7 @@ public:
     if (source_protocol.type() != type())
     {
       std::bad_cast ex;
-      ASIO_NAMESPACE::detail::throw_exception(ex);
+      ModioAsio::detail::throw_exception(ex);
     }
   }
 
@@ -120,7 +120,7 @@ private:
 };
 
 } // namespace generic
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

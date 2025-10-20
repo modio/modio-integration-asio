@@ -22,7 +22,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace execution {
 namespace detail {
 
@@ -70,7 +70,7 @@ ASIO_CONSTEXPR const bool is_scheduler_v = is_scheduler<T>::value;
 template <typename T>
 ASIO_CONCEPT scheduler = is_scheduler<T>::value;
 
-#define ASIO_EXECUTION_SCHEDULER ::ASIO_NAMESPACE::execution::scheduler
+#define ASIO_EXECUTION_SCHEDULER ::ModioAsio::execution::scheduler
 
 #else // defined(ASIO_HAS_CONCEPTS)
 
@@ -79,7 +79,7 @@ ASIO_CONCEPT scheduler = is_scheduler<T>::value;
 #endif // defined(ASIO_HAS_CONCEPTS)
 
 } // namespace execution
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

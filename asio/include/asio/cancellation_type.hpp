@@ -19,7 +19,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 
 # if defined(GENERATING_DOCUMENTATION)
 
@@ -167,7 +167,7 @@ inline cancellation_type_t& operator^=(
   return x;
 }
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

@@ -20,16 +20,16 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace experimental {
 
 #if !defined(ASIO_NO_DEPRECATED)
-using ASIO_NAMESPACE::as_tuple_t;
-using ASIO_NAMESPACE::as_tuple;
+using ModioAsio::as_tuple_t;
+using ModioAsio::as_tuple;
 #endif // !defined(ASIO_NO_DEPRECATED)
 
 } // namespace experimental
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

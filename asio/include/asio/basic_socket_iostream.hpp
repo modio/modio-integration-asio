@@ -74,7 +74,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 // A separate base class is used to ensure that the streambuf is initialised
@@ -306,7 +306,7 @@ public:
    *   std::cout << "Error: " << s.error().message() << std::endl;
    * } @endcode
    */
-  const ASIO_NAMESPACE::error_code& error() const
+  const ModioAsio::error_code& error() const
   {
     return rdbuf()->error();
   }
@@ -337,7 +337,7 @@ public:
    * This function sets the expiry time associated with the stream. Stream
    * operations performed after this time (where the operations cannot be
    * completed using the internal buffers) will fail with the error
-   * ASIO_NAMESPACE::error::operation_aborted.
+   * ModioAsio::error::operation_aborted.
    *
    * @param expiry_time The expiry time to be used for the stream.
    */
@@ -351,7 +351,7 @@ public:
    * This function sets the expiry time associated with the stream. Stream
    * operations performed after this time (where the operations cannot be
    * completed using the internal buffers) will fail with the error
-   * ASIO_NAMESPACE::error::operation_aborted.
+   * ModioAsio::error::operation_aborted.
    *
    * @param expiry_time The expiry time to be used for the timer.
    */
@@ -376,7 +376,7 @@ public:
    * This function sets the expiry time associated with the stream. Stream
    * operations performed after this time (where the operations cannot be
    * completed using the internal buffers) will fail with the error
-   * ASIO_NAMESPACE::error::operation_aborted.
+   * ModioAsio::error::operation_aborted.
    *
    * @param expiry_time The expiry time to be used for the timer.
    */
@@ -393,7 +393,7 @@ private:
       const basic_socket_iostream&) ASIO_DELETED;
 };
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

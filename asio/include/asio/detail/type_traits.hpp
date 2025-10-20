@@ -48,7 +48,7 @@
 # include <boost/utility/result_of.hpp>
 #endif // defined(ASIO_HAS_STD_TYPE_TRAITS)
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 
 #if defined(ASIO_HAS_STD_TYPE_TRAITS)
 using std::add_const;
@@ -159,6 +159,6 @@ struct defaulted_constraint
 template <bool Condition, typename Type = int>
 struct constraint : enable_if<Condition, Type> {};
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #endif // ASIO_DETAIL_TYPE_TRAITS_HPP

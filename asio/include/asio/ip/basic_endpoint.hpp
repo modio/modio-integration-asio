@@ -30,7 +30,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace ip {
 
 /// Type used for storing port numbers.
@@ -38,7 +38,7 @@ typedef uint_least16_t port_type;
 
 /// Describes an endpoint for a version-independent IP socket.
 /**
- * The ASIO_NAMESPACE::ip::basic_endpoint class template describes an endpoint that
+ * The ModioAsio::ip::basic_endpoint class template describes an endpoint that
  * may be associated with a particular socket.
  *
  * @par Thread Safety
@@ -60,7 +60,7 @@ public:
 #if defined(GENERATING_DOCUMENTATION)
   typedef implementation_defined data_type;
 #else
-  typedef ASIO_NAMESPACE::detail::socket_addr_type data_type;
+  typedef ModioAsio::detail::socket_addr_type data_type;
 #endif
 
   /// Default constructor.
@@ -77,12 +77,12 @@ public:
    * @par Examples
    * To initialise an IPv4 TCP endpoint for port 1234, use:
    * @code
-   * ASIO_NAMESPACE::ip::tcp::endpoint ep(ASIO_NAMESPACE::ip::tcp::v4(), 1234);
+   * ModioAsio::ip::tcp::endpoint ep(ModioAsio::ip::tcp::v4(), 1234);
    * @endcode
    *
    * To specify an IPv6 UDP endpoint for port 9876, use:
    * @code
-   * ASIO_NAMESPACE::ip::udp::endpoint ep(ASIO_NAMESPACE::ip::udp::v6(), 9876);
+   * ModioAsio::ip::udp::endpoint ep(ModioAsio::ip::udp::v6(), 9876);
    * @endcode
    */
   basic_endpoint(const InternetProtocol& internet_protocol,
@@ -94,7 +94,7 @@ public:
   /// Construct an endpoint using a port number and an IP address. This
   /// constructor may be used for accepting connections on a specific interface
   /// or for making a connection to a remote endpoint.
-  basic_endpoint(const ASIO_NAMESPACE::ip::address& addr,
+  basic_endpoint(const ModioAsio::ip::address& addr,
       port_type port_num) ASIO_NOEXCEPT
     : impl_(addr, port_num)
   {
@@ -183,13 +183,13 @@ public:
   }
 
   /// Get the IP address associated with the endpoint.
-  ASIO_NAMESPACE::ip::address address() const ASIO_NOEXCEPT
+  ModioAsio::ip::address address() const ASIO_NOEXCEPT
   {
     return impl_.address();
   }
 
   /// Set the IP address associated with the endpoint.
-  void address(const ASIO_NAMESPACE::ip::address& addr) ASIO_NOEXCEPT
+  void address(const ModioAsio::ip::address& addr) ASIO_NOEXCEPT
   {
     impl_.address(addr);
   }
@@ -238,7 +238,7 @@ public:
 
 private:
   // The underlying IP endpoint.
-  ASIO_NAMESPACE::ip::detail::endpoint impl_;
+  ModioAsio::ip::detail::endpoint impl_;
 };
 
 #if !defined(ASIO_NO_IOSTREAM)
@@ -253,7 +253,7 @@ private:
  *
  * @return The output stream.
  *
- * @relates ASIO_NAMESPACE::ip::basic_endpoint
+ * @relates ModioAsio::ip::basic_endpoint
  */
 template <typename Elem, typename Traits, typename InternetProtocol>
 std::basic_ostream<Elem, Traits>& operator<<(
@@ -263,19 +263,19 @@ std::basic_ostream<Elem, Traits>& operator<<(
 #endif // !defined(ASIO_NO_IOSTREAM)
 
 } // namespace ip
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #if defined(ASIO_HAS_STD_HASH)
 namespace std {
 
 template <typename InternetProtocol>
-struct hash<ASIO_NAMESPACE::ip::basic_endpoint<InternetProtocol> >
+struct hash<ModioAsio::ip::basic_endpoint<InternetProtocol> >
 {
   std::size_t operator()(
-      const ASIO_NAMESPACE::ip::basic_endpoint<InternetProtocol>& ep)
+      const ModioAsio::ip::basic_endpoint<InternetProtocol>& ep)
     const ASIO_NOEXCEPT
   {
-    std::size_t hash1 = std::hash<ASIO_NAMESPACE::ip::address>()(ep.address());
+    std::size_t hash1 = std::hash<ModioAsio::ip::address>()(ep.address());
     std::size_t hash2 = std::hash<unsigned short>()(ep.port());
     return hash1 ^ (hash2 + 0x9e3779b9 + (hash1 << 6) + (hash1 >> 2));
   }

@@ -24,7 +24,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 template <typename Handler, typename Alloc,
@@ -45,7 +45,7 @@ public:
   }
 
   static void do_complete(void* owner, Operation* base,
-      const ASIO_NAMESPACE::error_code& /*ec*/,
+      const ModioAsio::error_code& /*ec*/,
       std::size_t /*bytes_transferred*/)
   {
     // Take ownership of the handler object.
@@ -69,7 +69,7 @@ public:
     {
       fenced_block b(fenced_block::half);
       ASIO_HANDLER_INVOCATION_BEGIN(());
-      ASIO_NAMESPACE::asio_handler_invoke_helpers::invoke(handler, handler.handler_);
+      ModioAsio::asio_handler_invoke_helpers::invoke(handler, handler.handler_);
       ASIO_HANDLER_INVOCATION_END;
     }
   }
@@ -81,7 +81,7 @@ private:
 };
 
 } // namespace detail
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

@@ -25,7 +25,7 @@
 
 #if defined(GENERATING_DOCUMENTATION)
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace execution {
 
 /// A customisation point that is used to obtain a sender from a scheduler.
@@ -63,19 +63,19 @@ struct can_schedule :
 };
 
 } // namespace execution
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #else // defined(GENERATING_DOCUMENTATION)
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace asio_execution_schedule_fn {
 
-using ASIO_NAMESPACE::decay;
-using ASIO_NAMESPACE::declval;
-using ASIO_NAMESPACE::enable_if;
-using ASIO_NAMESPACE::execution::is_executor;
-using ASIO_NAMESPACE::traits::schedule_free;
-using ASIO_NAMESPACE::traits::schedule_member;
+using ModioAsio::decay;
+using ModioAsio::declval;
+using ModioAsio::enable_if;
+using ModioAsio::execution::is_executor;
+using ModioAsio::traits::schedule_free;
+using ModioAsio::traits::schedule_member;
 
 void schedule();
 
@@ -239,8 +239,8 @@ template <typename T>
 const T static_instance<T>::instance = {};
 
 } // namespace asio_execution_schedule_fn
-} // namespace ASIO_NAMESPACE
-namespace ASIO_NAMESPACE {
+} // namespace ModioAsio
+namespace ModioAsio {
 namespace execution {
 namespace {
 
@@ -280,7 +280,7 @@ constexpr bool is_nothrow_schedule_v
 #endif // defined(ASIO_HAS_VARIABLE_TEMPLATES)
 
 } // namespace execution
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #endif // defined(GENERATING_DOCUMENTATION)
 

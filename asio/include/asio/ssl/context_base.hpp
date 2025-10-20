@@ -20,7 +20,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace ssl {
 
 /// The context_base class is used as a base for the basic_context class
@@ -175,7 +175,7 @@ public:
 #if !defined(GENERATING_DOCUMENTATION)
   // The following types and constants are preserved for backward compatibility.
   // New programs should use the equivalents of the same names that are defined
-  // in the ASIO_NAMESPACE::ssl namespace.
+  // in the ModioAsio::ssl namespace.
   typedef int verify_mode;
   ASIO_STATIC_CONSTANT(int, verify_none = SSL_VERIFY_NONE);
   ASIO_STATIC_CONSTANT(int, verify_peer = SSL_VERIFY_PEER);
@@ -202,7 +202,7 @@ protected:
 };
 
 } // namespace ssl
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

@@ -33,7 +33,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 
 namespace detail
 {
@@ -41,10 +41,10 @@ namespace detail
       typename ConstBufferIterator, typename CompletionCondition>
   std::size_t write(SyncWriteStream& s,
       const ConstBufferSequence& buffers, const ConstBufferIterator&,
-      CompletionCondition completion_condition, ASIO_NAMESPACE::error_code& ec)
+      CompletionCondition completion_condition, ModioAsio::error_code& ec)
   {
-    ec = ASIO_NAMESPACE::error_code();
-    ASIO_NAMESPACE::detail::consuming_buffers<const_buffer,
+    ec = ModioAsio::error_code();
+    ModioAsio::detail::consuming_buffers<const_buffer,
         ConstBufferSequence, ConstBufferIterator> tmp(buffers);
     while (!tmp.empty())
     {
@@ -61,13 +61,13 @@ namespace detail
 template <typename SyncWriteStream, typename ConstBufferSequence,
     typename CompletionCondition>
 inline std::size_t write(SyncWriteStream& s, const ConstBufferSequence& buffers,
-    CompletionCondition completion_condition, ASIO_NAMESPACE::error_code& ec,
+    CompletionCondition completion_condition, ModioAsio::error_code& ec,
     typename constraint<
       is_const_buffer_sequence<ConstBufferSequence>::value
     >::type)
 {
   return detail::write(s, buffers,
-      ASIO_NAMESPACE::buffer_sequence_begin(buffers),
+      ModioAsio::buffer_sequence_begin(buffers),
       ASIO_MOVE_CAST(CompletionCondition)(completion_condition), ec);
 }
 
@@ -77,15 +77,15 @@ inline std::size_t write(SyncWriteStream& s, const ConstBufferSequence& buffers,
       is_const_buffer_sequence<ConstBufferSequence>::value
     >::type)
 {
-  ASIO_NAMESPACE::error_code ec;
+  ModioAsio::error_code ec;
   std::size_t bytes_transferred = write(s, buffers, transfer_all(), ec);
-  ASIO_NAMESPACE::detail::throw_error(ec, "write");
+  ModioAsio::detail::throw_error(ec, "write");
   return bytes_transferred;
 }
 
 template <typename SyncWriteStream, typename ConstBufferSequence>
 inline std::size_t write(SyncWriteStream& s, const ConstBufferSequence& buffers,
-    ASIO_NAMESPACE::error_code& ec,
+    ModioAsio::error_code& ec,
     typename constraint<
       is_const_buffer_sequence<ConstBufferSequence>::value
     >::type)
@@ -101,10 +101,10 @@ inline std::size_t write(SyncWriteStream& s, const ConstBufferSequence& buffers,
       is_const_buffer_sequence<ConstBufferSequence>::value
     >::type)
 {
-  ASIO_NAMESPACE::error_code ec;
+  ModioAsio::error_code ec;
   std::size_t bytes_transferred = write(s, buffers,
       ASIO_MOVE_CAST(CompletionCondition)(completion_condition), ec);
-  ASIO_NAMESPACE::detail::throw_error(ec, "write");
+  ModioAsio::detail::throw_error(ec, "write");
   return bytes_transferred;
 }
 
@@ -114,7 +114,7 @@ template <typename SyncWriteStream, typename DynamicBuffer_v1,
     typename CompletionCondition>
 std::size_t write(SyncWriteStream& s,
     ASIO_MOVE_ARG(DynamicBuffer_v1) buffers,
-    CompletionCondition completion_condition, ASIO_NAMESPACE::error_code& ec,
+    CompletionCondition completion_condition, ModioAsio::error_code& ec,
     typename constraint<
       is_dynamic_buffer_v1<typename decay<DynamicBuffer_v1>::type>::value
     >::type,
@@ -141,18 +141,18 @@ inline std::size_t write(SyncWriteStream& s,
       !is_dynamic_buffer_v2<typename decay<DynamicBuffer_v1>::type>::value
     >::type)
 {
-  ASIO_NAMESPACE::error_code ec;
+  ModioAsio::error_code ec;
   std::size_t bytes_transferred = write(s,
       ASIO_MOVE_CAST(DynamicBuffer_v1)(buffers),
       transfer_all(), ec);
-  ASIO_NAMESPACE::detail::throw_error(ec, "write");
+  ModioAsio::detail::throw_error(ec, "write");
   return bytes_transferred;
 }
 
 template <typename SyncWriteStream, typename DynamicBuffer_v1>
 inline std::size_t write(SyncWriteStream& s,
     ASIO_MOVE_ARG(DynamicBuffer_v1) buffers,
-    ASIO_NAMESPACE::error_code& ec,
+    ModioAsio::error_code& ec,
     typename constraint<
       is_dynamic_buffer_v1<typename decay<DynamicBuffer_v1>::type>::value
     >::type,
@@ -176,11 +176,11 @@ inline std::size_t write(SyncWriteStream& s,
       !is_dynamic_buffer_v2<typename decay<DynamicBuffer_v1>::type>::value
     >::type)
 {
-  ASIO_NAMESPACE::error_code ec;
+  ModioAsio::error_code ec;
   std::size_t bytes_transferred = write(s,
       ASIO_MOVE_CAST(DynamicBuffer_v1)(buffers),
       ASIO_MOVE_CAST(CompletionCondition)(completion_condition), ec);
-  ASIO_NAMESPACE::detail::throw_error(ec, "write");
+  ModioAsio::detail::throw_error(ec, "write");
   return bytes_transferred;
 }
 
@@ -190,8 +190,8 @@ inline std::size_t write(SyncWriteStream& s,
 template <typename SyncWriteStream, typename Allocator,
     typename CompletionCondition>
 inline std::size_t write(SyncWriteStream& s,
-    ASIO_NAMESPACE::basic_streambuf<Allocator>& b,
-    CompletionCondition completion_condition, ASIO_NAMESPACE::error_code& ec)
+    ModioAsio::basic_streambuf<Allocator>& b,
+    CompletionCondition completion_condition, ModioAsio::error_code& ec)
 {
   return write(s, basic_streambuf_ref<Allocator>(b),
       ASIO_MOVE_CAST(CompletionCondition)(completion_condition), ec);
@@ -199,15 +199,15 @@ inline std::size_t write(SyncWriteStream& s,
 
 template <typename SyncWriteStream, typename Allocator>
 inline std::size_t write(SyncWriteStream& s,
-    ASIO_NAMESPACE::basic_streambuf<Allocator>& b)
+    ModioAsio::basic_streambuf<Allocator>& b)
 {
   return write(s, basic_streambuf_ref<Allocator>(b));
 }
 
 template <typename SyncWriteStream, typename Allocator>
 inline std::size_t write(SyncWriteStream& s,
-    ASIO_NAMESPACE::basic_streambuf<Allocator>& b,
-    ASIO_NAMESPACE::error_code& ec)
+    ModioAsio::basic_streambuf<Allocator>& b,
+    ModioAsio::error_code& ec)
 {
   return write(s, basic_streambuf_ref<Allocator>(b), ec);
 }
@@ -215,7 +215,7 @@ inline std::size_t write(SyncWriteStream& s,
 template <typename SyncWriteStream, typename Allocator,
     typename CompletionCondition>
 inline std::size_t write(SyncWriteStream& s,
-    ASIO_NAMESPACE::basic_streambuf<Allocator>& b,
+    ModioAsio::basic_streambuf<Allocator>& b,
     CompletionCondition completion_condition)
 {
   return write(s, basic_streambuf_ref<Allocator>(b),
@@ -229,7 +229,7 @@ inline std::size_t write(SyncWriteStream& s,
 template <typename SyncWriteStream, typename DynamicBuffer_v2,
     typename CompletionCondition>
 std::size_t write(SyncWriteStream& s, DynamicBuffer_v2 buffers,
-    CompletionCondition completion_condition, ASIO_NAMESPACE::error_code& ec,
+    CompletionCondition completion_condition, ModioAsio::error_code& ec,
     typename constraint<
       is_dynamic_buffer_v2<DynamicBuffer_v2>::value
     >::type)
@@ -246,17 +246,17 @@ inline std::size_t write(SyncWriteStream& s, DynamicBuffer_v2 buffers,
       is_dynamic_buffer_v2<DynamicBuffer_v2>::value
     >::type)
 {
-  ASIO_NAMESPACE::error_code ec;
+  ModioAsio::error_code ec;
   std::size_t bytes_transferred = write(s,
       ASIO_MOVE_CAST(DynamicBuffer_v2)(buffers),
       transfer_all(), ec);
-  ASIO_NAMESPACE::detail::throw_error(ec, "write");
+  ModioAsio::detail::throw_error(ec, "write");
   return bytes_transferred;
 }
 
 template <typename SyncWriteStream, typename DynamicBuffer_v2>
 inline std::size_t write(SyncWriteStream& s, DynamicBuffer_v2 buffers,
-    ASIO_NAMESPACE::error_code& ec,
+    ModioAsio::error_code& ec,
     typename constraint<
       is_dynamic_buffer_v2<DynamicBuffer_v2>::value
     >::type)
@@ -273,11 +273,11 @@ inline std::size_t write(SyncWriteStream& s, DynamicBuffer_v2 buffers,
       is_dynamic_buffer_v2<DynamicBuffer_v2>::value
     >::type)
 {
-  ASIO_NAMESPACE::error_code ec;
+  ModioAsio::error_code ec;
   std::size_t bytes_transferred = write(s,
       ASIO_MOVE_CAST(DynamicBuffer_v2)(buffers),
       ASIO_MOVE_CAST(CompletionCondition)(completion_condition), ec);
-  ASIO_NAMESPACE::detail::throw_error(ec, "write");
+  ModioAsio::detail::throw_error(ec, "write");
   return bytes_transferred;
 }
 
@@ -329,7 +329,7 @@ namespace detail
     }
 #endif // defined(ASIO_HAS_MOVE)
 
-    void operator()(ASIO_NAMESPACE::error_code ec,
+    void operator()(ModioAsio::error_code ec,
         std::size_t bytes_transferred, int start = 0)
     {
       std::size_t max_size;
@@ -359,13 +359,13 @@ namespace detail
         }
 
         ASIO_MOVE_OR_LVALUE(WriteHandler)(handler_)(
-            static_cast<const ASIO_NAMESPACE::error_code&>(ec),
+            static_cast<const ModioAsio::error_code&>(ec),
             static_cast<const std::size_t&>(buffers_.total_consumed()));
       }
     }
 
   //private:
-    typedef ASIO_NAMESPACE::detail::consuming_buffers<const_buffer,
+    typedef ModioAsio::detail::consuming_buffers<const_buffer,
         ConstBufferSequence, ConstBufferIterator> buffers_type;
 
     AsyncWriteStream& stream_;
@@ -383,10 +383,10 @@ namespace detail
         CompletionCondition, WriteHandler>* this_handler)
   {
 #if defined(ASIO_NO_DEPRECATED)
-    ASIO_NAMESPACE::asio_handler_alloc_helpers::allocate(size, this_handler->handler_);
+    ModioAsio::asio_handler_alloc_helpers::allocate(size, this_handler->handler_);
     return asio_handler_allocate_is_no_longer_used();
 #else // defined(ASIO_NO_DEPRECATED)
-    return ASIO_NAMESPACE::asio_handler_alloc_helpers::allocate(
+    return ModioAsio::asio_handler_alloc_helpers::allocate(
         size, this_handler->handler_);
 #endif // defined(ASIO_NO_DEPRECATED)
   }
@@ -399,7 +399,7 @@ namespace detail
       write_op<AsyncWriteStream, ConstBufferSequence, ConstBufferIterator,
         CompletionCondition, WriteHandler>* this_handler)
   {
-    ASIO_NAMESPACE::asio_handler_alloc_helpers::deallocate(
+    ModioAsio::asio_handler_alloc_helpers::deallocate(
         pointer, size, this_handler->handler_);
 #if defined(ASIO_NO_DEPRECATED)
     return asio_handler_deallocate_is_no_longer_used();
@@ -414,7 +414,7 @@ namespace detail
         CompletionCondition, WriteHandler>* this_handler)
   {
     return this_handler->start_ == 0 ? true
-      : ASIO_NAMESPACE::asio_handler_cont_helpers::is_continuation(
+      : ModioAsio::asio_handler_cont_helpers::is_continuation(
           this_handler->handler_);
   }
 
@@ -426,7 +426,7 @@ namespace detail
       write_op<AsyncWriteStream, ConstBufferSequence, ConstBufferIterator,
         CompletionCondition, WriteHandler>* this_handler)
   {
-    ASIO_NAMESPACE::asio_handler_invoke_helpers::invoke(
+    ModioAsio::asio_handler_invoke_helpers::invoke(
         function, this_handler->handler_);
 #if defined(ASIO_NO_DEPRECATED)
     return asio_handler_invoke_is_no_longer_used();
@@ -441,7 +441,7 @@ namespace detail
       write_op<AsyncWriteStream, ConstBufferSequence, ConstBufferIterator,
         CompletionCondition, WriteHandler>* this_handler)
   {
-    ASIO_NAMESPACE::asio_handler_invoke_helpers::invoke(
+    ModioAsio::asio_handler_invoke_helpers::invoke(
         function, this_handler->handler_);
 #if defined(ASIO_NO_DEPRECATED)
     return asio_handler_invoke_is_no_longer_used();
@@ -458,7 +458,7 @@ namespace detail
     detail::write_op<AsyncWriteStream, ConstBufferSequence,
       ConstBufferIterator, CompletionCondition, WriteHandler>(
         stream, buffers, completion_condition, handler)(
-          ASIO_NAMESPACE::error_code(), 0, 1);
+          ModioAsio::error_code(), 0, 1);
   }
 
   template <typename AsyncWriteStream>
@@ -490,7 +490,7 @@ namespace detail
       non_const_lvalue<WriteHandler> handler2(handler);
       non_const_lvalue<CompletionCondition> completion_cond2(completion_cond);
       start_write_op(stream_, buffers,
-          ASIO_NAMESPACE::buffer_sequence_begin(buffers),
+          ModioAsio::buffer_sequence_begin(buffers),
           completion_cond2.value, handler2.value);
     }
 
@@ -524,10 +524,10 @@ struct associator<Associator,
 
 template <typename AsyncWriteStream,
     typename ConstBufferSequence, typename CompletionCondition,
-    ASIO_COMPLETION_TOKEN_FOR(void (ASIO_NAMESPACE::error_code,
+    ASIO_COMPLETION_TOKEN_FOR(void (ModioAsio::error_code,
       std::size_t)) WriteToken>
 inline ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(WriteToken,
-    void (ASIO_NAMESPACE::error_code, std::size_t))
+    void (ModioAsio::error_code, std::size_t))
 async_write(AsyncWriteStream& s, const ConstBufferSequence& buffers,
     CompletionCondition completion_condition,
     ASIO_MOVE_ARG(WriteToken) token,
@@ -536,23 +536,23 @@ async_write(AsyncWriteStream& s, const ConstBufferSequence& buffers,
     >::type)
   ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
     async_initiate<WriteToken,
-      void (ASIO_NAMESPACE::error_code, std::size_t)>(
+      void (ModioAsio::error_code, std::size_t)>(
         declval<detail::initiate_async_write<AsyncWriteStream> >(),
         token, buffers,
         ASIO_MOVE_CAST(CompletionCondition)(completion_condition))))
 {
   return async_initiate<WriteToken,
-    void (ASIO_NAMESPACE::error_code, std::size_t)>(
+    void (ModioAsio::error_code, std::size_t)>(
       detail::initiate_async_write<AsyncWriteStream>(s),
       token, buffers,
       ASIO_MOVE_CAST(CompletionCondition)(completion_condition));
 }
 
 template <typename AsyncWriteStream, typename ConstBufferSequence,
-    ASIO_COMPLETION_TOKEN_FOR(void (ASIO_NAMESPACE::error_code,
+    ASIO_COMPLETION_TOKEN_FOR(void (ModioAsio::error_code,
       std::size_t)) WriteToken>
 inline ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(WriteToken,
-    void (ASIO_NAMESPACE::error_code, std::size_t))
+    void (ModioAsio::error_code, std::size_t))
 async_write(AsyncWriteStream& s, const ConstBufferSequence& buffers,
     ASIO_MOVE_ARG(WriteToken) token,
     typename constraint<
@@ -560,12 +560,12 @@ async_write(AsyncWriteStream& s, const ConstBufferSequence& buffers,
     >::type)
   ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
     async_initiate<WriteToken,
-      void (ASIO_NAMESPACE::error_code, std::size_t)>(
+      void (ModioAsio::error_code, std::size_t)>(
         declval<detail::initiate_async_write<AsyncWriteStream> >(),
         token, buffers, transfer_all())))
 {
   return async_initiate<WriteToken,
-    void (ASIO_NAMESPACE::error_code, std::size_t)>(
+    void (ModioAsio::error_code, std::size_t)>(
       detail::initiate_async_write<AsyncWriteStream>(s),
       token, buffers, transfer_all());
 }
@@ -611,7 +611,7 @@ namespace detail
     }
 #endif // defined(ASIO_HAS_MOVE)
 
-    void operator()(const ASIO_NAMESPACE::error_code& ec,
+    void operator()(const ModioAsio::error_code& ec,
         std::size_t bytes_transferred, int start = 0)
     {
       switch (start)
@@ -642,10 +642,10 @@ namespace detail
         CompletionCondition, WriteHandler>* this_handler)
   {
 #if defined(ASIO_NO_DEPRECATED)
-    ASIO_NAMESPACE::asio_handler_alloc_helpers::allocate(size, this_handler->handler_);
+    ModioAsio::asio_handler_alloc_helpers::allocate(size, this_handler->handler_);
     return asio_handler_allocate_is_no_longer_used();
 #else // defined(ASIO_NO_DEPRECATED)
-    return ASIO_NAMESPACE::asio_handler_alloc_helpers::allocate(
+    return ModioAsio::asio_handler_alloc_helpers::allocate(
         size, this_handler->handler_);
 #endif // defined(ASIO_NO_DEPRECATED)
   }
@@ -657,7 +657,7 @@ namespace detail
       write_dynbuf_v1_op<AsyncWriteStream, DynamicBuffer_v1,
         CompletionCondition, WriteHandler>* this_handler)
   {
-    ASIO_NAMESPACE::asio_handler_alloc_helpers::deallocate(
+    ModioAsio::asio_handler_alloc_helpers::deallocate(
         pointer, size, this_handler->handler_);
 #if defined(ASIO_NO_DEPRECATED)
     return asio_handler_deallocate_is_no_longer_used();
@@ -670,7 +670,7 @@ namespace detail
       write_dynbuf_v1_op<AsyncWriteStream, DynamicBuffer_v1,
         CompletionCondition, WriteHandler>* this_handler)
   {
-    return ASIO_NAMESPACE::asio_handler_cont_helpers::is_continuation(
+    return ModioAsio::asio_handler_cont_helpers::is_continuation(
         this_handler->handler_);
   }
 
@@ -682,7 +682,7 @@ namespace detail
       write_dynbuf_v1_op<AsyncWriteStream, DynamicBuffer_v1,
         CompletionCondition, WriteHandler>* this_handler)
   {
-    ASIO_NAMESPACE::asio_handler_invoke_helpers::invoke(
+    ModioAsio::asio_handler_invoke_helpers::invoke(
         function, this_handler->handler_);
 #if defined(ASIO_NO_DEPRECATED)
     return asio_handler_invoke_is_no_longer_used();
@@ -697,7 +697,7 @@ namespace detail
       write_dynbuf_v1_op<AsyncWriteStream, DynamicBuffer_v1,
         CompletionCondition, WriteHandler>* this_handler)
   {
-    ASIO_NAMESPACE::asio_handler_invoke_helpers::invoke(
+    ModioAsio::asio_handler_invoke_helpers::invoke(
         function, this_handler->handler_);
 #if defined(ASIO_NO_DEPRECATED)
     return asio_handler_invoke_is_no_longer_used();
@@ -737,7 +737,7 @@ namespace detail
           CompletionCondition, typename decay<WriteHandler>::type>(
             stream_, ASIO_MOVE_CAST(DynamicBuffer_v1)(buffers),
               completion_cond2.value, handler2.value)(
-                ASIO_NAMESPACE::error_code(), 0, 1);
+                ModioAsio::error_code(), 0, 1);
     }
 
   private:
@@ -769,10 +769,10 @@ struct associator<Associator,
 #endif // !defined(GENERATING_DOCUMENTATION)
 
 template <typename AsyncWriteStream, typename DynamicBuffer_v1,
-    ASIO_COMPLETION_TOKEN_FOR(void (ASIO_NAMESPACE::error_code,
+    ASIO_COMPLETION_TOKEN_FOR(void (ModioAsio::error_code,
       std::size_t)) WriteToken>
 inline ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(WriteToken,
-    void (ASIO_NAMESPACE::error_code, std::size_t))
+    void (ModioAsio::error_code, std::size_t))
 async_write(AsyncWriteStream& s,
     ASIO_MOVE_ARG(DynamicBuffer_v1) buffers,
     ASIO_MOVE_ARG(WriteToken) token,
@@ -784,13 +784,13 @@ async_write(AsyncWriteStream& s,
     >::type)
   ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
     async_initiate<WriteToken,
-      void (ASIO_NAMESPACE::error_code, std::size_t)>(
+      void (ModioAsio::error_code, std::size_t)>(
         declval<detail::initiate_async_write_dynbuf_v1<AsyncWriteStream> >(),
         token, ASIO_MOVE_CAST(DynamicBuffer_v1)(buffers),
         transfer_all())))
 {
   return async_initiate<WriteToken,
-    void (ASIO_NAMESPACE::error_code, std::size_t)>(
+    void (ModioAsio::error_code, std::size_t)>(
       detail::initiate_async_write_dynbuf_v1<AsyncWriteStream>(s),
       token, ASIO_MOVE_CAST(DynamicBuffer_v1)(buffers),
       transfer_all());
@@ -798,10 +798,10 @@ async_write(AsyncWriteStream& s,
 
 template <typename AsyncWriteStream,
     typename DynamicBuffer_v1, typename CompletionCondition,
-    ASIO_COMPLETION_TOKEN_FOR(void (ASIO_NAMESPACE::error_code,
+    ASIO_COMPLETION_TOKEN_FOR(void (ModioAsio::error_code,
       std::size_t)) WriteToken>
 inline ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(WriteToken,
-    void (ASIO_NAMESPACE::error_code, std::size_t))
+    void (ModioAsio::error_code, std::size_t))
 async_write(AsyncWriteStream& s,
     ASIO_MOVE_ARG(DynamicBuffer_v1) buffers,
     CompletionCondition completion_condition,
@@ -814,13 +814,13 @@ async_write(AsyncWriteStream& s,
     >::type)
   ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
     async_initiate<WriteToken,
-      void (ASIO_NAMESPACE::error_code, std::size_t)>(
+      void (ModioAsio::error_code, std::size_t)>(
         declval<detail::initiate_async_write_dynbuf_v1<AsyncWriteStream> >(),
         token, ASIO_MOVE_CAST(DynamicBuffer_v1)(buffers),
         ASIO_MOVE_CAST(CompletionCondition)(completion_condition))))
 {
   return async_initiate<WriteToken,
-    void (ASIO_NAMESPACE::error_code, std::size_t)>(
+    void (ModioAsio::error_code, std::size_t)>(
       detail::initiate_async_write_dynbuf_v1<AsyncWriteStream>(s),
       token, ASIO_MOVE_CAST(DynamicBuffer_v1)(buffers),
       ASIO_MOVE_CAST(CompletionCondition)(completion_condition));
@@ -830,12 +830,12 @@ async_write(AsyncWriteStream& s,
 #if !defined(ASIO_NO_IOSTREAM)
 
 template <typename AsyncWriteStream, typename Allocator,
-    ASIO_COMPLETION_TOKEN_FOR(void (ASIO_NAMESPACE::error_code,
+    ASIO_COMPLETION_TOKEN_FOR(void (ModioAsio::error_code,
       std::size_t)) WriteToken>
 inline ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(WriteToken,
-    void (ASIO_NAMESPACE::error_code, std::size_t))
+    void (ModioAsio::error_code, std::size_t))
 async_write(AsyncWriteStream& s,
-    ASIO_NAMESPACE::basic_streambuf<Allocator>& b,
+    ModioAsio::basic_streambuf<Allocator>& b,
     ASIO_MOVE_ARG(WriteToken) token)
   ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
     async_write(s, basic_streambuf_ref<Allocator>(b),
@@ -847,12 +847,12 @@ async_write(AsyncWriteStream& s,
 
 template <typename AsyncWriteStream,
     typename Allocator, typename CompletionCondition,
-    ASIO_COMPLETION_TOKEN_FOR(void (ASIO_NAMESPACE::error_code,
+    ASIO_COMPLETION_TOKEN_FOR(void (ModioAsio::error_code,
       std::size_t)) WriteToken>
 inline ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(WriteToken,
-    void (ASIO_NAMESPACE::error_code, std::size_t))
+    void (ModioAsio::error_code, std::size_t))
 async_write(AsyncWriteStream& s,
-    ASIO_NAMESPACE::basic_streambuf<Allocator>& b,
+    ModioAsio::basic_streambuf<Allocator>& b,
     CompletionCondition completion_condition,
     ASIO_MOVE_ARG(WriteToken) token)
   ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
@@ -908,7 +908,7 @@ namespace detail
     }
 #endif // defined(ASIO_HAS_MOVE)
 
-    void operator()(const ASIO_NAMESPACE::error_code& ec,
+    void operator()(const ModioAsio::error_code& ec,
         std::size_t bytes_transferred, int start = 0)
     {
       switch (start)
@@ -939,10 +939,10 @@ namespace detail
         CompletionCondition, WriteHandler>* this_handler)
   {
 #if defined(ASIO_NO_DEPRECATED)
-    ASIO_NAMESPACE::asio_handler_alloc_helpers::allocate(size, this_handler->handler_);
+    ModioAsio::asio_handler_alloc_helpers::allocate(size, this_handler->handler_);
     return asio_handler_allocate_is_no_longer_used();
 #else // defined(ASIO_NO_DEPRECATED)
-    return ASIO_NAMESPACE::asio_handler_alloc_helpers::allocate(
+    return ModioAsio::asio_handler_alloc_helpers::allocate(
         size, this_handler->handler_);
 #endif // defined(ASIO_NO_DEPRECATED)
   }
@@ -954,7 +954,7 @@ namespace detail
       write_dynbuf_v2_op<AsyncWriteStream, DynamicBuffer_v2,
         CompletionCondition, WriteHandler>* this_handler)
   {
-    ASIO_NAMESPACE::asio_handler_alloc_helpers::deallocate(
+    ModioAsio::asio_handler_alloc_helpers::deallocate(
         pointer, size, this_handler->handler_);
 #if defined(ASIO_NO_DEPRECATED)
     return asio_handler_deallocate_is_no_longer_used();
@@ -967,7 +967,7 @@ namespace detail
       write_dynbuf_v2_op<AsyncWriteStream, DynamicBuffer_v2,
         CompletionCondition, WriteHandler>* this_handler)
   {
-    return ASIO_NAMESPACE::asio_handler_cont_helpers::is_continuation(
+    return ModioAsio::asio_handler_cont_helpers::is_continuation(
         this_handler->handler_);
   }
 
@@ -979,7 +979,7 @@ namespace detail
       write_dynbuf_v2_op<AsyncWriteStream, DynamicBuffer_v2,
         CompletionCondition, WriteHandler>* this_handler)
   {
-    ASIO_NAMESPACE::asio_handler_invoke_helpers::invoke(
+    ModioAsio::asio_handler_invoke_helpers::invoke(
         function, this_handler->handler_);
 #if defined(ASIO_NO_DEPRECATED)
     return asio_handler_invoke_is_no_longer_used();
@@ -994,7 +994,7 @@ namespace detail
       write_dynbuf_v2_op<AsyncWriteStream, DynamicBuffer_v2,
         CompletionCondition, WriteHandler>* this_handler)
   {
-    ASIO_NAMESPACE::asio_handler_invoke_helpers::invoke(
+    ModioAsio::asio_handler_invoke_helpers::invoke(
         function, this_handler->handler_);
 #if defined(ASIO_NO_DEPRECATED)
     return asio_handler_invoke_is_no_longer_used();
@@ -1034,7 +1034,7 @@ namespace detail
           CompletionCondition, typename decay<WriteHandler>::type>(
             stream_, ASIO_MOVE_CAST(DynamicBuffer_v2)(buffers),
               completion_cond2.value, handler2.value)(
-                ASIO_NAMESPACE::error_code(), 0, 1);
+                ModioAsio::error_code(), 0, 1);
     }
 
   private:
@@ -1089,10 +1089,10 @@ struct associated_cancellation_slot<
 #endif // !defined(GENERATING_DOCUMENTATION)
 
 template <typename AsyncWriteStream, typename DynamicBuffer_v2,
-    ASIO_COMPLETION_TOKEN_FOR(void (ASIO_NAMESPACE::error_code,
+    ASIO_COMPLETION_TOKEN_FOR(void (ModioAsio::error_code,
       std::size_t)) WriteToken>
 inline ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(WriteToken,
-    void (ASIO_NAMESPACE::error_code, std::size_t))
+    void (ModioAsio::error_code, std::size_t))
 async_write(AsyncWriteStream& s, DynamicBuffer_v2 buffers,
     ASIO_MOVE_ARG(WriteToken) token,
     typename constraint<
@@ -1100,13 +1100,13 @@ async_write(AsyncWriteStream& s, DynamicBuffer_v2 buffers,
     >::type)
   ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
     async_initiate<WriteToken,
-      void (ASIO_NAMESPACE::error_code, std::size_t)>(
+      void (ModioAsio::error_code, std::size_t)>(
         declval<detail::initiate_async_write_dynbuf_v2<AsyncWriteStream> >(),
         token, ASIO_MOVE_CAST(DynamicBuffer_v2)(buffers),
         transfer_all())))
 {
   return async_initiate<WriteToken,
-    void (ASIO_NAMESPACE::error_code, std::size_t)>(
+    void (ModioAsio::error_code, std::size_t)>(
       detail::initiate_async_write_dynbuf_v2<AsyncWriteStream>(s),
       token, ASIO_MOVE_CAST(DynamicBuffer_v2)(buffers),
       transfer_all());
@@ -1114,10 +1114,10 @@ async_write(AsyncWriteStream& s, DynamicBuffer_v2 buffers,
 
 template <typename AsyncWriteStream,
     typename DynamicBuffer_v2, typename CompletionCondition,
-    ASIO_COMPLETION_TOKEN_FOR(void (ASIO_NAMESPACE::error_code,
+    ASIO_COMPLETION_TOKEN_FOR(void (ModioAsio::error_code,
       std::size_t)) WriteToken>
 inline ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(WriteToken,
-    void (ASIO_NAMESPACE::error_code, std::size_t))
+    void (ModioAsio::error_code, std::size_t))
 async_write(AsyncWriteStream& s, DynamicBuffer_v2 buffers,
     CompletionCondition completion_condition,
     ASIO_MOVE_ARG(WriteToken) token,
@@ -1126,19 +1126,19 @@ async_write(AsyncWriteStream& s, DynamicBuffer_v2 buffers,
     >::type)
   ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
     async_initiate<WriteToken,
-      void (ASIO_NAMESPACE::error_code, std::size_t)>(
+      void (ModioAsio::error_code, std::size_t)>(
         declval<detail::initiate_async_write_dynbuf_v2<AsyncWriteStream> >(),
         token, ASIO_MOVE_CAST(DynamicBuffer_v2)(buffers),
         ASIO_MOVE_CAST(CompletionCondition)(completion_condition))))
 {
   return async_initiate<WriteToken,
-    void (ASIO_NAMESPACE::error_code, std::size_t)>(
+    void (ModioAsio::error_code, std::size_t)>(
       detail::initiate_async_write_dynbuf_v2<AsyncWriteStream>(s),
       token, ASIO_MOVE_CAST(DynamicBuffer_v2)(buffers),
       ASIO_MOVE_CAST(CompletionCondition)(completion_condition));
 }
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

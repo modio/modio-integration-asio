@@ -35,7 +35,7 @@
 # error Only Windows, POSIX and std::thread are supported!
 #endif
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 #if !defined(ASIO_HAS_THREADS)
@@ -55,6 +55,6 @@ typedef std_thread thread;
 #endif
 
 } // namespace detail
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #endif // ASIO_DETAIL_THREAD_HPP

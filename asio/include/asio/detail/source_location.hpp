@@ -28,7 +28,7 @@
   but no source_location is available
 #endif // defined(ASIO_HAS_STD_EXPERIMENTAL_SOURCE_LOCATION)
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 #if defined(ASIO_HAS_STD_SOURCE_LOCATION)
@@ -38,7 +38,7 @@ using std::experimental::source_location;
 #endif // defined(ASIO_HAS_STD_EXPERIMENTAL_SOURCE_LOCATION)
 
 } // namespace detail
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #endif // defined(ASIO_HAS_SOURCE_LOCATION)
 

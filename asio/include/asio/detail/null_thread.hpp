@@ -25,7 +25,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 class null_thread
@@ -36,8 +36,8 @@ public:
   template <typename Function>
   null_thread(Function, unsigned int = 0)
   {
-    ASIO_NAMESPACE::detail::throw_error(
-        ASIO_NAMESPACE::error::operation_not_supported, "thread");
+    ModioAsio::detail::throw_error(
+        ModioAsio::error::operation_not_supported, "thread");
   }
 
   // Destructor.
@@ -58,7 +58,7 @@ public:
 };
 
 } // namespace detail
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

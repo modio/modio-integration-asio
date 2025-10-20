@@ -26,7 +26,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 template <typename T>
@@ -51,7 +51,7 @@ struct awaitable_signature<awaitable<void, Executor>>
  * @param ex The executor that will be used to schedule the new thread of
  * execution.
  *
- * @param a The ASIO_NAMESPACE::awaitable object that is the result of calling the
+ * @param a The ModioAsio::awaitable object that is the result of calling the
  * coroutine's entry point function.
  *
  * @param token The @ref completion_token that will handle the notification that
@@ -64,7 +64,7 @@ struct awaitable_signature<awaitable<void, Executor>>
  *
  * @par Example
  * @code
- * ASIO_NAMESPACE::awaitable<std::size_t> echo(tcp::socket socket)
+ * ModioAsio::awaitable<std::size_t> echo(tcp::socket socket)
  * {
  *   std::size_t bytes_transferred = 0;
  *
@@ -74,10 +74,10 @@ struct awaitable_signature<awaitable<void, Executor>>
  *     for (;;)
  *     {
  *       std::size_t n = co_await socket.async_read_some(
- *           ASIO_NAMESPACE::buffer(data), ASIO_NAMESPACE::use_awaitable);
+ *           ModioAsio::buffer(data), ModioAsio::use_awaitable);
  *
- *       co_await ASIO_NAMESPACE::async_write(socket,
- *           ASIO_NAMESPACE::buffer(data, n), ASIO_NAMESPACE::use_awaitable);
+ *       co_await ModioAsio::async_write(socket,
+ *           ModioAsio::buffer(data, n), ModioAsio::use_awaitable);
  *
  *       bytes_transferred += n;
  *     }
@@ -91,7 +91,7 @@ struct awaitable_signature<awaitable<void, Executor>>
  *
  * // ...
  *
- * ASIO_NAMESPACE::co_spawn(my_executor,
+ * ModioAsio::co_spawn(my_executor,
  *   echo(std::move(my_tcp_socket)),
  *   [](std::exception_ptr e, std::size_t n)
  *   {
@@ -102,7 +102,7 @@ struct awaitable_signature<awaitable<void, Executor>>
  * @par Per-Operation Cancellation
  * The new thread of execution is created with a cancellation state that
  * supports @c cancellation_type::terminal values only. To change the
- * cancellation state, call ASIO_NAMESPACE::this_coro::reset_cancellation_state.
+ * cancellation state, call ModioAsio::this_coro::reset_cancellation_state.
  */
 template <typename Executor, typename T, typename AwaitableExecutor,
     ASIO_COMPLETION_TOKEN_FOR(
@@ -123,7 +123,7 @@ co_spawn(const Executor& ex, awaitable<T, AwaitableExecutor> a,
  * @param ex The executor that will be used to schedule the new thread of
  * execution.
  *
- * @param a The ASIO_NAMESPACE::awaitable object that is the result of calling the
+ * @param a The ModioAsio::awaitable object that is the result of calling the
  * coroutine's entry point function.
  *
  * @param token The @ref completion_token that will handle the notification that
@@ -136,7 +136,7 @@ co_spawn(const Executor& ex, awaitable<T, AwaitableExecutor> a,
  *
  * @par Example
  * @code
- * ASIO_NAMESPACE::awaitable<void> echo(tcp::socket socket)
+ * ModioAsio::awaitable<void> echo(tcp::socket socket)
  * {
  *   try
  *   {
@@ -144,10 +144,10 @@ co_spawn(const Executor& ex, awaitable<T, AwaitableExecutor> a,
  *     for (;;)
  *     {
  *       std::size_t n = co_await socket.async_read_some(
- *           ASIO_NAMESPACE::buffer(data), ASIO_NAMESPACE::use_awaitable);
+ *           ModioAsio::buffer(data), ModioAsio::use_awaitable);
  *
- *       co_await ASIO_NAMESPACE::async_write(socket,
- *           ASIO_NAMESPACE::buffer(data, n), ASIO_NAMESPACE::use_awaitable);
+ *       co_await ModioAsio::async_write(socket,
+ *           ModioAsio::buffer(data, n), ModioAsio::use_awaitable);
  *     }
  *   }
  *   catch (const std::exception& e)
@@ -158,15 +158,15 @@ co_spawn(const Executor& ex, awaitable<T, AwaitableExecutor> a,
  *
  * // ...
  *
- * ASIO_NAMESPACE::co_spawn(my_executor,
+ * ModioAsio::co_spawn(my_executor,
  *   echo(std::move(my_tcp_socket)),
- *   ASIO_NAMESPACE::detached);
+ *   ModioAsio::detached);
  * @endcode
  *
  * @par Per-Operation Cancellation
  * The new thread of execution is created with a cancellation state that
  * supports @c cancellation_type::terminal values only. To change the
- * cancellation state, call ASIO_NAMESPACE::this_coro::reset_cancellation_state.
+ * cancellation state, call ModioAsio::this_coro::reset_cancellation_state.
  */
 template <typename Executor, typename AwaitableExecutor,
     ASIO_COMPLETION_TOKEN_FOR(
@@ -187,7 +187,7 @@ co_spawn(const Executor& ex, awaitable<void, AwaitableExecutor> a,
  * @param ctx An execution context that will provide the executor to be used to
  * schedule the new thread of execution.
  *
- * @param a The ASIO_NAMESPACE::awaitable object that is the result of calling the
+ * @param a The ModioAsio::awaitable object that is the result of calling the
  * coroutine's entry point function.
  *
  * @param token The @ref completion_token that will handle the notification that
@@ -200,7 +200,7 @@ co_spawn(const Executor& ex, awaitable<void, AwaitableExecutor> a,
  *
  * @par Example
  * @code
- * ASIO_NAMESPACE::awaitable<std::size_t> echo(tcp::socket socket)
+ * ModioAsio::awaitable<std::size_t> echo(tcp::socket socket)
  * {
  *   std::size_t bytes_transferred = 0;
  *
@@ -210,10 +210,10 @@ co_spawn(const Executor& ex, awaitable<void, AwaitableExecutor> a,
  *     for (;;)
  *     {
  *       std::size_t n = co_await socket.async_read_some(
- *           ASIO_NAMESPACE::buffer(data), ASIO_NAMESPACE::use_awaitable);
+ *           ModioAsio::buffer(data), ModioAsio::use_awaitable);
  *
- *       co_await ASIO_NAMESPACE::async_write(socket,
- *           ASIO_NAMESPACE::buffer(data, n), ASIO_NAMESPACE::use_awaitable);
+ *       co_await ModioAsio::async_write(socket,
+ *           ModioAsio::buffer(data, n), ModioAsio::use_awaitable);
  *
  *       bytes_transferred += n;
  *     }
@@ -227,7 +227,7 @@ co_spawn(const Executor& ex, awaitable<void, AwaitableExecutor> a,
  *
  * // ...
  *
- * ASIO_NAMESPACE::co_spawn(my_io_context,
+ * ModioAsio::co_spawn(my_io_context,
  *   echo(std::move(my_tcp_socket)),
  *   [](std::exception_ptr e, std::size_t n)
  *   {
@@ -238,7 +238,7 @@ co_spawn(const Executor& ex, awaitable<void, AwaitableExecutor> a,
  * @par Per-Operation Cancellation
  * The new thread of execution is created with a cancellation state that
  * supports @c cancellation_type::terminal values only. To change the
- * cancellation state, call ASIO_NAMESPACE::this_coro::reset_cancellation_state.
+ * cancellation state, call ModioAsio::this_coro::reset_cancellation_state.
  */
 template <typename ExecutionContext, typename T, typename AwaitableExecutor,
     ASIO_COMPLETION_TOKEN_FOR(
@@ -262,7 +262,7 @@ co_spawn(ExecutionContext& ctx, awaitable<T, AwaitableExecutor> a,
  * @param ctx An execution context that will provide the executor to be used to
  * schedule the new thread of execution.
  *
- * @param a The ASIO_NAMESPACE::awaitable object that is the result of calling the
+ * @param a The ModioAsio::awaitable object that is the result of calling the
  * coroutine's entry point function.
  *
  * @param token The @ref completion_token that will handle the notification that
@@ -275,7 +275,7 @@ co_spawn(ExecutionContext& ctx, awaitable<T, AwaitableExecutor> a,
  *
  * @par Example
  * @code
- * ASIO_NAMESPACE::awaitable<void> echo(tcp::socket socket)
+ * ModioAsio::awaitable<void> echo(tcp::socket socket)
  * {
  *   try
  *   {
@@ -283,10 +283,10 @@ co_spawn(ExecutionContext& ctx, awaitable<T, AwaitableExecutor> a,
  *     for (;;)
  *     {
  *       std::size_t n = co_await socket.async_read_some(
- *           ASIO_NAMESPACE::buffer(data), ASIO_NAMESPACE::use_awaitable);
+ *           ModioAsio::buffer(data), ModioAsio::use_awaitable);
  *
- *       co_await ASIO_NAMESPACE::async_write(socket,
- *           ASIO_NAMESPACE::buffer(data, n), ASIO_NAMESPACE::use_awaitable);
+ *       co_await ModioAsio::async_write(socket,
+ *           ModioAsio::buffer(data, n), ModioAsio::use_awaitable);
  *     }
  *   }
  *   catch (const std::exception& e)
@@ -297,15 +297,15 @@ co_spawn(ExecutionContext& ctx, awaitable<T, AwaitableExecutor> a,
  *
  * // ...
  *
- * ASIO_NAMESPACE::co_spawn(my_io_context,
+ * ModioAsio::co_spawn(my_io_context,
  *   echo(std::move(my_tcp_socket)),
- *   ASIO_NAMESPACE::detached);
+ *   ModioAsio::detached);
  * @endcode
  *
  * @par Per-Operation Cancellation
  * The new thread of execution is created with a cancellation state that
  * supports @c cancellation_type::terminal values only. To change the
- * cancellation state, call ASIO_NAMESPACE::this_coro::reset_cancellation_state.
+ * cancellation state, call ModioAsio::this_coro::reset_cancellation_state.
  */
 template <typename ExecutionContext, typename AwaitableExecutor,
     ASIO_COMPLETION_TOKEN_FOR(
@@ -330,7 +330,7 @@ co_spawn(ExecutionContext& ctx, awaitable<void, AwaitableExecutor> a,
  * execution.
  *
  * @param f A nullary function object with a return type of the form
- * @c ASIO_NAMESPACE::awaitable<R,E> that will be used as the coroutine's entry
+ * @c ModioAsio::awaitable<R,E> that will be used as the coroutine's entry
  * point.
  *
  * @param token The @ref completion_token that will handle the notification
@@ -345,11 +345,11 @@ co_spawn(ExecutionContext& ctx, awaitable<void, AwaitableExecutor> a,
  * @code void(std::exception_ptr, R) @endcode
  * where @c R is the first template argument to the @c awaitable returned by the
  * supplied function object @c F:
- * @code ASIO_NAMESPACE::awaitable<R, AwaitableExecutor> F() @endcode
+ * @code ModioAsio::awaitable<R, AwaitableExecutor> F() @endcode
  *
  * @par Example
  * @code
- * ASIO_NAMESPACE::awaitable<std::size_t> echo(tcp::socket socket)
+ * ModioAsio::awaitable<std::size_t> echo(tcp::socket socket)
  * {
  *   std::size_t bytes_transferred = 0;
  *
@@ -359,10 +359,10 @@ co_spawn(ExecutionContext& ctx, awaitable<void, AwaitableExecutor> a,
  *     for (;;)
  *     {
  *       std::size_t n = co_await socket.async_read_some(
- *           ASIO_NAMESPACE::buffer(data), ASIO_NAMESPACE::use_awaitable);
+ *           ModioAsio::buffer(data), ModioAsio::use_awaitable);
  *
- *       co_await ASIO_NAMESPACE::async_write(socket,
- *           ASIO_NAMESPACE::buffer(data, n), ASIO_NAMESPACE::use_awaitable);
+ *       co_await ModioAsio::async_write(socket,
+ *           ModioAsio::buffer(data, n), ModioAsio::use_awaitable);
  *
  *       bytes_transferred += n;
  *     }
@@ -376,9 +376,9 @@ co_spawn(ExecutionContext& ctx, awaitable<void, AwaitableExecutor> a,
  *
  * // ...
  *
- * ASIO_NAMESPACE::co_spawn(my_executor,
+ * ModioAsio::co_spawn(my_executor,
  *   [socket = std::move(my_tcp_socket)]() mutable
- *     -> ASIO_NAMESPACE::awaitable<void>
+ *     -> ModioAsio::awaitable<void>
  *   {
  *     try
  *     {
@@ -386,23 +386,23 @@ co_spawn(ExecutionContext& ctx, awaitable<void, AwaitableExecutor> a,
  *       for (;;)
  *       {
  *         std::size_t n = co_await socket.async_read_some(
- *             ASIO_NAMESPACE::buffer(data), ASIO_NAMESPACE::use_awaitable);
+ *             ModioAsio::buffer(data), ModioAsio::use_awaitable);
  *
- *         co_await ASIO_NAMESPACE::async_write(socket,
- *             ASIO_NAMESPACE::buffer(data, n), ASIO_NAMESPACE::use_awaitable);
+ *         co_await ModioAsio::async_write(socket,
+ *             ModioAsio::buffer(data, n), ModioAsio::use_awaitable);
  *       }
  *     }
  *     catch (const std::exception& e)
  *     {
  *       std::cerr << "Exception: " << e.what() << "\n";
  *     }
- *   }, ASIO_NAMESPACE::detached);
+ *   }, ModioAsio::detached);
  * @endcode
  *
  * @par Per-Operation Cancellation
  * The new thread of execution is created with a cancellation state that
  * supports @c cancellation_type::terminal values only. To change the
- * cancellation state, call ASIO_NAMESPACE::this_coro::reset_cancellation_state.
+ * cancellation state, call ModioAsio::this_coro::reset_cancellation_state.
  */
 template <typename Executor, typename F,
     ASIO_COMPLETION_TOKEN_FOR(typename detail::awaitable_signature<
@@ -423,7 +423,7 @@ co_spawn(const Executor& ex, F&& f,
  * schedule the new thread of execution.
  *
  * @param f A nullary function object with a return type of the form
- * @c ASIO_NAMESPACE::awaitable<R,E> that will be used as the coroutine's entry
+ * @c ModioAsio::awaitable<R,E> that will be used as the coroutine's entry
  * point.
  *
  * @param token The @ref completion_token that will handle the notification
@@ -438,11 +438,11 @@ co_spawn(const Executor& ex, F&& f,
  * @code void(std::exception_ptr, R) @endcode
  * where @c R is the first template argument to the @c awaitable returned by the
  * supplied function object @c F:
- * @code ASIO_NAMESPACE::awaitable<R, AwaitableExecutor> F() @endcode
+ * @code ModioAsio::awaitable<R, AwaitableExecutor> F() @endcode
  *
  * @par Example
  * @code
- * ASIO_NAMESPACE::awaitable<std::size_t> echo(tcp::socket socket)
+ * ModioAsio::awaitable<std::size_t> echo(tcp::socket socket)
  * {
  *   std::size_t bytes_transferred = 0;
  *
@@ -452,10 +452,10 @@ co_spawn(const Executor& ex, F&& f,
  *     for (;;)
  *     {
  *       std::size_t n = co_await socket.async_read_some(
- *           ASIO_NAMESPACE::buffer(data), ASIO_NAMESPACE::use_awaitable);
+ *           ModioAsio::buffer(data), ModioAsio::use_awaitable);
  *
- *       co_await ASIO_NAMESPACE::async_write(socket,
- *           ASIO_NAMESPACE::buffer(data, n), ASIO_NAMESPACE::use_awaitable);
+ *       co_await ModioAsio::async_write(socket,
+ *           ModioAsio::buffer(data, n), ModioAsio::use_awaitable);
  *
  *       bytes_transferred += n;
  *     }
@@ -469,9 +469,9 @@ co_spawn(const Executor& ex, F&& f,
  *
  * // ...
  *
- * ASIO_NAMESPACE::co_spawn(my_io_context,
+ * ModioAsio::co_spawn(my_io_context,
  *   [socket = std::move(my_tcp_socket)]() mutable
- *     -> ASIO_NAMESPACE::awaitable<void>
+ *     -> ModioAsio::awaitable<void>
  *   {
  *     try
  *     {
@@ -479,23 +479,23 @@ co_spawn(const Executor& ex, F&& f,
  *       for (;;)
  *       {
  *         std::size_t n = co_await socket.async_read_some(
- *             ASIO_NAMESPACE::buffer(data), ASIO_NAMESPACE::use_awaitable);
+ *             ModioAsio::buffer(data), ModioAsio::use_awaitable);
  *
- *         co_await ASIO_NAMESPACE::async_write(socket,
- *             ASIO_NAMESPACE::buffer(data, n), ASIO_NAMESPACE::use_awaitable);
+ *         co_await ModioAsio::async_write(socket,
+ *             ModioAsio::buffer(data, n), ModioAsio::use_awaitable);
  *       }
  *     }
  *     catch (const std::exception& e)
  *     {
  *       std::cerr << "Exception: " << e.what() << "\n";
  *     }
- *   }, ASIO_NAMESPACE::detached);
+ *   }, ModioAsio::detached);
  * @endcode
  *
  * @par Per-Operation Cancellation
  * The new thread of execution is created with a cancellation state that
  * supports @c cancellation_type::terminal values only. To change the
- * cancellation state, call ASIO_NAMESPACE::this_coro::reset_cancellation_state.
+ * cancellation state, call ModioAsio::this_coro::reset_cancellation_state.
  */
 template <typename ExecutionContext, typename F,
     ASIO_COMPLETION_TOKEN_FOR(typename detail::awaitable_signature<
@@ -512,7 +512,7 @@ co_spawn(ExecutionContext& ctx, F&& f,
       is_convertible<ExecutionContext&, execution_context&>::value
     >::type = 0);
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

@@ -25,7 +25,7 @@
 
 #if defined(GENERATING_DOCUMENTATION)
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace execution {
 
 /// A customisation point that delivers a value to a receiver.
@@ -65,18 +65,18 @@ struct can_set_value :
 };
 
 } // namespace execution
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #else // defined(GENERATING_DOCUMENTATION)
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace asio_execution_set_value_fn {
 
-using ASIO_NAMESPACE::decay;
-using ASIO_NAMESPACE::declval;
-using ASIO_NAMESPACE::enable_if;
-using ASIO_NAMESPACE::traits::set_value_free;
-using ASIO_NAMESPACE::traits::set_value_member;
+using ModioAsio::decay;
+using ModioAsio::declval;
+using ModioAsio::enable_if;
+using ModioAsio::traits::set_value_free;
+using ModioAsio::traits::set_value_member;
 
 void set_value();
 
@@ -383,8 +383,8 @@ template <typename T>
 const T static_instance<T>::instance = {};
 
 } // namespace asio_execution_set_value_fn
-} // namespace ASIO_NAMESPACE
-namespace ASIO_NAMESPACE {
+} // namespace ModioAsio
+namespace ModioAsio {
 namespace execution {
 namespace {
 
@@ -476,7 +476,7 @@ ASIO_VARIADIC_GENERATE(ASIO_PRIVATE_SET_VALUE_TRAITS_DEF)
 #endif // defined(ASIO_HAS_VARIADIC_TEMPLATES)
 
 } // namespace execution
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #endif // defined(GENERATING_DOCUMENTATION)
 

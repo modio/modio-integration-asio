@@ -20,7 +20,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace experimental {
 
 template <typename Yield, typename Return, typename Executor>
@@ -90,26 +90,26 @@ template <typename T>
 struct coro_error;
 
 template <>
-struct coro_error<ASIO_NAMESPACE::error_code>
+struct coro_error<ModioAsio::error_code>
 {
-  static ASIO_NAMESPACE::error_code invalid()
+  static ModioAsio::error_code invalid()
   {
-    return ASIO_NAMESPACE::error::fault;
+    return ModioAsio::error::fault;
   }
 
-  static ASIO_NAMESPACE::error_code cancelled()
+  static ModioAsio::error_code cancelled()
   {
-    return ASIO_NAMESPACE::error::operation_aborted;
+    return ModioAsio::error::operation_aborted;
   }
 
-  static ASIO_NAMESPACE::error_code interrupted()
+  static ModioAsio::error_code interrupted()
   {
-    return ASIO_NAMESPACE::error::interrupted;
+    return ModioAsio::error::interrupted;
   }
 
-  static ASIO_NAMESPACE::error_code done()
+  static ModioAsio::error_code done()
   {
-    return ASIO_NAMESPACE::error::broken_pipe;
+    return ModioAsio::error::broken_pipe;
   }
 };
 
@@ -119,29 +119,29 @@ struct coro_error<std::exception_ptr>
   static std::exception_ptr invalid()
   {
     return std::make_exception_ptr(
-        ASIO_NAMESPACE::system_error(
-          coro_error<ASIO_NAMESPACE::error_code>::invalid()));
+        ModioAsio::system_error(
+          coro_error<ModioAsio::error_code>::invalid()));
   }
 
   static std::exception_ptr cancelled()
   {
     return std::make_exception_ptr(
-        ASIO_NAMESPACE::system_error(
-          coro_error<ASIO_NAMESPACE::error_code>::cancelled()));
+        ModioAsio::system_error(
+          coro_error<ModioAsio::error_code>::cancelled()));
   }
 
   static std::exception_ptr interrupted()
   {
     return std::make_exception_ptr(
-        ASIO_NAMESPACE::system_error(
-          coro_error<ASIO_NAMESPACE::error_code>::interrupted()));
+        ModioAsio::system_error(
+          coro_error<ModioAsio::error_code>::interrupted()));
   }
 
   static std::exception_ptr done()
   {
     return std::make_exception_ptr(
-        ASIO_NAMESPACE::system_error(
-          coro_error<ASIO_NAMESPACE::error_code>::done()));
+        ModioAsio::system_error(
+          coro_error<ModioAsio::error_code>::done()));
   }
 };
 
@@ -170,8 +170,8 @@ struct coro_with_arg
         if ((hp.cancel->state.cancelled() != cancellation_type::none)
             && hp.cancel->throw_if_cancelled_)
         {
-          ASIO_NAMESPACE::detail::throw_error(
-              ASIO_NAMESPACE::error::operation_aborted, "coro-cancelled");
+          ModioAsio::detail::throw_error(
+              ModioAsio::error::operation_aborted, "coro-cancelled");
         }
       }
 
@@ -187,7 +187,7 @@ struct coro_with_arg
       {
         coro.coro_->awaited_from =
           dispatch_coroutine(
-              ASIO_NAMESPACE::prefer(hp.get_executor(),
+              ModioAsio::prefer(hp.get_executor(),
                 execution::outstanding_work.tracked),
                 [h]() mutable { h.resume(); });
 
@@ -212,7 +212,7 @@ struct coro_with_arg
 
           void operator()(cancellation_type ct)
           {
-            ASIO_NAMESPACE::dispatch(e, [ct, st = st]() mutable
+            ModioAsio::dispatch(e, [ct, st = st]() mutable
             {
               auto & [sig, state] = *st;
               sig.emit(ct);
@@ -678,7 +678,7 @@ struct coro_promise final :
   {
     struct exec_helper
     {
-      const ASIO_NAMESPACE::cancellation_state& value;
+      const ModioAsio::cancellation_state& value;
 
       constexpr static bool await_ready() noexcept
       {
@@ -689,7 +689,7 @@ struct coro_promise final :
       {
       }
 
-      ASIO_NAMESPACE::cancellation_state await_resume() const noexcept
+      ModioAsio::cancellation_state await_resume() const noexcept
       {
         return value;
       }
@@ -878,8 +878,8 @@ struct coro_promise final :
       if ((cancel->state.cancelled() != cancellation_type::none)
           && cancel->throw_if_cancelled_)
       {
-        ASIO_NAMESPACE::detail::throw_error(
-            ASIO_NAMESPACE::error::operation_aborted, "coro-cancelled");
+        ModioAsio::detail::throw_error(
+            ModioAsio::error::operation_aborted, "coro-cancelled");
       }
       return std::move(kr).as_throwing(cancel->state.slot());
     }
@@ -907,8 +907,8 @@ struct coro<Yield, Return, Executor>::awaitable_t
       if ((hp.cancel->state.cancelled() != cancellation_type::none)
           && hp.cancel->throw_if_cancelled_)
       {
-        ASIO_NAMESPACE::detail::throw_error(
-            ASIO_NAMESPACE::error::operation_aborted, "coro-cancelled");
+        ModioAsio::detail::throw_error(
+            ModioAsio::error::operation_aborted, "coro-cancelled");
       }
     }
 
@@ -923,7 +923,7 @@ struct coro<Yield, Return, Executor>::awaitable_t
     else
     {
       coro_.coro_->awaited_from = detail::dispatch_coroutine(
-          ASIO_NAMESPACE::prefer(hp.get_executor(),
+          ModioAsio::prefer(hp.get_executor(),
             execution::outstanding_work.tracked),
           [h]() mutable
           {
@@ -949,7 +949,7 @@ struct coro<Yield, Return, Executor>::awaitable_t
 
         void operator()(cancellation_type ct)
         {
-          ASIO_NAMESPACE::dispatch(e,
+          ModioAsio::dispatch(e,
               [ct, st = st]() mutable
               {
                 auto & [sig, state] = *st;
@@ -1054,7 +1054,7 @@ struct coro<Yield, Return, Executor>::initiate_async_resume
     {
       if (!coro)
       {
-        ASIO_NAMESPACE::post(exec,
+        ModioAsio::post(exec,
             [h = std::move(h)]() mutable
             {
               h(detail::coro_error<error_type>::invalid());
@@ -1065,7 +1065,7 @@ struct coro<Yield, Return, Executor>::initiate_async_resume
       auto ch = detail::coroutine_handle<promise_type>::from_promise(*coro);
       if (!ch)
       {
-        ASIO_NAMESPACE::post(exec,
+        ModioAsio::post(exec,
             [h = std::move(h)]() mutable
             {
               h(detail::coro_error<error_type>::invalid());
@@ -1073,7 +1073,7 @@ struct coro<Yield, Return, Executor>::initiate_async_resume
       }
       else if (ch.done())
       {
-        ASIO_NAMESPACE::post(exec,
+        ModioAsio::post(exec,
             [h = std::move(h)]() mutable
             {
               h(detail::coro_error<error_type>::done());
@@ -1104,7 +1104,7 @@ struct coro<Yield, Return, Executor>::initiate_async_resume
     {
       if (!coro)
       {
-        ASIO_NAMESPACE::post(exec,
+        ModioAsio::post(exec,
             [h = std::move(h)]() mutable
             {
               h(detail::coro_error<error_type>::invalid(), result_type{});
@@ -1116,7 +1116,7 @@ struct coro<Yield, Return, Executor>::initiate_async_resume
         detail::coroutine_handle<promise_type>::from_promise(*coro);
       if (!ch)
       {
-        ASIO_NAMESPACE::post(exec,
+        ModioAsio::post(exec,
             [h = std::move(h)]() mutable
             {
               h(detail::coro_error<error_type>::invalid(), result_type{});
@@ -1124,7 +1124,7 @@ struct coro<Yield, Return, Executor>::initiate_async_resume
       }
       else if (ch.done())
       {
-        ASIO_NAMESPACE::post(exec,
+        ModioAsio::post(exec,
             [h = std::move(h)]() mutable
             {
               h(detail::coro_error<error_type>::done(), result_type{});
@@ -1149,14 +1149,14 @@ struct coro<Yield, Return, Executor>::initiate_async_resume
   template <typename WaitHandler>
   void operator()(WaitHandler&& handler)
   {
-    const auto exec = ASIO_NAMESPACE::prefer(
+    const auto exec = ModioAsio::prefer(
         get_associated_executor(handler, get_executor()),
         execution::outstanding_work.tracked);
 
     coro_->cancel = &coro_->cancel_source.emplace();
     coro_->cancel->state = cancellation_state(
         coro_->cancel->slot = get_associated_cancellation_slot(handler));
-    ASIO_NAMESPACE::dispatch(get_executor(),
+    ModioAsio::dispatch(get_executor(),
         handle(exec, std::forward<WaitHandler>(handler),
           std::integral_constant<bool, is_noexcept>{},
           std::is_void<result_type>{}));
@@ -1165,14 +1165,14 @@ struct coro<Yield, Return, Executor>::initiate_async_resume
   template <typename WaitHandler, typename Input>
   void operator()(WaitHandler&& handler, Input&& input)
   {
-    const auto exec = ASIO_NAMESPACE::prefer(
+    const auto exec = ModioAsio::prefer(
         get_associated_executor(handler, get_executor()),
         execution::outstanding_work.tracked);
 
     coro_->cancel = &coro_->cancel_source.emplace();
     coro_->cancel->state = cancellation_state(
         coro_->cancel->slot = get_associated_cancellation_slot(handler));
-    ASIO_NAMESPACE::dispatch(get_executor(),
+    ModioAsio::dispatch(get_executor(),
         [h = handle(exec, std::forward<WaitHandler>(handler),
             std::integral_constant<bool, is_noexcept>{},
             std::is_void<result_type>{}),
@@ -1188,7 +1188,7 @@ private:
 };
 
 } // namespace experimental
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

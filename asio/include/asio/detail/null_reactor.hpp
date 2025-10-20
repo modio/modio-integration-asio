@@ -27,7 +27,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 class null_reactor
@@ -40,7 +40,7 @@ public:
   };
 
   // Constructor.
-  null_reactor(ASIO_NAMESPACE::execution_context& ctx)
+  null_reactor(ModioAsio::execution_context& ctx)
     : execution_context_service_base<null_reactor>(ctx)
   {
   }
@@ -72,7 +72,7 @@ public:
 };
 
 } // namespace detail
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

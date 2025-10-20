@@ -25,7 +25,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 
 inline thread_pool::executor_type
 thread_pool::get_executor() ASIO_NOEXCEPT
@@ -118,7 +118,7 @@ void thread_pool::basic_executor_type<Allocator,
 #endif // defined(ASIO_HAS_STD_EXCEPTION_PTR)
        //   && !defined(ASIO_NO_EXCEPTIONS)
       detail::fenced_block b(detail::fenced_block::full);
-      ASIO_NAMESPACE::asio_handler_invoke_helpers::invoke(tmp, tmp);
+      ModioAsio::asio_handler_invoke_helpers::invoke(tmp, tmp);
       return;
 #if defined(ASIO_HAS_STD_EXCEPTION_PTR) \
   && !defined(ASIO_NO_EXCEPTIONS)
@@ -170,7 +170,7 @@ void thread_pool::basic_executor_type<Allocator,
     {
 #endif // !defined(ASIO_NO_EXCEPTIONS)
       detail::fenced_block b(detail::fenced_block::full);
-      ASIO_NAMESPACE::asio_handler_invoke_helpers::invoke(f2.value, f2.value);
+      ModioAsio::asio_handler_invoke_helpers::invoke(f2.value, f2.value);
       return;
 #if !defined(ASIO_NO_EXCEPTIONS)
     }
@@ -292,7 +292,7 @@ void thread_pool::basic_executor_type<Allocator, Bits>::dispatch(
     function_type tmp(ASIO_MOVE_CAST(Function)(f));
 
     detail::fenced_block b(detail::fenced_block::full);
-    ASIO_NAMESPACE::asio_handler_invoke_helpers::invoke(tmp, tmp);
+    ModioAsio::asio_handler_invoke_helpers::invoke(tmp, tmp);
     return;
   }
 
@@ -347,7 +347,7 @@ void thread_pool::basic_executor_type<Allocator, Bits>::defer(
 }
 #endif // !defined(ASIO_NO_TS_EXECUTORS)
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

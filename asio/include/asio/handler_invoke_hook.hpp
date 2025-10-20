@@ -19,9 +19,9 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 
-/** @defgroup asio_handler_invoke ASIO_NAMESPACE::asio_handler_invoke
+/** @defgroup asio_handler_invoke ModioAsio::asio_handler_invoke
  *
  * @brief (Deprecated: Use the associated_executor trait.) Default invoke
  * function for handlers.
@@ -104,7 +104,7 @@ asio_handler_invoke(const Function& function, ...)
 
 /*@}*/
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

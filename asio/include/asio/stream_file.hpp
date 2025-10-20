@@ -22,12 +22,12 @@
 
 #include "asio/basic_stream_file.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 
 /// Typedef for the typical usage of a stream-oriented file.
 typedef basic_stream_file<> stream_file;
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #endif // defined(ASIO_HAS_FILE)
        //   || defined(GENERATING_DOCUMENTATION)

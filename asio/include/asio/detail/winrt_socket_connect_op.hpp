@@ -31,7 +31,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 template <typename Handler, typename IoExecutor>
@@ -49,11 +49,11 @@ public:
   }
 
   static void do_complete(void* owner, operation* base,
-      const ASIO_NAMESPACE::error_code&, std::size_t)
+      const ModioAsio::error_code&, std::size_t)
   {
     // Take ownership of the operation object.
     winrt_socket_connect_op* o(static_cast<winrt_socket_connect_op*>(base));
-    ptr p = { ASIO_NAMESPACE::detail::addressof(o->handler_), o, o };
+    ptr p = { ModioAsio::detail::addressof(o->handler_), o, o };
 
     ASIO_HANDLER_COMPLETION((*o));
 
@@ -68,9 +68,9 @@ public:
     // with the handler. Consequently, a local copy of the handler is required
     // to ensure that any owning sub-object remains valid until after we have
     // deallocated the memory here.
-    detail::binder1<Handler, ASIO_NAMESPACE::error_code>
+    detail::binder1<Handler, ModioAsio::error_code>
       handler(o->handler_, o->ec_);
-    p.h = ASIO_NAMESPACE::detail::addressof(handler.handler_);
+    p.h = ModioAsio::detail::addressof(handler.handler_);
     p.reset();
 
     // Make the upcall if required.
@@ -89,7 +89,7 @@ private:
 };
 
 } // namespace detail
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

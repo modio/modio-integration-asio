@@ -23,7 +23,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 timer_queue<time_traits<boost::posix_time::ptime> >::timer_queue()
@@ -88,7 +88,7 @@ void timer_queue<time_traits<boost::posix_time::ptime> >::move_timer(
 }
 
 } // namespace detail
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

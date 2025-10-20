@@ -29,14 +29,14 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 template <typename MutableBufferSequence>
 class descriptor_read_op_base : public reactor_op
 {
 public:
-  descriptor_read_op_base(const ASIO_NAMESPACE::error_code& success_ec,
+  descriptor_read_op_base(const ModioAsio::error_code& success_ec,
       int descriptor, const MutableBufferSequence& buffers,
       func_type complete_func)
     : reactor_op(success_ec,
@@ -50,7 +50,7 @@ public:
   {
     descriptor_read_op_base* o(static_cast<descriptor_read_op_base*>(base));
 
-    typedef buffer_sequence_adapter<ASIO_NAMESPACE::mutable_buffer,
+    typedef buffer_sequence_adapter<ModioAsio::mutable_buffer,
         MutableBufferSequence> bufs_type;
 
     status result;
@@ -87,7 +87,7 @@ class descriptor_read_op
 public:
   ASIO_DEFINE_HANDLER_PTR(descriptor_read_op);
 
-  descriptor_read_op(const ASIO_NAMESPACE::error_code& success_ec,
+  descriptor_read_op(const ModioAsio::error_code& success_ec,
       int descriptor, const MutableBufferSequence& buffers,
       Handler& handler, const IoExecutor& io_ex)
     : descriptor_read_op_base<MutableBufferSequence>(success_ec,
@@ -98,12 +98,12 @@ public:
   }
 
   static void do_complete(void* owner, operation* base,
-      const ASIO_NAMESPACE::error_code& /*ec*/,
+      const ModioAsio::error_code& /*ec*/,
       std::size_t /*bytes_transferred*/)
   {
     // Take ownership of the handler object.
     descriptor_read_op* o(static_cast<descriptor_read_op*>(base));
-    ptr p = { ASIO_NAMESPACE::detail::addressof(o->handler_), o, o };
+    ptr p = { ModioAsio::detail::addressof(o->handler_), o, o };
 
     ASIO_HANDLER_COMPLETION((*o));
 
@@ -120,9 +120,9 @@ public:
     // with the handler. Consequently, a local copy of the handler is required
     // to ensure that any owning sub-object remains valid until after we have
     // deallocated the memory here.
-    detail::binder2<Handler, ASIO_NAMESPACE::error_code, std::size_t>
+    detail::binder2<Handler, ModioAsio::error_code, std::size_t>
       handler(o->handler_, o->ec_, o->bytes_transferred_);
-    p.h = ASIO_NAMESPACE::detail::addressof(handler.handler_);
+    p.h = ModioAsio::detail::addressof(handler.handler_);
     p.reset();
 
     // Make the upcall if required.
@@ -141,7 +141,7 @@ private:
 };
 
 } // namespace detail
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

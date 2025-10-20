@@ -69,10 +69,10 @@ public:
   }
 
   // Obtain buffers for reading from or writing to a socket.
-  boost::array<ASIO_NAMESPACE::mutable_buffer, 1> to_buffers()
+  boost::array<ModioAsio::mutable_buffer, 1> to_buffers()
   {
-    boost::array<ASIO_NAMESPACE::mutable_buffer, 1> buffers
-      = { { ASIO_NAMESPACE::buffer(data_) } };
+    boost::array<ModioAsio::mutable_buffer, 1> buffers
+      = { { ModioAsio::buffer(data_) } };
     return buffers;
   }
 
@@ -134,10 +134,10 @@ public:
   }
 
   // Obtain buffers for reading from or writing to a socket.
-  boost::array<ASIO_NAMESPACE::mutable_buffer, 1> to_buffers()
+  boost::array<ModioAsio::mutable_buffer, 1> to_buffers()
   {
-    boost::array<ASIO_NAMESPACE::mutable_buffer, 1> buffers
-      = { { ASIO_NAMESPACE::buffer(data_) } };
+    boost::array<ModioAsio::mutable_buffer, 1> buffers
+      = { { ModioAsio::buffer(data_) } };
     return buffers;
   }
 

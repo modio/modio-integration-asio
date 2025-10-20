@@ -24,7 +24,7 @@
 // Calls to asio_handler_is_continuation must be made from a namespace that
 // does not contain overloads of this function. This namespace is defined here
 // for that purpose.
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace asio_handler_cont_helpers {
 
 template <typename Context>
@@ -33,14 +33,14 @@ inline bool is_continuation(Context& context)
 #if !defined(ASIO_HAS_HANDLER_HOOKS)
   return false;
 #else
-  using ASIO_NAMESPACE::asio_handler_is_continuation;
+  using ModioAsio::asio_handler_is_continuation;
   return asio_handler_is_continuation(
-      ASIO_NAMESPACE::detail::addressof(context));
+      ModioAsio::detail::addressof(context));
 #endif
 }
 
 } // namespace asio_handler_cont_helpers
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

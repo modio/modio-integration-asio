@@ -27,7 +27,7 @@
 # include "asio/detail/pipe_select_interrupter.hpp"
 #endif
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 #if defined(ASIO_WINDOWS) || defined(__CYGWIN__) || defined(__SYMBIAN32__) || defined(ASIO_USE_SOCKET_SELECT)
@@ -39,7 +39,7 @@ typedef pipe_select_interrupter select_interrupter;
 #endif
 
 } // namespace detail
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #endif // !defined(ASIO_WINDOWS_RUNTIME)
 

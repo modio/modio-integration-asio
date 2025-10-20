@@ -25,12 +25,12 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace generic {
 
 /// Encapsulates the flags needed for a generic sequenced packet socket.
 /**
- * The ASIO_NAMESPACE::generic::seq_packet_protocol class contains flags necessary
+ * The ModioAsio::generic::seq_packet_protocol class contains flags necessary
  * for seq_packet-oriented sockets of any address family and protocol.
  *
  * @par Examples
@@ -67,7 +67,7 @@ public:
     if (source_protocol.type() != type())
     {
       std::bad_cast ex;
-      ASIO_NAMESPACE::detail::throw_exception(ex);
+      ModioAsio::detail::throw_exception(ex);
     }
   }
 
@@ -115,7 +115,7 @@ private:
 };
 
 } // namespace generic
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

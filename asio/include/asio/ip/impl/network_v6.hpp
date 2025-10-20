@@ -21,19 +21,19 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace ip {
 
 template <typename Elem, typename Traits>
 std::basic_ostream<Elem, Traits>& operator<<(
     std::basic_ostream<Elem, Traits>& os, const network_v6& addr)
 {
-  ASIO_NAMESPACE::error_code ec;
+  ModioAsio::error_code ec;
   std::string s = addr.to_string(ec);
   if (ec)
   {
     if (os.exceptions() & std::basic_ostream<Elem, Traits>::failbit)
-      ASIO_NAMESPACE::detail::throw_error(ec);
+      ModioAsio::detail::throw_error(ec);
     else
       os.setstate(std::basic_ostream<Elem, Traits>::failbit);
   }
@@ -44,7 +44,7 @@ std::basic_ostream<Elem, Traits>& operator<<(
 }
 
 } // namespace ip
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

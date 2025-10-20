@@ -39,7 +39,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 class epoll_reactor
@@ -77,14 +77,14 @@ public:
     ASIO_DECL operation* perform_io(uint32_t events);
     ASIO_DECL static void do_complete(
         void* owner, operation* base,
-        const ASIO_NAMESPACE::error_code& ec, std::size_t bytes_transferred);
+        const ModioAsio::error_code& ec, std::size_t bytes_transferred);
   };
 
   // Per-descriptor data.
   typedef descriptor_state* per_descriptor_data;
 
   // Constructor.
-  ASIO_DECL epoll_reactor(ASIO_NAMESPACE::execution_context& ctx);
+  ASIO_DECL epoll_reactor(ModioAsio::execution_context& ctx);
 
   // Destructor.
   ASIO_DECL ~epoll_reactor();
@@ -94,7 +94,7 @@ public:
 
   // Recreate internal descriptors following a fork.
   ASIO_DECL void notify_fork(
-      ASIO_NAMESPACE::execution_context::fork_event fork_ev);
+      ModioAsio::execution_context::fork_event fork_ev);
 
   // Initialise the task.
   ASIO_DECL void init_task();
@@ -264,7 +264,7 @@ private:
 };
 
 } // namespace detail
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

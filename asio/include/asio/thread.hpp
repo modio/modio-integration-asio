@@ -21,11 +21,11 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 
 /// A simple abstraction for starting threads.
 /**
- * The ASIO_NAMESPACE::thread class implements the smallest possible subset of the
+ * The ModioAsio::thread class implements the smallest possible subset of the
  * functionality of boost::thread. It is intended to be used only for starting
  * a thread and waiting for it to exit. If more extensive threading
  * capabilities are required, you are strongly advised to use something else.
@@ -35,13 +35,13 @@ namespace ASIO_NAMESPACE {
  * @e Shared @e objects: Unsafe.
  *
  * @par Example
- * A typical use of ASIO_NAMESPACE::thread would be to launch a thread to run an
+ * A typical use of ModioAsio::thread would be to launch a thread to run an
  * io_context's event processing loop:
  *
  * @par
- * @code ASIO_NAMESPACE::io_context io_context;
+ * @code ModioAsio::io_context io_context;
  * // ...
- * ASIO_NAMESPACE::thread t(boost::bind(&ASIO_NAMESPACE::io_context::run, &io_context));
+ * ModioAsio::thread t(boost::bind(&ModioAsio::io_context::run, &io_context));
  * // ...
  * t.join(); @endcode
  */
@@ -85,7 +85,7 @@ private:
   detail::thread impl_;
 };
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

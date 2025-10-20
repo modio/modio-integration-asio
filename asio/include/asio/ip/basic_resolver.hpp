@@ -42,7 +42,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace ip {
 
 #if !defined(ASIO_IP_BASIC_RESOLVER_FWD_DECL)
@@ -230,7 +230,7 @@ public:
   /**
    * This function forces the completion of any pending asynchronous
    * operations on the host resolver. The handler for each cancelled operation
-   * will be invoked with the ASIO_NAMESPACE::error::operation_aborted error code.
+   * will be invoked with the ModioAsio::error::operation_aborted error code.
    */
   void cancel()
   {
@@ -249,14 +249,14 @@ public:
    * successful call to this function is guaranteed to return a non-empty
    * range.
    *
-   * @throws ASIO_NAMESPACE::system_error Thrown on failure.
+   * @throws ModioAsio::system_error Thrown on failure.
    */
   results_type resolve(const query& q)
   {
-    ASIO_NAMESPACE::error_code ec;
+    ModioAsio::error_code ec;
     results_type r = impl_.get_service().resolve(
         impl_.get_implementation(), q, ec);
-    ASIO_NAMESPACE::detail::throw_error(ec, "resolve");
+    ModioAsio::detail::throw_error(ec, "resolve");
     return r;
   }
 
@@ -273,7 +273,7 @@ public:
    * empty range is returned if an error occurs. A successful call to this
    * function is guaranteed to return a non-empty range.
    */
-  results_type resolve(const query& q, ASIO_NAMESPACE::error_code& ec)
+  results_type resolve(const query& q, ModioAsio::error_code& ec)
   {
     return impl_.get_service().resolve(impl_.get_implementation(), q, ec);
   }
@@ -299,7 +299,7 @@ public:
    * successful call to this function is guaranteed to return a non-empty
    * range.
    *
-   * @throws ASIO_NAMESPACE::system_error Thrown on failure.
+   * @throws ModioAsio::system_error Thrown on failure.
    *
    * @note On POSIX systems, host names may be locally defined in the file
    * <tt>/etc/hosts</tt>. On Windows, host names may be defined in the file
@@ -352,7 +352,7 @@ public:
    * may use additional locations when resolving service names.
    */
   results_type resolve(ASIO_STRING_VIEW_PARAM host,
-      ASIO_STRING_VIEW_PARAM service, ASIO_NAMESPACE::error_code& ec)
+      ASIO_STRING_VIEW_PARAM service, ModioAsio::error_code& ec)
   {
     return resolve(host, service, resolver_base::flags(), ec);
   }
@@ -382,7 +382,7 @@ public:
    * successful call to this function is guaranteed to return a non-empty
    * range.
    *
-   * @throws ASIO_NAMESPACE::system_error Thrown on failure.
+   * @throws ModioAsio::system_error Thrown on failure.
    *
    * @note On POSIX systems, host names may be locally defined in the file
    * <tt>/etc/hosts</tt>. On Windows, host names may be defined in the file
@@ -398,12 +398,12 @@ public:
   results_type resolve(ASIO_STRING_VIEW_PARAM host,
       ASIO_STRING_VIEW_PARAM service, resolver_base::flags resolve_flags)
   {
-    ASIO_NAMESPACE::error_code ec;
+    ModioAsio::error_code ec;
     basic_resolver_query<protocol_type> q(static_cast<std::string>(host),
         static_cast<std::string>(service), resolve_flags);
     results_type r = impl_.get_service().resolve(
         impl_.get_implementation(), q, ec);
-    ASIO_NAMESPACE::detail::throw_error(ec, "resolve");
+    ModioAsio::detail::throw_error(ec, "resolve");
     return r;
   }
 
@@ -447,7 +447,7 @@ public:
    */
   results_type resolve(ASIO_STRING_VIEW_PARAM host,
       ASIO_STRING_VIEW_PARAM service, resolver_base::flags resolve_flags,
-      ASIO_NAMESPACE::error_code& ec)
+      ModioAsio::error_code& ec)
   {
     basic_resolver_query<protocol_type> q(static_cast<std::string>(host),
         static_cast<std::string>(service), resolve_flags);
@@ -477,7 +477,7 @@ public:
    * successful call to this function is guaranteed to return a non-empty
    * range.
    *
-   * @throws ASIO_NAMESPACE::system_error Thrown on failure.
+   * @throws ModioAsio::system_error Thrown on failure.
    *
    * @note On POSIX systems, host names may be locally defined in the file
    * <tt>/etc/hosts</tt>. On Windows, host names may be defined in the file
@@ -534,7 +534,7 @@ public:
    */
   results_type resolve(const protocol_type& protocol,
       ASIO_STRING_VIEW_PARAM host, ASIO_STRING_VIEW_PARAM service,
-      ASIO_NAMESPACE::error_code& ec)
+      ModioAsio::error_code& ec)
   {
     return resolve(protocol, host, service, resolver_base::flags(), ec);
   }
@@ -567,7 +567,7 @@ public:
    * successful call to this function is guaranteed to return a non-empty
    * range.
    *
-   * @throws ASIO_NAMESPACE::system_error Thrown on failure.
+   * @throws ModioAsio::system_error Thrown on failure.
    *
    * @note On POSIX systems, host names may be locally defined in the file
    * <tt>/etc/hosts</tt>. On Windows, host names may be defined in the file
@@ -584,13 +584,13 @@ public:
       ASIO_STRING_VIEW_PARAM host, ASIO_STRING_VIEW_PARAM service,
       resolver_base::flags resolve_flags)
   {
-    ASIO_NAMESPACE::error_code ec;
+    ModioAsio::error_code ec;
     basic_resolver_query<protocol_type> q(
         protocol, static_cast<std::string>(host),
         static_cast<std::string>(service), resolve_flags);
     results_type r = impl_.get_service().resolve(
         impl_.get_implementation(), q, ec);
-    ASIO_NAMESPACE::detail::throw_error(ec, "resolve");
+    ModioAsio::detail::throw_error(ec, "resolve");
     return r;
   }
 
@@ -637,7 +637,7 @@ public:
    */
   results_type resolve(const protocol_type& protocol,
       ASIO_STRING_VIEW_PARAM host, ASIO_STRING_VIEW_PARAM service,
-      resolver_base::flags resolve_flags, ASIO_NAMESPACE::error_code& ec)
+      resolver_base::flags resolve_flags, ModioAsio::error_code& ec)
   {
     basic_resolver_query<protocol_type> q(
         protocol, static_cast<std::string>(host),
@@ -661,36 +661,36 @@ public:
    * @ref yield_context, or a function object with the correct completion
    * signature. The function signature of the completion handler must be:
    * @code void handler(
-   *   const ASIO_NAMESPACE::error_code& error, // Result of operation.
+   *   const ModioAsio::error_code& error, // Result of operation.
    *   resolver::results_type results // Resolved endpoints as a range.
    * ); @endcode
    * Regardless of whether the asynchronous operation completes immediately or
    * not, the completion handler will not be invoked from within this function.
    * On immediate completion, invocation of the handler will be performed in a
-   * manner equivalent to using ASIO_NAMESPACE::post().
+   * manner equivalent to using ModioAsio::post().
    *
    * A successful resolve operation is guaranteed to pass a non-empty range to
    * the handler.
    *
    * @par Completion Signature
-   * @code void(ASIO_NAMESPACE::error_code, results_type) @endcode
+   * @code void(ModioAsio::error_code, results_type) @endcode
    */
   template <
-      ASIO_COMPLETION_TOKEN_FOR(void (ASIO_NAMESPACE::error_code,
+      ASIO_COMPLETION_TOKEN_FOR(void (ModioAsio::error_code,
         results_type)) ResolveToken
           ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(executor_type)>
   ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(ResolveToken,
-      void (ASIO_NAMESPACE::error_code, results_type))
+      void (ModioAsio::error_code, results_type))
   async_resolve(const query& q,
       ASIO_MOVE_ARG(ResolveToken) token
         ASIO_DEFAULT_COMPLETION_TOKEN(executor_type))
     ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
-      ASIO_NAMESPACE::async_initiate<ResolveToken,
-        void (ASIO_NAMESPACE::error_code, results_type)>(
+      ModioAsio::async_initiate<ResolveToken,
+        void (ModioAsio::error_code, results_type)>(
           declval<initiate_async_resolve>(), token, q)))
   {
-    return ASIO_NAMESPACE::async_initiate<ResolveToken,
-      void (ASIO_NAMESPACE::error_code, results_type)>(
+    return ModioAsio::async_initiate<ResolveToken,
+      void (ModioAsio::error_code, results_type)>(
         initiate_async_resolve(this), token, q);
   }
 #endif // !defined(ASIO_NO_DEPRECATED)
@@ -717,19 +717,19 @@ public:
    * @ref yield_context, or a function object with the correct completion
    * signature. The function signature of the completion handler must be:
    * @code void handler(
-   *   const ASIO_NAMESPACE::error_code& error, // Result of operation.
+   *   const ModioAsio::error_code& error, // Result of operation.
    *   resolver::results_type results // Resolved endpoints as a range.
    * ); @endcode
    * Regardless of whether the asynchronous operation completes immediately or
    * not, the completion handler will not be invoked from within this function.
    * On immediate completion, invocation of the handler will be performed in a
-   * manner equivalent to using ASIO_NAMESPACE::post().
+   * manner equivalent to using ModioAsio::post().
    *
    * A successful resolve operation is guaranteed to pass a non-empty range to
    * the handler.
    *
    * @par Completion Signature
-   * @code void(ASIO_NAMESPACE::error_code, results_type) @endcode
+   * @code void(ModioAsio::error_code, results_type) @endcode
    *
    * @note On POSIX systems, host names may be locally defined in the file
    * <tt>/etc/hosts</tt>. On Windows, host names may be defined in the file
@@ -743,18 +743,18 @@ public:
    * may use additional locations when resolving service names.
    */
   template <
-      ASIO_COMPLETION_TOKEN_FOR(void (ASIO_NAMESPACE::error_code,
+      ASIO_COMPLETION_TOKEN_FOR(void (ModioAsio::error_code,
         results_type)) ResolveToken
           ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(executor_type)>
   ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(ResolveToken,
-      void (ASIO_NAMESPACE::error_code, results_type))
+      void (ModioAsio::error_code, results_type))
   async_resolve(ASIO_STRING_VIEW_PARAM host,
       ASIO_STRING_VIEW_PARAM service,
       ASIO_MOVE_ARG(ResolveToken) token
         ASIO_DEFAULT_COMPLETION_TOKEN(executor_type))
     ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
-      ASIO_NAMESPACE::async_initiate<ResolveToken,
-        void (ASIO_NAMESPACE::error_code, results_type)>(
+      ModioAsio::async_initiate<ResolveToken,
+        void (ModioAsio::error_code, results_type)>(
           declval<initiate_async_resolve>(), token,
           declval<basic_resolver_query<protocol_type>&>())))
   {
@@ -790,19 +790,19 @@ public:
    * @ref yield_context, or a function object with the correct completion
    * signature. The function signature of the completion handler must be:
    * @code void handler(
-   *   const ASIO_NAMESPACE::error_code& error, // Result of operation.
+   *   const ModioAsio::error_code& error, // Result of operation.
    *   resolver::results_type results // Resolved endpoints as a range.
    * ); @endcode
    * Regardless of whether the asynchronous operation completes immediately or
    * not, the completion handler will not be invoked from within this function.
    * On immediate completion, invocation of the handler will be performed in a
-   * manner equivalent to using ASIO_NAMESPACE::post().
+   * manner equivalent to using ModioAsio::post().
    *
    * A successful resolve operation is guaranteed to pass a non-empty range to
    * the handler.
    *
    * @par Completion Signature
-   * @code void(ASIO_NAMESPACE::error_code, results_type) @endcode
+   * @code void(ModioAsio::error_code, results_type) @endcode
    *
    * @note On POSIX systems, host names may be locally defined in the file
    * <tt>/etc/hosts</tt>. On Windows, host names may be defined in the file
@@ -816,27 +816,27 @@ public:
    * may use additional locations when resolving service names.
    */
   template <
-      ASIO_COMPLETION_TOKEN_FOR(void (ASIO_NAMESPACE::error_code,
+      ASIO_COMPLETION_TOKEN_FOR(void (ModioAsio::error_code,
         results_type)) ResolveToken
           ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(executor_type)>
   ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(ResolveToken,
-      void (ASIO_NAMESPACE::error_code, results_type))
+      void (ModioAsio::error_code, results_type))
   async_resolve(ASIO_STRING_VIEW_PARAM host,
       ASIO_STRING_VIEW_PARAM service,
       resolver_base::flags resolve_flags,
       ASIO_MOVE_ARG(ResolveToken) token
         ASIO_DEFAULT_COMPLETION_TOKEN(executor_type))
     ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
-      ASIO_NAMESPACE::async_initiate<ResolveToken,
-        void (ASIO_NAMESPACE::error_code, results_type)>(
+      ModioAsio::async_initiate<ResolveToken,
+        void (ModioAsio::error_code, results_type)>(
           declval<initiate_async_resolve>(), token,
           declval<basic_resolver_query<protocol_type>&>())))
   {
     basic_resolver_query<protocol_type> q(static_cast<std::string>(host),
         static_cast<std::string>(service), resolve_flags);
 
-    return ASIO_NAMESPACE::async_initiate<ResolveToken,
-      void (ASIO_NAMESPACE::error_code, results_type)>(
+    return ModioAsio::async_initiate<ResolveToken,
+      void (ModioAsio::error_code, results_type)>(
         initiate_async_resolve(this), token, q);
   }
 
@@ -866,19 +866,19 @@ public:
    * @ref yield_context, or a function object with the correct completion
    * signature. The function signature of the completion handler must be:
    * @code void handler(
-   *   const ASIO_NAMESPACE::error_code& error, // Result of operation.
+   *   const ModioAsio::error_code& error, // Result of operation.
    *   resolver::results_type results // Resolved endpoints as a range.
    * ); @endcode
    * Regardless of whether the asynchronous operation completes immediately or
    * not, the completion handler will not be invoked from within this function.
    * On immediate completion, invocation of the handler will be performed in a
-   * manner equivalent to using ASIO_NAMESPACE::post().
+   * manner equivalent to using ModioAsio::post().
    *
    * A successful resolve operation is guaranteed to pass a non-empty range to
    * the handler.
    *
    * @par Completion Signature
-   * @code void(ASIO_NAMESPACE::error_code, results_type) @endcode
+   * @code void(ModioAsio::error_code, results_type) @endcode
    *
    * @note On POSIX systems, host names may be locally defined in the file
    * <tt>/etc/hosts</tt>. On Windows, host names may be defined in the file
@@ -892,18 +892,18 @@ public:
    * may use additional locations when resolving service names.
    */
   template <
-      ASIO_COMPLETION_TOKEN_FOR(void (ASIO_NAMESPACE::error_code,
+      ASIO_COMPLETION_TOKEN_FOR(void (ModioAsio::error_code,
         results_type)) ResolveToken
           ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(executor_type)>
   ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(ResolveToken,
-      void (ASIO_NAMESPACE::error_code, results_type))
+      void (ModioAsio::error_code, results_type))
   async_resolve(const protocol_type& protocol,
       ASIO_STRING_VIEW_PARAM host, ASIO_STRING_VIEW_PARAM service,
       ASIO_MOVE_ARG(ResolveToken) token
         ASIO_DEFAULT_COMPLETION_TOKEN(executor_type))
     ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
-      ASIO_NAMESPACE::async_initiate<ResolveToken,
-        void (ASIO_NAMESPACE::error_code, results_type)>(
+      ModioAsio::async_initiate<ResolveToken,
+        void (ModioAsio::error_code, results_type)>(
           declval<initiate_async_resolve>(), token,
           declval<basic_resolver_query<protocol_type>&>())))
   {
@@ -942,19 +942,19 @@ public:
    * @ref yield_context, or a function object with the correct completion
    * signature. The function signature of the completion handler must be:
    * @code void handler(
-   *   const ASIO_NAMESPACE::error_code& error, // Result of operation.
+   *   const ModioAsio::error_code& error, // Result of operation.
    *   resolver::results_type results // Resolved endpoints as a range.
    * ); @endcode
    * Regardless of whether the asynchronous operation completes immediately or
    * not, the completion handler will not be invoked from within this function.
    * On immediate completion, invocation of the handler will be performed in a
-   * manner equivalent to using ASIO_NAMESPACE::post().
+   * manner equivalent to using ModioAsio::post().
    *
    * A successful resolve operation is guaranteed to pass a non-empty range to
    * the handler.
    *
    * @par Completion Signature
-   * @code void(ASIO_NAMESPACE::error_code, results_type) @endcode
+   * @code void(ModioAsio::error_code, results_type) @endcode
    *
    * @note On POSIX systems, host names may be locally defined in the file
    * <tt>/etc/hosts</tt>. On Windows, host names may be defined in the file
@@ -968,19 +968,19 @@ public:
    * may use additional locations when resolving service names.
    */
   template <
-      ASIO_COMPLETION_TOKEN_FOR(void (ASIO_NAMESPACE::error_code,
+      ASIO_COMPLETION_TOKEN_FOR(void (ModioAsio::error_code,
         results_type)) ResolveToken
           ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(executor_type)>
   ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(ResolveToken,
-      void (ASIO_NAMESPACE::error_code, results_type))
+      void (ModioAsio::error_code, results_type))
   async_resolve(const protocol_type& protocol,
       ASIO_STRING_VIEW_PARAM host, ASIO_STRING_VIEW_PARAM service,
       resolver_base::flags resolve_flags,
       ASIO_MOVE_ARG(ResolveToken) token
         ASIO_DEFAULT_COMPLETION_TOKEN(executor_type))
     ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
-      ASIO_NAMESPACE::async_initiate<ResolveToken,
-        void (ASIO_NAMESPACE::error_code, results_type)>(
+      ModioAsio::async_initiate<ResolveToken,
+        void (ModioAsio::error_code, results_type)>(
           declval<initiate_async_resolve>(), token,
           declval<basic_resolver_query<protocol_type>&>())))
   {
@@ -988,8 +988,8 @@ public:
         protocol, static_cast<std::string>(host),
         static_cast<std::string>(service), resolve_flags);
 
-    return ASIO_NAMESPACE::async_initiate<ResolveToken,
-      void (ASIO_NAMESPACE::error_code, results_type)>(
+    return ModioAsio::async_initiate<ResolveToken,
+      void (ModioAsio::error_code, results_type)>(
         initiate_async_resolve(this), token, q);
   }
 
@@ -1005,14 +1005,14 @@ public:
    * successful call to this function is guaranteed to return a non-empty
    * range.
    *
-   * @throws ASIO_NAMESPACE::system_error Thrown on failure.
+   * @throws ModioAsio::system_error Thrown on failure.
    */
   results_type resolve(const endpoint_type& e)
   {
-    ASIO_NAMESPACE::error_code ec;
+    ModioAsio::error_code ec;
     results_type i = impl_.get_service().resolve(
         impl_.get_implementation(), e, ec);
-    ASIO_NAMESPACE::detail::throw_error(ec, "resolve");
+    ModioAsio::detail::throw_error(ec, "resolve");
     return i;
   }
 
@@ -1030,7 +1030,7 @@ public:
    * empty range is returned if an error occurs. A successful call to this
    * function is guaranteed to return a non-empty range.
    */
-  results_type resolve(const endpoint_type& e, ASIO_NAMESPACE::error_code& ec)
+  results_type resolve(const endpoint_type& e, ModioAsio::error_code& ec)
   {
     return impl_.get_service().resolve(impl_.get_implementation(), e, ec);
   }
@@ -1051,36 +1051,36 @@ public:
    * @ref yield_context, or a function object with the correct completion
    * signature. The function signature of the completion handler must be:
    * @code void handler(
-   *   const ASIO_NAMESPACE::error_code& error, // Result of operation.
+   *   const ModioAsio::error_code& error, // Result of operation.
    *   resolver::results_type results // Resolved endpoints as a range.
    * ); @endcode
    * Regardless of whether the asynchronous operation completes immediately or
    * not, the completion handler will not be invoked from within this function.
    * On immediate completion, invocation of the handler will be performed in a
-   * manner equivalent to using ASIO_NAMESPACE::post().
+   * manner equivalent to using ModioAsio::post().
    *
    * A successful resolve operation is guaranteed to pass a non-empty range to
    * the handler.
    *
    * @par Completion Signature
-   * @code void(ASIO_NAMESPACE::error_code, results_type) @endcode
+   * @code void(ModioAsio::error_code, results_type) @endcode
    */
   template <
-      ASIO_COMPLETION_TOKEN_FOR(void (ASIO_NAMESPACE::error_code,
+      ASIO_COMPLETION_TOKEN_FOR(void (ModioAsio::error_code,
         results_type)) ResolveToken
           ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(executor_type)>
   ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(ResolveToken,
-      void (ASIO_NAMESPACE::error_code, results_type))
+      void (ModioAsio::error_code, results_type))
   async_resolve(const endpoint_type& e,
       ASIO_MOVE_ARG(ResolveToken) token
         ASIO_DEFAULT_COMPLETION_TOKEN(executor_type))
     ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
-      ASIO_NAMESPACE::async_initiate<ResolveToken,
-        void (ASIO_NAMESPACE::error_code, results_type)>(
+      ModioAsio::async_initiate<ResolveToken,
+        void (ModioAsio::error_code, results_type)>(
           declval<initiate_async_resolve>(), token, e)))
   {
-    return ASIO_NAMESPACE::async_initiate<ResolveToken,
-      void (ASIO_NAMESPACE::error_code, results_type)>(
+    return ModioAsio::async_initiate<ResolveToken,
+      void (ModioAsio::error_code, results_type)>(
         initiate_async_resolve(this), token, e);
   }
 
@@ -1113,7 +1113,7 @@ private:
       ASIO_RESOLVE_HANDLER_CHECK(
           ResolveHandler, handler, results_type) type_check;
 
-      ASIO_NAMESPACE::detail::non_const_lvalue<ResolveHandler> handler2(handler);
+      ModioAsio::detail::non_const_lvalue<ResolveHandler> handler2(handler);
       self_->impl_.get_service().async_resolve(
           self_->impl_.get_implementation(), q,
           handler2.value, self_->impl_.get_executor());
@@ -1124,18 +1124,18 @@ private:
   };
 
 # if defined(ASIO_WINDOWS_RUNTIME)
-  ASIO_NAMESPACE::detail::io_object_impl<
-    ASIO_NAMESPACE::detail::winrt_resolver_service<InternetProtocol>,
+  ModioAsio::detail::io_object_impl<
+    ModioAsio::detail::winrt_resolver_service<InternetProtocol>,
     Executor> impl_;
 # else
-  ASIO_NAMESPACE::detail::io_object_impl<
-    ASIO_NAMESPACE::detail::resolver_service<InternetProtocol>,
+  ModioAsio::detail::io_object_impl<
+    ModioAsio::detail::resolver_service<InternetProtocol>,
     Executor> impl_;
 # endif
 };
 
 } // namespace ip
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

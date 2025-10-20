@@ -28,7 +28,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace local {
 
 /// Create a pair of connected sockets.
@@ -39,51 +39,51 @@ void connect_pair(basic_socket<Protocol, Executor1>& socket1,
 /// Create a pair of connected sockets.
 template <typename Protocol, typename Executor1, typename Executor2>
 ASIO_SYNC_OP_VOID connect_pair(basic_socket<Protocol, Executor1>& socket1,
-    basic_socket<Protocol, Executor2>& socket2, ASIO_NAMESPACE::error_code& ec);
+    basic_socket<Protocol, Executor2>& socket2, ModioAsio::error_code& ec);
 
 template <typename Protocol, typename Executor1, typename Executor2>
 inline void connect_pair(basic_socket<Protocol, Executor1>& socket1,
     basic_socket<Protocol, Executor2>& socket2)
 {
-  ASIO_NAMESPACE::error_code ec;
+  ModioAsio::error_code ec;
   connect_pair(socket1, socket2, ec);
-  ASIO_NAMESPACE::detail::throw_error(ec, "connect_pair");
+  ModioAsio::detail::throw_error(ec, "connect_pair");
 }
 
 template <typename Protocol, typename Executor1, typename Executor2>
 inline ASIO_SYNC_OP_VOID connect_pair(
     basic_socket<Protocol, Executor1>& socket1,
-    basic_socket<Protocol, Executor2>& socket2, ASIO_NAMESPACE::error_code& ec)
+    basic_socket<Protocol, Executor2>& socket2, ModioAsio::error_code& ec)
 {
   // Check that this function is only being used with a UNIX domain socket.
-  ASIO_NAMESPACE::local::basic_endpoint<Protocol>* tmp
+  ModioAsio::local::basic_endpoint<Protocol>* tmp
     = static_cast<typename Protocol::endpoint*>(0);
   (void)tmp;
 
   Protocol protocol;
-  ASIO_NAMESPACE::detail::socket_type sv[2];
-  if (ASIO_NAMESPACE::detail::socket_ops::socketpair(protocol.family(),
+  ModioAsio::detail::socket_type sv[2];
+  if (ModioAsio::detail::socket_ops::socketpair(protocol.family(),
         protocol.type(), protocol.protocol(), sv, ec)
-      == ASIO_NAMESPACE::detail::socket_error_retval)
+      == ModioAsio::detail::socket_error_retval)
     ASIO_SYNC_OP_VOID_RETURN(ec);
 
   socket1.assign(protocol, sv[0], ec);
   if (ec)
   {
-    ASIO_NAMESPACE::error_code temp_ec;
-    ASIO_NAMESPACE::detail::socket_ops::state_type state[2] = { 0, 0 };
-    ASIO_NAMESPACE::detail::socket_ops::close(sv[0], state[0], true, temp_ec);
-    ASIO_NAMESPACE::detail::socket_ops::close(sv[1], state[1], true, temp_ec);
+    ModioAsio::error_code temp_ec;
+    ModioAsio::detail::socket_ops::state_type state[2] = { 0, 0 };
+    ModioAsio::detail::socket_ops::close(sv[0], state[0], true, temp_ec);
+    ModioAsio::detail::socket_ops::close(sv[1], state[1], true, temp_ec);
     ASIO_SYNC_OP_VOID_RETURN(ec);
   }
 
   socket2.assign(protocol, sv[1], ec);
   if (ec)
   {
-    ASIO_NAMESPACE::error_code temp_ec;
+    ModioAsio::error_code temp_ec;
     socket1.close(temp_ec);
-    ASIO_NAMESPACE::detail::socket_ops::state_type state = 0;
-    ASIO_NAMESPACE::detail::socket_ops::close(sv[1], state, true, temp_ec);
+    ModioAsio::detail::socket_ops::state_type state = 0;
+    ModioAsio::detail::socket_ops::close(sv[1], state, true, temp_ec);
     ASIO_SYNC_OP_VOID_RETURN(ec);
   }
 
@@ -91,7 +91,7 @@ inline ASIO_SYNC_OP_VOID connect_pair(
 }
 
 } // namespace local
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

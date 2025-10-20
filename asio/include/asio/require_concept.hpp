@@ -26,20 +26,20 @@
 
 #if defined(GENERATING_DOCUMENTATION)
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 
 /// A customisation point that applies a concept-enforcing property to an
 /// object.
 /**
  * The name <tt>require_concept</tt> denotes a customization point object. The
- * expression <tt>ASIO_NAMESPACE::require_concept(E, P)</tt> for some
+ * expression <tt>ModioAsio::require_concept(E, P)</tt> for some
  * subexpressions <tt>E</tt> and <tt>P</tt> (with types <tt>T =
  * decay_t<decltype(E)></tt> and <tt>Prop = decay_t<decltype(P)></tt>) is
  * expression-equivalent to:
  *
  * @li If <tt>is_applicable_property_v<T, Prop> &&
  *   Prop::is_requirable_concept</tt> is not a well-formed constant expression
- *   with value <tt>true</tt>, <tt>ASIO_NAMESPACE::require_concept(E, P)</tt> is
+ *   with value <tt>true</tt>, <tt>ModioAsio::require_concept(E, P)</tt> is
  *   ill-formed.
  *
  * @li Otherwise, <tt>E</tt> if the expression <tt>Prop::template
@@ -54,7 +54,7 @@ namespace ASIO_NAMESPACE {
  *   resolution performed in a context that does not include the declaration
  *   of the <tt>require_concept</tt> customization point object.
  *
- * @li Otherwise, <tt>ASIO_NAMESPACE::require_concept(E, P)</tt> is ill-formed.
+ * @li Otherwise, <tt>ModioAsio::require_concept(E, P)</tt> is ill-formed.
  */
 inline constexpr unspecified require_concept = unspecified;
 
@@ -63,7 +63,7 @@ inline constexpr unspecified require_concept = unspecified;
 /**
  * Class template @c can_require_concept is a trait that is derived from
  * @c true_type if the expression
- * <tt>ASIO_NAMESPACE::require_concept(std::declval<T>(),
+ * <tt>ModioAsio::require_concept(std::declval<T>(),
  * std::declval<Property>())</tt> is well formed; otherwise @c false_type.
  */
 template <typename T, typename Property>
@@ -77,7 +77,7 @@ struct can_require_concept :
 /**
  * Class template @c is_nothrow_require_concept is a trait that is derived from
  * @c true_type if the expression
- * <tt>ASIO_NAMESPACE::require_concept(std::declval<T>(),
+ * <tt>ModioAsio::require_concept(std::declval<T>(),
  * std::declval<Property>())</tt> is @c noexcept; otherwise @c false_type.
  */
 template <typename T, typename Property>
@@ -91,7 +91,7 @@ struct is_nothrow_require_concept :
 /**
  * Class template @c require_concept_result is a trait that determines the
  * result type of the expression
- * <tt>ASIO_NAMESPACE::require_concept(std::declval<T>(),
+ * <tt>ModioAsio::require_concept(std::declval<T>(),
  * std::declval<Property>())</tt>.
  */
 template <typename T, typename Property>
@@ -101,21 +101,21 @@ struct require_concept_result
   typedef automatically_determined type;
 };
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #else // defined(GENERATING_DOCUMENTATION)
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace asio_require_concept_fn {
 
-using ASIO_NAMESPACE::conditional;
-using ASIO_NAMESPACE::decay;
-using ASIO_NAMESPACE::declval;
-using ASIO_NAMESPACE::enable_if;
-using ASIO_NAMESPACE::is_applicable_property;
-using ASIO_NAMESPACE::traits::require_concept_free;
-using ASIO_NAMESPACE::traits::require_concept_member;
-using ASIO_NAMESPACE::traits::static_require_concept;
+using ModioAsio::conditional;
+using ModioAsio::decay;
+using ModioAsio::declval;
+using ModioAsio::enable_if;
+using ModioAsio::is_applicable_property;
+using ModioAsio::traits::require_concept_free;
+using ModioAsio::traits::require_concept_member;
+using ModioAsio::traits::static_require_concept;
 
 void require_concept();
 
@@ -294,8 +294,8 @@ template <typename T>
 const T static_instance<T>::instance = {};
 
 } // namespace asio_require_concept_fn
-} // namespace ASIO_NAMESPACE
-namespace ASIO_NAMESPACE {
+} // namespace ModioAsio
+namespace ModioAsio {
 namespace {
 
 static ASIO_CONSTEXPR const asio_require_concept_fn::impl&
@@ -345,7 +345,7 @@ struct require_concept_result
       require_concept_t, T, void(Property)>::result_type type;
 };
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #endif // defined(GENERATING_DOCUMENTATION)
 

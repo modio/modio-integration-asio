@@ -31,7 +31,7 @@
 
 #if defined(GENERATING_DOCUMENTATION)
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace execution {
 
 /// A customisation point that connects a sender to a receiver.
@@ -126,27 +126,27 @@ template <typename S, typename R>
 using connect_result_t = typename connect_result<S, R>::type;
 
 } // namespace execution
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #else // defined(GENERATING_DOCUMENTATION)
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace asio_execution_connect_fn {
 
-using ASIO_NAMESPACE::conditional;
-using ASIO_NAMESPACE::declval;
-using ASIO_NAMESPACE::enable_if;
-using ASIO_NAMESPACE::execution::detail::as_invocable;
-using ASIO_NAMESPACE::execution::detail::as_operation;
-using ASIO_NAMESPACE::execution::detail::is_as_receiver;
-using ASIO_NAMESPACE::execution::is_executor_of;
-using ASIO_NAMESPACE::execution::is_operation_state;
-using ASIO_NAMESPACE::execution::is_receiver;
-using ASIO_NAMESPACE::execution::is_sender;
-using ASIO_NAMESPACE::false_type;
-using ASIO_NAMESPACE::remove_cvref;
-using ASIO_NAMESPACE::traits::connect_free;
-using ASIO_NAMESPACE::traits::connect_member;
+using ModioAsio::conditional;
+using ModioAsio::declval;
+using ModioAsio::enable_if;
+using ModioAsio::execution::detail::as_invocable;
+using ModioAsio::execution::detail::as_operation;
+using ModioAsio::execution::detail::is_as_receiver;
+using ModioAsio::execution::is_executor_of;
+using ModioAsio::execution::is_operation_state;
+using ModioAsio::execution::is_receiver;
+using ModioAsio::execution::is_sender;
+using ModioAsio::false_type;
+using ModioAsio::remove_cvref;
+using ModioAsio::traits::connect_free;
+using ModioAsio::traits::connect_member;
 
 void connect();
 
@@ -427,8 +427,8 @@ template <typename T>
 const T static_instance<T>::instance = {};
 
 } // namespace asio_execution_connect_fn
-} // namespace ASIO_NAMESPACE
-namespace ASIO_NAMESPACE {
+} // namespace ModioAsio
+namespace ModioAsio {
 namespace execution {
 namespace {
 
@@ -482,7 +482,7 @@ using connect_result_t = typename connect_result<S, R>::type;
 #endif // defined(ASIO_HAS_ALIAS_TEMPLATES)
 
 } // namespace execution
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #endif // defined(GENERATING_DOCUMENTATION)
 

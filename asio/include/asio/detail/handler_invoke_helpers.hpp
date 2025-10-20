@@ -24,18 +24,18 @@
 // Calls to asio_handler_invoke must be made from a namespace that does not
 // contain overloads of this function. The asio_handler_invoke_helpers
 // namespace is defined here for that purpose.
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace asio_handler_invoke_helpers {
 
 #if defined(ASIO_NO_DEPRECATED)
 template <typename Function, typename Context>
 inline void error_if_hook_is_defined(Function& function, Context& context)
 {
-  using ASIO_NAMESPACE::asio_handler_invoke;
+  using ModioAsio::asio_handler_invoke;
   // If you get an error here it is because some of your handlers still
   // overload asio_handler_invoke, but this hook is no longer used.
-  (void)static_cast<ASIO_NAMESPACE::asio_handler_invoke_is_no_longer_used>(
-    asio_handler_invoke(function, ASIO_NAMESPACE::detail::addressof(context)));
+  (void)static_cast<ModioAsio::asio_handler_invoke_is_no_longer_used>(
+    asio_handler_invoke(function, ModioAsio::detail::addressof(context)));
 }
 #endif // defined(ASIO_NO_DEPRECATED)
 
@@ -51,8 +51,8 @@ inline void invoke(Function& function, Context& context)
   (void)context;
   function();
 #else
-  using ASIO_NAMESPACE::asio_handler_invoke;
-  asio_handler_invoke(function, ASIO_NAMESPACE::detail::addressof(context));
+  using ModioAsio::asio_handler_invoke;
+  asio_handler_invoke(function, ModioAsio::detail::addressof(context));
 #endif
 }
 
@@ -69,13 +69,13 @@ inline void invoke(const Function& function, Context& context)
   Function tmp(function);
   tmp();
 #else
-  using ASIO_NAMESPACE::asio_handler_invoke;
-  asio_handler_invoke(function, ASIO_NAMESPACE::detail::addressof(context));
+  using ModioAsio::asio_handler_invoke;
+  asio_handler_invoke(function, ModioAsio::detail::addressof(context));
 #endif
 }
 
 } // namespace asio_handler_invoke_helpers
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

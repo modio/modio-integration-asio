@@ -21,7 +21,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 class thread_group
@@ -83,7 +83,7 @@ private:
     {
     }
 
-    ASIO_NAMESPACE::detail::thread thread_;
+    ModioAsio::detail::thread thread_;
     item* next_;
   };
 
@@ -92,7 +92,7 @@ private:
 };
 
 } // namespace detail
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

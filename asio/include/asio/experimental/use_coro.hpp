@@ -25,7 +25,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 
 class any_io_executor;
 
@@ -57,8 +57,8 @@ struct use_coro_t
   ASIO_CONSTEXPR use_coro_t(
 #if defined(ASIO_ENABLE_HANDLER_TRACKING)
 # if defined(ASIO_HAS_SOURCE_LOCATION)
-      ASIO_NAMESPACE::detail::source_location location =
-        ASIO_NAMESPACE::detail::source_location::current()
+      ModioAsio::detail::source_location location =
+        ModioAsio::detail::source_location::current()
 # endif // defined(ASIO_HAS_SOURCE_LOCATION)
 #endif // defined(ASIO_ENABLE_HANDLER_TRACKING)
     )
@@ -148,7 +148,7 @@ struct use_coro_t
 /// A @ref completion_token object that represents the currently executing
 /// resumable coroutine.
 /**
- * See the documentation for ASIO_NAMESPACE::use_coro_t for a usage example.
+ * See the documentation for ModioAsio::use_coro_t for a usage example.
  */
 #if defined(GENERATING_DOCUMENTATION)
 constexpr use_coro_t<> use_coro;
@@ -159,7 +159,7 @@ __declspec(selectany) use_coro_t<> use_coro(0, 0, 0);
 #endif
 
 } // namespace experimental
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

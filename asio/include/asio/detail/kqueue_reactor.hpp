@@ -45,7 +45,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 class scheduler;
@@ -84,7 +84,7 @@ public:
   typedef descriptor_state* per_descriptor_data;
 
   // Constructor.
-  ASIO_DECL kqueue_reactor(ASIO_NAMESPACE::execution_context& ctx);
+  ASIO_DECL kqueue_reactor(ModioAsio::execution_context& ctx);
 
   // Destructor.
   ASIO_DECL ~kqueue_reactor();
@@ -94,7 +94,7 @@ public:
 
   // Recreate internal descriptors following a fork.
   ASIO_DECL void notify_fork(
-      ASIO_NAMESPACE::execution_context::fork_event fork_ev);
+      ModioAsio::execution_context::fork_event fork_ev);
 
   // Initialise the task.
   ASIO_DECL void init_task();
@@ -240,7 +240,7 @@ private:
 };
 
 } // namespace detail
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

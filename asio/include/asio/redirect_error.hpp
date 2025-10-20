@@ -21,7 +21,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 
 /// A @ref completion_token adapter used to specify that an error produced by an
 /// asynchronous operation is captured to an error_code variable.
@@ -36,7 +36,7 @@ public:
   /// Constructor. 
   template <typename T>
   redirect_error_t(ASIO_MOVE_ARG(T) completion_token,
-      ASIO_NAMESPACE::error_code& ec)
+      ModioAsio::error_code& ec)
     : token_(ASIO_MOVE_CAST(T)(completion_token)),
       ec_(ec)
   {
@@ -44,20 +44,20 @@ public:
 
 //private:
   CompletionToken token_;
-  ASIO_NAMESPACE::error_code& ec_;
+  ModioAsio::error_code& ec_;
 };
 
 /// Adapt a @ref completion_token to capture error_code values to a variable.
 template <typename CompletionToken>
 inline redirect_error_t<typename decay<CompletionToken>::type> redirect_error(
     ASIO_MOVE_ARG(CompletionToken) completion_token,
-    ASIO_NAMESPACE::error_code& ec)
+    ModioAsio::error_code& ec)
 {
   return redirect_error_t<typename decay<CompletionToken>::type>(
       ASIO_MOVE_CAST(CompletionToken)(completion_token), ec);
 }
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

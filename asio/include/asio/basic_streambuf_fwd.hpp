@@ -21,7 +21,7 @@
 
 #include <memory>
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 
 template <typename Allocator = std::allocator<char> >
 class basic_streambuf;
@@ -29,7 +29,7 @@ class basic_streambuf;
 template <typename Allocator = std::allocator<char> >
 class basic_streambuf_ref;
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #endif // !defined(ASIO_NO_IOSTREAM)
 

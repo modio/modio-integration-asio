@@ -25,7 +25,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 class std_event;
@@ -34,7 +34,7 @@ class std_static_mutex
   : private noncopyable
 {
 public:
-  typedef ASIO_NAMESPACE::detail::scoped_lock<std_static_mutex> scoped_lock;
+  typedef ModioAsio::detail::scoped_lock<std_static_mutex> scoped_lock;
 
   // Constructor.
   std_static_mutex(int)
@@ -72,7 +72,7 @@ private:
 #define ASIO_STD_STATIC_MUTEX_INIT 0
 
 } // namespace detail
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

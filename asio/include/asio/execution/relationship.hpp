@@ -30,7 +30,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 
 #if defined(GENERATING_DOCUMENTATION)
 
@@ -344,7 +344,7 @@ struct relationship_t
 #endif // defined(ASIO_MSVC)
 #endif // !defined(__clang__)
   {
-    return ASIO_NAMESPACE::query(ex, fork_t());
+    return ModioAsio::query(ex, fork_t());
   }
 
   template <typename Executor>
@@ -367,7 +367,7 @@ struct relationship_t
 #endif // defined(ASIO_MSVC)
 #endif // !defined(__clang__)
   {
-    return ASIO_NAMESPACE::query(ex, continuation_t());
+    return ModioAsio::query(ex, continuation_t());
   }
 
   ASIO_STATIC_CONSTEXPR_DEFAULT_INIT(fork_t, fork);
@@ -858,7 +858,7 @@ struct static_require<T, execution::relationship_t::continuation_t,
 
 #endif // defined(GENERATING_DOCUMENTATION)
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

@@ -20,7 +20,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace execution {
 
 receiver_invocation_error::receiver_invocation_error()
@@ -29,7 +29,7 @@ receiver_invocation_error::receiver_invocation_error()
 }
 
 } // namespace execution
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

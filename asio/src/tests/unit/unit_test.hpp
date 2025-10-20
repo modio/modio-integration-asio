@@ -41,7 +41,7 @@
 # define ASIO_TEST_IOSTREAM std::cerr
 #endif // !defined(ASIO_TEST_IOSTREAM)
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 inline const char*& test_name()
@@ -58,8 +58,8 @@ inline atomic_count& test_errors()
 
 inline void begin_test_suite(const char* name)
 {
-  ASIO_NAMESPACE::detail::test_name();
-  ASIO_NAMESPACE::detail::test_errors();
+  ModioAsio::detail::test_name();
+  ModioAsio::detail::test_errors();
   ASIO_TEST_IOSTREAM << name << " test suite begins" << std::endl;
 }
 
@@ -67,7 +67,7 @@ inline int end_test_suite(const char* name)
 {
   ASIO_TEST_IOSTREAM << name << " test suite ends" << std::endl;
   ASIO_TEST_IOSTREAM << "\n*** ";
-  long errors = ASIO_NAMESPACE::detail::test_errors();
+  long errors = ModioAsio::detail::test_errors();
   if (errors == 0)
     ASIO_TEST_IOSTREAM << "No errors detected.";
   else if (errors == 1)
@@ -82,7 +82,7 @@ template <void (*Test)()>
 inline void run_test(const char* name)
 {
   test_name() = name;
-  long errors_before = ASIO_NAMESPACE::detail::test_errors();
+  long errors_before = ModioAsio::detail::test_errors();
   Test();
   if (test_errors() == errors_before)
     ASIO_TEST_IOSTREAM << name << " passed" << std::endl;
@@ -108,67 +108,67 @@ void throw_exception(const T& t)
 #endif // defined(ASIO_NO_EXCEPTIONS)
 
 } // namespace detail
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #define ASIO_CHECK(expr) \
   do { if (!(expr)) { \
     ASIO_TEST_IOSTREAM << __FILE__ << "(" << __LINE__ << "): " \
-      << ASIO_NAMESPACE::detail::test_name() << ": " \
+      << ModioAsio::detail::test_name() << ": " \
       << "check '" << #expr << "' failed" << std::endl; \
-    ++ASIO_NAMESPACE::detail::test_errors(); \
+    ++ModioAsio::detail::test_errors(); \
   } } while (0)
 
 #define ASIO_CHECK_MESSAGE(expr, msg) \
   do { if (!(expr)) { \
     ASIO_TEST_IOSTREAM << __FILE__ << "(" << __LINE__ << "): " \
-      << ASIO_NAMESPACE::detail::test_name() << ": " \
+      << ModioAsio::detail::test_name() << ": " \
       << msg << std::endl; \
-    ++ASIO_NAMESPACE::detail::test_errors(); \
+    ++ModioAsio::detail::test_errors(); \
   } } while (0)
 
 #define ASIO_WARN_MESSAGE(expr, msg) \
   do { if (!(expr)) { \
     ASIO_TEST_IOSTREAM << __FILE__ << "(" << __LINE__ << "): " \
-      << ASIO_NAMESPACE::detail::test_name() << ": " \
+      << ModioAsio::detail::test_name() << ": " \
       << msg << std::endl; \
   } } while (0)
 
 #define ASIO_ERROR(msg) \
   do { \
     ASIO_TEST_IOSTREAM << __FILE__ << "(" << __LINE__ << "): " \
-      << ASIO_NAMESPACE::detail::test_name() << ": " \
+      << ModioAsio::detail::test_name() << ": " \
       << msg << std::endl; \
-    ++ASIO_NAMESPACE::detail::test_errors(); \
+    ++ModioAsio::detail::test_errors(); \
   } while (0)
 
 #define ASIO_TEST_SUITE(name, tests) \
   int main() \
   { \
-    ASIO_NAMESPACE::detail::begin_test_suite(name); \
+    ModioAsio::detail::begin_test_suite(name); \
     tests \
-    return ASIO_NAMESPACE::detail::end_test_suite(name); \
+    return ModioAsio::detail::end_test_suite(name); \
   }
 
 #define ASIO_TEST_CASE(test) \
-  ASIO_NAMESPACE::detail::run_test<&test>(#test);
+  ModioAsio::detail::run_test<&test>(#test);
 
 #define ASIO_TEST_CASE2(test1, test2) \
-  ASIO_NAMESPACE::detail::run_test<&test1, test2>(#test1 "," #test2);
+  ModioAsio::detail::run_test<&test1, test2>(#test1 "," #test2);
 
 #define ASIO_TEST_CASE3(test1, test2, test3) \
-  ASIO_NAMESPACE::detail::run_test<&test1, test2, test3>( \
+  ModioAsio::detail::run_test<&test1, test2, test3>( \
     #test1 "," #test2 "," #test3);
 
 #define ASIO_TEST_CASE4(test1, test2, test3, test4) \
-  ASIO_NAMESPACE::detail::run_test<&test1, test2, test3, test4>( \
+  ModioAsio::detail::run_test<&test1, test2, test3, test4>( \
     #test1 "," #test2 "," #test3 "," #test4);
 
 #define ASIO_TEST_CASE5(test1, test2, test3, test4, test5) \
-  ASIO_NAMESPACE::detail::run_test<&test1, test2, test3, test4, test5>( \
+  ModioAsio::detail::run_test<&test1, test2, test3, test4, test5>( \
     #test1 "," #test2 "," #test3 "," #test4 "," #test5);
 
 #define ASIO_COMPILE_TEST_CASE(test) \
-  ASIO_NAMESPACE::detail::compile_test<&test>(#test);
+  ModioAsio::detail::compile_test<&test>(#test);
 
 inline void null_test()
 {

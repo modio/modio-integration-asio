@@ -18,11 +18,11 @@
 #include "asio/detail/config.hpp"
 #include "asio/basic_signal_set.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 
 /// Typedef for the typical usage of a signal set.
 typedef basic_signal_set<> signal_set;
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #endif // ASIO_SIGNAL_SET_HPP

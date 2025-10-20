@@ -26,7 +26,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace ssl {
 namespace detail {
 
@@ -42,7 +42,7 @@ public:
 
     mutexes_.resize(::CRYPTO_num_locks());
     for (size_t i = 0; i < mutexes_.size(); ++i)
-      mutexes_[i].reset(new ASIO_NAMESPACE::detail::mutex);
+      mutexes_[i].reset(new ModioAsio::detail::mutex);
     ::CRYPTO_set_locking_callback(&do_init::openssl_locking_func);
 #endif // (OPENSSL_VERSION_NUMBER < 0x10100000L)
 #if (OPENSSL_VERSION_NUMBER < 0x10000000L)
@@ -133,8 +133,8 @@ private:
   }
 
   // Mutexes to be used in locking callbacks.
-  std::vector<ASIO_NAMESPACE::detail::shared_ptr<
-        ASIO_NAMESPACE::detail::mutex> > mutexes_;
+  std::vector<ModioAsio::detail::shared_ptr<
+        ModioAsio::detail::mutex> > mutexes_;
 #endif // (OPENSSL_VERSION_NUMBER < 0x10100000L)
 
 #if !defined(SSL_OP_NO_COMPRESSION) \
@@ -144,10 +144,10 @@ private:
        // && (OPENSSL_VERSION_NUMBER >= 0x00908000L)
 };
 
-ASIO_NAMESPACE::detail::shared_ptr<openssl_init_base::do_init>
+ModioAsio::detail::shared_ptr<openssl_init_base::do_init>
 openssl_init_base::instance()
 {
-  static ASIO_NAMESPACE::detail::shared_ptr<do_init> init(new do_init);
+  static ModioAsio::detail::shared_ptr<do_init> init(new do_init);
   return init;
 }
 
@@ -162,7 +162,7 @@ STACK_OF(SSL_COMP)* openssl_init_base::get_null_compression_methods()
 
 } // namespace detail
 } // namespace ssl
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

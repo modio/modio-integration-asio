@@ -27,7 +27,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace traits {
 
 template <typename T, typename Property, typename = void>
@@ -117,7 +117,7 @@ struct static_require_concept : static_require_concept_default<T, Property>
 };
 
 } // namespace traits
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

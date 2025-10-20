@@ -25,15 +25,15 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 win_mutex::win_mutex()
 {
   int error = do_init();
-  ASIO_NAMESPACE::error_code ec(error,
-      ASIO_NAMESPACE::error::get_system_category());
-  ASIO_NAMESPACE::detail::throw_error(ec, "mutex");
+  ModioAsio::error_code ec(error,
+      ModioAsio::error::get_system_category());
+  ModioAsio::detail::throw_error(ec, "mutex");
 }
 
 int win_mutex::do_init()
@@ -75,7 +75,7 @@ int win_mutex::do_init()
 }
 
 } // namespace detail
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

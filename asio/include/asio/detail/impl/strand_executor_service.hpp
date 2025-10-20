@@ -25,7 +25,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 template <typename F, typename Allocator>
@@ -78,7 +78,7 @@ class strand_executor_service::invoker<Executor,
 public:
   invoker(const implementation_type& impl, Executor& ex)
     : impl_(impl),
-      executor_(ASIO_NAMESPACE::prefer(ex, execution::outstanding_work.tracked))
+      executor_(ModioAsio::prefer(ex, execution::outstanding_work.tracked))
   {
   }
 
@@ -107,8 +107,8 @@ public:
         recycling_allocator<void> allocator;
         executor_type ex = this_->executor_;
         execution::execute(
-            ASIO_NAMESPACE::prefer(
-              ASIO_NAMESPACE::require(
+            ModioAsio::prefer(
+              ModioAsio::require(
                 ASIO_MOVE_CAST(executor_type)(ex),
                 execution::blocking.never),
             execution::allocator(allocator)),
@@ -207,7 +207,7 @@ inline void strand_executor_service::execute(const implementation_type& impl,
 {
   return strand_executor_service::do_execute(impl, ex,
       ASIO_MOVE_CAST(Function)(function),
-      ASIO_NAMESPACE::query(ex, execution::allocator));
+      ModioAsio::query(ex, execution::allocator));
 }
 
 template <typename Executor, typename Function>
@@ -230,14 +230,14 @@ void strand_executor_service::do_execute(const implementation_type& impl,
 
   // If the executor is not never-blocking, and we are already in the strand,
   // then the function can run immediately.
-  if (ASIO_NAMESPACE::query(ex, execution::blocking) != execution::blocking.never
+  if (ModioAsio::query(ex, execution::blocking) != execution::blocking.never
       && running_in_this_thread(impl))
   {
     // Make a local, non-const copy of the function.
     function_type tmp(ASIO_MOVE_CAST(Function)(function));
 
     fenced_block b(fenced_block::full);
-    ASIO_NAMESPACE::asio_handler_invoke_helpers::invoke(tmp, tmp);
+    ModioAsio::asio_handler_invoke_helpers::invoke(tmp, tmp);
     return;
   }
 
@@ -271,7 +271,7 @@ void strand_executor_service::dispatch(const implementation_type& impl,
     function_type tmp(ASIO_MOVE_CAST(Function)(function));
 
     fenced_block b(fenced_block::full);
-    ASIO_NAMESPACE::asio_handler_invoke_helpers::invoke(tmp, tmp);
+    ModioAsio::asio_handler_invoke_helpers::invoke(tmp, tmp);
     return;
   }
 
@@ -288,7 +288,7 @@ void strand_executor_service::dispatch(const implementation_type& impl,
   p.v = p.p = 0;
   if (first)
   {
-    ASIO_NAMESPACE::dispatch(ex,
+    ModioAsio::dispatch(ex,
         allocator_binder<invoker<Executor>, Allocator>(
           invoker<Executor>(impl, ex), a));
   }
@@ -314,7 +314,7 @@ void strand_executor_service::post(const implementation_type& impl,
   p.v = p.p = 0;
   if (first)
   {
-    ASIO_NAMESPACE::post(ex,
+    ModioAsio::post(ex,
         allocator_binder<invoker<Executor>, Allocator>(
           invoker<Executor>(impl, ex), a));
   }
@@ -340,14 +340,14 @@ void strand_executor_service::defer(const implementation_type& impl,
   p.v = p.p = 0;
   if (first)
   {
-    ASIO_NAMESPACE::defer(ex,
+    ModioAsio::defer(ex,
         allocator_binder<invoker<Executor>, Allocator>(
           invoker<Executor>(impl, ex), a));
   }
 }
 
 } // namespace detail
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

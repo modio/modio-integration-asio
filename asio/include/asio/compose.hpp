@@ -32,7 +32,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 template <typename Executor, typename = void>
@@ -46,7 +46,7 @@ public:
     >::type executor_type;
 
   composed_work_guard(const Executor& ex)
-    : executor_(ASIO_NAMESPACE::prefer(ex, execution::outstanding_work.tracked))
+    : executor_(ModioAsio::prefer(ex, execution::outstanding_work.tracked))
   {
   }
 
@@ -453,10 +453,10 @@ asio_handler_allocate(std::size_t size,
     composed_op<Impl, Work, Handler, Signature>* this_handler)
 {
 #if defined(ASIO_NO_DEPRECATED)
-  ASIO_NAMESPACE::asio_handler_alloc_helpers::allocate(size, this_handler->handler_);
+  ModioAsio::asio_handler_alloc_helpers::allocate(size, this_handler->handler_);
   return asio_handler_allocate_is_no_longer_used();
 #else // defined(ASIO_NO_DEPRECATED)
-  return ASIO_NAMESPACE::asio_handler_alloc_helpers::allocate(
+  return ModioAsio::asio_handler_alloc_helpers::allocate(
       size, this_handler->handler_);
 #endif // defined(ASIO_NO_DEPRECATED)
 }
@@ -466,7 +466,7 @@ inline asio_handler_deallocate_is_deprecated
 asio_handler_deallocate(void* pointer, std::size_t size,
     composed_op<Impl, Work, Handler, Signature>* this_handler)
 {
-  ASIO_NAMESPACE::asio_handler_alloc_helpers::deallocate(
+  ModioAsio::asio_handler_alloc_helpers::deallocate(
       pointer, size, this_handler->handler_);
 #if defined(ASIO_NO_DEPRECATED)
   return asio_handler_deallocate_is_no_longer_used();
@@ -478,7 +478,7 @@ inline bool asio_handler_is_continuation(
     composed_op<Impl, Work, Handler, Signature>* this_handler)
 {
   return this_handler->invocations_ > 1 ? true
-    : ASIO_NAMESPACE::asio_handler_cont_helpers::is_continuation(
+    : ModioAsio::asio_handler_cont_helpers::is_continuation(
         this_handler->handler_);
 }
 
@@ -488,7 +488,7 @@ inline asio_handler_invoke_is_deprecated
 asio_handler_invoke(Function& function,
     composed_op<Impl, Work, Handler, Signature>* this_handler)
 {
-  ASIO_NAMESPACE::asio_handler_invoke_helpers::invoke(
+  ModioAsio::asio_handler_invoke_helpers::invoke(
       function, this_handler->handler_);
 #if defined(ASIO_NO_DEPRECATED)
   return asio_handler_invoke_is_no_longer_used();
@@ -501,7 +501,7 @@ inline asio_handler_invoke_is_deprecated
 asio_handler_invoke(const Function& function,
     composed_op<Impl, Work, Handler, Signature>* this_handler)
 {
-  ASIO_NAMESPACE::asio_handler_invoke_helpers::invoke(
+  ModioAsio::asio_handler_invoke_helpers::invoke(
       function, this_handler->handler_);
 #if defined(ASIO_NO_DEPRECATED)
   return asio_handler_invoke_is_no_longer_used();
@@ -619,12 +619,12 @@ struct associator<Associator,
  * @code struct async_echo_implementation
  * {
  *   tcp::socket& socket_;
- *   ASIO_NAMESPACE::mutable_buffer buffer_;
+ *   ModioAsio::mutable_buffer buffer_;
  *   enum { starting, reading, writing } state_;
  *
  *   template <typename Self>
  *   void operator()(Self& self,
- *       ASIO_NAMESPACE::error_code error = {},
+ *       ModioAsio::error_code error = {},
  *       std::size_t n = 0)
  *   {
  *     switch (state_)
@@ -642,8 +642,8 @@ struct associator<Associator,
  *       else
  *       {
  *         state_ = writing;
- *         ASIO_NAMESPACE::async_write(socket_, buffer_,
- *             ASIO_NAMESPACE::transfer_exactly(n),
+ *         ModioAsio::async_write(socket_, buffer_,
+ *             ModioAsio::transfer_exactly(n),
  *             std::move(self));
  *       }
  *       break;
@@ -656,16 +656,16 @@ struct associator<Associator,
  *
  * template <typename CompletionToken>
  * auto async_echo(tcp::socket& socket,
- *     ASIO_NAMESPACE::mutable_buffer buffer,
+ *     ModioAsio::mutable_buffer buffer,
  *     CompletionToken&& token) ->
  *   decltype(
- *     ASIO_NAMESPACE::async_compose<CompletionToken,
- *       void(ASIO_NAMESPACE::error_code, std::size_t)>(
+ *     ModioAsio::async_compose<CompletionToken,
+ *       void(ModioAsio::error_code, std::size_t)>(
  *         std::declval<async_echo_implementation>(),
  *         token, socket))
  * {
- *   return ASIO_NAMESPACE::async_compose<CompletionToken,
- *     void(ASIO_NAMESPACE::error_code, std::size_t)>(
+ *   return ModioAsio::async_compose<CompletionToken,
+ *     void(ModioAsio::error_code, std::size_t)>(
  *       async_echo_implementation{socket, buffer,
  *         async_echo_implementation::starting},
  *       token, socket);
@@ -799,7 +799,7 @@ async_compose(ASIO_MOVE_ARG(Implementation) implementation,
 #endif // defined(ASIO_HAS_VARIADIC_TEMPLATES)
        //   || defined(GENERATING_DOCUMENTATION)
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

@@ -19,7 +19,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 
 /// Used to generically specialise associators for a type.
 template <template <typename, typename> class Associator,
@@ -28,7 +28,7 @@ struct associator
 {
 };
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

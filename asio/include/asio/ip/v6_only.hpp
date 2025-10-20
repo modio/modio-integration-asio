@@ -20,7 +20,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace ip {
 
 /// Socket option for determining whether an IPv6 socket supports IPv6
@@ -31,18 +31,18 @@ namespace ip {
  * @par Examples
  * Setting the option:
  * @code
- * ASIO_NAMESPACE::ip::tcp::socket socket(my_context);
+ * ModioAsio::ip::tcp::socket socket(my_context);
  * ...
- * ASIO_NAMESPACE::ip::v6_only option(true);
+ * ModioAsio::ip::v6_only option(true);
  * socket.set_option(option);
  * @endcode
  *
  * @par
  * Getting the current option value:
  * @code
- * ASIO_NAMESPACE::ip::tcp::socket socket(my_context);
+ * ModioAsio::ip::tcp::socket socket(my_context);
  * ...
- * ASIO_NAMESPACE::ip::v6_only option;
+ * ModioAsio::ip::v6_only option;
  * socket.get_option(option);
  * bool v6_only = option.value();
  * @endcode
@@ -53,16 +53,16 @@ namespace ip {
 #if defined(GENERATING_DOCUMENTATION)
 typedef implementation_defined v6_only;
 #elif defined(IPV6_V6ONLY)
-typedef ASIO_NAMESPACE::detail::socket_option::boolean<
+typedef ModioAsio::detail::socket_option::boolean<
     IPPROTO_IPV6, IPV6_V6ONLY> v6_only;
 #else
-typedef ASIO_NAMESPACE::detail::socket_option::boolean<
-    ASIO_NAMESPACE::detail::custom_socket_option_level,
-    ASIO_NAMESPACE::detail::always_fail_option> v6_only;
+typedef ModioAsio::detail::socket_option::boolean<
+    ModioAsio::detail::custom_socket_option_level,
+    ModioAsio::detail::always_fail_option> v6_only;
 #endif
 
 } // namespace ip
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

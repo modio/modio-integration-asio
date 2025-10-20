@@ -42,7 +42,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 class winrt_timer_scheduler
@@ -114,16 +114,16 @@ private:
   scheduler_impl& scheduler_;
 
   // Mutex used to protect internal variables.
-  ASIO_NAMESPACE::detail::mutex mutex_;
+  ModioAsio::detail::mutex mutex_;
 
   // Event used to wake up background thread.
-  ASIO_NAMESPACE::detail::event event_;
+  ModioAsio::detail::event event_;
 
   // The timer queues.
   timer_queue_set timer_queues_;
 
   // The background thread that is waiting for timers to expire.
-  ASIO_NAMESPACE::detail::thread* thread_;
+  ModioAsio::detail::thread* thread_;
 
   // Does the background thread need to stop.
   bool stop_thread_;
@@ -133,7 +133,7 @@ private:
 };
 
 } // namespace detail
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

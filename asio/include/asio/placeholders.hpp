@@ -23,7 +23,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace placeholders {
 
 #if defined(GENERATING_DOCUMENTATION)
@@ -34,28 +34,28 @@ unspecified error;
 
 /// An argument placeholder, for use with boost::bind(), that corresponds to
 /// the bytes_transferred argument of a handler for asynchronous functions such
-/// as ASIO_NAMESPACE::basic_stream_socket::async_write_some or
-/// ASIO_NAMESPACE::async_write.
+/// as ModioAsio::basic_stream_socket::async_write_some or
+/// ModioAsio::async_write.
 unspecified bytes_transferred;
 
 /// An argument placeholder, for use with boost::bind(), that corresponds to
 /// the iterator argument of a handler for asynchronous functions such as
-/// ASIO_NAMESPACE::async_connect.
+/// ModioAsio::async_connect.
 unspecified iterator;
 
 /// An argument placeholder, for use with boost::bind(), that corresponds to
 /// the results argument of a handler for asynchronous functions such as
-/// ASIO_NAMESPACE::basic_resolver::async_resolve.
+/// ModioAsio::basic_resolver::async_resolve.
 unspecified results;
 
 /// An argument placeholder, for use with boost::bind(), that corresponds to
 /// the results argument of a handler for asynchronous functions such as
-/// ASIO_NAMESPACE::async_connect.
+/// ModioAsio::async_connect.
 unspecified endpoint;
 
 /// An argument placeholder, for use with boost::bind(), that corresponds to
 /// the signal_number argument of a handler for asynchronous functions such as
-/// ASIO_NAMESPACE::signal_set::async_wait.
+/// ModioAsio::signal_set::async_wait.
 unspecified signal_number;
 
 #elif defined(ASIO_HAS_BOOST_BIND)
@@ -109,34 +109,34 @@ namespace detail
 #  if defined(ASIO_MSVC) && (ASIO_MSVC < 1400)
 
 static boost::arg<1>& error
-  = ASIO_NAMESPACE::placeholders::detail::placeholder<1>::get();
+  = ModioAsio::placeholders::detail::placeholder<1>::get();
 static boost::arg<2>& bytes_transferred
-  = ASIO_NAMESPACE::placeholders::detail::placeholder<2>::get();
+  = ModioAsio::placeholders::detail::placeholder<2>::get();
 static boost::arg<2>& iterator
-  = ASIO_NAMESPACE::placeholders::detail::placeholder<2>::get();
+  = ModioAsio::placeholders::detail::placeholder<2>::get();
 static boost::arg<2>& results
-  = ASIO_NAMESPACE::placeholders::detail::placeholder<2>::get();
+  = ModioAsio::placeholders::detail::placeholder<2>::get();
 static boost::arg<2>& endpoint
-  = ASIO_NAMESPACE::placeholders::detail::placeholder<2>::get();
+  = ModioAsio::placeholders::detail::placeholder<2>::get();
 static boost::arg<2>& signal_number
-  = ASIO_NAMESPACE::placeholders::detail::placeholder<2>::get();
+  = ModioAsio::placeholders::detail::placeholder<2>::get();
 
 #  else
 
 namespace
 {
   boost::arg<1>& error
-    = ASIO_NAMESPACE::placeholders::detail::placeholder<1>::get();
+    = ModioAsio::placeholders::detail::placeholder<1>::get();
   boost::arg<2>& bytes_transferred
-    = ASIO_NAMESPACE::placeholders::detail::placeholder<2>::get();
+    = ModioAsio::placeholders::detail::placeholder<2>::get();
   boost::arg<2>& iterator
-    = ASIO_NAMESPACE::placeholders::detail::placeholder<2>::get();
+    = ModioAsio::placeholders::detail::placeholder<2>::get();
   boost::arg<2>& results
-    = ASIO_NAMESPACE::placeholders::detail::placeholder<2>::get();
+    = ModioAsio::placeholders::detail::placeholder<2>::get();
   boost::arg<2>& endpoint
-    = ASIO_NAMESPACE::placeholders::detail::placeholder<2>::get();
+    = ModioAsio::placeholders::detail::placeholder<2>::get();
   boost::arg<2>& signal_number
-    = ASIO_NAMESPACE::placeholders::detail::placeholder<2>::get();
+    = ModioAsio::placeholders::detail::placeholder<2>::get();
 } // namespace
 
 #  endif
@@ -144,7 +144,7 @@ namespace
 #endif
 
 } // namespace placeholders
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

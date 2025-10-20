@@ -29,7 +29,7 @@
 
 #if defined(GENERATING_DOCUMENTATION)
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace execution {
 
 /// A customisation point that submits a sender to a receiver.
@@ -103,18 +103,18 @@ struct can_submit :
 };
 
 } // namespace execution
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #else // defined(GENERATING_DOCUMENTATION)
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace asio_execution_submit_fn {
 
-using ASIO_NAMESPACE::declval;
-using ASIO_NAMESPACE::enable_if;
-using ASIO_NAMESPACE::execution::is_sender_to;
-using ASIO_NAMESPACE::traits::submit_free;
-using ASIO_NAMESPACE::traits::submit_member;
+using ModioAsio::declval;
+using ModioAsio::enable_if;
+using ModioAsio::execution::is_sender_to;
+using ModioAsio::traits::submit_free;
+using ModioAsio::traits::submit_member;
 
 void submit();
 
@@ -217,8 +217,8 @@ struct impl
     ASIO_NOEXCEPT_IF((
       call_traits<S, void(R)>::is_noexcept))
   {
-    return ASIO_NAMESPACE::execution::start(
-        (new ASIO_NAMESPACE::execution::detail::submit_receiver<S, R>(
+    return ModioAsio::execution::start(
+        (new ModioAsio::execution::detail::submit_receiver<S, R>(
           ASIO_MOVE_CAST(S)(s), ASIO_MOVE_CAST(R)(r)))->state_);
   }
 #else // defined(ASIO_HAS_MOVE)
@@ -279,8 +279,8 @@ struct impl
     ASIO_NOEXCEPT_IF((
       call_traits<S&, void(R&)>::is_noexcept))
   {
-    return ASIO_NAMESPACE::execution::start(
-        (new ASIO_NAMESPACE::execution::detail::submit_receiver<
+    return ModioAsio::execution::start(
+        (new ModioAsio::execution::detail::submit_receiver<
           S&, R&>(s, r))->state_);
   }
 
@@ -293,8 +293,8 @@ struct impl
     ASIO_NOEXCEPT_IF((
       call_traits<const S&, void(R&)>::is_noexcept))
   {
-    ASIO_NAMESPACE::execution::start(
-        (new ASIO_NAMESPACE::execution::detail::submit_receiver<
+    ModioAsio::execution::start(
+        (new ModioAsio::execution::detail::submit_receiver<
           const S&, R&>(s, r))->state_);
   }
 
@@ -355,8 +355,8 @@ struct impl
     ASIO_NOEXCEPT_IF((
       call_traits<S&, void(const R&)>::is_noexcept))
   {
-    ASIO_NAMESPACE::execution::start(
-        (new ASIO_NAMESPACE::execution::detail::submit_receiver<
+    ModioAsio::execution::start(
+        (new ModioAsio::execution::detail::submit_receiver<
           S&, const R&>(s, r))->state_);
   }
 
@@ -369,8 +369,8 @@ struct impl
     ASIO_NOEXCEPT_IF((
       call_traits<const S&, void(const R&)>::is_noexcept))
   {
-    ASIO_NAMESPACE::execution::start(
-        (new ASIO_NAMESPACE::execution::detail::submit_receiver<
+    ModioAsio::execution::start(
+        (new ModioAsio::execution::detail::submit_receiver<
           const S&, const R&>(s, r))->state_);
   }
 #endif // defined(ASIO_HAS_MOVE)
@@ -386,8 +386,8 @@ template <typename T>
 const T static_instance<T>::instance = {};
 
 } // namespace asio_execution_submit_fn
-} // namespace ASIO_NAMESPACE
-namespace ASIO_NAMESPACE {
+} // namespace ModioAsio
+namespace ModioAsio {
 namespace execution {
 namespace {
 
@@ -443,7 +443,7 @@ void submit_helper(ASIO_MOVE_ARG(S) s, ASIO_MOVE_ARG(R) r)
 
 } // namespace detail
 } // namespace execution
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #endif // defined(GENERATING_DOCUMENTATION)
 

@@ -65,18 +65,18 @@ public:
   unsigned char protocol() const { return rep_[9]; }
   unsigned short header_checksum() const { return decode(10, 11); }
 
-  ASIO_NAMESPACE::ip::address_v4 source_address() const
+  ModioAsio::ip::address_v4 source_address() const
   {
-    ASIO_NAMESPACE::ip::address_v4::bytes_type bytes
+    ModioAsio::ip::address_v4::bytes_type bytes
       = { { rep_[12], rep_[13], rep_[14], rep_[15] } };
-    return ASIO_NAMESPACE::ip::address_v4(bytes);
+    return ModioAsio::ip::address_v4(bytes);
   }
 
-  ASIO_NAMESPACE::ip::address_v4 destination_address() const
+  ModioAsio::ip::address_v4 destination_address() const
   {
-    ASIO_NAMESPACE::ip::address_v4::bytes_type bytes
+    ModioAsio::ip::address_v4::bytes_type bytes
       = { { rep_[16], rep_[17], rep_[18], rep_[19] } };
-    return ASIO_NAMESPACE::ip::address_v4(bytes);
+    return ModioAsio::ip::address_v4(bytes);
   }
 
   friend std::istream& operator>>(std::istream& is, ipv4_header& header)

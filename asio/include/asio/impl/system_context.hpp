@@ -19,7 +19,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 
 inline system_context::executor_type
 system_context::get_executor() ASIO_NOEXCEPT
@@ -27,7 +27,7 @@ system_context::get_executor() ASIO_NOEXCEPT
   return system_executor();
 }
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

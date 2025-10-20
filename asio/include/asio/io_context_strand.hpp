@@ -28,7 +28,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 
 /// Provides serialised handler execution.
 /**
@@ -102,9 +102,9 @@ public:
    * @param io_context The io_context object that the strand will use to
    * dispatch handlers that are ready to be run.
    */
-  explicit strand(ASIO_NAMESPACE::io_context& io_context)
-    : service_(ASIO_NAMESPACE::use_service<
-        ASIO_NAMESPACE::detail::strand_service>(io_context))
+  explicit strand(ModioAsio::io_context& io_context)
+    : service_(ModioAsio::use_service<
+        ModioAsio::detail::strand_service>(io_context))
   {
     service_.construct(impl_);
   }
@@ -121,7 +121,7 @@ public:
   }
 
   /// Obtain the underlying execution context.
-  ASIO_NAMESPACE::io_context& context() const ASIO_NOEXCEPT
+  ModioAsio::io_context& context() const ASIO_NOEXCEPT
   {
     return service_.get_io_context();
   }
@@ -168,7 +168,7 @@ public:
   }
 
 #if !defined(ASIO_NO_DEPRECATED)
-  /// (Deprecated: Use ASIO_NAMESPACE::dispatch().) Request the strand to invoke
+  /// (Deprecated: Use ModioAsio::dispatch().) Request the strand to invoke
   /// the given handler.
   /**
    * This function is used to ask the strand to execute the given handler.
@@ -222,7 +222,7 @@ public:
   }
 
 #if !defined(ASIO_NO_DEPRECATED)
-  /// (Deprecated: Use ASIO_NAMESPACE::post().) Request the strand to invoke the
+  /// (Deprecated: Use ModioAsio::post().) Request the strand to invoke the
   /// given handler and return immediately.
   /**
    * This function is used to ask the strand to execute the given handler, but
@@ -272,7 +272,7 @@ public:
   }
 
 #if !defined(ASIO_NO_DEPRECATED)
-  /// (Deprecated: Use ASIO_NAMESPACE::bind_executor().) Create a new handler that
+  /// (Deprecated: Use ModioAsio::bind_executor().) Create a new handler that
   /// automatically dispatches the wrapped handler on the strand.
   /**
    * This function is used to create a new handler function object that, when
@@ -374,11 +374,11 @@ private:
   };
 #endif // !defined(ASIO_NO_DEPRECATED)
 
-  ASIO_NAMESPACE::detail::strand_service& service_;
-  mutable ASIO_NAMESPACE::detail::strand_service::implementation_type impl_;
+  ModioAsio::detail::strand_service& service_;
+  mutable ModioAsio::detail::strand_service::implementation_type impl_;
 };
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

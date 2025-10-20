@@ -28,7 +28,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 template <typename Time_Traits>
@@ -153,7 +153,7 @@ public:
         while (wait_op* op = timer->op_queue_.front())
         {
           timer->op_queue_.pop();
-          op->ec_ = ASIO_NAMESPACE::error_code();
+          op->ec_ = ModioAsio::error_code();
           ops.push(op);
         }
         remove_timer(*timer);
@@ -186,7 +186,7 @@ public:
       while (wait_op* op = (num_cancelled != max_cancelled)
           ? timer.op_queue_.front() : 0)
       {
-        op->ec_ = ASIO_NAMESPACE::error::operation_aborted;
+        op->ec_ = ModioAsio::error::operation_aborted;
         timer.op_queue_.pop();
         ops.push(op);
         ++num_cancelled;
@@ -209,7 +209,7 @@ public:
         timer->op_queue_.pop();
         if (op->cancellation_key_ == cancellation_key)
         {
-          op->ec_ = ASIO_NAMESPACE::error::operation_aborted;
+          op->ec_ = ModioAsio::error::operation_aborted;
           ops.push(op);
         }
         else
@@ -382,7 +382,7 @@ private:
 };
 
 } // namespace detail
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

@@ -32,7 +32,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 template <typename Handler, typename IoExecutor>
@@ -43,7 +43,7 @@ public:
 
   win_iocp_wait_op(socket_ops::weak_cancel_token_type cancel_token,
       Handler& handler, const IoExecutor& io_ex)
-    : reactor_op(ASIO_NAMESPACE::error_code(),
+    : reactor_op(ModioAsio::error_code(),
         &win_iocp_wait_op::do_perform,
         &win_iocp_wait_op::do_complete),
       cancel_token_(cancel_token),
@@ -58,14 +58,14 @@ public:
   }
 
   static void do_complete(void* owner, operation* base,
-      const ASIO_NAMESPACE::error_code& result_ec,
+      const ModioAsio::error_code& result_ec,
       std::size_t /*bytes_transferred*/)
   {
-    ASIO_NAMESPACE::error_code ec(result_ec);
+    ModioAsio::error_code ec(result_ec);
 
     // Take ownership of the operation object.
     win_iocp_wait_op* o(static_cast<win_iocp_wait_op*>(base));
-    ptr p = { ASIO_NAMESPACE::detail::addressof(o->handler_), o, o };
+    ptr p = { ModioAsio::detail::addressof(o->handler_), o, o };
 
     ASIO_HANDLER_COMPLETION((*o));
 
@@ -82,13 +82,13 @@ public:
     if (ec.value() == ERROR_NETNAME_DELETED)
     {
       if (o->cancel_token_.expired())
-        ec = ASIO_NAMESPACE::error::operation_aborted;
+        ec = ModioAsio::error::operation_aborted;
       else
-        ec = ASIO_NAMESPACE::error::connection_reset;
+        ec = ModioAsio::error::connection_reset;
     }
     else if (ec.value() == ERROR_PORT_UNREACHABLE)
     {
-      ec = ASIO_NAMESPACE::error::connection_refused;
+      ec = ModioAsio::error::connection_refused;
     }
 
     ASIO_ERROR_LOCATION(ec);
@@ -99,9 +99,9 @@ public:
     // with the handler. Consequently, a local copy of the handler is required
     // to ensure that any owning sub-object remains valid until after we have
     // deallocated the memory here.
-    detail::binder1<Handler, ASIO_NAMESPACE::error_code>
+    detail::binder1<Handler, ModioAsio::error_code>
       handler(o->handler_, ec);
-    p.h = ASIO_NAMESPACE::detail::addressof(handler.handler_);
+    p.h = ModioAsio::detail::addressof(handler.handler_);
     p.reset();
 
     // Make the upcall if required.
@@ -121,7 +121,7 @@ private:
 };
 
 } // namespace detail
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

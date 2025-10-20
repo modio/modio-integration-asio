@@ -21,7 +21,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 
 #if defined(ASIO_HAS_CONCEPTS) \
   && defined(ASIO_HAS_VARIADIC_TEMPLATES) \
@@ -159,7 +159,7 @@ ASIO_CONCEPT completion_signature =
   detail::is_completion_signature<T>::value;
 
 #define ASIO_COMPLETION_SIGNATURE \
-  ::ASIO_NAMESPACE::completion_signature
+  ::ModioAsio::completion_signature
 
 template <typename T, typename... Signatures>
 ASIO_CONCEPT completion_handler_for =
@@ -167,11 +167,11 @@ ASIO_CONCEPT completion_handler_for =
     && detail::is_completion_handler_for<T, Signatures...>::value;
 
 #define ASIO_COMPLETION_HANDLER_FOR(sig) \
-  ::ASIO_NAMESPACE::completion_handler_for<sig>
+  ::ModioAsio::completion_handler_for<sig>
 #define ASIO_COMPLETION_HANDLER_FOR2(sig0, sig1) \
-  ::ASIO_NAMESPACE::completion_handler_for<sig0, sig1>
+  ::ModioAsio::completion_handler_for<sig0, sig1>
 #define ASIO_COMPLETION_HANDLER_FOR3(sig0, sig1, sig2) \
-  ::ASIO_NAMESPACE::completion_handler_for<sig0, sig1, sig2>
+  ::ModioAsio::completion_handler_for<sig0, sig1, sig2>
 
 #else // defined(ASIO_HAS_CONCEPTS)
       //   && defined(ASIO_HAS_VARIADIC_TEMPLATES)
@@ -427,7 +427,7 @@ struct simple_completion_signature<R() && noexcept>
 # define ASIO_COMPLETION_SIGNATURES_TARGS Signatures...
 
 # define ASIO_COMPLETION_SIGNATURES_TSIMPLEARGS \
-    typename ASIO_NAMESPACE::detail::simple_completion_signature< \
+    typename ModioAsio::detail::simple_completion_signature< \
       Signatures>::type...
 
 #else // defined(ASIO_HAS_VARIADIC_TEMPLATES)
@@ -446,9 +446,9 @@ struct simple_completion_signature<R() && noexcept>
 # define ASIO_COMPLETION_SIGNATURES_TARGS Sig0, Sig1, Sig2
 
 # define ASIO_COMPLETION_SIGNATURES_TSIMPLEARGS \
-    typename ::ASIO_NAMESPACE::detail::simple_completion_signature<Sig0>::type, \
-    typename ::ASIO_NAMESPACE::detail::simple_completion_signature<Sig1>::type, \
-    typename ::ASIO_NAMESPACE::detail::simple_completion_signature<Sig2>::type
+    typename ::ModioAsio::detail::simple_completion_signature<Sig0>::type, \
+    typename ::ModioAsio::detail::simple_completion_signature<Sig1>::type, \
+    typename ::ModioAsio::detail::simple_completion_signature<Sig2>::type
 
 #endif // defined(ASIO_HAS_VARIADIC_TEMPLATES)
        //   || defined(GENERATING_DOCUMENTATION)
@@ -644,7 +644,7 @@ template <typename CompletionToken, ASIO_COMPLETION_SIGNATURES_TPARAMS>
 struct async_completion
 {
   /// The real handler type to be used for the asynchronous operation.
-  typedef typename ASIO_NAMESPACE::async_result<
+  typedef typename ModioAsio::async_result<
     typename decay<CompletionToken>::type,
       ASIO_COMPLETION_SIGNATURES_TARGS>::completion_handler_type
         completion_handler_type;
@@ -744,43 +744,43 @@ struct async_result_has_initiate_memfn
   void_or_deduced
 #elif defined(_MSC_VER) && (_MSC_VER < 1500)
 # define ASIO_INITFN_RESULT_TYPE(ct, sig) \
-  typename ::ASIO_NAMESPACE::detail::async_result_helper< \
+  typename ::ModioAsio::detail::async_result_helper< \
     ct, sig>::return_type
 # define ASIO_INITFN_RESULT_TYPE2(ct, sig0, sig1) \
-  typename ::ASIO_NAMESPACE::detail::async_result_helper< \
+  typename ::ModioAsio::detail::async_result_helper< \
     ct, sig0, sig1>::return_type
 # define ASIO_INITFN_RESULT_TYPE3(ct, sig0, sig1, sig2) \
-  typename ::ASIO_NAMESPACE::detail::async_result_helper< \
+  typename ::ModioAsio::detail::async_result_helper< \
     ct, sig0, sig1, sig2>::return_type
 #define ASIO_HANDLER_TYPE(ct, sig) \
-  typename ::ASIO_NAMESPACE::detail::async_result_helper< \
+  typename ::ModioAsio::detail::async_result_helper< \
     ct, sig>::completion_handler_type
 #define ASIO_HANDLER_TYPE2(ct, sig0, sig1) \
-  typename ::ASIO_NAMESPACE::detail::async_result_helper< \
+  typename ::ModioAsio::detail::async_result_helper< \
     ct, sig0, sig1>::completion_handler_type
 #define ASIO_HANDLER_TYPE3(ct, sig0, sig1, sig2) \
-  typename ::ASIO_NAMESPACE::detail::async_result_helper< \
+  typename ::ModioAsio::detail::async_result_helper< \
     ct, sig0, sig1, sig2>::completion_handler_type
 #else
 # define ASIO_INITFN_RESULT_TYPE(ct, sig) \
-  typename ::ASIO_NAMESPACE::async_result< \
-    typename ::ASIO_NAMESPACE::decay<ct>::type, sig>::return_type
+  typename ::ModioAsio::async_result< \
+    typename ::ModioAsio::decay<ct>::type, sig>::return_type
 # define ASIO_INITFN_RESULT_TYPE2(ct, sig0, sig1) \
-  typename ::ASIO_NAMESPACE::async_result< \
-    typename ::ASIO_NAMESPACE::decay<ct>::type, sig0, sig1>::return_type
+  typename ::ModioAsio::async_result< \
+    typename ::ModioAsio::decay<ct>::type, sig0, sig1>::return_type
 # define ASIO_INITFN_RESULT_TYPE3(ct, sig0, sig1, sig2) \
-  typename ::ASIO_NAMESPACE::async_result< \
-    typename ::ASIO_NAMESPACE::decay<ct>::type, sig0, sig1, sig2>::return_type
+  typename ::ModioAsio::async_result< \
+    typename ::ModioAsio::decay<ct>::type, sig0, sig1, sig2>::return_type
 #define ASIO_HANDLER_TYPE(ct, sig) \
-  typename ::ASIO_NAMESPACE::async_result< \
-    typename ::ASIO_NAMESPACE::decay<ct>::type, sig>::completion_handler_type
+  typename ::ModioAsio::async_result< \
+    typename ::ModioAsio::decay<ct>::type, sig>::completion_handler_type
 #define ASIO_HANDLER_TYPE2(ct, sig0, sig1) \
-  typename ::ASIO_NAMESPACE::async_result< \
-    typename ::ASIO_NAMESPACE::decay<ct>::type, \
+  typename ::ModioAsio::async_result< \
+    typename ::ModioAsio::decay<ct>::type, \
       sig0, sig1>::completion_handler_type
 #define ASIO_HANDLER_TYPE3(ct, sig0, sig1, sig2) \
-  typename ::ASIO_NAMESPACE::async_result< \
-    typename ::ASIO_NAMESPACE::decay<ct>::type, \
+  typename ::ModioAsio::async_result< \
+    typename ::ModioAsio::decay<ct>::type, \
       sig0, sig1, sig2>::completion_handler_type
 #endif
 
@@ -1215,11 +1215,11 @@ ASIO_CONCEPT completion_token_for =
   };
 
 #define ASIO_COMPLETION_TOKEN_FOR(sig) \
-  ::ASIO_NAMESPACE::completion_token_for<sig>
+  ::ModioAsio::completion_token_for<sig>
 #define ASIO_COMPLETION_TOKEN_FOR2(sig0, sig1) \
-  ::ASIO_NAMESPACE::completion_token_for<sig0, sig1>
+  ::ModioAsio::completion_token_for<sig0, sig1>
 #define ASIO_COMPLETION_TOKEN_FOR3(sig0, sig1, sig2) \
-  ::ASIO_NAMESPACE::completion_token_for<sig0, sig1, sig2>
+  ::ModioAsio::completion_token_for<sig0, sig1, sig2>
 
 #else // defined(ASIO_HAS_CONCEPTS)
       //   && defined(ASIO_HAS_VARIADIC_TEMPLATES)
@@ -1375,13 +1375,13 @@ template <typename T, typename... Args>
 ASIO_CONCEPT async_operation = is_async_operation<T, Args...>::value;
 
 #define ASIO_ASYNC_OPERATION(t) \
-  ::ASIO_NAMESPACE::async_operation<t>
+  ::ModioAsio::async_operation<t>
 #define ASIO_ASYNC_OPERATION1(t, a0) \
-  ::ASIO_NAMESPACE::async_operation<t, a0>
+  ::ModioAsio::async_operation<t, a0>
 #define ASIO_ASYNC_OPERATION2(t, a0, a1) \
-  ::ASIO_NAMESPACE::async_operation<t, a0, a1>
+  ::ModioAsio::async_operation<t, a0, a1>
 #define ASIO_ASYNC_OPERATION3(t, a0, a1, a2) \
-  ::ASIO_NAMESPACE::async_operation<t, a0, a1, a2>
+  ::ModioAsio::async_operation<t, a0, a1, a2>
 
 #else // defined(ASIO_HAS_CONCEPTS)
       //   && defined(ASIO_HAS_VARIADIC_TEMPLATES)
@@ -1609,9 +1609,9 @@ using default_completion_token_t = typename default_completion_token<T>::type;
 #if defined(ASIO_HAS_DEFAULT_FUNCTION_TEMPLATE_ARGUMENTS)
 
 #define ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(e) \
-  = typename ::ASIO_NAMESPACE::default_completion_token<e>::type
+  = typename ::ModioAsio::default_completion_token<e>::type
 #define ASIO_DEFAULT_COMPLETION_TOKEN(e) \
-  = typename ::ASIO_NAMESPACE::default_completion_token<e>::type()
+  = typename ::ModioAsio::default_completion_token<e>::type()
 
 #else // defined(ASIO_HAS_DEFAULT_FUNCTION_TEMPLATE_ARGUMENTS)
 
@@ -1620,7 +1620,7 @@ using default_completion_token_t = typename default_completion_token<T>::type;
 
 #endif // defined(ASIO_HAS_DEFAULT_FUNCTION_TEMPLATE_ARGUMENTS)
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

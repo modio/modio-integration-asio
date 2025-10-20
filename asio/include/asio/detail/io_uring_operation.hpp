@@ -25,7 +25,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 class io_uring_operation
@@ -33,7 +33,7 @@ class io_uring_operation
 {
 public:
   // The error code to be passed to the completion handler.
-  ASIO_NAMESPACE::error_code ec_;
+  ModioAsio::error_code ec_;
 
   // The number of bytes transferred, to be passed to the completion handler.
   std::size_t bytes_transferred_;
@@ -57,7 +57,7 @@ protected:
   typedef void (*prepare_func_type)(io_uring_operation*, ::io_uring_sqe*);
   typedef bool (*perform_func_type)(io_uring_operation*, bool);
 
-  io_uring_operation(const ASIO_NAMESPACE::error_code& success_ec,
+  io_uring_operation(const ModioAsio::error_code& success_ec,
       prepare_func_type prepare_func, perform_func_type perform_func,
       func_type complete_func)
     : operation(complete_func),
@@ -75,7 +75,7 @@ private:
 };
 
 } // namespace detail
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

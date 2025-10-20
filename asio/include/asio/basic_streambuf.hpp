@@ -32,7 +32,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 
 /// Automatically resizable buffer class based on std::streambuf.
 /**
@@ -75,7 +75,7 @@ namespace ASIO_NAMESPACE {
  * @par Examples
  * Writing directly from an streambuf to a socket:
  * @code
- * ASIO_NAMESPACE::streambuf b;
+ * ModioAsio::streambuf b;
  * std::ostream os(&b);
  * os << "Hello, World!\n";
  *
@@ -87,10 +87,10 @@ namespace ASIO_NAMESPACE {
  *
  * Reading from a socket directly into a streambuf:
  * @code
- * ASIO_NAMESPACE::streambuf b;
+ * ModioAsio::streambuf b;
  *
  * // reserve 512 bytes in output sequence
- * ASIO_NAMESPACE::streambuf::mutable_buffers_type bufs = b.prepare(512);
+ * ModioAsio::streambuf::mutable_buffers_type bufs = b.prepare(512);
  *
  * size_t n = sock.receive(bufs);
  *
@@ -191,7 +191,7 @@ public:
    */
   const_buffers_type data() const ASIO_NOEXCEPT
   {
-    return ASIO_NAMESPACE::buffer(ASIO_NAMESPACE::const_buffer(gptr(),
+    return ModioAsio::buffer(ModioAsio::const_buffer(gptr(),
           (pptr() - gptr()) * sizeof(char_type)));
   }
 
@@ -214,7 +214,7 @@ public:
   mutable_buffers_type prepare(std::size_t n)
   {
     reserve(n);
-    return ASIO_NAMESPACE::buffer(ASIO_NAMESPACE::mutable_buffer(
+    return ModioAsio::buffer(ModioAsio::mutable_buffer(
           pptr(), n * sizeof(char_type)));
   }
 
@@ -335,8 +335,8 @@ protected:
       }
       else
       {
-        std::length_error ex("ASIO_NAMESPACE::streambuf too long");
-        ASIO_NAMESPACE::detail::throw_exception(ex);
+        std::length_error ex("ModioAsio::streambuf too long");
+        ModioAsio::detail::throw_exception(ex);
       }
     }
 
@@ -443,7 +443,7 @@ private:
   basic_streambuf<Allocator>& sb_;
 };
 
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

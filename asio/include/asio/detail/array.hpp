@@ -23,7 +23,7 @@
 # include <boost/array.hpp>
 #endif // defined(ASIO_HAS_STD_ARRAY)
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 #if defined(ASIO_HAS_STD_ARRAY)
@@ -33,6 +33,6 @@ using boost::array;
 #endif // defined(ASIO_HAS_STD_ARRAY)
 
 } // namespace detail
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #endif // ASIO_DETAIL_ARRAY_HPP

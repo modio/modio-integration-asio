@@ -26,7 +26,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace ASIO_NAMESPACE {
+namespace ModioAsio {
 namespace detail {
 
 win_iocp_file_service::win_iocp_file_service(
@@ -48,14 +48,14 @@ void win_iocp_file_service::shutdown()
   handle_service_.shutdown();
 }
 
-ASIO_NAMESPACE::error_code win_iocp_file_service::open(
+ModioAsio::error_code win_iocp_file_service::open(
     win_iocp_file_service::implementation_type& impl,
     const char* path, file_base::flags open_flags,
-    ASIO_NAMESPACE::error_code& ec)
+    ModioAsio::error_code& ec)
 {
   if (is_open(impl))
   {
-    ec = ASIO_NAMESPACE::error::already_open;
+    ec = ModioAsio::error::already_open;
     ASIO_ERROR_LOCATION(ec);
     return ec;
   }
@@ -103,7 +103,7 @@ ASIO_NAMESPACE::error_code win_iocp_file_service::open(
       {
         DWORD last_error = ::GetLastError();
         ::CloseHandle(handle);
-        ec.assign(last_error, ASIO_NAMESPACE::error::get_system_category());
+        ec.assign(last_error, ModioAsio::error::get_system_category());
         ASIO_ERROR_LOCATION(ec);
         return ec;
       }
@@ -119,7 +119,7 @@ ASIO_NAMESPACE::error_code win_iocp_file_service::open(
   else
   {
     DWORD last_error = ::GetLastError();
-    ec.assign(last_error, ASIO_NAMESPACE::error::get_system_category());
+    ec.assign(last_error, ModioAsio::error::get_system_category());
     ASIO_ERROR_LOCATION(ec);
     return ec;
   }
@@ -127,26 +127,26 @@ ASIO_NAMESPACE::error_code win_iocp_file_service::open(
 
 uint64_t win_iocp_file_service::size(
     const win_iocp_file_service::implementation_type& impl,
-    ASIO_NAMESPACE::error_code& ec) const
+    ModioAsio::error_code& ec) const
 {
   LARGE_INTEGER result;
   if (::GetFileSizeEx(native_handle(impl), &result))
   {
-    ASIO_NAMESPACE::error::clear(ec);
+    ModioAsio::error::clear(ec);
     return static_cast<uint64_t>(result.QuadPart);
   }
   else
   {
     DWORD last_error = ::GetLastError();
-    ec.assign(last_error, ASIO_NAMESPACE::error::get_system_category());
+    ec.assign(last_error, ModioAsio::error::get_system_category());
     ASIO_ERROR_LOCATION(ec);
     return 0;
   }
 }
 
-ASIO_NAMESPACE::error_code win_iocp_file_service::resize(
+ModioAsio::error_code win_iocp_file_service::resize(
     win_iocp_file_service::implementation_type& impl,
-    uint64_t n, ASIO_NAMESPACE::error_code& ec)
+    uint64_t n, ModioAsio::error_code& ec)
 {
   LARGE_INTEGER distance;
   distance.QuadPart = n;
@@ -163,43 +163,43 @@ ASIO_NAMESPACE::error_code win_iocp_file_service::resize(
     }
 
     if (result)
-      ASIO_NAMESPACE::error::clear(ec);
+      ModioAsio::error::clear(ec);
     else
-      ec.assign(last_error, ASIO_NAMESPACE::error::get_system_category());
+      ec.assign(last_error, ModioAsio::error::get_system_category());
     ASIO_ERROR_LOCATION(ec);
     return ec;
   }
   else
   {
     DWORD last_error = ::GetLastError();
-    ec.assign(last_error, ASIO_NAMESPACE::error::get_system_category());
+    ec.assign(last_error, ModioAsio::error::get_system_category());
     ASIO_ERROR_LOCATION(ec);
     return ec;
   }
 }
 
-ASIO_NAMESPACE::error_code win_iocp_file_service::sync_all(
+ModioAsio::error_code win_iocp_file_service::sync_all(
     win_iocp_file_service::implementation_type& impl,
-    ASIO_NAMESPACE::error_code& ec)
+    ModioAsio::error_code& ec)
 {
   BOOL result = ::FlushFileBuffers(native_handle(impl));
   if (result)
   {
-    ASIO_NAMESPACE::error::clear(ec);
+    ModioAsio::error::clear(ec);
     return ec;
   }
   else
   {
     DWORD last_error = ::GetLastError();
-    ec.assign(last_error, ASIO_NAMESPACE::error::get_system_category());
+    ec.assign(last_error, ModioAsio::error::get_system_category());
     ASIO_ERROR_LOCATION(ec);
     return ec;
   }
 }
 
-ASIO_NAMESPACE::error_code win_iocp_file_service::sync_data(
+ModioAsio::error_code win_iocp_file_service::sync_data(
     win_iocp_file_service::implementation_type& impl,
-    ASIO_NAMESPACE::error_code& ec)
+    ModioAsio::error_code& ec)
 {
   if (nt_flush_buffers_file_ex_)
   {
@@ -207,7 +207,7 @@ ASIO_NAMESPACE::error_code win_iocp_file_service::sync_data(
     if (!nt_flush_buffers_file_ex_(native_handle(impl),
           flush_flags_file_data_sync_only, 0, 0, &status))
     {
-      ASIO_NAMESPACE::error::clear(ec);
+      ModioAsio::error::clear(ec);
       return ec;
     }
   }
@@ -216,7 +216,7 @@ ASIO_NAMESPACE::error_code win_iocp_file_service::sync_data(
 
 uint64_t win_iocp_file_service::seek(
     win_iocp_file_service::implementation_type& impl, int64_t offset,
-    file_base::seek_basis whence, ASIO_NAMESPACE::error_code& ec)
+    file_base::seek_basis whence, ModioAsio::error_code& ec)
 {
   DWORD method;
   switch (whence)
@@ -231,7 +231,7 @@ uint64_t win_iocp_file_service::seek(
     method = FILE_END;
     break;
   default:
-    ec = ASIO_NAMESPACE::error::invalid_argument;
+    ec = ModioAsio::error::invalid_argument;
     ASIO_ERROR_LOCATION(ec);
     return 0;
   }
@@ -241,20 +241,20 @@ uint64_t win_iocp_file_service::seek(
   if (::SetFilePointerEx(native_handle(impl), distance, &new_offset, method))
   {
     impl.offset_ = new_offset.QuadPart;
-    ASIO_NAMESPACE::error::clear(ec);
+    ModioAsio::error::clear(ec);
     return impl.offset_;
   }
   else
   {
     DWORD last_error = ::GetLastError();
-    ec.assign(last_error, ASIO_NAMESPACE::error::get_system_category());
+    ec.assign(last_error, ModioAsio::error::get_system_category());
     ASIO_ERROR_LOCATION(ec);
     return 0;
   }
 }
 
 } // namespace detail
-} // namespace ASIO_NAMESPACE
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 
