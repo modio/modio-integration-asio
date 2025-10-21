@@ -21,12 +21,12 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 namespace ip {
 
 /// An entry produced by a resolver.
 /**
- * The asio::ip::basic_resolver_entry class template describes an entry
+ * The ModioAsio::ip::basic_resolver_entry class template describes an entry
  * as returned by a resolver.
  *
  * @par Thread Safety
@@ -106,7 +106,7 @@ private:
 };
 
 } // namespace ip
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

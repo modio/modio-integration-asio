@@ -35,7 +35,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 namespace windows {
 
 /// Provides object-oriented handle functionality.
@@ -69,7 +69,7 @@ public:
 #if defined(GENERATING_DOCUMENTATION)
   typedef implementation_defined native_handle_type;
 #else
-  typedef asio::detail::win_object_handle_service::native_handle_type
+  typedef ModioAsio::detail::win_object_handle_service::native_handle_type
     native_handle_type;
 #endif
 
@@ -118,15 +118,15 @@ public:
    *
    * @param native_handle The new underlying handle implementation.
    *
-   * @throws asio::system_error Thrown on failure.
+   * @throws ModioAsio::system_error Thrown on failure.
    */
   basic_object_handle(const executor_type& ex,
       const native_handle_type& native_handle)
     : impl_(0, ex)
   {
-    asio::error_code ec;
+    ModioAsio::error_code ec;
     impl_.get_service().assign(impl_.get_implementation(), native_handle, ec);
-    asio::detail::throw_error(ec, "assign");
+    ModioAsio::detail::throw_error(ec, "assign");
   }
 
   /// Construct an object handle on an existing native handle.
@@ -140,7 +140,7 @@ public:
    *
    * @param native_handle The new underlying handle implementation.
    *
-   * @throws asio::system_error Thrown on failure.
+   * @throws ModioAsio::system_error Thrown on failure.
    */
   template <typename ExecutionContext>
   basic_object_handle(ExecutionContext& context,
@@ -150,9 +150,9 @@ public:
       >::type = 0)
     : impl_(0, 0, context)
   {
-    asio::error_code ec;
+    ModioAsio::error_code ec;
     impl_.get_service().assign(impl_.get_implementation(), native_handle, ec);
-    asio::detail::throw_error(ec, "assign");
+    ModioAsio::detail::throw_error(ec, "assign");
   }
 
 #if defined(ASIO_HAS_MOVE) || defined(GENERATING_DOCUMENTATION)
@@ -276,13 +276,13 @@ public:
    *
    * @param handle A native handle.
    *
-   * @throws asio::system_error Thrown on failure.
+   * @throws ModioAsio::system_error Thrown on failure.
    */
   void assign(const native_handle_type& handle)
   {
-    asio::error_code ec;
+    ModioAsio::error_code ec;
     impl_.get_service().assign(impl_.get_implementation(), handle, ec);
-    asio::detail::throw_error(ec, "assign");
+    ModioAsio::detail::throw_error(ec, "assign");
   }
 
   /// Assign an existing native handle to the handle.
@@ -294,7 +294,7 @@ public:
    * @param ec Set to indicate what error occurred, if any.
    */
   ASIO_SYNC_OP_VOID assign(const native_handle_type& handle,
-      asio::error_code& ec)
+      ModioAsio::error_code& ec)
   {
     impl_.get_service().assign(impl_.get_implementation(), handle, ec);
     ASIO_SYNC_OP_VOID_RETURN(ec);
@@ -310,26 +310,26 @@ public:
   /**
    * This function is used to close the handle. Any asynchronous read or write
    * operations will be cancelled immediately, and will complete with the
-   * asio::error::operation_aborted error.
+   * ModioAsio::error::operation_aborted error.
    *
-   * @throws asio::system_error Thrown on failure.
+   * @throws ModioAsio::system_error Thrown on failure.
    */
   void close()
   {
-    asio::error_code ec;
+    ModioAsio::error_code ec;
     impl_.get_service().close(impl_.get_implementation(), ec);
-    asio::detail::throw_error(ec, "close");
+    ModioAsio::detail::throw_error(ec, "close");
   }
 
   /// Close the handle.
   /**
    * This function is used to close the handle. Any asynchronous read or write
    * operations will be cancelled immediately, and will complete with the
-   * asio::error::operation_aborted error.
+   * ModioAsio::error::operation_aborted error.
    *
    * @param ec Set to indicate what error occurred, if any.
    */
-  ASIO_SYNC_OP_VOID close(asio::error_code& ec)
+  ASIO_SYNC_OP_VOID close(ModioAsio::error_code& ec)
   {
     impl_.get_service().close(impl_.get_implementation(), ec);
     ASIO_SYNC_OP_VOID_RETURN(ec);
@@ -350,26 +350,26 @@ public:
   /**
    * This function causes all outstanding asynchronous read or write operations
    * to finish immediately, and the handlers for cancelled operations will be
-   * passed the asio::error::operation_aborted error.
+   * passed the ModioAsio::error::operation_aborted error.
    *
-   * @throws asio::system_error Thrown on failure.
+   * @throws ModioAsio::system_error Thrown on failure.
    */
   void cancel()
   {
-    asio::error_code ec;
+    ModioAsio::error_code ec;
     impl_.get_service().cancel(impl_.get_implementation(), ec);
-    asio::detail::throw_error(ec, "cancel");
+    ModioAsio::detail::throw_error(ec, "cancel");
   }
 
   /// Cancel all asynchronous operations associated with the handle.
   /**
    * This function causes all outstanding asynchronous read or write operations
    * to finish immediately, and the handlers for cancelled operations will be
-   * passed the asio::error::operation_aborted error.
+   * passed the ModioAsio::error::operation_aborted error.
    *
    * @param ec Set to indicate what error occurred, if any.
    */
-  ASIO_SYNC_OP_VOID cancel(asio::error_code& ec)
+  ASIO_SYNC_OP_VOID cancel(ModioAsio::error_code& ec)
   {
     impl_.get_service().cancel(impl_.get_implementation(), ec);
     ASIO_SYNC_OP_VOID_RETURN(ec);
@@ -381,13 +381,13 @@ public:
    * signalled state. This function blocks and does not return until the object
    * handle has been set to the signalled state.
    *
-   * @throws asio::system_error Thrown on failure.
+   * @throws ModioAsio::system_error Thrown on failure.
    */
   void wait()
   {
-    asio::error_code ec;
+    ModioAsio::error_code ec;
     impl_.get_service().wait(impl_.get_implementation(), ec);
-    asio::detail::throw_error(ec, "wait");
+    ModioAsio::detail::throw_error(ec, "wait");
   }
 
   /// Perform a blocking wait on the object handle.
@@ -398,7 +398,7 @@ public:
    *
    * @param ec Set to indicate what error occurred, if any.
    */
-  void wait(asio::error_code& ec)
+  void wait(ModioAsio::error_code& ec)
   {
     impl_.get_service().wait(impl_.get_implementation(), ec);
   }
@@ -415,29 +415,29 @@ public:
    * @ref yield_context, or a function object with the correct completion
    * signature. The function signature of the completion handler must be:
    * @code void handler(
-   *   const asio::error_code& error // Result of operation.
+   *   const ModioAsio::error_code& error // Result of operation.
    * ); @endcode
    * Regardless of whether the asynchronous operation completes immediately or
    * not, the completion handler will not be invoked from within this function.
    * On immediate completion, invocation of the handler will be performed in a
-   * manner equivalent to using asio::post().
+   * manner equivalent to using ModioAsio::post().
    *
    * @par Completion Signature
-   * @code void(asio::error_code) @endcode
+   * @code void(ModioAsio::error_code) @endcode
    */
   template <
-      ASIO_COMPLETION_TOKEN_FOR(void (asio::error_code))
+      ASIO_COMPLETION_TOKEN_FOR(void (ModioAsio::error_code))
         WaitToken ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(executor_type)>
   ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(WaitToken,
-      void (asio::error_code))
+      void (ModioAsio::error_code))
   async_wait(
       ASIO_MOVE_ARG(WaitToken) token
         ASIO_DEFAULT_COMPLETION_TOKEN(executor_type))
     ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
-      async_initiate<WaitToken, void (asio::error_code)>(
+      async_initiate<WaitToken, void (ModioAsio::error_code)>(
           declval<initiate_async_wait>(), token)))
   {
-    return async_initiate<WaitToken, void (asio::error_code)>(
+    return async_initiate<WaitToken, void (ModioAsio::error_code)>(
         initiate_async_wait(this), token);
   }
 
@@ -478,12 +478,12 @@ private:
     basic_object_handle* self_;
   };
 
-  asio::detail::io_object_impl<
-    asio::detail::win_object_handle_service, Executor> impl_;
+  ModioAsio::detail::io_object_impl<
+    ModioAsio::detail::win_object_handle_service, Executor> impl_;
 };
 
 } // namespace windows
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

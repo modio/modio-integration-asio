@@ -25,7 +25,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 
 #if defined(ASIO_USE_TS_EXECUTOR_AS_DEFAULT)
 
@@ -167,11 +167,11 @@ public:
   /// Obtain a polymorphic wrapper with the specified property.
   /**
    * Do not call this function directly. It is intended for use with the
-   * asio::require and asio::prefer customisation points.
+   * ModioAsio::require and ModioAsio::prefer customisation points.
    *
    * For example:
    * @code any_io_executor ex = ...;
-   * auto ex2 = asio::require(ex, execution::blocking.possibly); @endcode
+   * auto ex2 = ModioAsio::require(ex, execution::blocking.possibly); @endcode
    */
   template <typename Property>
   any_io_executor require(const Property& p,
@@ -185,11 +185,11 @@ public:
   /// Obtain a polymorphic wrapper with the specified property.
   /**
    * Do not call this function directly. It is intended for use with the
-   * asio::prefer customisation point.
+   * ModioAsio::prefer customisation point.
    *
    * For example:
    * @code any_io_executor ex = ...;
-   * auto ex2 = asio::prefer(ex, execution::blocking.possibly); @endcode
+   * auto ex2 = ModioAsio::prefer(ex, execution::blocking.possibly); @endcode
    */
   template <typename Property>
   any_io_executor prefer(const Property& p,
@@ -290,7 +290,7 @@ struct prefer_member<any_io_executor, Prop> :
 
 #endif // defined(ASIO_USE_TS_EXECUTOR_AS_DEFAULT)
 
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

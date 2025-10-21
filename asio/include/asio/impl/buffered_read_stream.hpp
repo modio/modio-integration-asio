@@ -25,7 +25,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 
 template <typename Stream>
 std::size_t buffered_read_stream<Stream>::fill()
@@ -42,7 +42,7 @@ std::size_t buffered_read_stream<Stream>::fill()
 }
 
 template <typename Stream>
-std::size_t buffered_read_stream<Stream>::fill(asio::error_code& ec)
+std::size_t buffered_read_stream<Stream>::fill(ModioAsio::error_code& ec)
 {
   detail::buffer_resize_guard<detail::buffered_stream_storage>
     resize_guard(storage_);
@@ -86,7 +86,7 @@ namespace detail
     }
 #endif // defined(ASIO_HAS_MOVE)
 
-    void operator()(const asio::error_code& ec,
+    void operator()(const ModioAsio::error_code& ec,
         const std::size_t bytes_transferred)
     {
       storage_.resize(previous_size_ + bytes_transferred);
@@ -105,10 +105,10 @@ namespace detail
       buffered_fill_handler<ReadHandler>* this_handler)
   {
 #if defined(ASIO_NO_DEPRECATED)
-    asio_handler_alloc_helpers::allocate(size, this_handler->handler_);
+    ModioAsio::asio_handler_alloc_helpers::allocate(size, this_handler->handler_);
     return asio_handler_allocate_is_no_longer_used();
 #else // defined(ASIO_NO_DEPRECATED)
-    return asio_handler_alloc_helpers::allocate(
+    return ModioAsio::asio_handler_alloc_helpers::allocate(
         size, this_handler->handler_);
 #endif // defined(ASIO_NO_DEPRECATED)
   }
@@ -118,7 +118,7 @@ namespace detail
   asio_handler_deallocate(void* pointer, std::size_t size,
       buffered_fill_handler<ReadHandler>* this_handler)
   {
-    asio_handler_alloc_helpers::deallocate(
+    ModioAsio::asio_handler_alloc_helpers::deallocate(
         pointer, size, this_handler->handler_);
 #if defined(ASIO_NO_DEPRECATED)
     return asio_handler_deallocate_is_no_longer_used();
@@ -129,7 +129,7 @@ namespace detail
   inline bool asio_handler_is_continuation(
       buffered_fill_handler<ReadHandler>* this_handler)
   {
-    return asio_handler_cont_helpers::is_continuation(
+    return ModioAsio::asio_handler_cont_helpers::is_continuation(
           this_handler->handler_);
   }
 
@@ -138,7 +138,7 @@ namespace detail
   asio_handler_invoke(Function& function,
       buffered_fill_handler<ReadHandler>* this_handler)
   {
-    asio_handler_invoke_helpers::invoke(
+    ModioAsio::asio_handler_invoke_helpers::invoke(
         function, this_handler->handler_);
 #if defined(ASIO_NO_DEPRECATED)
     return asio_handler_invoke_is_no_longer_used();
@@ -150,7 +150,7 @@ namespace detail
   asio_handler_invoke(const Function& function,
       buffered_fill_handler<ReadHandler>* this_handler)
   {
-    asio_handler_invoke_helpers::invoke(
+    ModioAsio::asio_handler_invoke_helpers::invoke(
         function, this_handler->handler_);
 #if defined(ASIO_NO_DEPRECATED)
     return asio_handler_invoke_is_no_longer_used();
@@ -220,20 +220,20 @@ struct associator<Associator,
 
 template <typename Stream>
 template <
-    ASIO_COMPLETION_TOKEN_FOR(void (asio::error_code,
+    ASIO_COMPLETION_TOKEN_FOR(void (ModioAsio::error_code,
       std::size_t)) ReadHandler>
 ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(ReadHandler,
-    void (asio::error_code, std::size_t))
+    void (ModioAsio::error_code, std::size_t))
 buffered_read_stream<Stream>::async_fill(
     ASIO_MOVE_ARG(ReadHandler) handler)
   ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
     async_initiate<ReadHandler,
-      void (asio::error_code, std::size_t)>(
+      void (ModioAsio::error_code, std::size_t)>(
         declval<detail::initiate_async_buffered_fill<Stream> >(),
         handler, declval<detail::buffered_stream_storage*>())))
 {
   return async_initiate<ReadHandler,
-    void (asio::error_code, std::size_t)>(
+    void (ModioAsio::error_code, std::size_t)>(
       detail::initiate_async_buffered_fill<Stream>(next_layer_),
       handler, &storage_);
 }
@@ -243,7 +243,7 @@ template <typename MutableBufferSequence>
 std::size_t buffered_read_stream<Stream>::read_some(
     const MutableBufferSequence& buffers)
 {
-  using asio::buffer_size;
+  using ModioAsio::buffer_size;
   if (buffer_size(buffers) == 0)
     return 0;
 
@@ -256,11 +256,11 @@ std::size_t buffered_read_stream<Stream>::read_some(
 template <typename Stream>
 template <typename MutableBufferSequence>
 std::size_t buffered_read_stream<Stream>::read_some(
-    const MutableBufferSequence& buffers, asio::error_code& ec)
+    const MutableBufferSequence& buffers, ModioAsio::error_code& ec)
 {
-  ec = asio::error_code();
+  ec = ModioAsio::error_code();
 
-  using asio::buffer_size;
+  using ModioAsio::buffer_size;
   if (buffer_size(buffers) == 0)
     return 0;
 
@@ -300,7 +300,7 @@ namespace detail
       }
 #endif // defined(ASIO_HAS_MOVE)
 
-    void operator()(const asio::error_code& ec, std::size_t)
+    void operator()(const ModioAsio::error_code& ec, std::size_t)
     {
       if (ec || storage_.empty())
       {
@@ -309,7 +309,7 @@ namespace detail
       }
       else
       {
-        const std::size_t bytes_copied = asio::buffer_copy(
+        const std::size_t bytes_copied = ModioAsio::buffer_copy(
             buffers_, storage_.data(), storage_.size());
         storage_.consume(bytes_copied);
         ASIO_MOVE_OR_LVALUE(ReadHandler)(handler_)(ec, bytes_copied);
@@ -329,10 +329,10 @@ namespace detail
         MutableBufferSequence, ReadHandler>* this_handler)
   {
 #if defined(ASIO_NO_DEPRECATED)
-    asio_handler_alloc_helpers::allocate(size, this_handler->handler_);
+    ModioAsio::asio_handler_alloc_helpers::allocate(size, this_handler->handler_);
     return asio_handler_allocate_is_no_longer_used();
 #else // defined(ASIO_NO_DEPRECATED)
-    return asio_handler_alloc_helpers::allocate(
+    return ModioAsio::asio_handler_alloc_helpers::allocate(
         size, this_handler->handler_);
 #endif // defined(ASIO_NO_DEPRECATED)
   }
@@ -343,7 +343,7 @@ namespace detail
       buffered_read_some_handler<
         MutableBufferSequence, ReadHandler>* this_handler)
   {
-    asio_handler_alloc_helpers::deallocate(
+    ModioAsio::asio_handler_alloc_helpers::deallocate(
         pointer, size, this_handler->handler_);
 #if defined(ASIO_NO_DEPRECATED)
     return asio_handler_deallocate_is_no_longer_used();
@@ -355,7 +355,7 @@ namespace detail
       buffered_read_some_handler<
         MutableBufferSequence, ReadHandler>* this_handler)
   {
-    return asio_handler_cont_helpers::is_continuation(
+    return ModioAsio::asio_handler_cont_helpers::is_continuation(
           this_handler->handler_);
   }
 
@@ -366,7 +366,7 @@ namespace detail
       buffered_read_some_handler<
         MutableBufferSequence, ReadHandler>* this_handler)
   {
-    asio_handler_invoke_helpers::invoke(
+    ModioAsio::asio_handler_invoke_helpers::invoke(
         function, this_handler->handler_);
 #if defined(ASIO_NO_DEPRECATED)
     return asio_handler_invoke_is_no_longer_used();
@@ -380,7 +380,7 @@ namespace detail
       buffered_read_some_handler<
         MutableBufferSequence, ReadHandler>* this_handler)
   {
-    asio_handler_invoke_helpers::invoke(
+    ModioAsio::asio_handler_invoke_helpers::invoke(
         function, this_handler->handler_);
 #if defined(ASIO_NO_DEPRECATED)
     return asio_handler_invoke_is_no_longer_used();
@@ -414,7 +414,7 @@ namespace detail
       // does not meet the documented type requirements for a ReadHandler.
       ASIO_READ_HANDLER_CHECK(ReadHandler, handler) type_check;
 
-      using asio::buffer_size;
+      using ModioAsio::buffer_size;
       non_const_lvalue<ReadHandler> handler2(handler);
       if (buffer_size(buffers) == 0 || !storage->empty())
       {
@@ -461,21 +461,21 @@ struct associator<Associator,
 
 template <typename Stream>
 template <typename MutableBufferSequence,
-    ASIO_COMPLETION_TOKEN_FOR(void (asio::error_code,
+    ASIO_COMPLETION_TOKEN_FOR(void (ModioAsio::error_code,
       std::size_t)) ReadHandler>
 ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(ReadHandler,
-    void (asio::error_code, std::size_t))
+    void (ModioAsio::error_code, std::size_t))
 buffered_read_stream<Stream>::async_read_some(
     const MutableBufferSequence& buffers,
     ASIO_MOVE_ARG(ReadHandler) handler)
   ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
     async_initiate<ReadHandler,
-      void (asio::error_code, std::size_t)>(
+      void (ModioAsio::error_code, std::size_t)>(
         declval<detail::initiate_async_buffered_read_some<Stream> >(),
         handler, declval<detail::buffered_stream_storage*>(), buffers)))
 {
   return async_initiate<ReadHandler,
-    void (asio::error_code, std::size_t)>(
+    void (ModioAsio::error_code, std::size_t)>(
       detail::initiate_async_buffered_read_some<Stream>(next_layer_),
       handler, &storage_, buffers);
 }
@@ -493,15 +493,15 @@ std::size_t buffered_read_stream<Stream>::peek(
 template <typename Stream>
 template <typename MutableBufferSequence>
 std::size_t buffered_read_stream<Stream>::peek(
-    const MutableBufferSequence& buffers, asio::error_code& ec)
+    const MutableBufferSequence& buffers, ModioAsio::error_code& ec)
 {
-  ec = asio::error_code();
+  ec = ModioAsio::error_code();
   if (storage_.empty() && !this->fill(ec))
     return 0;
   return this->peek_copy(buffers);
 }
 
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

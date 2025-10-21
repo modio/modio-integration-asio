@@ -20,7 +20,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 namespace detail {
 
 class buffer_registration_base;
@@ -349,7 +349,7 @@ inline const_registered_buffer operator+(std::size_t n,
   return b + n;
 }
 
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

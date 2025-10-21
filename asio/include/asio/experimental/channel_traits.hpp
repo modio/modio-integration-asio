@@ -23,7 +23,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 namespace experimental {
 
 #if defined(GENERATING_DOCUMENTATION)
@@ -82,7 +82,7 @@ struct channel_traits
 };
 
 template <typename R, typename... Args, typename... Signatures>
-struct channel_traits<R(asio::error_code, Args...), Signatures...>
+struct channel_traits<R(ModioAsio::error_code, Args...), Signatures...>
 {
   template <typename... NewSignatures>
   struct rebind
@@ -96,21 +96,21 @@ struct channel_traits<R(asio::error_code, Args...), Signatures...>
     typedef std::deque<Element> type;
   };
 
-  typedef R receive_cancelled_signature(asio::error_code, Args...);
+  typedef R receive_cancelled_signature(ModioAsio::error_code, Args...);
 
   template <typename F>
   static void invoke_receive_cancelled(F f)
   {
-    const asio::error_code e = error::channel_cancelled;
+    const ModioAsio::error_code e = error::channel_cancelled;
     ASIO_MOVE_OR_LVALUE(F)(f)(e, typename decay<Args>::type()...);
   }
 
-  typedef R receive_closed_signature(asio::error_code, Args...);
+  typedef R receive_closed_signature(ModioAsio::error_code, Args...);
 
   template <typename F>
   static void invoke_receive_closed(F f)
   {
-    const asio::error_code e = error::channel_closed;
+    const ModioAsio::error_code e = error::channel_closed;
     ASIO_MOVE_OR_LVALUE(F)(f)(e, typename decay<Args>::type()...);
   }
 };
@@ -135,9 +135,9 @@ struct channel_traits<R(std::exception_ptr, Args...), Signatures...>
   template <typename F>
   static void invoke_receive_cancelled(F f)
   {
-    const asio::error_code e = error::channel_cancelled;
+    const ModioAsio::error_code e = error::channel_cancelled;
     ASIO_MOVE_OR_LVALUE(F)(f)(
-        std::make_exception_ptr(asio::system_error(e)),
+        std::make_exception_ptr(ModioAsio::system_error(e)),
         typename decay<Args>::type()...);
   }
 
@@ -146,9 +146,9 @@ struct channel_traits<R(std::exception_ptr, Args...), Signatures...>
   template <typename F>
   static void invoke_receive_closed(F f)
   {
-    const asio::error_code e = error::channel_closed;
+    const ModioAsio::error_code e = error::channel_closed;
     ASIO_MOVE_OR_LVALUE(F)(f)(
-        std::make_exception_ptr(asio::system_error(e)),
+        std::make_exception_ptr(ModioAsio::system_error(e)),
         typename decay<Args>::type()...);
   }
 };
@@ -168,21 +168,21 @@ struct channel_traits<R()>
     typedef std::deque<Element> type;
   };
 
-  typedef R receive_cancelled_signature(asio::error_code);
+  typedef R receive_cancelled_signature(ModioAsio::error_code);
 
   template <typename F>
   static void invoke_receive_cancelled(F f)
   {
-    const asio::error_code e = error::channel_cancelled;
+    const ModioAsio::error_code e = error::channel_cancelled;
     ASIO_MOVE_OR_LVALUE(F)(f)(e);
   }
 
-  typedef R receive_closed_signature(asio::error_code);
+  typedef R receive_closed_signature(ModioAsio::error_code);
 
   template <typename F>
   static void invoke_receive_closed(F f)
   {
-    const asio::error_code e = error::channel_closed;
+    const ModioAsio::error_code e = error::channel_closed;
     ASIO_MOVE_OR_LVALUE(F)(f)(e);
   }
 };
@@ -202,21 +202,21 @@ struct channel_traits<R(T)>
     typedef std::deque<Element> type;
   };
 
-  typedef R receive_cancelled_signature(asio::error_code);
+  typedef R receive_cancelled_signature(ModioAsio::error_code);
 
   template <typename F>
   static void invoke_receive_cancelled(F f)
   {
-    const asio::error_code e = error::channel_cancelled;
+    const ModioAsio::error_code e = error::channel_cancelled;
     ASIO_MOVE_OR_LVALUE(F)(f)(e);
   }
 
-  typedef R receive_closed_signature(asio::error_code);
+  typedef R receive_closed_signature(ModioAsio::error_code);
 
   template <typename F>
   static void invoke_receive_closed(F f)
   {
-    const asio::error_code e = error::channel_closed;
+    const ModioAsio::error_code e = error::channel_closed;
     ASIO_MOVE_OR_LVALUE(F)(f)(e);
   }
 };
@@ -224,7 +224,7 @@ struct channel_traits<R(T)>
 #endif // defined(GENERATING_DOCUMENTATION)
 
 } // namespace experimental
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

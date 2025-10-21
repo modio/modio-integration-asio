@@ -25,7 +25,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 namespace posix {
 
 /// The descriptor_base class is used as a base for the descriptor class as a
@@ -56,9 +56,9 @@ public:
    *
    * @par Example
    * @code
-   * asio::posix::stream_descriptor descriptor(my_context);
+   * ModioAsio::posix::stream_descriptor descriptor(my_context);
    * ...
-   * asio::descriptor_base::bytes_readable command(true);
+   * ModioAsio::descriptor_base::bytes_readable command(true);
    * descriptor.io_control(command);
    * std::size_t bytes_readable = command.get();
    * @endcode
@@ -69,7 +69,7 @@ public:
 #if defined(GENERATING_DOCUMENTATION)
   typedef implementation_defined bytes_readable;
 #else
-  typedef asio::detail::io_control::bytes_readable bytes_readable;
+  typedef ModioAsio::detail::io_control::bytes_readable bytes_readable;
 #endif
 
 protected:
@@ -80,7 +80,7 @@ protected:
 };
 
 } // namespace posix
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

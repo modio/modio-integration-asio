@@ -33,7 +33,7 @@ public:
   connection& operator=(const connection&) = delete;
 
   /// Construct a connection with the given socket.
-  explicit connection(asio::ip::tcp::socket socket,
+  explicit connection(ModioAsio::ip::tcp::socket socket,
       connection_manager& manager, request_handler& handler);
 
   /// Start the first asynchronous operation for the connection.
@@ -50,7 +50,7 @@ private:
   void do_write();
 
   /// Socket for the connection.
-  asio::ip::tcp::socket socket_;
+  ModioAsio::ip::tcp::socket socket_;
 
   /// The manager for this connection.
   connection_manager& connection_manager_;

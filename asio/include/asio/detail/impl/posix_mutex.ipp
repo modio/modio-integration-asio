@@ -25,19 +25,19 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 namespace detail {
 
 posix_mutex::posix_mutex()
 {
   int error = ::pthread_mutex_init(&mutex_, 0);
-  asio::error_code ec(error,
-      asio::error::get_system_category());
-  asio::detail::throw_error(ec, "mutex");
+  ModioAsio::error_code ec(error,
+      ModioAsio::error::get_system_category());
+  ModioAsio::detail::throw_error(ec, "mutex");
 }
 
 } // namespace detail
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

@@ -34,7 +34,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 namespace detail {
 
 class win_object_handle_service :
@@ -106,8 +106,8 @@ public:
   ASIO_DECL void destroy(implementation_type& impl);
 
   // Assign a native handle to a handle implementation.
-  ASIO_DECL asio::error_code assign(implementation_type& impl,
-      const native_handle_type& handle, asio::error_code& ec);
+  ASIO_DECL ModioAsio::error_code assign(implementation_type& impl,
+      const native_handle_type& handle, ModioAsio::error_code& ec);
 
   // Determine whether the handle is open.
   bool is_open(const implementation_type& impl) const
@@ -116,8 +116,8 @@ public:
   }
 
   // Destroy a handle implementation.
-  ASIO_DECL asio::error_code close(implementation_type& impl,
-      asio::error_code& ec);
+  ASIO_DECL ModioAsio::error_code close(implementation_type& impl,
+      ModioAsio::error_code& ec);
 
   // Get the native handle representation.
   native_handle_type native_handle(const implementation_type& impl) const
@@ -126,12 +126,12 @@ public:
   }
 
   // Cancel all operations associated with the handle.
-  ASIO_DECL asio::error_code cancel(implementation_type& impl,
-      asio::error_code& ec);
+  ASIO_DECL ModioAsio::error_code cancel(implementation_type& impl,
+      ModioAsio::error_code& ec);
 
   // Perform a synchronous wait for the object to enter a signalled state.
   ASIO_DECL void wait(implementation_type& impl,
-      asio::error_code& ec);
+      ModioAsio::error_code& ec);
 
   /// Start an asynchronous wait.
   template <typename Handler, typename IoExecutor>
@@ -140,7 +140,7 @@ public:
   {
     // Allocate and construct an operation to wrap the handler.
     typedef wait_handler<Handler, IoExecutor> op;
-    typename op::ptr p = { asio::detail::addressof(handler),
+    typename op::ptr p = { ModioAsio::detail::addressof(handler),
       op::ptr::allocate(handler), 0 };
     p.p = new (p.v) op(handler, io_ex);
 
@@ -182,7 +182,7 @@ private:
 };
 
 } // namespace detail
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

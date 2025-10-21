@@ -36,7 +36,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 namespace detail {
 
 class io_uring_service
@@ -65,7 +65,7 @@ public:
     void set_result(int r) { task_result_ = static_cast<unsigned>(r); }
     ASIO_DECL operation* perform_io(int result);
     ASIO_DECL static void do_complete(void* owner, operation* base,
-        const asio::error_code& ec, std::size_t bytes_transferred);
+        const ModioAsio::error_code& ec, std::size_t bytes_transferred);
   };
 
   // Per I/O object state.
@@ -89,7 +89,7 @@ public:
   typedef io_object* per_io_object_data;
 
   // Constructor.
-  ASIO_DECL io_uring_service(asio::execution_context& ctx);
+  ASIO_DECL io_uring_service(ModioAsio::execution_context& ctx);
 
   // Destructor.
   ASIO_DECL ~io_uring_service();
@@ -99,7 +99,7 @@ public:
 
   // Recreate internal state following a fork.
   ASIO_DECL void notify_fork(
-      asio::execution_context::fork_event fork_ev);
+      ModioAsio::execution_context::fork_event fork_ev);
 
   // Initialise the task.
   ASIO_DECL void init_task();
@@ -249,7 +249,7 @@ private:
 
     ASIO_DECL submit_sqes_op(io_uring_service* s);
     ASIO_DECL static void do_complete(void* owner, operation* base,
-        const asio::error_code& ec, std::size_t bytes_transferred);
+        const ModioAsio::error_code& ec, std::size_t bytes_transferred);
   };
 
   // The scheduler implementation used to post completions.
@@ -304,7 +304,7 @@ private:
 };
 
 } // namespace detail
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

@@ -21,7 +21,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 namespace detail {
 
 inline void io_uring_service::post_immediate_completion(
@@ -103,7 +103,7 @@ void io_uring_service::move_timer(timer_queue<Time_Traits>& queue,
 }
 
 } // namespace detail
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

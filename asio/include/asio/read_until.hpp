@@ -31,7 +31,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 namespace detail {
 
 char (&has_result_type_helper(...))[2];
@@ -73,15 +73,15 @@ struct is_match_condition
 #else
   enum
   {
-    value = asio::is_function<
-        typename asio::remove_pointer<T>::type>::value
+    value = ModioAsio::is_function<
+        typename ModioAsio::remove_pointer<T>::type>::value
       || detail::has_result_type<T>::value
   };
 #endif
 };
 
 /**
- * @defgroup read_until asio::read_until
+ * @defgroup read_until ModioAsio::read_until
  *
  * @brief The @c read_until function is a composed operation that reads data
  * into a dynamic buffer sequence, or into a streambuf, until it contains a
@@ -119,7 +119,7 @@ struct is_match_condition
  * @returns The number of bytes in the dynamic buffer sequence's get area up to
  * and including the delimiter.
  *
- * @throws asio::system_error Thrown on failure.
+ * @throws ModioAsio::system_error Thrown on failure.
  *
  * @note After a successful read_until operation, the dynamic buffer sequence
  * may contain additional data beyond the delimiter. An application will
@@ -129,8 +129,8 @@ struct is_match_condition
  * @par Example
  * To read data into a @c std::string until a newline is encountered:
  * @code std::string data;
- * std::size_t n = asio::read_until(s,
- *     asio::dynamic_buffer(data), '\n');
+ * std::size_t n = ModioAsio::read_until(s,
+ *     ModioAsio::dynamic_buffer(data), '\n');
  * std::string line = data.substr(0, n);
  * data.erase(0, n); @endcode
  * After the @c read_until operation completes successfully, the string @c data
@@ -192,7 +192,7 @@ std::size_t read_until(SyncReadStream& s,
 template <typename SyncReadStream, typename DynamicBuffer_v1>
 std::size_t read_until(SyncReadStream& s,
     ASIO_MOVE_ARG(DynamicBuffer_v1) buffers,
-    char delim, asio::error_code& ec,
+    char delim, ModioAsio::error_code& ec,
     typename constraint<
       is_dynamic_buffer_v1<typename decay<DynamicBuffer_v1>::type>::value
     >::type = 0,
@@ -235,8 +235,8 @@ std::size_t read_until(SyncReadStream& s,
  * @par Example
  * To read data into a @c std::string until a CR-LF sequence is encountered:
  * @code std::string data;
- * std::size_t n = asio::read_until(s,
- *     asio::dynamic_buffer(data), "\r\n");
+ * std::size_t n = ModioAsio::read_until(s,
+ *     ModioAsio::dynamic_buffer(data), "\r\n");
  * std::string line = data.substr(0, n);
  * data.erase(0, n); @endcode
  * After the @c read_until operation completes successfully, the string @c data
@@ -300,7 +300,7 @@ template <typename SyncReadStream, typename DynamicBuffer_v1>
 std::size_t read_until(SyncReadStream& s,
     ASIO_MOVE_ARG(DynamicBuffer_v1) buffers,
     ASIO_STRING_VIEW_PARAM delim,
-    asio::error_code& ec,
+    ModioAsio::error_code& ec,
     typename constraint<
       is_dynamic_buffer_v1<typename decay<DynamicBuffer_v1>::type>::value
     >::type = 0,
@@ -340,7 +340,7 @@ std::size_t read_until(SyncReadStream& s,
  * @returns The number of bytes in the dynamic buffer sequence's get area up to
  * and including the substring that matches the regular expression.
  *
- * @throws asio::system_error Thrown on failure.
+ * @throws ModioAsio::system_error Thrown on failure.
  *
  * @note After a successful read_until operation, the dynamic buffer sequence
  * may contain additional data beyond that which matched the regular
@@ -350,8 +350,8 @@ std::size_t read_until(SyncReadStream& s,
  * @par Example
  * To read data into a @c std::string until a CR-LF sequence is encountered:
  * @code std::string data;
- * std::size_t n = asio::read_until(s,
- *     asio::dynamic_buffer(data), boost::regex("\r\n"));
+ * std::size_t n = ModioAsio::read_until(s,
+ *     ModioAsio::dynamic_buffer(data), boost::regex("\r\n"));
  * std::string line = data.substr(0, n);
  * data.erase(0, n); @endcode
  * After the @c read_until operation completes successfully, the string @c data
@@ -416,7 +416,7 @@ std::size_t read_until(SyncReadStream& s,
 template <typename SyncReadStream, typename DynamicBuffer_v1>
 std::size_t read_until(SyncReadStream& s,
     ASIO_MOVE_ARG(DynamicBuffer_v1) buffers,
-    const boost::regex& expr, asio::error_code& ec,
+    const boost::regex& expr, ModioAsio::error_code& ec,
     typename constraint<
       is_dynamic_buffer_v1<typename decay<DynamicBuffer_v1>::type>::value
     >::type = 0,
@@ -468,7 +468,7 @@ std::size_t read_until(SyncReadStream& s,
  * @returns The number of bytes in the dynamic_buffer's get area that
  * have been fully consumed by the match function.
  *
- * @throws asio::system_error Thrown on failure.
+ * @throws ModioAsio::system_error Thrown on failure.
  *
  * @note After a successful read_until operation, the dynamic buffer sequence
  * may contain additional data beyond that which matched the function object.
@@ -482,8 +482,8 @@ std::size_t read_until(SyncReadStream& s,
  *
  * @par Examples
  * To read data into a dynamic buffer sequence until whitespace is encountered:
- * @code typedef asio::buffers_iterator<
- *     asio::const_buffers_1> iterator;
+ * @code typedef ModioAsio::buffers_iterator<
+ *     ModioAsio::const_buffers_1> iterator;
  *
  * std::pair<iterator, bool>
  * match_whitespace(iterator begin, iterator end)
@@ -496,7 +496,7 @@ std::size_t read_until(SyncReadStream& s,
  * }
  * ...
  * std::string data;
- * asio::read_until(s, data, match_whitespace);
+ * ModioAsio::read_until(s, data, match_whitespace);
  * @endcode
  *
  * To read data into a @c std::string until a matching character is found:
@@ -520,13 +520,13 @@ std::size_t read_until(SyncReadStream& s,
  *   char c_;
  * };
  *
- * namespace asio {
+ * namespace ModioAsio {
  *   template <> struct is_match_condition<match_char>
  *     : public boost::true_type {};
- * } // namespace asio
+ * } // namespace ModioAsio
  * ...
  * std::string data;
- * asio::read_until(s, data, match_char('a'));
+ * ModioAsio::read_until(s, data, match_char('a'));
  * @endcode
  */
 template <typename SyncReadStream,
@@ -601,7 +601,7 @@ template <typename SyncReadStream,
     typename DynamicBuffer_v1, typename MatchCondition>
 std::size_t read_until(SyncReadStream& s,
     ASIO_MOVE_ARG(DynamicBuffer_v1) buffers,
-    MatchCondition match_condition, asio::error_code& ec,
+    MatchCondition match_condition, ModioAsio::error_code& ec,
     typename constraint<
       is_match_condition<MatchCondition>::value
     >::type = 0,
@@ -638,7 +638,7 @@ std::size_t read_until(SyncReadStream& s,
  * @returns The number of bytes in the streambuf's get area up to and including
  * the delimiter.
  *
- * @throws asio::system_error Thrown on failure.
+ * @throws ModioAsio::system_error Thrown on failure.
  *
  * @note After a successful read_until operation, the streambuf may contain
  * additional data beyond the delimiter. An application will typically leave
@@ -646,8 +646,8 @@ std::size_t read_until(SyncReadStream& s,
  *
  * @par Example
  * To read data into a streambuf until a newline is encountered:
- * @code asio::streambuf b;
- * asio::read_until(s, b, '\n');
+ * @code ModioAsio::streambuf b;
+ * ModioAsio::read_until(s, b, '\n');
  * std::istream is(&b);
  * std::string line;
  * std::getline(is, line); @endcode
@@ -664,7 +664,7 @@ std::size_t read_until(SyncReadStream& s,
  */
 template <typename SyncReadStream, typename Allocator>
 std::size_t read_until(SyncReadStream& s,
-    asio::basic_streambuf<Allocator>& b, char delim);
+    ModioAsio::basic_streambuf<Allocator>& b, char delim);
 
 /// Read data into a streambuf until it contains a specified delimiter.
 /**
@@ -698,8 +698,8 @@ std::size_t read_until(SyncReadStream& s,
  */
 template <typename SyncReadStream, typename Allocator>
 std::size_t read_until(SyncReadStream& s,
-    asio::basic_streambuf<Allocator>& b, char delim,
-    asio::error_code& ec);
+    ModioAsio::basic_streambuf<Allocator>& b, char delim,
+    ModioAsio::error_code& ec);
 
 /// Read data into a streambuf until it contains a specified delimiter.
 /**
@@ -725,7 +725,7 @@ std::size_t read_until(SyncReadStream& s,
  * @returns The number of bytes in the streambuf's get area up to and including
  * the delimiter.
  *
- * @throws asio::system_error Thrown on failure.
+ * @throws ModioAsio::system_error Thrown on failure.
  *
  * @note After a successful read_until operation, the streambuf may contain
  * additional data beyond the delimiter. An application will typically leave
@@ -733,8 +733,8 @@ std::size_t read_until(SyncReadStream& s,
  *
  * @par Example
  * To read data into a streambuf until a newline is encountered:
- * @code asio::streambuf b;
- * asio::read_until(s, b, "\r\n");
+ * @code ModioAsio::streambuf b;
+ * ModioAsio::read_until(s, b, "\r\n");
  * std::istream is(&b);
  * std::string line;
  * std::getline(is, line); @endcode
@@ -751,7 +751,7 @@ std::size_t read_until(SyncReadStream& s,
  */
 template <typename SyncReadStream, typename Allocator>
 std::size_t read_until(SyncReadStream& s,
-    asio::basic_streambuf<Allocator>& b,
+    ModioAsio::basic_streambuf<Allocator>& b,
     ASIO_STRING_VIEW_PARAM delim);
 
 /// Read data into a streambuf until it contains a specified delimiter.
@@ -786,8 +786,8 @@ std::size_t read_until(SyncReadStream& s,
  */
 template <typename SyncReadStream, typename Allocator>
 std::size_t read_until(SyncReadStream& s,
-    asio::basic_streambuf<Allocator>& b,
-    ASIO_STRING_VIEW_PARAM delim, asio::error_code& ec);
+    ModioAsio::basic_streambuf<Allocator>& b,
+    ASIO_STRING_VIEW_PARAM delim, ModioAsio::error_code& ec);
 
 #if defined(ASIO_HAS_BOOST_REGEX) \
   || defined(GENERATING_DOCUMENTATION)
@@ -817,7 +817,7 @@ std::size_t read_until(SyncReadStream& s,
  * @returns The number of bytes in the streambuf's get area up to and including
  * the substring that matches the regular expression.
  *
- * @throws asio::system_error Thrown on failure.
+ * @throws ModioAsio::system_error Thrown on failure.
  *
  * @note After a successful read_until operation, the streambuf may contain
  * additional data beyond that which matched the regular expression. An
@@ -826,8 +826,8 @@ std::size_t read_until(SyncReadStream& s,
  *
  * @par Example
  * To read data into a streambuf until a CR-LF sequence is encountered:
- * @code asio::streambuf b;
- * asio::read_until(s, b, boost::regex("\r\n"));
+ * @code ModioAsio::streambuf b;
+ * ModioAsio::read_until(s, b, boost::regex("\r\n"));
  * std::istream is(&b);
  * std::string line;
  * std::getline(is, line); @endcode
@@ -844,7 +844,7 @@ std::size_t read_until(SyncReadStream& s,
  */
 template <typename SyncReadStream, typename Allocator>
 std::size_t read_until(SyncReadStream& s,
-    asio::basic_streambuf<Allocator>& b, const boost::regex& expr);
+    ModioAsio::basic_streambuf<Allocator>& b, const boost::regex& expr);
 
 /// Read data into a streambuf until some part of the data it contains matches
 /// a regular expression.
@@ -881,8 +881,8 @@ std::size_t read_until(SyncReadStream& s,
  */
 template <typename SyncReadStream, typename Allocator>
 std::size_t read_until(SyncReadStream& s,
-    asio::basic_streambuf<Allocator>& b, const boost::regex& expr,
-    asio::error_code& ec);
+    ModioAsio::basic_streambuf<Allocator>& b, const boost::regex& expr,
+    ModioAsio::error_code& ec);
 
 #endif // defined(ASIO_HAS_BOOST_REGEX)
        // || defined(GENERATING_DOCUMENTATION)
@@ -926,7 +926,7 @@ std::size_t read_until(SyncReadStream& s,
  * @returns The number of bytes in the streambuf's get area that have been fully
  * consumed by the match function.
  *
- * @throws asio::system_error Thrown on failure.
+ * @throws ModioAsio::system_error Thrown on failure.
  *
  * @note After a successful read_until operation, the streambuf may contain
  * additional data beyond that which matched the function object. An application
@@ -940,8 +940,8 @@ std::size_t read_until(SyncReadStream& s,
  *
  * @par Examples
  * To read data into a streambuf until whitespace is encountered:
- * @code typedef asio::buffers_iterator<
- *     asio::streambuf::const_buffers_type> iterator;
+ * @code typedef ModioAsio::buffers_iterator<
+ *     ModioAsio::streambuf::const_buffers_type> iterator;
  *
  * std::pair<iterator, bool>
  * match_whitespace(iterator begin, iterator end)
@@ -953,8 +953,8 @@ std::size_t read_until(SyncReadStream& s,
  *   return std::make_pair(i, false);
  * }
  * ...
- * asio::streambuf b;
- * asio::read_until(s, b, match_whitespace);
+ * ModioAsio::streambuf b;
+ * ModioAsio::read_until(s, b, match_whitespace);
  * @endcode
  *
  * To read data into a streambuf until a matching character is found:
@@ -978,18 +978,18 @@ std::size_t read_until(SyncReadStream& s,
  *   char c_;
  * };
  *
- * namespace asio {
+ * namespace ModioAsio {
  *   template <> struct is_match_condition<match_char>
  *     : public boost::true_type {};
- * } // namespace asio
+ * } // namespace ModioAsio
  * ...
- * asio::streambuf b;
- * asio::read_until(s, b, match_char('a'));
+ * ModioAsio::streambuf b;
+ * ModioAsio::read_until(s, b, match_char('a'));
  * @endcode
  */
 template <typename SyncReadStream, typename Allocator, typename MatchCondition>
 std::size_t read_until(SyncReadStream& s,
-    asio::basic_streambuf<Allocator>& b, MatchCondition match_condition,
+    ModioAsio::basic_streambuf<Allocator>& b, MatchCondition match_condition,
     typename constraint<is_match_condition<MatchCondition>::value>::type = 0);
 
 /// Read data into a streambuf until a function object indicates a match.
@@ -1045,8 +1045,8 @@ std::size_t read_until(SyncReadStream& s,
  */
 template <typename SyncReadStream, typename Allocator, typename MatchCondition>
 std::size_t read_until(SyncReadStream& s,
-    asio::basic_streambuf<Allocator>& b,
-    MatchCondition match_condition, asio::error_code& ec,
+    ModioAsio::basic_streambuf<Allocator>& b,
+    MatchCondition match_condition, ModioAsio::error_code& ec,
     typename constraint<is_match_condition<MatchCondition>::value>::type = 0);
 
 #endif // !defined(ASIO_NO_IOSTREAM)
@@ -1080,7 +1080,7 @@ std::size_t read_until(SyncReadStream& s,
  * @returns The number of bytes in the dynamic buffer sequence's get area up to
  * and including the delimiter.
  *
- * @throws asio::system_error Thrown on failure.
+ * @throws ModioAsio::system_error Thrown on failure.
  *
  * @note After a successful read_until operation, the dynamic buffer sequence
  * may contain additional data beyond the delimiter. An application will
@@ -1090,8 +1090,8 @@ std::size_t read_until(SyncReadStream& s,
  * @par Example
  * To read data into a @c std::string until a newline is encountered:
  * @code std::string data;
- * std::size_t n = asio::read_until(s,
- *     asio::dynamic_buffer(data), '\n');
+ * std::size_t n = ModioAsio::read_until(s,
+ *     ModioAsio::dynamic_buffer(data), '\n');
  * std::string line = data.substr(0, n);
  * data.erase(0, n); @endcode
  * After the @c read_until operation completes successfully, the string @c data
@@ -1148,7 +1148,7 @@ std::size_t read_until(SyncReadStream& s, DynamicBuffer_v2 buffers, char delim,
  */
 template <typename SyncReadStream, typename DynamicBuffer_v2>
 std::size_t read_until(SyncReadStream& s, DynamicBuffer_v2 buffers,
-    char delim, asio::error_code& ec,
+    char delim, ModioAsio::error_code& ec,
     typename constraint<
       is_dynamic_buffer_v2<DynamicBuffer_v2>::value
     >::type = 0);
@@ -1188,8 +1188,8 @@ std::size_t read_until(SyncReadStream& s, DynamicBuffer_v2 buffers,
  * @par Example
  * To read data into a @c std::string until a CR-LF sequence is encountered:
  * @code std::string data;
- * std::size_t n = asio::read_until(s,
- *     asio::dynamic_buffer(data), "\r\n");
+ * std::size_t n = ModioAsio::read_until(s,
+ *     ModioAsio::dynamic_buffer(data), "\r\n");
  * std::string line = data.substr(0, n);
  * data.erase(0, n); @endcode
  * After the @c read_until operation completes successfully, the string @c data
@@ -1247,7 +1247,7 @@ std::size_t read_until(SyncReadStream& s, DynamicBuffer_v2 buffers,
  */
 template <typename SyncReadStream, typename DynamicBuffer_v2>
 std::size_t read_until(SyncReadStream& s, DynamicBuffer_v2 buffers,
-    ASIO_STRING_VIEW_PARAM delim, asio::error_code& ec,
+    ASIO_STRING_VIEW_PARAM delim, ModioAsio::error_code& ec,
     typename constraint<
       is_dynamic_buffer_v2<DynamicBuffer_v2>::value
     >::type = 0);
@@ -1284,7 +1284,7 @@ std::size_t read_until(SyncReadStream& s, DynamicBuffer_v2 buffers,
  * @returns The number of bytes in the dynamic buffer sequence's get area up to
  * and including the substring that matches the regular expression.
  *
- * @throws asio::system_error Thrown on failure.
+ * @throws ModioAsio::system_error Thrown on failure.
  *
  * @note After a successful read_until operation, the dynamic buffer sequence
  * may contain additional data beyond that which matched the regular
@@ -1294,8 +1294,8 @@ std::size_t read_until(SyncReadStream& s, DynamicBuffer_v2 buffers,
  * @par Example
  * To read data into a @c std::string until a CR-LF sequence is encountered:
  * @code std::string data;
- * std::size_t n = asio::read_until(s,
- *     asio::dynamic_buffer(data), boost::regex("\r\n"));
+ * std::size_t n = ModioAsio::read_until(s,
+ *     ModioAsio::dynamic_buffer(data), boost::regex("\r\n"));
  * std::string line = data.substr(0, n);
  * data.erase(0, n); @endcode
  * After the @c read_until operation completes successfully, the string @c data
@@ -1355,7 +1355,7 @@ std::size_t read_until(SyncReadStream& s, DynamicBuffer_v2 buffers,
  */
 template <typename SyncReadStream, typename DynamicBuffer_v2>
 std::size_t read_until(SyncReadStream& s, DynamicBuffer_v2 buffers,
-    const boost::regex& expr, asio::error_code& ec,
+    const boost::regex& expr, ModioAsio::error_code& ec,
     typename constraint<
         is_dynamic_buffer_v2<DynamicBuffer_v2>::value
     >::type = 0);
@@ -1404,7 +1404,7 @@ std::size_t read_until(SyncReadStream& s, DynamicBuffer_v2 buffers,
  * @returns The number of bytes in the dynamic_buffer's get area that
  * have been fully consumed by the match function.
  *
- * @throws asio::system_error Thrown on failure.
+ * @throws ModioAsio::system_error Thrown on failure.
  *
  * @note After a successful read_until operation, the dynamic buffer sequence
  * may contain additional data beyond that which matched the function object.
@@ -1418,8 +1418,8 @@ std::size_t read_until(SyncReadStream& s, DynamicBuffer_v2 buffers,
  *
  * @par Examples
  * To read data into a dynamic buffer sequence until whitespace is encountered:
- * @code typedef asio::buffers_iterator<
- *     asio::const_buffers_1> iterator;
+ * @code typedef ModioAsio::buffers_iterator<
+ *     ModioAsio::const_buffers_1> iterator;
  *
  * std::pair<iterator, bool>
  * match_whitespace(iterator begin, iterator end)
@@ -1432,7 +1432,7 @@ std::size_t read_until(SyncReadStream& s, DynamicBuffer_v2 buffers,
  * }
  * ...
  * std::string data;
- * asio::read_until(s, data, match_whitespace);
+ * ModioAsio::read_until(s, data, match_whitespace);
  * @endcode
  *
  * To read data into a @c std::string until a matching character is found:
@@ -1456,13 +1456,13 @@ std::size_t read_until(SyncReadStream& s, DynamicBuffer_v2 buffers,
  *   char c_;
  * };
  *
- * namespace asio {
+ * namespace ModioAsio {
  *   template <> struct is_match_condition<match_char>
  *     : public boost::true_type {};
- * } // namespace asio
+ * } // namespace ModioAsio
  * ...
  * std::string data;
- * asio::read_until(s, data, match_char('a'));
+ * ModioAsio::read_until(s, data, match_char('a'));
  * @endcode
  */
 template <typename SyncReadStream,
@@ -1532,7 +1532,7 @@ std::size_t read_until(SyncReadStream& s, DynamicBuffer_v2 buffers,
 template <typename SyncReadStream,
     typename DynamicBuffer_v2, typename MatchCondition>
 std::size_t read_until(SyncReadStream& s, DynamicBuffer_v2 buffers,
-    MatchCondition match_condition, asio::error_code& ec,
+    MatchCondition match_condition, ModioAsio::error_code& ec,
     typename constraint<
       is_match_condition<MatchCondition>::value
     >::type = 0,
@@ -1544,7 +1544,7 @@ std::size_t read_until(SyncReadStream& s, DynamicBuffer_v2 buffers,
 
 /*@}*/
 /**
- * @defgroup async_read_until asio::async_read_until
+ * @defgroup async_read_until ModioAsio::async_read_until
  *
  * @brief The @c async_read_until function is a composed asynchronous operation
  * that reads data into a dynamic buffer sequence, or into a streambuf, until
@@ -1594,7 +1594,7 @@ std::size_t read_until(SyncReadStream& s, DynamicBuffer_v2 buffers,
  * signature. The function signature of the completion handler must be:
  * @code void handler(
  *   // Result of operation.
- *   const asio::error_code& error,
+ *   const ModioAsio::error_code& error,
  *
  *   // The number of bytes in the dynamic buffer sequence's
  *   // get area up to and including the delimiter.
@@ -1603,10 +1603,10 @@ std::size_t read_until(SyncReadStream& s, DynamicBuffer_v2 buffers,
  * Regardless of whether the asynchronous operation completes immediately or
  * not, the completion handler will not be invoked from within this function.
  * On immediate completion, invocation of the handler will be performed in a
- * manner equivalent to using asio::post().
+ * manner equivalent to using ModioAsio::post().
  *
  * @par Completion Signature
- * @code void(asio::error_code, std::size_t) @endcode
+ * @code void(ModioAsio::error_code, std::size_t) @endcode
  *
  * @note After a successful async_read_until operation, the dynamic buffer
  * sequence may contain additional data beyond the delimiter. An application
@@ -1618,7 +1618,7 @@ std::size_t read_until(SyncReadStream& s, DynamicBuffer_v2 buffers,
  * encountered:
  * @code std::string data;
  * ...
- * void handler(const asio::error_code& e, std::size_t size)
+ * void handler(const ModioAsio::error_code& e, std::size_t size)
  * {
  *   if (!e)
  *   {
@@ -1628,7 +1628,7 @@ std::size_t read_until(SyncReadStream& s, DynamicBuffer_v2 buffers,
  *   }
  * }
  * ...
- * asio::async_read_until(s, data, '\n', handler); @endcode
+ * ModioAsio::async_read_until(s, data, '\n', handler); @endcode
  * After the @c async_read_until operation completes successfully, the buffer
  * @c data contains the delimiter:
  * @code { 'a', 'b', ..., 'c', '\n', 'd', 'e', ... } @endcode
@@ -1643,7 +1643,7 @@ std::size_t read_until(SyncReadStream& s, DynamicBuffer_v2 buffers,
  *
  * @par Per-Operation Cancellation
  * This asynchronous operation supports cancellation for the following
- * asio::cancellation_type values:
+ * ModioAsio::cancellation_type values:
  *
  * @li @c cancellation_type::terminal
  *
@@ -1653,12 +1653,12 @@ std::size_t read_until(SyncReadStream& s, DynamicBuffer_v2 buffers,
  * @c async_read_some operation.
  */
 template <typename AsyncReadStream, typename DynamicBuffer_v1,
-    ASIO_COMPLETION_TOKEN_FOR(void (asio::error_code,
+    ASIO_COMPLETION_TOKEN_FOR(void (ModioAsio::error_code,
       std::size_t)) ReadToken
         ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(
           typename AsyncReadStream::executor_type)>
 ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(ReadToken,
-    void (asio::error_code, std::size_t))
+    void (ModioAsio::error_code, std::size_t))
 async_read_until(AsyncReadStream& s,
     ASIO_MOVE_ARG(DynamicBuffer_v1) buffers, char delim,
     ASIO_MOVE_ARG(ReadToken) token
@@ -1672,7 +1672,7 @@ async_read_until(AsyncReadStream& s,
     >::type = 0)
   ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
     async_initiate<ReadToken,
-      void (asio::error_code, std::size_t)>(
+      void (ModioAsio::error_code, std::size_t)>(
         declval<detail::initiate_async_read_until_delim_v1<AsyncReadStream> >(),
         token, ASIO_MOVE_CAST(DynamicBuffer_v1)(buffers), delim)));
 
@@ -1715,7 +1715,7 @@ async_read_until(AsyncReadStream& s,
  * signature. The function signature of the completion handler must be:
  * @code void handler(
  *   // Result of operation.
- *   const asio::error_code& error,
+ *   const ModioAsio::error_code& error,
  *
  *   // The number of bytes in the dynamic buffer sequence's
  *   // get area up to and including the delimiter.
@@ -1724,10 +1724,10 @@ async_read_until(AsyncReadStream& s,
  * Regardless of whether the asynchronous operation completes immediately or
  * not, the completion handler will not be invoked from within this function.
  * On immediate completion, invocation of the handler will be performed in a
- * manner equivalent to using asio::post().
+ * manner equivalent to using ModioAsio::post().
  *
  * @par Completion Signature
- * @code void(asio::error_code, std::size_t) @endcode
+ * @code void(ModioAsio::error_code, std::size_t) @endcode
  *
  * @note After a successful async_read_until operation, the dynamic buffer
  * sequence may contain additional data beyond the delimiter. An application
@@ -1739,7 +1739,7 @@ async_read_until(AsyncReadStream& s,
  * encountered:
  * @code std::string data;
  * ...
- * void handler(const asio::error_code& e, std::size_t size)
+ * void handler(const ModioAsio::error_code& e, std::size_t size)
  * {
  *   if (!e)
  *   {
@@ -1749,7 +1749,7 @@ async_read_until(AsyncReadStream& s,
  *   }
  * }
  * ...
- * asio::async_read_until(s, data, "\r\n", handler); @endcode
+ * ModioAsio::async_read_until(s, data, "\r\n", handler); @endcode
  * After the @c async_read_until operation completes successfully, the string
  * @c data contains the delimiter:
  * @code { 'a', 'b', ..., 'c', '\r', '\n', 'd', 'e', ... } @endcode
@@ -1764,7 +1764,7 @@ async_read_until(AsyncReadStream& s,
  *
  * @par Per-Operation Cancellation
  * This asynchronous operation supports cancellation for the following
- * asio::cancellation_type values:
+ * ModioAsio::cancellation_type values:
  *
  * @li @c cancellation_type::terminal
  *
@@ -1774,12 +1774,12 @@ async_read_until(AsyncReadStream& s,
  * @c async_read_some operation.
  */
 template <typename AsyncReadStream, typename DynamicBuffer_v1,
-    ASIO_COMPLETION_TOKEN_FOR(void (asio::error_code,
+    ASIO_COMPLETION_TOKEN_FOR(void (ModioAsio::error_code,
       std::size_t)) ReadToken
         ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(
           typename AsyncReadStream::executor_type)>
 ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(ReadToken,
-    void (asio::error_code, std::size_t))
+    void (ModioAsio::error_code, std::size_t))
 async_read_until(AsyncReadStream& s,
     ASIO_MOVE_ARG(DynamicBuffer_v1) buffers,
     ASIO_STRING_VIEW_PARAM delim,
@@ -1794,7 +1794,7 @@ async_read_until(AsyncReadStream& s,
     >::type = 0)
   ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
     async_initiate<ReadToken,
-      void (asio::error_code, std::size_t)>(
+      void (ModioAsio::error_code, std::size_t)>(
         declval<detail::initiate_async_read_until_delim_string_v1<
           AsyncReadStream> >(),
         token, ASIO_MOVE_CAST(DynamicBuffer_v1)(buffers),
@@ -1845,7 +1845,7 @@ async_read_until(AsyncReadStream& s,
  * signature. The function signature of the completion handler must be:
  * @code void handler(
  *   // Result of operation.
- *   const asio::error_code& error,
+ *   const ModioAsio::error_code& error,
  *
  *   // The number of bytes in the dynamic buffer
  *   // sequence's get area up to and including the
@@ -1856,10 +1856,10 @@ async_read_until(AsyncReadStream& s,
  * Regardless of whether the asynchronous operation completes immediately or
  * not, the completion handler will not be invoked from within this function.
  * On immediate completion, invocation of the handler will be performed in a
- * manner equivalent to using asio::post().
+ * manner equivalent to using ModioAsio::post().
  *
  * @par Completion Signature
- * @code void(asio::error_code, std::size_t) @endcode
+ * @code void(ModioAsio::error_code, std::size_t) @endcode
  *
  * @note After a successful async_read_until operation, the dynamic buffer
  * sequence may contain additional data beyond that which matched the regular
@@ -1871,7 +1871,7 @@ async_read_until(AsyncReadStream& s,
  * encountered:
  * @code std::string data;
  * ...
- * void handler(const asio::error_code& e, std::size_t size)
+ * void handler(const ModioAsio::error_code& e, std::size_t size)
  * {
  *   if (!e)
  *   {
@@ -1881,7 +1881,7 @@ async_read_until(AsyncReadStream& s,
  *   }
  * }
  * ...
- * asio::async_read_until(s, data,
+ * ModioAsio::async_read_until(s, data,
  *     boost::regex("\r\n"), handler); @endcode
  * After the @c async_read_until operation completes successfully, the string
  * @c data contains the data which matched the regular expression:
@@ -1897,7 +1897,7 @@ async_read_until(AsyncReadStream& s,
  *
  * @par Per-Operation Cancellation
  * This asynchronous operation supports cancellation for the following
- * asio::cancellation_type values:
+ * ModioAsio::cancellation_type values:
  *
  * @li @c cancellation_type::terminal
  *
@@ -1907,12 +1907,12 @@ async_read_until(AsyncReadStream& s,
  * @c async_read_some operation.
  */
 template <typename AsyncReadStream, typename DynamicBuffer_v1,
-    ASIO_COMPLETION_TOKEN_FOR(void (asio::error_code,
+    ASIO_COMPLETION_TOKEN_FOR(void (ModioAsio::error_code,
       std::size_t)) ReadToken
         ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(
           typename AsyncReadStream::executor_type)>
 ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(ReadToken,
-    void (asio::error_code, std::size_t))
+    void (ModioAsio::error_code, std::size_t))
 async_read_until(AsyncReadStream& s,
     ASIO_MOVE_ARG(DynamicBuffer_v1) buffers,
     const boost::regex& expr,
@@ -1927,7 +1927,7 @@ async_read_until(AsyncReadStream& s,
     >::type = 0)
   ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
     async_initiate<ReadToken,
-      void (asio::error_code, std::size_t)>(
+      void (ModioAsio::error_code, std::size_t)>(
         declval<detail::initiate_async_read_until_expr_v1<AsyncReadStream> >(),
         token, ASIO_MOVE_CAST(DynamicBuffer_v1)(buffers), expr)));
 
@@ -1987,7 +1987,7 @@ async_read_until(AsyncReadStream& s,
  * signature. The function signature of the completion handler must be:
  * @code void handler(
  *   // Result of operation.
- *   const asio::error_code& error,
+ *   const ModioAsio::error_code& error,
  *
  *   // The number of bytes in the dynamic buffer sequence's
  *   // get area that have been fully consumed by the match
@@ -1997,7 +1997,7 @@ async_read_until(AsyncReadStream& s,
  * Regardless of whether the asynchronous operation completes immediately or
  * not, the completion handler will not be invoked from within this function.
  * On immediate completion, invocation of the handler will be performed in a
- * manner equivalent to using asio::post().
+ * manner equivalent to using ModioAsio::post().
  *
  * @note After a successful async_read_until operation, the dynamic buffer
  * sequence may contain additional data beyond that which matched the function
@@ -2005,7 +2005,7 @@ async_read_until(AsyncReadStream& s,
  * sequence for a subsequent async_read_until operation to examine.
  *
  * @par Completion Signature
- * @code void(asio::error_code, std::size_t) @endcode
+ * @code void(ModioAsio::error_code, std::size_t) @endcode
  *
  * @note The default implementation of the @c is_match_condition type trait
  * evaluates to true for function pointers and function objects with a
@@ -2015,8 +2015,8 @@ async_read_until(AsyncReadStream& s,
  * @par Examples
  * To asynchronously read data into a @c std::string until whitespace is
  * encountered:
- * @code typedef asio::buffers_iterator<
- *     asio::const_buffers_1> iterator;
+ * @code typedef ModioAsio::buffers_iterator<
+ *     ModioAsio::const_buffers_1> iterator;
  *
  * std::pair<iterator, bool>
  * match_whitespace(iterator begin, iterator end)
@@ -2028,10 +2028,10 @@ async_read_until(AsyncReadStream& s,
  *   return std::make_pair(i, false);
  * }
  * ...
- * void handler(const asio::error_code& e, std::size_t size);
+ * void handler(const ModioAsio::error_code& e, std::size_t size);
  * ...
  * std::string data;
- * asio::async_read_until(s, data, match_whitespace, handler);
+ * ModioAsio::async_read_until(s, data, match_whitespace, handler);
  * @endcode
  *
  * To asynchronously read data into a @c std::string until a matching character
@@ -2056,20 +2056,20 @@ async_read_until(AsyncReadStream& s,
  *   char c_;
  * };
  *
- * namespace asio {
+ * namespace ModioAsio {
  *   template <> struct is_match_condition<match_char>
  *     : public boost::true_type {};
- * } // namespace asio
+ * } // namespace ModioAsio
  * ...
- * void handler(const asio::error_code& e, std::size_t size);
+ * void handler(const ModioAsio::error_code& e, std::size_t size);
  * ...
  * std::string data;
- * asio::async_read_until(s, data, match_char('a'), handler);
+ * ModioAsio::async_read_until(s, data, match_char('a'), handler);
  * @endcode
  *
  * @par Per-Operation Cancellation
  * This asynchronous operation supports cancellation for the following
- * asio::cancellation_type values:
+ * ModioAsio::cancellation_type values:
  *
  * @li @c cancellation_type::terminal
  *
@@ -2080,12 +2080,12 @@ async_read_until(AsyncReadStream& s,
  */
 template <typename AsyncReadStream,
     typename DynamicBuffer_v1, typename MatchCondition,
-    ASIO_COMPLETION_TOKEN_FOR(void (asio::error_code,
+    ASIO_COMPLETION_TOKEN_FOR(void (ModioAsio::error_code,
       std::size_t)) ReadToken
         ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(
           typename AsyncReadStream::executor_type)>
 ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(ReadToken,
-    void (asio::error_code, std::size_t))
+    void (ModioAsio::error_code, std::size_t))
 async_read_until(AsyncReadStream& s,
     ASIO_MOVE_ARG(DynamicBuffer_v1) buffers,
     MatchCondition match_condition,
@@ -2103,7 +2103,7 @@ async_read_until(AsyncReadStream& s,
     >::type = 0)
   ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
     async_initiate<ReadToken,
-      void (asio::error_code, std::size_t)>(
+      void (ModioAsio::error_code, std::size_t)>(
         declval<detail::initiate_async_read_until_match_v1<AsyncReadStream> >(),
         token, ASIO_MOVE_CAST(DynamicBuffer_v1)(buffers),
         match_condition)));
@@ -2147,7 +2147,7 @@ async_read_until(AsyncReadStream& s,
  * signature. The function signature of the completion handler must be:
  * @code void handler(
  *   // Result of operation.
- *   const asio::error_code& error,
+ *   const ModioAsio::error_code& error,
  *
  *   // The number of bytes in the streambuf's get
  *   // area up to and including the delimiter.
@@ -2157,10 +2157,10 @@ async_read_until(AsyncReadStream& s,
  * Regardless of whether the asynchronous operation completes immediately or
  * not, the completion handler will not be invoked from within this function.
  * On immediate completion, invocation of the handler will be performed in a
- * manner equivalent to using asio::post().
+ * manner equivalent to using ModioAsio::post().
  *
  * @par Completion Signature
- * @code void(asio::error_code, std::size_t) @endcode
+ * @code void(ModioAsio::error_code, std::size_t) @endcode
  *
  * @note After a successful async_read_until operation, the streambuf may
  * contain additional data beyond the delimiter. An application will typically
@@ -2169,9 +2169,9 @@ async_read_until(AsyncReadStream& s,
  *
  * @par Example
  * To asynchronously read data into a streambuf until a newline is encountered:
- * @code asio::streambuf b;
+ * @code ModioAsio::streambuf b;
  * ...
- * void handler(const asio::error_code& e, std::size_t size)
+ * void handler(const ModioAsio::error_code& e, std::size_t size)
  * {
  *   if (!e)
  *   {
@@ -2182,7 +2182,7 @@ async_read_until(AsyncReadStream& s,
  *   }
  * }
  * ...
- * asio::async_read_until(s, b, '\n', handler); @endcode
+ * ModioAsio::async_read_until(s, b, '\n', handler); @endcode
  * After the @c async_read_until operation completes successfully, the buffer
  * @c b contains the delimiter:
  * @code { 'a', 'b', ..., 'c', '\n', 'd', 'e', ... } @endcode
@@ -2196,7 +2196,7 @@ async_read_until(AsyncReadStream& s,
  *
  * @par Per-Operation Cancellation
  * This asynchronous operation supports cancellation for the following
- * asio::cancellation_type values:
+ * ModioAsio::cancellation_type values:
  *
  * @li @c cancellation_type::terminal
  *
@@ -2206,14 +2206,14 @@ async_read_until(AsyncReadStream& s,
  * @c async_read_some operation.
  */
 template <typename AsyncReadStream, typename Allocator,
-    ASIO_COMPLETION_TOKEN_FOR(void (asio::error_code,
+    ASIO_COMPLETION_TOKEN_FOR(void (ModioAsio::error_code,
       std::size_t)) ReadToken
         ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(
           typename AsyncReadStream::executor_type)>
 ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(ReadToken,
-    void (asio::error_code, std::size_t))
+    void (ModioAsio::error_code, std::size_t))
 async_read_until(AsyncReadStream& s,
-    asio::basic_streambuf<Allocator>& b, char delim,
+    ModioAsio::basic_streambuf<Allocator>& b, char delim,
     ASIO_MOVE_ARG(ReadToken) token
       ASIO_DEFAULT_COMPLETION_TOKEN(
         typename AsyncReadStream::executor_type))
@@ -2258,7 +2258,7 @@ async_read_until(AsyncReadStream& s,
  * signature. The function signature of the completion handler must be:
  * @code void handler(
  *   // Result of operation.
- *   const asio::error_code& error,
+ *   const ModioAsio::error_code& error,
  *
  *   // The number of bytes in the streambuf's get
  *   // area up to and including the delimiter.
@@ -2268,10 +2268,10 @@ async_read_until(AsyncReadStream& s,
  * Regardless of whether the asynchronous operation completes immediately or
  * not, the completion handler will not be invoked from within this function.
  * On immediate completion, invocation of the handler will be performed in a
- * manner equivalent to using asio::post().
+ * manner equivalent to using ModioAsio::post().
  *
  * @par Completion Signature
- * @code void(asio::error_code, std::size_t) @endcode
+ * @code void(ModioAsio::error_code, std::size_t) @endcode
  *
  * @note After a successful async_read_until operation, the streambuf may
  * contain additional data beyond the delimiter. An application will typically
@@ -2280,9 +2280,9 @@ async_read_until(AsyncReadStream& s,
  *
  * @par Example
  * To asynchronously read data into a streambuf until a newline is encountered:
- * @code asio::streambuf b;
+ * @code ModioAsio::streambuf b;
  * ...
- * void handler(const asio::error_code& e, std::size_t size)
+ * void handler(const ModioAsio::error_code& e, std::size_t size)
  * {
  *   if (!e)
  *   {
@@ -2293,7 +2293,7 @@ async_read_until(AsyncReadStream& s,
  *   }
  * }
  * ...
- * asio::async_read_until(s, b, "\r\n", handler); @endcode
+ * ModioAsio::async_read_until(s, b, "\r\n", handler); @endcode
  * After the @c async_read_until operation completes successfully, the buffer
  * @c b contains the delimiter:
  * @code { 'a', 'b', ..., 'c', '\r', '\n', 'd', 'e', ... } @endcode
@@ -2307,7 +2307,7 @@ async_read_until(AsyncReadStream& s,
  *
  * @par Per-Operation Cancellation
  * This asynchronous operation supports cancellation for the following
- * asio::cancellation_type values:
+ * ModioAsio::cancellation_type values:
  *
  * @li @c cancellation_type::terminal
  *
@@ -2317,14 +2317,14 @@ async_read_until(AsyncReadStream& s,
  * @c async_read_some operation.
  */
 template <typename AsyncReadStream, typename Allocator,
-    ASIO_COMPLETION_TOKEN_FOR(void (asio::error_code,
+    ASIO_COMPLETION_TOKEN_FOR(void (ModioAsio::error_code,
       std::size_t)) ReadToken
         ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(
           typename AsyncReadStream::executor_type)>
 ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(ReadToken,
-    void (asio::error_code, std::size_t))
+    void (ModioAsio::error_code, std::size_t))
 async_read_until(AsyncReadStream& s,
-    asio::basic_streambuf<Allocator>& b,
+    ModioAsio::basic_streambuf<Allocator>& b,
     ASIO_STRING_VIEW_PARAM delim,
     ASIO_MOVE_ARG(ReadToken) token
       ASIO_DEFAULT_COMPLETION_TOKEN(
@@ -2374,7 +2374,7 @@ async_read_until(AsyncReadStream& s,
  * signature. The function signature of the completion handler must be:
  * @code void handler(
  *   // Result of operation.
- *   const asio::error_code& error,
+ *   const ModioAsio::error_code& error,
  *
  *   // The number of bytes in the streambuf's get
  *   // area up to and including the substring
@@ -2385,10 +2385,10 @@ async_read_until(AsyncReadStream& s,
  * Regardless of whether the asynchronous operation completes immediately or
  * not, the completion handler will not be invoked from within this function.
  * On immediate completion, invocation of the handler will be performed in a
- * manner equivalent to using asio::post().
+ * manner equivalent to using ModioAsio::post().
  *
  * @par Completion Signature
- * @code void(asio::error_code, std::size_t) @endcode
+ * @code void(ModioAsio::error_code, std::size_t) @endcode
  *
  * @note After a successful async_read_until operation, the streambuf may
  * contain additional data beyond that which matched the regular expression. An
@@ -2398,9 +2398,9 @@ async_read_until(AsyncReadStream& s,
  * @par Example
  * To asynchronously read data into a streambuf until a CR-LF sequence is
  * encountered:
- * @code asio::streambuf b;
+ * @code ModioAsio::streambuf b;
  * ...
- * void handler(const asio::error_code& e, std::size_t size)
+ * void handler(const ModioAsio::error_code& e, std::size_t size)
  * {
  *   if (!e)
  *   {
@@ -2411,7 +2411,7 @@ async_read_until(AsyncReadStream& s,
  *   }
  * }
  * ...
- * asio::async_read_until(s, b, boost::regex("\r\n"), handler); @endcode
+ * ModioAsio::async_read_until(s, b, boost::regex("\r\n"), handler); @endcode
  * After the @c async_read_until operation completes successfully, the buffer
  * @c b contains the data which matched the regular expression:
  * @code { 'a', 'b', ..., 'c', '\r', '\n', 'd', 'e', ... } @endcode
@@ -2425,7 +2425,7 @@ async_read_until(AsyncReadStream& s,
  *
  * @par Per-Operation Cancellation
  * This asynchronous operation supports cancellation for the following
- * asio::cancellation_type values:
+ * ModioAsio::cancellation_type values:
  *
  * @li @c cancellation_type::terminal
  *
@@ -2435,14 +2435,14 @@ async_read_until(AsyncReadStream& s,
  * @c async_read_some operation.
  */
 template <typename AsyncReadStream, typename Allocator,
-    ASIO_COMPLETION_TOKEN_FOR(void (asio::error_code,
+    ASIO_COMPLETION_TOKEN_FOR(void (ModioAsio::error_code,
       std::size_t)) ReadToken
         ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(
           typename AsyncReadStream::executor_type)>
 ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(ReadToken,
-    void (asio::error_code, std::size_t))
+    void (ModioAsio::error_code, std::size_t))
 async_read_until(AsyncReadStream& s,
-    asio::basic_streambuf<Allocator>& b, const boost::regex& expr,
+    ModioAsio::basic_streambuf<Allocator>& b, const boost::regex& expr,
     ASIO_MOVE_ARG(ReadToken) token
       ASIO_DEFAULT_COMPLETION_TOKEN(
         typename AsyncReadStream::executor_type))
@@ -2503,7 +2503,7 @@ async_read_until(AsyncReadStream& s,
  * signature. The function signature of the completion handler must be:
  * @code void handler(
  *   // Result of operation.
- *   const asio::error_code& error,
+ *   const ModioAsio::error_code& error,
  *
  *   // The number of bytes in the streambuf's get
  *   // area that have been fully consumed by the
@@ -2513,7 +2513,7 @@ async_read_until(AsyncReadStream& s,
  * Regardless of whether the asynchronous operation completes immediately or
  * not, the completion handler will not be invoked from within this function.
  * On immediate completion, invocation of the handler will be performed in a
- * manner equivalent to using asio::post().
+ * manner equivalent to using ModioAsio::post().
  *
  * @note After a successful async_read_until operation, the streambuf may
  * contain additional data beyond that which matched the function object. An
@@ -2521,7 +2521,7 @@ async_read_until(AsyncReadStream& s,
  * async_read_until operation to examine.
  *
  * @par Completion Signature
- * @code void(asio::error_code, std::size_t) @endcode
+ * @code void(ModioAsio::error_code, std::size_t) @endcode
  *
  * @note The default implementation of the @c is_match_condition type trait
  * evaluates to true for function pointers and function objects with a
@@ -2530,8 +2530,8 @@ async_read_until(AsyncReadStream& s,
  *
  * @par Examples
  * To asynchronously read data into a streambuf until whitespace is encountered:
- * @code typedef asio::buffers_iterator<
- *     asio::streambuf::const_buffers_type> iterator;
+ * @code typedef ModioAsio::buffers_iterator<
+ *     ModioAsio::streambuf::const_buffers_type> iterator;
  *
  * std::pair<iterator, bool>
  * match_whitespace(iterator begin, iterator end)
@@ -2543,10 +2543,10 @@ async_read_until(AsyncReadStream& s,
  *   return std::make_pair(i, false);
  * }
  * ...
- * void handler(const asio::error_code& e, std::size_t size);
+ * void handler(const ModioAsio::error_code& e, std::size_t size);
  * ...
- * asio::streambuf b;
- * asio::async_read_until(s, b, match_whitespace, handler);
+ * ModioAsio::streambuf b;
+ * ModioAsio::async_read_until(s, b, match_whitespace, handler);
  * @endcode
  *
  * To asynchronously read data into a streambuf until a matching character is
@@ -2571,20 +2571,20 @@ async_read_until(AsyncReadStream& s,
  *   char c_;
  * };
  *
- * namespace asio {
+ * namespace ModioAsio {
  *   template <> struct is_match_condition<match_char>
  *     : public boost::true_type {};
- * } // namespace asio
+ * } // namespace ModioAsio
  * ...
- * void handler(const asio::error_code& e, std::size_t size);
+ * void handler(const ModioAsio::error_code& e, std::size_t size);
  * ...
- * asio::streambuf b;
- * asio::async_read_until(s, b, match_char('a'), handler);
+ * ModioAsio::streambuf b;
+ * ModioAsio::async_read_until(s, b, match_char('a'), handler);
  * @endcode
  *
  * @par Per-Operation Cancellation
  * This asynchronous operation supports cancellation for the following
- * asio::cancellation_type values:
+ * ModioAsio::cancellation_type values:
  *
  * @li @c cancellation_type::terminal
  *
@@ -2594,14 +2594,14 @@ async_read_until(AsyncReadStream& s,
  * @c async_read_some operation.
  */
 template <typename AsyncReadStream, typename Allocator, typename MatchCondition,
-    ASIO_COMPLETION_TOKEN_FOR(void (asio::error_code,
+    ASIO_COMPLETION_TOKEN_FOR(void (ModioAsio::error_code,
       std::size_t)) ReadToken
         ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(
           typename AsyncReadStream::executor_type)>
 ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(ReadToken,
-    void (asio::error_code, std::size_t))
+    void (ModioAsio::error_code, std::size_t))
 async_read_until(AsyncReadStream& s,
-    asio::basic_streambuf<Allocator>& b,
+    ModioAsio::basic_streambuf<Allocator>& b,
     MatchCondition match_condition,
     ASIO_MOVE_ARG(ReadToken) token
       ASIO_DEFAULT_COMPLETION_TOKEN(
@@ -2654,7 +2654,7 @@ async_read_until(AsyncReadStream& s,
  * signature. The function signature of the completion handler must be:
  * @code void handler(
  *   // Result of operation.
- *   const asio::error_code& error,
+ *   const ModioAsio::error_code& error,
  *
  *   // The number of bytes in the dynamic buffer sequence's
  *   // get area up to and including the delimiter.
@@ -2664,10 +2664,10 @@ async_read_until(AsyncReadStream& s,
  * Regardless of whether the asynchronous operation completes immediately or
  * not, the completion handler will not be invoked from within this function.
  * On immediate completion, invocation of the handler will be performed in a
- * manner equivalent to using asio::post().
+ * manner equivalent to using ModioAsio::post().
  *
  * @par Completion Signature
- * @code void(asio::error_code, std::size_t) @endcode
+ * @code void(ModioAsio::error_code, std::size_t) @endcode
  *
  * @note After a successful async_read_until operation, the dynamic buffer
  * sequence may contain additional data beyond the delimiter. An application
@@ -2679,7 +2679,7 @@ async_read_until(AsyncReadStream& s,
  * encountered:
  * @code std::string data;
  * ...
- * void handler(const asio::error_code& e, std::size_t size)
+ * void handler(const ModioAsio::error_code& e, std::size_t size)
  * {
  *   if (!e)
  *   {
@@ -2689,7 +2689,7 @@ async_read_until(AsyncReadStream& s,
  *   }
  * }
  * ...
- * asio::async_read_until(s, data, '\n', handler); @endcode
+ * ModioAsio::async_read_until(s, data, '\n', handler); @endcode
  * After the @c async_read_until operation completes successfully, the buffer
  * @c data contains the delimiter:
  * @code { 'a', 'b', ..., 'c', '\n', 'd', 'e', ... } @endcode
@@ -2704,7 +2704,7 @@ async_read_until(AsyncReadStream& s,
  *
  * @par Per-Operation Cancellation
  * This asynchronous operation supports cancellation for the following
- * asio::cancellation_type values:
+ * ModioAsio::cancellation_type values:
  *
  * @li @c cancellation_type::terminal
  *
@@ -2714,12 +2714,12 @@ async_read_until(AsyncReadStream& s,
  * @c async_read_some operation.
  */
 template <typename AsyncReadStream, typename DynamicBuffer_v2,
-    ASIO_COMPLETION_TOKEN_FOR(void (asio::error_code,
+    ASIO_COMPLETION_TOKEN_FOR(void (ModioAsio::error_code,
       std::size_t)) ReadToken
         ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(
           typename AsyncReadStream::executor_type)>
 ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(ReadToken,
-    void (asio::error_code, std::size_t))
+    void (ModioAsio::error_code, std::size_t))
 async_read_until(AsyncReadStream& s, DynamicBuffer_v2 buffers, char delim,
     ASIO_MOVE_ARG(ReadToken) token
       ASIO_DEFAULT_COMPLETION_TOKEN(
@@ -2729,7 +2729,7 @@ async_read_until(AsyncReadStream& s, DynamicBuffer_v2 buffers, char delim,
     >::type = 0)
   ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
     async_initiate<ReadToken,
-      void (asio::error_code, std::size_t)>(
+      void (ModioAsio::error_code, std::size_t)>(
         declval<detail::initiate_async_read_until_delim_v2<AsyncReadStream> >(),
         token, ASIO_MOVE_CAST(DynamicBuffer_v2)(buffers), delim)));
 
@@ -2772,7 +2772,7 @@ async_read_until(AsyncReadStream& s, DynamicBuffer_v2 buffers, char delim,
  * signature. The function signature of the completion handler must be:
  * @code void handler(
  *   // Result of operation.
- *   const asio::error_code& error,
+ *   const ModioAsio::error_code& error,
  *
  *   // The number of bytes in the dynamic buffer sequence's
  *   // get area up to and including the delimiter.
@@ -2781,10 +2781,10 @@ async_read_until(AsyncReadStream& s, DynamicBuffer_v2 buffers, char delim,
  * Regardless of whether the asynchronous operation completes immediately or
  * not, the completion handler will not be invoked from within this function.
  * On immediate completion, invocation of the handler will be performed in a
- * manner equivalent to using asio::post().
+ * manner equivalent to using ModioAsio::post().
  *
  * @par Completion Signature
- * @code void(asio::error_code, std::size_t) @endcode
+ * @code void(ModioAsio::error_code, std::size_t) @endcode
  *
  * @note After a successful async_read_until operation, the dynamic buffer
  * sequence may contain additional data beyond the delimiter. An application
@@ -2796,7 +2796,7 @@ async_read_until(AsyncReadStream& s, DynamicBuffer_v2 buffers, char delim,
  * encountered:
  * @code std::string data;
  * ...
- * void handler(const asio::error_code& e, std::size_t size)
+ * void handler(const ModioAsio::error_code& e, std::size_t size)
  * {
  *   if (!e)
  *   {
@@ -2806,7 +2806,7 @@ async_read_until(AsyncReadStream& s, DynamicBuffer_v2 buffers, char delim,
  *   }
  * }
  * ...
- * asio::async_read_until(s, data, "\r\n", handler); @endcode
+ * ModioAsio::async_read_until(s, data, "\r\n", handler); @endcode
  * After the @c async_read_until operation completes successfully, the string
  * @c data contains the delimiter:
  * @code { 'a', 'b', ..., 'c', '\r', '\n', 'd', 'e', ... } @endcode
@@ -2821,7 +2821,7 @@ async_read_until(AsyncReadStream& s, DynamicBuffer_v2 buffers, char delim,
  *
  * @par Per-Operation Cancellation
  * This asynchronous operation supports cancellation for the following
- * asio::cancellation_type values:
+ * ModioAsio::cancellation_type values:
  *
  * @li @c cancellation_type::terminal
  *
@@ -2831,12 +2831,12 @@ async_read_until(AsyncReadStream& s, DynamicBuffer_v2 buffers, char delim,
  * @c async_read_some operation.
  */
 template <typename AsyncReadStream, typename DynamicBuffer_v2,
-    ASIO_COMPLETION_TOKEN_FOR(void (asio::error_code,
+    ASIO_COMPLETION_TOKEN_FOR(void (ModioAsio::error_code,
       std::size_t)) ReadToken
         ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(
           typename AsyncReadStream::executor_type)>
 ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(ReadToken,
-    void (asio::error_code, std::size_t))
+    void (ModioAsio::error_code, std::size_t))
 async_read_until(AsyncReadStream& s, DynamicBuffer_v2 buffers,
     ASIO_STRING_VIEW_PARAM delim,
     ASIO_MOVE_ARG(ReadToken) token
@@ -2847,7 +2847,7 @@ async_read_until(AsyncReadStream& s, DynamicBuffer_v2 buffers,
     >::type = 0)
   ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
     async_initiate<ReadToken,
-      void (asio::error_code, std::size_t)>(
+      void (ModioAsio::error_code, std::size_t)>(
         declval<detail::initiate_async_read_until_delim_string_v2<
           AsyncReadStream> >(),
         token, ASIO_MOVE_CAST(DynamicBuffer_v2)(buffers),
@@ -2898,7 +2898,7 @@ async_read_until(AsyncReadStream& s, DynamicBuffer_v2 buffers,
  * signature. The function signature of the completion handler must be:
  * @code void handler(
  *   // Result of operation.
- *   const asio::error_code& error,
+ *   const ModioAsio::error_code& error,
  *
  *   // The number of bytes in the dynamic buffer
  *   // sequence's get area up to and including the
@@ -2909,10 +2909,10 @@ async_read_until(AsyncReadStream& s, DynamicBuffer_v2 buffers,
  * Regardless of whether the asynchronous operation completes immediately or
  * not, the completion handler will not be invoked from within this function.
  * On immediate completion, invocation of the handler will be performed in a
- * manner equivalent to using asio::post().
+ * manner equivalent to using ModioAsio::post().
  *
  * @par Completion Signature
- * @code void(asio::error_code, std::size_t) @endcode
+ * @code void(ModioAsio::error_code, std::size_t) @endcode
  *
  * @note After a successful async_read_until operation, the dynamic buffer
  * sequence may contain additional data beyond that which matched the regular
@@ -2924,7 +2924,7 @@ async_read_until(AsyncReadStream& s, DynamicBuffer_v2 buffers,
  * encountered:
  * @code std::string data;
  * ...
- * void handler(const asio::error_code& e, std::size_t size)
+ * void handler(const ModioAsio::error_code& e, std::size_t size)
  * {
  *   if (!e)
  *   {
@@ -2934,7 +2934,7 @@ async_read_until(AsyncReadStream& s, DynamicBuffer_v2 buffers,
  *   }
  * }
  * ...
- * asio::async_read_until(s, data,
+ * ModioAsio::async_read_until(s, data,
  *     boost::regex("\r\n"), handler); @endcode
  * After the @c async_read_until operation completes successfully, the string
  * @c data contains the data which matched the regular expression:
@@ -2950,7 +2950,7 @@ async_read_until(AsyncReadStream& s, DynamicBuffer_v2 buffers,
  *
  * @par Per-Operation Cancellation
  * This asynchronous operation supports cancellation for the following
- * asio::cancellation_type values:
+ * ModioAsio::cancellation_type values:
  *
  * @li @c cancellation_type::terminal
  *
@@ -2960,12 +2960,12 @@ async_read_until(AsyncReadStream& s, DynamicBuffer_v2 buffers,
  * @c async_read_some operation.
  */
 template <typename AsyncReadStream, typename DynamicBuffer_v2,
-    ASIO_COMPLETION_TOKEN_FOR(void (asio::error_code,
+    ASIO_COMPLETION_TOKEN_FOR(void (ModioAsio::error_code,
       std::size_t)) ReadToken
         ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(
           typename AsyncReadStream::executor_type)>
 ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(ReadToken,
-    void (asio::error_code, std::size_t))
+    void (ModioAsio::error_code, std::size_t))
 async_read_until(AsyncReadStream& s, DynamicBuffer_v2 buffers,
     const boost::regex& expr,
     ASIO_MOVE_ARG(ReadToken) token
@@ -2976,7 +2976,7 @@ async_read_until(AsyncReadStream& s, DynamicBuffer_v2 buffers,
     >::type = 0)
   ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
     async_initiate<ReadToken,
-      void (asio::error_code, std::size_t)>(
+      void (ModioAsio::error_code, std::size_t)>(
         declval<detail::initiate_async_read_until_expr_v2<AsyncReadStream> >(),
         token, ASIO_MOVE_CAST(DynamicBuffer_v2)(buffers), expr)));
 
@@ -3036,7 +3036,7 @@ async_read_until(AsyncReadStream& s, DynamicBuffer_v2 buffers,
  * signature. The function signature of the completion handler must be:
  * @code void handler(
  *   // Result of operation.
- *   const asio::error_code& error,
+ *   const ModioAsio::error_code& error,
  *
  *   // The number of bytes in the dynamic buffer sequence's
  *   // get area that have been fully consumed by the match
@@ -3046,7 +3046,7 @@ async_read_until(AsyncReadStream& s, DynamicBuffer_v2 buffers,
  * Regardless of whether the asynchronous operation completes immediately or
  * not, the completion handler will not be invoked from within this function.
  * On immediate completion, invocation of the handler will be performed in a
- * manner equivalent to using asio::post().
+ * manner equivalent to using ModioAsio::post().
  *
  * @note After a successful async_read_until operation, the dynamic buffer
  * sequence may contain additional data beyond that which matched the function
@@ -3054,7 +3054,7 @@ async_read_until(AsyncReadStream& s, DynamicBuffer_v2 buffers,
  * sequence for a subsequent async_read_until operation to examine.
  *
  * @par Completion Signature
- * @code void(asio::error_code, std::size_t) @endcode
+ * @code void(ModioAsio::error_code, std::size_t) @endcode
  *
  * @note The default implementation of the @c is_match_condition type trait
  * evaluates to true for function pointers and function objects with a
@@ -3064,8 +3064,8 @@ async_read_until(AsyncReadStream& s, DynamicBuffer_v2 buffers,
  * @par Examples
  * To asynchronously read data into a @c std::string until whitespace is
  * encountered:
- * @code typedef asio::buffers_iterator<
- *     asio::const_buffers_1> iterator;
+ * @code typedef ModioAsio::buffers_iterator<
+ *     ModioAsio::const_buffers_1> iterator;
  *
  * std::pair<iterator, bool>
  * match_whitespace(iterator begin, iterator end)
@@ -3077,10 +3077,10 @@ async_read_until(AsyncReadStream& s, DynamicBuffer_v2 buffers,
  *   return std::make_pair(i, false);
  * }
  * ...
- * void handler(const asio::error_code& e, std::size_t size);
+ * void handler(const ModioAsio::error_code& e, std::size_t size);
  * ...
  * std::string data;
- * asio::async_read_until(s, data, match_whitespace, handler);
+ * ModioAsio::async_read_until(s, data, match_whitespace, handler);
  * @endcode
  *
  * To asynchronously read data into a @c std::string until a matching character
@@ -3105,20 +3105,20 @@ async_read_until(AsyncReadStream& s, DynamicBuffer_v2 buffers,
  *   char c_;
  * };
  *
- * namespace asio {
+ * namespace ModioAsio {
  *   template <> struct is_match_condition<match_char>
  *     : public boost::true_type {};
- * } // namespace asio
+ * } // namespace ModioAsio
  * ...
- * void handler(const asio::error_code& e, std::size_t size);
+ * void handler(const ModioAsio::error_code& e, std::size_t size);
  * ...
  * std::string data;
- * asio::async_read_until(s, data, match_char('a'), handler);
+ * ModioAsio::async_read_until(s, data, match_char('a'), handler);
  * @endcode
  *
  * @par Per-Operation Cancellation
  * This asynchronous operation supports cancellation for the following
- * asio::cancellation_type values:
+ * ModioAsio::cancellation_type values:
  *
  * @li @c cancellation_type::terminal
  *
@@ -3129,12 +3129,12 @@ async_read_until(AsyncReadStream& s, DynamicBuffer_v2 buffers,
  */
 template <typename AsyncReadStream,
     typename DynamicBuffer_v2, typename MatchCondition,
-    ASIO_COMPLETION_TOKEN_FOR(void (asio::error_code,
+    ASIO_COMPLETION_TOKEN_FOR(void (ModioAsio::error_code,
       std::size_t)) ReadToken
         ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(
           typename AsyncReadStream::executor_type)>
 ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(ReadToken,
-    void (asio::error_code, std::size_t))
+    void (ModioAsio::error_code, std::size_t))
 async_read_until(AsyncReadStream& s, DynamicBuffer_v2 buffers,
     MatchCondition match_condition,
     ASIO_MOVE_ARG(ReadToken) token
@@ -3148,7 +3148,7 @@ async_read_until(AsyncReadStream& s, DynamicBuffer_v2 buffers,
     >::type = 0)
   ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
     async_initiate<ReadToken,
-      void (asio::error_code, std::size_t)>(
+      void (ModioAsio::error_code, std::size_t)>(
         declval<detail::initiate_async_read_until_match_v2<AsyncReadStream> >(),
         token, ASIO_MOVE_CAST(DynamicBuffer_v2)(buffers),
         match_condition)));
@@ -3157,7 +3157,7 @@ async_read_until(AsyncReadStream& s, DynamicBuffer_v2 buffers,
 
 /*@}*/
 
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

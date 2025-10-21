@@ -34,7 +34,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 namespace detail {
 namespace winrt_utils {
 
@@ -82,20 +82,20 @@ template <typename ConstBufferSequence>
 inline winrt::Windows::Storage::Streams::IBuffer buffer_dup(
     const ConstBufferSequence& buffers)
 {
-  using asio::buffer_size;
+  using ModioAsio::buffer_size;
   std::size_t size = buffer_size(buffers);
   auto b = winrt::make<winrt::Windows::Storage::Streams::Buffer>(size);
   byte* bytes = nullptr;
 
   b.as<Windows::Storage::Streams::IBufferByteAccess>()->Buffer(&bytes);
-  asio::buffer_copy(asio::buffer(bytes, size), buffers);
+  ModioAsio::buffer_copy(ModioAsio::buffer(bytes, size), buffers);
   b.Length(size);
   return b;
 }
 
 } // namespace winrt_utils
 } // namespace detail
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

@@ -26,7 +26,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 namespace detail {
 
 posix_serial_port_service::posix_serial_port_service(
@@ -41,13 +41,13 @@ void posix_serial_port_service::shutdown()
   descriptor_service_.shutdown();
 }
 
-asio::error_code posix_serial_port_service::open(
+ModioAsio::error_code posix_serial_port_service::open(
     posix_serial_port_service::implementation_type& impl,
-    const std::string& device, asio::error_code& ec)
+    const std::string& device, ModioAsio::error_code& ec)
 {
   if (is_open(impl))
   {
-    ec = asio::error::already_open;
+    ec = ModioAsio::error::already_open;
     ASIO_ERROR_LOCATION(ec);
     return ec;
   }
@@ -66,7 +66,7 @@ asio::error_code posix_serial_port_service::open(
     s = descriptor_ops::fcntl(fd, F_SETFL, s | O_NONBLOCK, ec);
   if (s < 0)
   {
-    asio::error_code ignored_ec;
+    ModioAsio::error_code ignored_ec;
     descriptor_ops::close(fd, state, ignored_ec);
     ASIO_ERROR_LOCATION(ec);
     return ec;
@@ -95,7 +95,7 @@ asio::error_code posix_serial_port_service::open(
   }
   if (s < 0)
   {
-    asio::error_code ignored_ec;
+    ModioAsio::error_code ignored_ec;
     descriptor_ops::close(fd, state, ignored_ec);
     ASIO_ERROR_LOCATION(ec);
     return ec;
@@ -104,7 +104,7 @@ asio::error_code posix_serial_port_service::open(
   // We're done. Take ownership of the serial port descriptor.
   if (descriptor_service_.assign(impl, fd, ec))
   {
-    asio::error_code ignored_ec;
+    ModioAsio::error_code ignored_ec;
     descriptor_ops::close(fd, state, ignored_ec);
   }
 
@@ -112,10 +112,10 @@ asio::error_code posix_serial_port_service::open(
   return ec;
 }
 
-asio::error_code posix_serial_port_service::do_set_option(
+ModioAsio::error_code posix_serial_port_service::do_set_option(
     posix_serial_port_service::implementation_type& impl,
     posix_serial_port_service::store_function_type store,
-    const void* option, asio::error_code& ec)
+    const void* option, ModioAsio::error_code& ec)
 {
   termios ios;
   int s = ::tcgetattr(descriptor_service_.native_handle(impl), &ios);
@@ -138,10 +138,10 @@ asio::error_code posix_serial_port_service::do_set_option(
   return ec;
 }
 
-asio::error_code posix_serial_port_service::do_get_option(
+ModioAsio::error_code posix_serial_port_service::do_get_option(
     const posix_serial_port_service::implementation_type& impl,
     posix_serial_port_service::load_function_type load,
-    void* option, asio::error_code& ec) const
+    void* option, ModioAsio::error_code& ec) const
 {
   termios ios;
   int s = ::tcgetattr(descriptor_service_.native_handle(impl), &ios);
@@ -158,7 +158,7 @@ asio::error_code posix_serial_port_service::do_get_option(
 }
 
 } // namespace detail
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

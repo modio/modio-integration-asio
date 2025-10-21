@@ -25,12 +25,12 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 namespace ip {
 
 /// Encapsulates the flags needed for ICMP.
 /**
- * The asio::ip::icmp class contains flags necessary for ICMP sockets.
+ * The ModioAsio::ip::icmp class contains flags necessary for ICMP sockets.
  *
  * @par Thread Safety
  * @e Distinct @e objects: Safe.@n
@@ -108,7 +108,7 @@ private:
 };
 
 } // namespace ip
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

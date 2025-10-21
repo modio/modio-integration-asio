@@ -37,7 +37,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 namespace detail {
 
 class buffer_registration_base
@@ -91,8 +91,8 @@ public:
             mutable_registered_buffer)(alloc))
   {
     init_buffers(buffer_registration::get_context(ex),
-        asio::buffer_sequence_begin(buffer_sequence_),
-        asio::buffer_sequence_end(buffer_sequence_));
+        ModioAsio::buffer_sequence_begin(buffer_sequence_),
+        ModioAsio::buffer_sequence_end(buffer_sequence_));
   }
 
   /// Register buffers with an execution context.
@@ -109,8 +109,8 @@ public:
             mutable_registered_buffer)(alloc))
   {
     init_buffers(ctx,
-        asio::buffer_sequence_begin(buffer_sequence_),
-        asio::buffer_sequence_end(buffer_sequence_));
+        ModioAsio::buffer_sequence_begin(buffer_sequence_),
+        ModioAsio::buffer_sequence_end(buffer_sequence_));
   }
 
 #if defined(ASIO_HAS_MOVE) || defined(GENERATING_DOCUMENTATION)
@@ -207,7 +207,7 @@ private:
   static execution_context& get_context(const T& t,
       typename enable_if<execution::is_executor<T>::value>::type* = 0)
   {
-    return asio::query(t, execution::context);
+    return ModioAsio::query(t, execution::context);
   }
 
   // Helper function to get an executor's context.
@@ -321,7 +321,7 @@ register_buffers(ExecutionContext& ctx,
 }
 #endif // defined(ASIO_HAS_MOVE) || defined(GENERATING_DOCUMENTATION)
 
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

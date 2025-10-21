@@ -21,7 +21,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 namespace experimental {
 namespace detail {
 
@@ -115,7 +115,7 @@ private:
 
 } // namespace detail
 } // namespace experimental
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

@@ -28,7 +28,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 namespace experimental {
 namespace detail {
 
@@ -47,7 +47,7 @@ template <typename Yield = void, typename Return = void,
     typename Executor = any_io_executor>
 struct coro
 {
-  /// The traits of the coroutine. See asio::experimental::coro_traits
+  /// The traits of the coroutine. See ModioAsio::experimental::coro_traits
   /// for details.
   using traits = coro_traits<Yield, Return, Executor>;
 
@@ -149,7 +149,7 @@ struct coro
       auto handle =
         detail::coroutine_handle<promise_type>::from_promise(*coro_);
       if (handle)
-        asio::dispatch(coro_->get_executor(), destroyer{handle});
+        ModioAsio::dispatch(coro_->get_executor(), destroyer{handle});
     }
   }
 
@@ -254,7 +254,7 @@ private:
 };
 
 } // namespace experimental
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

@@ -19,7 +19,7 @@
 
 # include <utility>
 
-namespace asio {
+namespace ModioAsio {
 namespace detail {
 
 #if defined(ASIO_HAS_STD_INDEX_SEQUENCE)
@@ -79,6 +79,6 @@ using make_index_sequence = typename index_range<0, N>::type;
 #endif // defined(ASIO_HAS_VARIADIC_TEMPLATES)
 
 } // namespace detail
-} // namespace asio
+} // namespace ModioAsio
 
 #endif // ASIO_DETAIL_UTILITY_HPP

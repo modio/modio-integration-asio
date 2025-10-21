@@ -32,7 +32,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 namespace detail {
 
 class scheduler::thread_function
@@ -45,7 +45,7 @@ public:
 
   void operator()()
   {
-    asio::error_code ec;
+    ModioAsio::error_code ec;
     this_->run(ec);
   }
 
@@ -59,7 +59,7 @@ struct scheduler::task_cleanup
   {
     if (this_thread_->private_outstanding_work > 0)
     {
-      asio::detail::increment(
+      ModioAsio::detail::increment(
           scheduler_->outstanding_work_,
           this_thread_->private_outstanding_work);
     }
@@ -84,7 +84,7 @@ struct scheduler::work_cleanup
   {
     if (this_thread_->private_outstanding_work > 1)
     {
-      asio::detail::increment(
+      ModioAsio::detail::increment(
           scheduler_->outstanding_work_,
           this_thread_->private_outstanding_work - 1);
     }
@@ -108,9 +108,9 @@ struct scheduler::work_cleanup
   thread_info* this_thread_;
 };
 
-scheduler::scheduler(asio::execution_context& ctx,
+scheduler::scheduler(ModioAsio::execution_context& ctx,
     int concurrency_hint, bool own_thread, get_task_func_type get_task)
-  : asio::detail::execution_context_service_base<scheduler>(ctx),
+  : ModioAsio::detail::execution_context_service_base<scheduler>(ctx),
     one_thread_(concurrency_hint == 1
         || !ASIO_CONCURRENCY_HINT_IS_LOCKING(
           SCHEDULER, concurrency_hint)
@@ -132,8 +132,8 @@ scheduler::scheduler(asio::execution_context& ctx,
   if (own_thread)
   {
     ++outstanding_work_;
-    asio::detail::signal_blocker sb;
-    thread_ = new asio::detail::thread(thread_function(this));
+    ModioAsio::detail::signal_blocker sb;
+    thread_ = new ModioAsio::detail::thread(thread_function(this));
   }
 }
 
@@ -190,9 +190,9 @@ void scheduler::init_task()
   }
 }
 
-std::size_t scheduler::run(asio::error_code& ec)
+std::size_t scheduler::run(ModioAsio::error_code& ec)
 {
-  ec = asio::error_code();
+  ec = ModioAsio::error_code();
   if (outstanding_work_ == 0)
   {
     stop();
@@ -212,9 +212,9 @@ std::size_t scheduler::run(asio::error_code& ec)
   return n;
 }
 
-std::size_t scheduler::run_one(asio::error_code& ec)
+std::size_t scheduler::run_one(ModioAsio::error_code& ec)
 {
-  ec = asio::error_code();
+  ec = ModioAsio::error_code();
   if (outstanding_work_ == 0)
   {
     stop();
@@ -230,9 +230,9 @@ std::size_t scheduler::run_one(asio::error_code& ec)
   return do_run_one(lock, this_thread, ec);
 }
 
-std::size_t scheduler::wait_one(long usec, asio::error_code& ec)
+std::size_t scheduler::wait_one(long usec, ModioAsio::error_code& ec)
 {
-  ec = asio::error_code();
+  ec = ModioAsio::error_code();
   if (outstanding_work_ == 0)
   {
     stop();
@@ -248,9 +248,9 @@ std::size_t scheduler::wait_one(long usec, asio::error_code& ec)
   return do_wait_one(lock, this_thread, usec, ec);
 }
 
-std::size_t scheduler::poll(asio::error_code& ec)
+std::size_t scheduler::poll(ModioAsio::error_code& ec)
 {
-  ec = asio::error_code();
+  ec = ModioAsio::error_code();
   if (outstanding_work_ == 0)
   {
     stop();
@@ -279,9 +279,9 @@ std::size_t scheduler::poll(asio::error_code& ec)
   return n;
 }
 
-std::size_t scheduler::poll_one(asio::error_code& ec)
+std::size_t scheduler::poll_one(ModioAsio::error_code& ec)
 {
-  ec = asio::error_code();
+  ec = ModioAsio::error_code();
   if (outstanding_work_ == 0)
   {
     stop();
@@ -446,7 +446,7 @@ void scheduler::abandon_operations(
 
 std::size_t scheduler::do_run_one(mutex::scoped_lock& lock,
     scheduler::thread_info& this_thread,
-    const asio::error_code& ec)
+    const ModioAsio::error_code& ec)
 {
   while (!stopped_)
   {
@@ -506,7 +506,7 @@ std::size_t scheduler::do_run_one(mutex::scoped_lock& lock,
 
 std::size_t scheduler::do_wait_one(mutex::scoped_lock& lock,
     scheduler::thread_info& this_thread, long usec,
-    const asio::error_code& ec)
+    const ModioAsio::error_code& ec)
 {
   if (stopped_)
     return 0;
@@ -577,7 +577,7 @@ std::size_t scheduler::do_wait_one(mutex::scoped_lock& lock,
 
 std::size_t scheduler::do_poll_one(mutex::scoped_lock& lock,
     scheduler::thread_info& this_thread,
-    const asio::error_code& ec)
+    const ModioAsio::error_code& ec)
 {
   if (stopped_)
     return 0;
@@ -657,7 +657,7 @@ void scheduler::wake_one_thread_and_unlock(
   }
 }
 
-scheduler_task* scheduler::get_default_task(asio::execution_context& ctx)
+scheduler_task* scheduler::get_default_task(ModioAsio::execution_context& ctx)
 {
 #if defined(ASIO_HAS_IO_URING_AS_DEFAULT)
   return &use_service<io_uring_service>(ctx);
@@ -667,7 +667,7 @@ scheduler_task* scheduler::get_default_task(asio::execution_context& ctx)
 }
 
 } // namespace detail
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

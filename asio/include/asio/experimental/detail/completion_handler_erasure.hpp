@@ -16,7 +16,7 @@
 #include "asio/associated_allocator.hpp"
 #include "asio/dispatch.hpp"
 
-namespace asio {
+namespace ModioAsio {
 
 class any_io_executor;
 
@@ -163,7 +163,7 @@ struct completion_handler_erasure<Return(Args...), Executor>
     if (impl_)
     {
       Executor executor(impl_->executor);
-      asio::dispatch(executor,
+      ModioAsio::dispatch(executor,
           [impl = std::move(impl_)]() mutable
           {
             impl.reset();
@@ -189,6 +189,6 @@ private:
 
 } // namespace detail
 } // namespace experimental
-} // namespace asio
+} // namespace ModioAsio
 
 #endif // ASIO_EXPERIMENTAL_DETAIL_COMPLETION_HANDLER_ERASURE_HPP

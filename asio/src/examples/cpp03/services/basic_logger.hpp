@@ -38,9 +38,9 @@ public:
    *
    * @param identifier An identifier for this logger.
    */
-  explicit basic_logger(asio::execution_context& context,
+  explicit basic_logger(ModioAsio::execution_context& context,
       const std::string& identifier)
-    : service_(asio::use_service<Service>(context)),
+    : service_(ModioAsio::use_service<Service>(context)),
       impl_(service_.null())
   {
     service_.create(impl_, identifier);

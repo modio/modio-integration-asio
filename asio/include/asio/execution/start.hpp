@@ -24,7 +24,7 @@
 
 #if defined(GENERATING_DOCUMENTATION)
 
-namespace asio {
+namespace ModioAsio {
 namespace execution {
 
 /// A customisation point that notifies an operation state object to start
@@ -59,17 +59,18 @@ struct can_start :
 };
 
 } // namespace execution
-} // namespace asio
+} // namespace ModioAsio
 
 #else // defined(GENERATING_DOCUMENTATION)
 
+namespace ModioAsio {
 namespace asio_execution_start_fn {
 
-using asio::decay;
-using asio::declval;
-using asio::enable_if;
-using asio::traits::start_free;
-using asio::traits::start_member;
+using ModioAsio::decay;
+using ModioAsio::declval;
+using ModioAsio::enable_if;
+using ModioAsio::traits::start_free;
+using ModioAsio::traits::start_member;
 
 void start();
 
@@ -198,7 +199,8 @@ template <typename T>
 const T static_instance<T>::instance = {};
 
 } // namespace asio_execution_start_fn
-namespace asio {
+} // namespace ModioAsio
+namespace ModioAsio {
 namespace execution {
 namespace {
 
@@ -238,7 +240,7 @@ constexpr bool is_nothrow_start_v
 #endif // defined(ASIO_HAS_VARIABLE_TEMPLATES)
 
 } // namespace execution
-} // namespace asio
+} // namespace ModioAsio
 
 #endif // defined(GENERATING_DOCUMENTATION)
 

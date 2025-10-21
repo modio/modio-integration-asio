@@ -26,7 +26,7 @@
        //   && defined(ASIO_HAS_NOEXCEPT)
        //   && defined(ASIO_HAS_WORKING_EXPRESSION_SFINAE)
 
-namespace asio {
+namespace ModioAsio {
 namespace traits {
 
 template <typename T, typename = void>
@@ -99,6 +99,6 @@ struct equality_comparable : equality_comparable_default<T>
 };
 
 } // namespace traits
-} // namespace asio
+} // namespace ModioAsio
 
 #endif // ASIO_TRAITS_EQUALITY_COMPARABLE_HPP

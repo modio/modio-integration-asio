@@ -22,20 +22,20 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 namespace ssl {
 
 template <typename VerifyCallback>
 void context::set_verify_callback(VerifyCallback callback)
 {
-  asio::error_code ec;
+  ModioAsio::error_code ec;
   this->set_verify_callback(callback, ec);
-  asio::detail::throw_error(ec, "set_verify_callback");
+  ModioAsio::detail::throw_error(ec, "set_verify_callback");
 }
 
 template <typename VerifyCallback>
 ASIO_SYNC_OP_VOID context::set_verify_callback(
-    VerifyCallback callback, asio::error_code& ec)
+    VerifyCallback callback, ModioAsio::error_code& ec)
 {
   do_set_verify_callback(
       new detail::verify_callback<VerifyCallback>(callback), ec);
@@ -45,14 +45,14 @@ ASIO_SYNC_OP_VOID context::set_verify_callback(
 template <typename PasswordCallback>
 void context::set_password_callback(PasswordCallback callback)
 {
-  asio::error_code ec;
+  ModioAsio::error_code ec;
   this->set_password_callback(callback, ec);
-  asio::detail::throw_error(ec, "set_password_callback");
+  ModioAsio::detail::throw_error(ec, "set_password_callback");
 }
 
 template <typename PasswordCallback>
 ASIO_SYNC_OP_VOID context::set_password_callback(
-    PasswordCallback callback, asio::error_code& ec)
+    PasswordCallback callback, ModioAsio::error_code& ec)
 {
   do_set_password_callback(
       new detail::password_callback<PasswordCallback>(callback), ec);
@@ -60,7 +60,7 @@ ASIO_SYNC_OP_VOID context::set_password_callback(
 }
 
 } // namespace ssl
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

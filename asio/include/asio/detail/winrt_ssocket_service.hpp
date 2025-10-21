@@ -28,7 +28,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 namespace detail {
 
 template <typename Protocol>
@@ -108,12 +108,12 @@ public:
   }
 
   // Open a new socket implementation.
-  asio::error_code open(implementation_type& impl,
-      const protocol_type& protocol, asio::error_code& ec)
+  ModioAsio::error_code open(implementation_type& impl,
+      const protocol_type& protocol, ModioAsio::error_code& ec)
   {
     if (is_open(impl))
     {
-      ec = asio::error::already_open;
+      ec = ModioAsio::error::already_open;
       return ec;
     }
 
@@ -121,46 +121,46 @@ public:
     {
       impl.socket_ = ref new Windows::Networking::Sockets::StreamSocket;
       impl.protocol_ = protocol;
-      ec = asio::error_code();
+      ec = ModioAsio::error_code();
     }
     catch (Platform::Exception^ e)
     {
-      ec = asio::error_code(e->HResult,
-            asio::system_category());
+      ec = ModioAsio::error_code(e->HResult,
+            ModioAsio::system_category());
     }
 
     return ec;
   }
 
   // Assign a native socket to a socket implementation.
-  asio::error_code assign(implementation_type& impl,
+  ModioAsio::error_code assign(implementation_type& impl,
       const protocol_type& protocol, const native_handle_type& native_socket,
-      asio::error_code& ec)
+      ModioAsio::error_code& ec)
   {
     if (is_open(impl))
     {
-      ec = asio::error::already_open;
+      ec = ModioAsio::error::already_open;
       return ec;
     }
 
     impl.socket_ = native_socket;
     impl.protocol_ = protocol;
-    ec = asio::error_code();
+    ec = ModioAsio::error_code();
 
     return ec;
   }
 
   // Bind the socket to the specified local endpoint.
-  asio::error_code bind(implementation_type&,
-      const endpoint_type&, asio::error_code& ec)
+  ModioAsio::error_code bind(implementation_type&,
+      const endpoint_type&, ModioAsio::error_code& ec)
   {
-    ec = asio::error::operation_not_supported;
+    ec = ModioAsio::error::operation_not_supported;
     return ec;
   }
 
   // Get the local endpoint.
   endpoint_type local_endpoint(const implementation_type& impl,
-      asio::error_code& ec) const
+      ModioAsio::error_code& ec) const
   {
     endpoint_type endpoint;
     endpoint.resize(do_get_endpoint(impl, true,
@@ -170,7 +170,7 @@ public:
 
   // Get the remote endpoint.
   endpoint_type remote_endpoint(const implementation_type& impl,
-      asio::error_code& ec) const
+      ModioAsio::error_code& ec) const
   {
     endpoint_type endpoint;
     endpoint.resize(do_get_endpoint(impl, false,
@@ -179,17 +179,17 @@ public:
   }
 
   // Disable sends or receives on the socket.
-  asio::error_code shutdown(implementation_type&,
-      socket_base::shutdown_type, asio::error_code& ec)
+  ModioAsio::error_code shutdown(implementation_type&,
+      socket_base::shutdown_type, ModioAsio::error_code& ec)
   {
-    ec = asio::error::operation_not_supported;
+    ec = ModioAsio::error::operation_not_supported;
     return ec;
   }
 
   // Set a socket option.
   template <typename Option>
-  asio::error_code set_option(implementation_type& impl,
-      const Option& option, asio::error_code& ec)
+  ModioAsio::error_code set_option(implementation_type& impl,
+      const Option& option, ModioAsio::error_code& ec)
   {
     return do_set_option(impl, option.level(impl.protocol_),
         option.name(impl.protocol_), option.data(impl.protocol_),
@@ -198,8 +198,8 @@ public:
 
   // Get a socket option.
   template <typename Option>
-  asio::error_code get_option(const implementation_type& impl,
-      Option& option, asio::error_code& ec) const
+  ModioAsio::error_code get_option(const implementation_type& impl,
+      Option& option, ModioAsio::error_code& ec) const
   {
     std::size_t size = option.size(impl.protocol_);
     do_get_option(impl, option.level(impl.protocol_),
@@ -211,8 +211,8 @@ public:
   }
 
   // Connect the socket to the specified endpoint.
-  asio::error_code connect(implementation_type& impl,
-      const endpoint_type& peer_endpoint, asio::error_code& ec)
+  ModioAsio::error_code connect(implementation_type& impl,
+      const endpoint_type& peer_endpoint, ModioAsio::error_code& ec)
   {
     return do_connect(impl, peer_endpoint.data(), ec);
   }
@@ -224,11 +224,11 @@ public:
       Handler& handler, const IoExecutor& io_ex)
   {
     bool is_continuation =
-      asio_handler_cont_helpers::is_continuation(handler);
+      ModioAsio::asio_handler_cont_helpers::is_continuation(handler);
 
     // Allocate and construct an operation to wrap the handler.
     typedef winrt_socket_connect_op<Handler, IoExecutor> op;
-    typename op::ptr p = { asio::detail::addressof(handler),
+    typename op::ptr p = { ModioAsio::detail::addressof(handler),
       op::ptr::allocate(handler), 0 };
     p.p = new (p.v) op(handler, io_ex);
 
@@ -241,7 +241,7 @@ public:
 };
 
 } // namespace detail
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

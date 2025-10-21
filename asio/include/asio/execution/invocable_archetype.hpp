@@ -21,7 +21,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 namespace execution {
 
 /// An archetypal function object used for determining adherence to the
@@ -63,7 +63,7 @@ struct invocable_archetype
 };
 
 } // namespace execution
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

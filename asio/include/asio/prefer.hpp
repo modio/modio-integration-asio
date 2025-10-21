@@ -28,12 +28,12 @@
 
 #if defined(GENERATING_DOCUMENTATION)
 
-namespace asio {
+namespace ModioAsio {
 
 /// A customisation point that attempts to apply a property to an object.
 /**
  * The name <tt>prefer</tt> denotes a customisation point object. The
- * expression <tt>asio::prefer(E, P0, Pn...)</tt> for some subexpressions
+ * expression <tt>ModioAsio::prefer(E, P0, Pn...)</tt> for some subexpressions
  * <tt>E</tt> and <tt>P0</tt>, and where <tt>Pn...</tt> represents <tt>N</tt>
  * subexpressions (where <tt>N</tt> is 0 or more, and with types <tt>T =
  * decay_t<decltype(E)></tt> and <tt>Prop0 = decay_t<decltype(P0)></tt>) is
@@ -41,7 +41,7 @@ namespace asio {
  *
  * @li If <tt>is_applicable_property_v<T, Prop0> && Prop0::is_preferable</tt> is
  *   not a well-formed constant expression with value <tt>true</tt>,
- *   <tt>asio::prefer(E, P0, Pn...)</tt> is ill-formed.
+ *   <tt>ModioAsio::prefer(E, P0, Pn...)</tt> is ill-formed.
  *
  * @li Otherwise, <tt>E</tt> if <tt>N == 0</tt> and the expression
  *   <tt>Prop0::template static_query_v<T> == Prop0::value()</tt> is a
@@ -66,19 +66,19 @@ namespace asio {
  * @li Otherwise, <tt>E</tt> if <tt>N == 0</tt>.
  *
  * @li Otherwise,
- *   <tt>asio::prefer(asio::prefer(E, P0), Pn...)</tt>
+ *   <tt>ModioAsio::prefer(ModioAsio::prefer(E, P0), Pn...)</tt>
  *   if <tt>N > 0</tt> and the expression
- *   <tt>asio::prefer(asio::prefer(E, P0), Pn...)</tt>
+ *   <tt>ModioAsio::prefer(ModioAsio::prefer(E, P0), Pn...)</tt>
  *   is a valid expression.
  *
- * @li Otherwise, <tt>asio::prefer(E, P0, Pn...)</tt> is ill-formed.
+ * @li Otherwise, <tt>ModioAsio::prefer(E, P0, Pn...)</tt> is ill-formed.
  */
 inline constexpr unspecified prefer = unspecified;
 
 /// A type trait that determines whether a @c prefer expression is well-formed.
 /**
  * Class template @c can_prefer is a trait that is derived from
- * @c true_type if the expression <tt>asio::prefer(std::declval<T>(),
+ * @c true_type if the expression <tt>ModioAsio::prefer(std::declval<T>(),
  * std::declval<Properties>()...)</tt> is well formed; otherwise @c false_type.
  */
 template <typename T, typename... Properties>
@@ -90,7 +90,7 @@ struct can_prefer :
 /// A type trait that determines whether a @c prefer expression will not throw.
 /**
  * Class template @c is_nothrow_prefer is a trait that is derived from
- * @c true_type if the expression <tt>asio::prefer(std::declval<T>(),
+ * @c true_type if the expression <tt>ModioAsio::prefer(std::declval<T>(),
  * std::declval<Properties>()...)</tt> is @c noexcept; otherwise @c false_type.
  */
 template <typename T, typename... Properties>
@@ -102,7 +102,7 @@ struct is_nothrow_prefer :
 /// A type trait that determines the result type of a @c prefer expression.
 /**
  * Class template @c prefer_result is a trait that determines the result
- * type of the expression <tt>asio::prefer(std::declval<T>(),
+ * type of the expression <tt>ModioAsio::prefer(std::declval<T>(),
  * std::declval<Properties>()...)</tt>.
  */
 template <typename T, typename... Properties>
@@ -112,22 +112,23 @@ struct prefer_result
   typedef automatically_determined type;
 };
 
-} // namespace asio
+} // namespace ModioAsio
 
 #else // defined(GENERATING_DOCUMENTATION)
 
+namespace ModioAsio {
 namespace asio_prefer_fn {
 
-using asio::conditional;
-using asio::decay;
-using asio::declval;
-using asio::enable_if;
-using asio::is_applicable_property;
-using asio::traits::prefer_free;
-using asio::traits::prefer_member;
-using asio::traits::require_free;
-using asio::traits::require_member;
-using asio::traits::static_require;
+using ModioAsio::conditional;
+using ModioAsio::decay;
+using ModioAsio::declval;
+using ModioAsio::enable_if;
+using ModioAsio::is_applicable_property;
+using ModioAsio::traits::prefer_free;
+using ModioAsio::traits::prefer_member;
+using ModioAsio::traits::require_free;
+using ModioAsio::traits::require_member;
+using ModioAsio::traits::static_require;
 
 void prefer();
 void require();
@@ -565,7 +566,8 @@ template <typename T>
 const T static_instance<T>::instance = {};
 
 } // namespace asio_prefer_fn
-namespace asio {
+} // namespace ModioAsio
+namespace ModioAsio {
 namespace {
 
 static ASIO_CONSTEXPR const asio_prefer_fn::impl&
@@ -725,7 +727,7 @@ struct prefer_result<T>
 
 #endif // defined(ASIO_HAS_VARIADIC_TEMPLATES)
 
-} // namespace asio
+} // namespace ModioAsio
 
 #endif // defined(GENERATING_DOCUMENTATION)
 

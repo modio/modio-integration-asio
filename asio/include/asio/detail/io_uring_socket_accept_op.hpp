@@ -31,14 +31,14 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 namespace detail {
 
 template <typename Socket, typename Protocol>
 class io_uring_socket_accept_op_base : public io_uring_operation
 {
 public:
-  io_uring_socket_accept_op_base(const asio::error_code& success_ec,
+  io_uring_socket_accept_op_base(const ModioAsio::error_code& success_ec,
       socket_type socket, socket_ops::state_type state, Socket& peer,
       const Protocol& protocol, typename Protocol::endpoint* peer_endpoint,
       func_type complete_func)
@@ -88,7 +88,7 @@ public:
       return result;
     }
 
-    if (o->ec_ && o->ec_ == asio::error::would_block)
+    if (o->ec_ && o->ec_ == ModioAsio::error::would_block)
     {
       o->state_ |= socket_ops::internal_non_blocking;
       return false;
@@ -130,7 +130,7 @@ class io_uring_socket_accept_op :
 public:
   ASIO_DEFINE_HANDLER_PTR(io_uring_socket_accept_op);
 
-  io_uring_socket_accept_op(const asio::error_code& success_ec,
+  io_uring_socket_accept_op(const ModioAsio::error_code& success_ec,
       socket_type socket, socket_ops::state_type state, Socket& peer,
       const Protocol& protocol, typename Protocol::endpoint* peer_endpoint,
       Handler& handler, const IoExecutor& io_ex)
@@ -143,12 +143,12 @@ public:
   }
 
   static void do_complete(void* owner, operation* base,
-      const asio::error_code& /*ec*/,
+      const ModioAsio::error_code& /*ec*/,
       std::size_t /*bytes_transferred*/)
   {
     // Take ownership of the handler object.
     io_uring_socket_accept_op* o(static_cast<io_uring_socket_accept_op*>(base));
-    ptr p = { asio::detail::addressof(o->handler_), o, o };
+    ptr p = { ModioAsio::detail::addressof(o->handler_), o, o };
 
     // On success, assign new connection to peer socket object.
     if (owner)
@@ -169,9 +169,9 @@ public:
     // with the handler. Consequently, a local copy of the handler is required
     // to ensure that any owning sub-object remains valid until after we have
     // deallocated the memory here.
-    detail::binder1<Handler, asio::error_code>
+    detail::binder1<Handler, ModioAsio::error_code>
       handler(o->handler_, o->ec_);
-    p.h = asio::detail::addressof(handler.handler_);
+    p.h = ModioAsio::detail::addressof(handler.handler_);
     p.reset();
 
     // Make the upcall if required.
@@ -202,7 +202,7 @@ class io_uring_socket_move_accept_op :
 public:
   ASIO_DEFINE_HANDLER_PTR(io_uring_socket_move_accept_op);
 
-  io_uring_socket_move_accept_op(const asio::error_code& success_ec,
+  io_uring_socket_move_accept_op(const ModioAsio::error_code& success_ec,
       const PeerIoExecutor& peer_io_ex, socket_type socket,
       socket_ops::state_type state, const Protocol& protocol,
       typename Protocol::endpoint* peer_endpoint, Handler& handler,
@@ -217,13 +217,13 @@ public:
   }
 
   static void do_complete(void* owner, operation* base,
-      const asio::error_code& /*ec*/,
+      const ModioAsio::error_code& /*ec*/,
       std::size_t /*bytes_transferred*/)
   {
     // Take ownership of the handler object.
     io_uring_socket_move_accept_op* o(
         static_cast<io_uring_socket_move_accept_op*>(base));
-    ptr p = { asio::detail::addressof(o->handler_), o, o };
+    ptr p = { ModioAsio::detail::addressof(o->handler_), o, o };
 
     // On success, assign new connection to peer socket object.
     if (owner)
@@ -245,10 +245,10 @@ public:
     // to ensure that any owning sub-object remains valid until after we have
     // deallocated the memory here.
     detail::move_binder2<Handler,
-      asio::error_code, peer_socket_type>
+      ModioAsio::error_code, peer_socket_type>
         handler(0, ASIO_MOVE_CAST(Handler)(o->handler_), o->ec_,
           ASIO_MOVE_CAST(peer_socket_type)(*o));
-    p.h = asio::detail::addressof(handler.handler_);
+    p.h = ModioAsio::detail::addressof(handler.handler_);
     p.reset();
 
     // Make the upcall if required.
@@ -272,7 +272,7 @@ private:
 #endif // defined(ASIO_HAS_MOVE)
 
 } // namespace detail
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

@@ -21,7 +21,7 @@
 # include <boost/throw_exception.hpp>
 #endif // defined(ASIO_BOOST_THROW_EXCEPTION)
 
-namespace asio {
+namespace ModioAsio {
 namespace detail {
 
 #if defined(ASIO_HAS_BOOST_THROW_EXCEPTION)
@@ -50,6 +50,6 @@ void throw_exception(
 #endif // defined(ASIO_HAS_BOOST_THROW_EXCEPTION)
 
 } // namespace detail
-} // namespace asio
+} // namespace ModioAsio
 
 #endif // ASIO_DETAIL_THROW_EXCEPTION_HPP

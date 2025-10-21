@@ -27,13 +27,13 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 namespace detail {
 
 reactive_descriptor_service::reactive_descriptor_service(
     execution_context& context)
   : execution_context_service_base<reactive_descriptor_service>(context),
-    reactor_(asio::use_service<reactor>(context))
+    reactor_(ModioAsio::use_service<reactor>(context))
 {
   reactor_.init_task();
 }
@@ -93,20 +93,20 @@ void reactive_descriptor_service::destroy(
     reactor_.deregister_descriptor(impl.descriptor_, impl.reactor_data_,
         (impl.state_ & descriptor_ops::possible_dup) == 0);
 
-    asio::error_code ignored_ec;
+    ModioAsio::error_code ignored_ec;
     descriptor_ops::close(impl.descriptor_, impl.state_, ignored_ec);
 
     reactor_.cleanup_descriptor_data(impl.reactor_data_);
   }
 }
 
-asio::error_code reactive_descriptor_service::assign(
+ModioAsio::error_code reactive_descriptor_service::assign(
     reactive_descriptor_service::implementation_type& impl,
-    const native_handle_type& native_descriptor, asio::error_code& ec)
+    const native_handle_type& native_descriptor, ModioAsio::error_code& ec)
 {
   if (is_open(impl))
   {
-    ec = asio::error::already_open;
+    ec = ModioAsio::error::already_open;
     ASIO_ERROR_LOCATION(ec);
     return ec;
   }
@@ -114,21 +114,21 @@ asio::error_code reactive_descriptor_service::assign(
   if (int err = reactor_.register_descriptor(
         native_descriptor, impl.reactor_data_))
   {
-    ec = asio::error_code(err,
-        asio::error::get_system_category());
+    ec = ModioAsio::error_code(err,
+        ModioAsio::error::get_system_category());
     ASIO_ERROR_LOCATION(ec);
     return ec;
   }
 
   impl.descriptor_ = native_descriptor;
   impl.state_ = descriptor_ops::possible_dup;
-  ec = asio::error_code();
+  ec = ModioAsio::error_code();
   return ec;
 }
 
-asio::error_code reactive_descriptor_service::close(
+ModioAsio::error_code reactive_descriptor_service::close(
     reactive_descriptor_service::implementation_type& impl,
-    asio::error_code& ec)
+    ModioAsio::error_code& ec)
 {
   if (is_open(impl))
   {
@@ -144,7 +144,7 @@ asio::error_code reactive_descriptor_service::close(
   }
   else
   {
-    ec = asio::error_code();
+    ec = ModioAsio::error_code();
   }
 
   // The descriptor is closed by the OS even if close() returns an error.
@@ -178,13 +178,13 @@ reactive_descriptor_service::release(
   return descriptor;
 }
 
-asio::error_code reactive_descriptor_service::cancel(
+ModioAsio::error_code reactive_descriptor_service::cancel(
     reactive_descriptor_service::implementation_type& impl,
-    asio::error_code& ec)
+    ModioAsio::error_code& ec)
 {
   if (!is_open(impl))
   {
-    ec = asio::error::bad_descriptor;
+    ec = ModioAsio::error::bad_descriptor;
     ASIO_ERROR_LOCATION(ec);
     return ec;
   }
@@ -193,7 +193,7 @@ asio::error_code reactive_descriptor_service::cancel(
         "descriptor", &impl, impl.descriptor_, "cancel"));
 
   reactor_.cancel_ops(impl.descriptor_, impl.reactor_data_);
-  ec = asio::error_code();
+  ec = ModioAsio::error_code();
   return ec;
 }
 
@@ -218,7 +218,7 @@ void reactive_descriptor_service::start_op(
 }
 
 } // namespace detail
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

@@ -27,7 +27,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 namespace experimental {
 namespace detail {
 
@@ -93,8 +93,8 @@ struct parallel_group_completion_handler
   parallel_group_completion_handler(Handler&& h)
     : handler_(std::move(h)),
       executor_(
-          asio::prefer(
-            asio::get_associated_executor(handler_),
+          ModioAsio::prefer(
+            ModioAsio::get_associated_executor(handler_),
             execution::outstanding_work.tracked))
   {
   }
@@ -106,11 +106,11 @@ struct parallel_group_completion_handler
 
   void operator()()
   {
-    this->invoke(asio::detail::make_index_sequence<sizeof...(Ops)>());
+    this->invoke(ModioAsio::detail::make_index_sequence<sizeof...(Ops)>());
   }
 
   template <std::size_t... I>
-  void invoke(asio::detail::index_sequence<I...>)
+  void invoke(ModioAsio::detail::index_sequence<I...>)
   {
     this->invoke(std::tuple_cat(std::move(std::get<I>(args_).get())...));
   }
@@ -119,12 +119,12 @@ struct parallel_group_completion_handler
   void invoke(std::tuple<Args...>&& args)
   {
     this->invoke(std::move(args),
-        asio::detail::index_sequence_for<Args...>());
+        ModioAsio::detail::index_sequence_for<Args...>());
   }
 
   template <typename... Args, std::size_t... I>
   void invoke(std::tuple<Args...>&& args,
-      asio::detail::index_sequence<I...>)
+      ModioAsio::detail::index_sequence<I...>)
   {
     std::move(handler_)(completion_order_, std::move(std::get<I>(args))...);
   }
@@ -171,7 +171,7 @@ struct parallel_group_state
   std::atomic<unsigned int> outstanding_{sizeof...(Ops)};
 
   // The cancellation signals for each operation in the group.
-  asio::cancellation_signal cancellation_signals_[sizeof...(Ops)];
+  ModioAsio::cancellation_signal cancellation_signals_[sizeof...(Ops)];
 
   // The cancellation condition is used to determine whether the results from an
   // individual operation warrant a cancellation request for the whole group.
@@ -185,7 +185,7 @@ struct parallel_group_state
 template <std::size_t I, typename Condition, typename Handler, typename... Ops>
 struct parallel_group_op_handler
 {
-  typedef asio::cancellation_slot cancellation_slot_type;
+  typedef ModioAsio::cancellation_slot cancellation_slot_type;
 
   parallel_group_op_handler(
     std::shared_ptr<parallel_group_state<Condition, Handler, Ops...> > state)
@@ -226,7 +226,7 @@ struct parallel_group_op_handler
 
     // If this is the last outstanding operation, invoke the user's handler.
     if (--state_->outstanding_ == 0)
-      asio::dispatch(std::move(state_->handler_));
+      ModioAsio::dispatch(std::move(state_->handler_));
   }
 
   std::shared_ptr<parallel_group_state<Condition, Handler, Ops...> > state_;
@@ -240,7 +240,7 @@ struct parallel_group_op_handler_with_executor :
   parallel_group_op_handler<I, Condition, Handler, Ops...>
 {
   typedef parallel_group_op_handler<I, Condition, Handler, Ops...> base_type;
-  typedef asio::cancellation_slot cancellation_slot_type;
+  typedef ModioAsio::cancellation_slot cancellation_slot_type;
   typedef Executor executor_type;
 
   parallel_group_op_handler_with_executor(
@@ -279,14 +279,14 @@ struct parallel_group_op_handler_with_executor :
     {
       if (auto state = state_.lock())
       {
-        asio::cancellation_signal* sig = &signal_;
-        asio::dispatch(executor_,
+        ModioAsio::cancellation_signal* sig = &signal_;
+        ModioAsio::dispatch(executor_,
             [state, sig, type]{ sig->emit(type); });
       }
     }
 
     std::weak_ptr<parallel_group_state<Condition, Handler, Ops...> > state_;
-    asio::cancellation_signal signal_;
+    ModioAsio::cancellation_signal signal_;
     executor_type executor_;
   };
 
@@ -303,7 +303,7 @@ struct parallel_group_op_launcher
       Condition, Handler, Ops...> >& state)
   {
     typedef typename associated_executor<Op>::type ex_type;
-    ex_type ex = asio::get_associated_executor(op);
+    ex_type ex = ModioAsio::get_associated_executor(op);
     std::move(op)(
         parallel_group_op_handler_with_executor<ex_type, I,
           Condition, Handler, Ops...>(state, std::move(ex)));
@@ -358,18 +358,18 @@ struct parallel_group_cancellation_handler
 template <typename Condition, typename Handler,
     typename... Ops, std::size_t... I>
 void parallel_group_launch(Condition cancellation_condition, Handler handler,
-    std::tuple<Ops...>& ops, asio::detail::index_sequence<I...>)
+    std::tuple<Ops...>& ops, ModioAsio::detail::index_sequence<I...>)
 {
   // Get the user's completion handler's cancellation slot, so that we can allow
   // cancellation of the entire group.
   typename associated_cancellation_slot<Handler>::type slot
-    = asio::get_associated_cancellation_slot(handler);
+    = ModioAsio::get_associated_cancellation_slot(handler);
 
   // Create the shared state for the operation.
   typedef parallel_group_state<Condition, Handler, Ops...> state_type;
   std::shared_ptr<state_type> state = std::allocate_shared<state_type>(
-      asio::detail::recycling_allocator<state_type,
-        asio::detail::thread_info_base::parallel_group_tag>(),
+      ModioAsio::detail::recycling_allocator<state_type,
+        ModioAsio::detail::thread_info_base::parallel_group_tag>(),
       std::move(cancellation_condition), std::move(handler));
 
   // Initiate each individual operation in the group.
@@ -411,7 +411,7 @@ struct associator<Associator,
   }
 };
 
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

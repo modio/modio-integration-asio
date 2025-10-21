@@ -39,19 +39,19 @@ private:
   void start_accept();
 
   /// Handle completion of an asynchronous accept operation.
-  void handle_accept(const asio::error_code& e);
+  void handle_accept(const ModioAsio::error_code& e);
 
   /// Handle a request to stop the server.
   void handle_stop();
 
   /// The io_context used to perform asynchronous operations.
-  asio::io_context io_context_;
+  ModioAsio::io_context io_context_;
 
   /// The signal_set is used to register for process termination notifications.
-  asio::signal_set signals_;
+  ModioAsio::signal_set signals_;
 
   /// Acceptor used to listen for incoming connections.
-  asio::ip::tcp::acceptor acceptor_;
+  ModioAsio::ip::tcp::acceptor acceptor_;
 
   /// The connection manager which owns all live connections.
   connection_manager connection_manager_;

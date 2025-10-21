@@ -22,7 +22,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 
 cancellation_signal::~cancellation_signal()
 {
@@ -89,7 +89,7 @@ cancellation_slot::auto_delete_helper::~auto_delete_helper()
   }
 }
 
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

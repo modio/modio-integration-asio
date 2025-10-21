@@ -30,7 +30,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 
 /// Trait for detecting objects that are usable as deferred operations.
 template <typename T>
@@ -182,12 +182,12 @@ private:
       ASIO_MOVE_ARG(CompletionToken) token,
       detail::index_sequence<I...>)
     -> decltype(
-        asio::async_initiate<CompletionToken, void(Values...)>(
+        ModioAsio::async_initiate<CompletionToken, void(Values...)>(
           initiate(), token,
           std::get<I>(
             ASIO_MOVE_CAST(std::tuple<Values...>)(this->values_))...))
   {
-    return asio::async_initiate<CompletionToken, void(Values...)>(
+    return ModioAsio::async_initiate<CompletionToken, void(Values...)>(
         initiate(), token,
         std::get<I>(ASIO_MOVE_CAST(std::tuple<Values...>)(values_))...);
   }
@@ -198,10 +198,10 @@ private:
       ASIO_MOVE_ARG(CompletionToken) token,
       detail::index_sequence<I...>)
     -> decltype(
-        asio::async_initiate<CompletionToken, void(Values...)>(
+        ModioAsio::async_initiate<CompletionToken, void(Values...)>(
           initiate(), token, std::get<I>(values_)...))
   {
-    return asio::async_initiate<CompletionToken, void(Values...)>(
+    return ModioAsio::async_initiate<CompletionToken, void(Values...)>(
         initiate(), token, std::get<I>(values_)...);
   }
 #endif // defined(ASIO_HAS_REF_QUALIFIED_FUNCTIONS)
@@ -268,11 +268,11 @@ private:
       ASIO_MOVE_ARG(CompletionToken) token,
       detail::index_sequence<I...>)
     -> decltype(
-        asio::async_initiate<CompletionToken, Signature>(
+        ModioAsio::async_initiate<CompletionToken, Signature>(
           ASIO_MOVE_CAST(initiation_t)(initiation_), token,
           std::get<I>(ASIO_MOVE_CAST(init_args_t)(init_args_))...))
   {
-    return asio::async_initiate<CompletionToken, Signature>(
+    return ModioAsio::async_initiate<CompletionToken, Signature>(
         ASIO_MOVE_CAST(initiation_t)(initiation_), token,
         std::get<I>(ASIO_MOVE_CAST(init_args_t)(init_args_))...);
   }
@@ -283,10 +283,10 @@ private:
       ASIO_MOVE_ARG(CompletionToken) token,
       detail::index_sequence<I...>) const &
     -> decltype(
-        asio::async_initiate<CompletionToken, Signature>(
+        ModioAsio::async_initiate<CompletionToken, Signature>(
           initiation_t(initiation_), token, std::get<I>(init_args_)...))
     {
-    return asio::async_initiate<CompletionToken, Signature>(
+    return ModioAsio::async_initiate<CompletionToken, Signature>(
         initiation_t(initiation_), token, std::get<I>(init_args_)...);
   }
 #endif // defined(ASIO_HAS_REF_QUALIFIED_FUNCTIONS)
@@ -381,12 +381,12 @@ public:
   auto operator()(
       ASIO_MOVE_ARG(CompletionToken) token) ASIO_RVALUE_REF_QUAL
     -> decltype(
-        asio::async_initiate<CompletionToken, signature>(
+        ModioAsio::async_initiate<CompletionToken, signature>(
           declval<initiate>(), token,
           ASIO_MOVE_OR_LVALUE(Head)(this->head_),
           ASIO_MOVE_OR_LVALUE(Tail)(this->tail_)))
   {
-    return asio::async_initiate<CompletionToken, signature>(
+    return ModioAsio::async_initiate<CompletionToken, signature>(
         initiate(), token,
         ASIO_MOVE_OR_LVALUE(Head)(head_),
         ASIO_MOVE_OR_LVALUE(Tail)(tail_));
@@ -397,10 +397,10 @@ public:
   auto operator()(
       ASIO_MOVE_ARG(CompletionToken) token) const &
     -> decltype(
-        asio::async_initiate<CompletionToken, signature>(
+        ModioAsio::async_initiate<CompletionToken, signature>(
           initiate(), token, head_, tail_))
   {
-    return asio::async_initiate<CompletionToken, signature>(
+    return ModioAsio::async_initiate<CompletionToken, signature>(
         initiate(), token, head_, tail_);
   }
 #endif // defined(ASIO_HAS_REF_QUALIFIED_FUNCTIONS)
@@ -536,12 +536,12 @@ struct is_deferred<deferred_conditional<OnTrue, OnFalse> > : true_type
  * The deferred_t class is used to indicate that an asynchronous operation
  * should return a function object which is itself an initiation function. A
  * deferred_t object may be passed as a completion token to an asynchronous
- * operation, typically using the special value @c asio::deferred. For
+ * operation, typically using the special value @c ModioAsio::deferred. For
  * example:
  *
  * @code auto my_deferred_op
  *   = my_socket.async_read_some(my_buffer,
- *       asio::deferred); @endcode
+ *       ModioAsio::deferred); @endcode
  *
  * The initiating function (async_read_some in the above example) returns a
  * function object that will lazily initiate the operation.
@@ -653,7 +653,7 @@ inline auto operator|(Head head, ASIO_MOVE_ARG(Tail) tail)
 /// A @ref completion_token object used to specify that an asynchronous
 /// operation should return a function object to lazily launch the operation.
 /**
- * See the documentation for asio::deferred_t for a usage example.
+ * See the documentation for ModioAsio::deferred_t for a usage example.
  */
 #if defined(ASIO_HAS_CONSTEXPR) || defined(GENERATING_DOCUMENTATION)
 constexpr deferred_t deferred;
@@ -661,7 +661,7 @@ constexpr deferred_t deferred;
 __declspec(selectany) deferred_t deferred;
 #endif
 
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

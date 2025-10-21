@@ -19,10 +19,10 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 namespace ssl {
 
-/// The stream_base class is used as a base for the asio::ssl::stream
+/// The stream_base class is used as a base for the ModioAsio::ssl::stream
 /// class template so that we have a common place to define various enums.
 class stream_base
 {
@@ -45,7 +45,7 @@ protected:
 };
 
 } // namespace ssl
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

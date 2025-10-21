@@ -21,7 +21,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 namespace detail {
 
   // Class to adapt a detached_t as a completion handler.
@@ -66,7 +66,7 @@ namespace detail {
 template <typename Signature>
 struct async_result<detached_t, Signature>
 {
-  typedef asio::detail::detached_handler completion_handler_type;
+  typedef ModioAsio::detail::detached_handler completion_handler_type;
 
   typedef void return_type;
 
@@ -123,7 +123,7 @@ struct async_result<detached_t, Signature>
 
 #endif // !defined(GENERATING_DOCUMENTATION)
 
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

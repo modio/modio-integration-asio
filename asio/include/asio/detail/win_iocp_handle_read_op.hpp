@@ -32,7 +32,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 namespace detail {
 
 template <typename MutableBufferSequence, typename Handler, typename IoExecutor>
@@ -51,14 +51,14 @@ public:
   }
 
   static void do_complete(void* owner, operation* base,
-      const asio::error_code& result_ec,
+      const ModioAsio::error_code& result_ec,
       std::size_t bytes_transferred)
   {
-    asio::error_code ec(result_ec);
+    ModioAsio::error_code ec(result_ec);
 
     // Take ownership of the operation object.
     win_iocp_handle_read_op* o(static_cast<win_iocp_handle_read_op*>(base));
-    ptr p = { asio::detail::addressof(o->handler_), o, o };
+    ptr p = { ModioAsio::detail::addressof(o->handler_), o, o };
 
     ASIO_HANDLER_COMPLETION((*o));
 
@@ -71,14 +71,14 @@ public:
     if (owner)
     {
       // Check whether buffers are still valid.
-      buffer_sequence_adapter<asio::mutable_buffer,
+      buffer_sequence_adapter<ModioAsio::mutable_buffer,
           MutableBufferSequence>::validate(o->buffers_);
     }
 #endif // defined(ASIO_ENABLE_BUFFER_DEBUGGING)
 
     // Map non-portable errors to their portable counterparts.
     if (ec.value() == ERROR_HANDLE_EOF)
-      ec = asio::error::eof;
+      ec = ModioAsio::error::eof;
 
     ASIO_ERROR_LOCATION(ec);
 
@@ -88,9 +88,9 @@ public:
     // with the handler. Consequently, a local copy of the handler is required
     // to ensure that any owning sub-object remains valid until after we have
     // deallocated the memory here.
-    detail::binder2<Handler, asio::error_code, std::size_t>
+    detail::binder2<Handler, ModioAsio::error_code, std::size_t>
       handler(o->handler_, ec, bytes_transferred);
-    p.h = asio::detail::addressof(handler.handler_);
+    p.h = ModioAsio::detail::addressof(handler.handler_);
     p.reset();
 
     // Make the upcall if required.
@@ -110,7 +110,7 @@ private:
 };
 
 } // namespace detail
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

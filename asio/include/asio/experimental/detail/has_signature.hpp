@@ -20,7 +20,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 namespace experimental {
 namespace detail {
 
@@ -47,7 +47,7 @@ struct has_signature<S, Head, Tail...> : has_signature<S, Tail...>
 
 } // namespace detail
 } // namespace experimental
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

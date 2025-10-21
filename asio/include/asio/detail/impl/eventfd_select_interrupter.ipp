@@ -35,7 +35,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 namespace detail {
 
 eventfd_select_interrupter::eventfd_select_interrupter()
@@ -85,9 +85,9 @@ void eventfd_select_interrupter::open_descriptors()
     }
     else
     {
-      asio::error_code ec(errno,
-          asio::error::get_system_category());
-      asio::detail::throw_error(ec, "eventfd_select_interrupter");
+      ModioAsio::error_code ec(errno,
+          ModioAsio::error::get_system_category());
+      ModioAsio::detail::throw_error(ec, "eventfd_select_interrupter");
     }
   }
 }
@@ -162,7 +162,7 @@ bool eventfd_select_interrupter::reset()
 }
 
 } // namespace detail
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

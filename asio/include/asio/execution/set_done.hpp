@@ -24,7 +24,7 @@
 
 #if defined(GENERATING_DOCUMENTATION)
 
-namespace asio {
+namespace ModioAsio {
 namespace execution {
 
 /// A customisation point that delivers a done notification to a receiver.
@@ -62,17 +62,18 @@ struct can_set_done :
 };
 
 } // namespace execution
-} // namespace asio
+} // namespace ModioAsio
 
 #else // defined(GENERATING_DOCUMENTATION)
 
+namespace ModioAsio {
 namespace asio_execution_set_done_fn {
 
-using asio::decay;
-using asio::declval;
-using asio::enable_if;
-using asio::traits::set_done_free;
-using asio::traits::set_done_member;
+using ModioAsio::decay;
+using ModioAsio::declval;
+using ModioAsio::enable_if;
+using ModioAsio::traits::set_done_free;
+using ModioAsio::traits::set_done_member;
 
 void set_done();
 
@@ -201,7 +202,8 @@ template <typename T>
 const T static_instance<T>::instance = {};
 
 } // namespace asio_execution_set_done_fn
-namespace asio {
+} // namespace ModioAsio
+namespace ModioAsio {
 namespace execution {
 namespace {
 
@@ -241,7 +243,7 @@ constexpr bool is_nothrow_set_done_v
 #endif // defined(ASIO_HAS_VARIABLE_TEMPLATES)
 
 } // namespace execution
-} // namespace asio
+} // namespace ModioAsio
 
 #endif // defined(GENERATING_DOCUMENTATION)
 

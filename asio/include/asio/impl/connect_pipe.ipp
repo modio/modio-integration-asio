@@ -39,10 +39,10 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 namespace detail {
 
-void create_pipe(native_pipe_handle p[2], asio::error_code& ec)
+void create_pipe(native_pipe_handle p[2], ModioAsio::error_code& ec)
 {
 #if defined(ASIO_HAS_IOCP)
   using namespace std; // For sprintf and memcmp.
@@ -72,7 +72,7 @@ void create_pipe(native_pipe_handle p[2], asio::error_code& ec)
   if (p[0] == INVALID_HANDLE_VALUE)
   {
     DWORD last_error = ::GetLastError();
-    ec.assign(last_error, asio::error::get_system_category());
+    ec.assign(last_error, ModioAsio::error::get_system_category());
     return;
   }
 
@@ -83,7 +83,7 @@ void create_pipe(native_pipe_handle p[2], asio::error_code& ec)
   {
     DWORD last_error = ::GetLastError();
     ::CloseHandle(p[0]);
-    ec.assign(last_error, asio::error::get_system_category());
+    ec.assign(last_error, ModioAsio::error::get_system_category());
     return;
   }
 
@@ -92,7 +92,7 @@ void create_pipe(native_pipe_handle p[2], asio::error_code& ec)
   if (::BCryptGenRandom(0, nonce, sizeof(nonce),
         BCRYPT_USE_SYSTEM_PREFERRED_RNG) != 0)
   {
-    ec = asio::error::connection_aborted;
+    ec = ModioAsio::error::connection_aborted;
     ::CloseHandle(p[0]);
     ::CloseHandle(p[1]);
     return;
@@ -102,7 +102,7 @@ void create_pipe(native_pipe_handle p[2], asio::error_code& ec)
   BOOL ok = ::WriteFile(p[1], nonce, sizeof(nonce), &bytes_written, 0);
   if (!ok || bytes_written != sizeof(nonce))
   {
-    ec = asio::error::connection_aborted;
+    ec = ModioAsio::error::connection_aborted;
     ::CloseHandle(p[0]);
     ::CloseHandle(p[1]);
     return;
@@ -114,14 +114,14 @@ void create_pipe(native_pipe_handle p[2], asio::error_code& ec)
   if (!ok || bytes_read != sizeof(nonce)
       || memcmp(nonce, nonce_check, sizeof(nonce)) != 0)
   {
-    ec = asio::error::connection_aborted;
+    ec = ModioAsio::error::connection_aborted;
     ::CloseHandle(p[0]);
     ::CloseHandle(p[1]);
     return;
   }
 #endif // _WIN32_WINNT >= 0x601
 
-  asio::error::clear(ec);
+  ModioAsio::error::clear(ec);
 #else // defined(ASIO_HAS_IOCP)
   int result = ::pipe(p);
   detail::descriptor_ops::get_last_error(ec, result != 0);
@@ -133,14 +133,14 @@ void close_pipe(native_pipe_handle p)
 #if defined(ASIO_HAS_IOCP)
   ::CloseHandle(p);
 #else // defined(ASIO_HAS_IOCP)
-  asio::error_code ignored_ec;
+  ModioAsio::error_code ignored_ec;
   detail::descriptor_ops::state_type state = 0;
   detail::descriptor_ops::close(p, state, ignored_ec);
 #endif // defined(ASIO_HAS_IOCP)
 }
 
 } // namespace detail
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

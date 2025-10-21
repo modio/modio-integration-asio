@@ -15,7 +15,7 @@
 #include "asio/detail/config.hpp"
 #include "asio/experimental/coro_traits.hpp"
 
-namespace asio {
+namespace ModioAsio {
 namespace experimental {
 namespace detail {
 
@@ -113,6 +113,6 @@ struct coro_promise_allocator<Coroutine, Executor, Allocator, true>
 
 } // namespace detail
 } // namespace experimental
-} // namespace asio
+} // namespace ModioAsio
 
 #endif // ASIO_EXPERIMENTAL_DETAIL_CORO_PROMISE_ALLOCATOR_HPP

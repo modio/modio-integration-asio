@@ -33,7 +33,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 
 namespace detail
 {
@@ -42,10 +42,10 @@ namespace detail
   std::size_t write_at_buffer_sequence(SyncRandomAccessWriteDevice& d,
       uint64_t offset, const ConstBufferSequence& buffers,
       const ConstBufferIterator&, CompletionCondition completion_condition,
-      asio::error_code& ec)
+      ModioAsio::error_code& ec)
   {
-    ec = asio::error_code();
-    asio::detail::consuming_buffers<const_buffer,
+    ec = ModioAsio::error_code();
+    ModioAsio::detail::consuming_buffers<const_buffer,
         ConstBufferSequence, ConstBufferIterator> tmp(buffers);
     while (!tmp.empty())
     {
@@ -66,10 +66,10 @@ template <typename SyncRandomAccessWriteDevice, typename ConstBufferSequence,
     typename CompletionCondition>
 std::size_t write_at(SyncRandomAccessWriteDevice& d,
     uint64_t offset, const ConstBufferSequence& buffers,
-    CompletionCondition completion_condition, asio::error_code& ec)
+    CompletionCondition completion_condition, ModioAsio::error_code& ec)
 {
   return detail::write_at_buffer_sequence(d, offset, buffers,
-      asio::buffer_sequence_begin(buffers),
+      ModioAsio::buffer_sequence_begin(buffers),
       ASIO_MOVE_CAST(CompletionCondition)(completion_condition), ec);
 }
 
@@ -77,17 +77,17 @@ template <typename SyncRandomAccessWriteDevice, typename ConstBufferSequence>
 inline std::size_t write_at(SyncRandomAccessWriteDevice& d,
     uint64_t offset, const ConstBufferSequence& buffers)
 {
-  asio::error_code ec;
+  ModioAsio::error_code ec;
   std::size_t bytes_transferred = write_at(
       d, offset, buffers, transfer_all(), ec);
-  asio::detail::throw_error(ec, "write_at");
+  ModioAsio::detail::throw_error(ec, "write_at");
   return bytes_transferred;
 }
 
 template <typename SyncRandomAccessWriteDevice, typename ConstBufferSequence>
 inline std::size_t write_at(SyncRandomAccessWriteDevice& d,
     uint64_t offset, const ConstBufferSequence& buffers,
-    asio::error_code& ec)
+    ModioAsio::error_code& ec)
 {
   return write_at(d, offset, buffers, transfer_all(), ec);
 }
@@ -98,10 +98,10 @@ inline std::size_t write_at(SyncRandomAccessWriteDevice& d,
     uint64_t offset, const ConstBufferSequence& buffers,
     CompletionCondition completion_condition)
 {
-  asio::error_code ec;
+  ModioAsio::error_code ec;
   std::size_t bytes_transferred = write_at(d, offset, buffers,
       ASIO_MOVE_CAST(CompletionCondition)(completion_condition), ec);
-  asio::detail::throw_error(ec, "write_at");
+  ModioAsio::detail::throw_error(ec, "write_at");
   return bytes_transferred;
 }
 
@@ -111,8 +111,8 @@ inline std::size_t write_at(SyncRandomAccessWriteDevice& d,
 template <typename SyncRandomAccessWriteDevice, typename Allocator,
     typename CompletionCondition>
 std::size_t write_at(SyncRandomAccessWriteDevice& d,
-    uint64_t offset, asio::basic_streambuf<Allocator>& b,
-    CompletionCondition completion_condition, asio::error_code& ec)
+    uint64_t offset, ModioAsio::basic_streambuf<Allocator>& b,
+    CompletionCondition completion_condition, ModioAsio::error_code& ec)
 {
   std::size_t bytes_transferred = write_at(d, offset, b.data(),
       ASIO_MOVE_CAST(CompletionCondition)(completion_condition), ec);
@@ -122,18 +122,18 @@ std::size_t write_at(SyncRandomAccessWriteDevice& d,
 
 template <typename SyncRandomAccessWriteDevice, typename Allocator>
 inline std::size_t write_at(SyncRandomAccessWriteDevice& d,
-    uint64_t offset, asio::basic_streambuf<Allocator>& b)
+    uint64_t offset, ModioAsio::basic_streambuf<Allocator>& b)
 {
-  asio::error_code ec;
+  ModioAsio::error_code ec;
   std::size_t bytes_transferred = write_at(d, offset, b, transfer_all(), ec);
-  asio::detail::throw_error(ec, "write_at");
+  ModioAsio::detail::throw_error(ec, "write_at");
   return bytes_transferred;
 }
 
 template <typename SyncRandomAccessWriteDevice, typename Allocator>
 inline std::size_t write_at(SyncRandomAccessWriteDevice& d,
-    uint64_t offset, asio::basic_streambuf<Allocator>& b,
-    asio::error_code& ec)
+    uint64_t offset, ModioAsio::basic_streambuf<Allocator>& b,
+    ModioAsio::error_code& ec)
 {
   return write_at(d, offset, b, transfer_all(), ec);
 }
@@ -141,13 +141,13 @@ inline std::size_t write_at(SyncRandomAccessWriteDevice& d,
 template <typename SyncRandomAccessWriteDevice, typename Allocator,
     typename CompletionCondition>
 inline std::size_t write_at(SyncRandomAccessWriteDevice& d,
-    uint64_t offset, asio::basic_streambuf<Allocator>& b,
+    uint64_t offset, ModioAsio::basic_streambuf<Allocator>& b,
     CompletionCondition completion_condition)
 {
-  asio::error_code ec;
+  ModioAsio::error_code ec;
   std::size_t bytes_transferred = write_at(d, offset, b,
       ASIO_MOVE_CAST(CompletionCondition)(completion_condition), ec);
-  asio::detail::throw_error(ec, "write_at");
+  ModioAsio::detail::throw_error(ec, "write_at");
   return bytes_transferred;
 }
 
@@ -206,7 +206,7 @@ namespace detail
     }
 #endif // defined(ASIO_HAS_MOVE)
 
-    void operator()(asio::error_code ec,
+    void operator()(ModioAsio::error_code ec,
         std::size_t bytes_transferred, int start = 0)
     {
       std::size_t max_size;
@@ -231,19 +231,19 @@ namespace detail
             break;
           if (this->cancelled() != cancellation_type::none)
           {
-            ec = asio::error::operation_aborted;
+            ec = ModioAsio::error::operation_aborted;
             break;
           }
         }
 
         ASIO_MOVE_OR_LVALUE(WriteHandler)(handler_)(
-            static_cast<const asio::error_code&>(ec),
+            static_cast<const ModioAsio::error_code&>(ec),
             static_cast<const std::size_t&>(buffers_.total_consumed()));
       }
     }
 
   //private:
-    typedef asio::detail::consuming_buffers<const_buffer,
+    typedef ModioAsio::detail::consuming_buffers<const_buffer,
         ConstBufferSequence, ConstBufferIterator> buffers_type;
 
     AsyncRandomAccessWriteDevice& device_;
@@ -262,10 +262,10 @@ namespace detail
         ConstBufferIterator, CompletionCondition, WriteHandler>* this_handler)
   {
 #if defined(ASIO_NO_DEPRECATED)
-    asio_handler_alloc_helpers::allocate(size, this_handler->handler_);
+    ModioAsio::asio_handler_alloc_helpers::allocate(size, this_handler->handler_);
     return asio_handler_allocate_is_no_longer_used();
 #else // defined(ASIO_NO_DEPRECATED)
-    return asio_handler_alloc_helpers::allocate(
+    return ModioAsio::asio_handler_alloc_helpers::allocate(
         size, this_handler->handler_);
 #endif // defined(ASIO_NO_DEPRECATED)
   }
@@ -278,7 +278,7 @@ namespace detail
       write_at_op<AsyncRandomAccessWriteDevice, ConstBufferSequence,
         ConstBufferIterator, CompletionCondition, WriteHandler>* this_handler)
   {
-    asio_handler_alloc_helpers::deallocate(
+    ModioAsio::asio_handler_alloc_helpers::deallocate(
         pointer, size, this_handler->handler_);
 #if defined(ASIO_NO_DEPRECATED)
     return asio_handler_deallocate_is_no_longer_used();
@@ -293,7 +293,7 @@ namespace detail
         ConstBufferIterator, CompletionCondition, WriteHandler>* this_handler)
   {
     return this_handler->start_ == 0 ? true
-      : asio_handler_cont_helpers::is_continuation(
+      : ModioAsio::asio_handler_cont_helpers::is_continuation(
           this_handler->handler_);
   }
 
@@ -305,7 +305,7 @@ namespace detail
       write_at_op<AsyncRandomAccessWriteDevice, ConstBufferSequence,
         ConstBufferIterator, CompletionCondition, WriteHandler>* this_handler)
   {
-    asio_handler_invoke_helpers::invoke(
+    ModioAsio::asio_handler_invoke_helpers::invoke(
         function, this_handler->handler_);
 #if defined(ASIO_NO_DEPRECATED)
     return asio_handler_invoke_is_no_longer_used();
@@ -320,7 +320,7 @@ namespace detail
       write_at_op<AsyncRandomAccessWriteDevice, ConstBufferSequence,
         ConstBufferIterator, CompletionCondition, WriteHandler>* this_handler)
   {
-    asio_handler_invoke_helpers::invoke(
+    ModioAsio::asio_handler_invoke_helpers::invoke(
         function, this_handler->handler_);
 #if defined(ASIO_NO_DEPRECATED)
     return asio_handler_invoke_is_no_longer_used();
@@ -338,7 +338,7 @@ namespace detail
     detail::write_at_op<AsyncRandomAccessWriteDevice, ConstBufferSequence,
       ConstBufferIterator, CompletionCondition, WriteHandler>(
         d, offset, buffers, completion_condition, handler)(
-          asio::error_code(), 0, 1);
+          ModioAsio::error_code(), 0, 1);
   }
 
   template <typename AsyncRandomAccessWriteDevice>
@@ -370,7 +370,7 @@ namespace detail
       non_const_lvalue<WriteHandler> handler2(handler);
       non_const_lvalue<CompletionCondition> completion_cond2(completion_cond);
       start_write_at_op(device_, offset, buffers,
-          asio::buffer_sequence_begin(buffers),
+          ModioAsio::buffer_sequence_begin(buffers),
           completion_cond2.value, handler2.value);
     }
 
@@ -405,46 +405,46 @@ struct associator<Associator,
 
 template <typename AsyncRandomAccessWriteDevice,
     typename ConstBufferSequence, typename CompletionCondition,
-    ASIO_COMPLETION_TOKEN_FOR(void (asio::error_code,
+    ASIO_COMPLETION_TOKEN_FOR(void (ModioAsio::error_code,
       std::size_t)) WriteToken>
 inline ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(WriteToken,
-    void (asio::error_code, std::size_t))
+    void (ModioAsio::error_code, std::size_t))
 async_write_at(AsyncRandomAccessWriteDevice& d,
     uint64_t offset, const ConstBufferSequence& buffers,
     CompletionCondition completion_condition,
     ASIO_MOVE_ARG(WriteToken) token)
   ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
     async_initiate<WriteToken,
-      void (asio::error_code, std::size_t)>(
+      void (ModioAsio::error_code, std::size_t)>(
         declval<detail::initiate_async_write_at<
           AsyncRandomAccessWriteDevice> >(),
         token, offset, buffers,
         ASIO_MOVE_CAST(CompletionCondition)(completion_condition))))
 {
   return async_initiate<WriteToken,
-    void (asio::error_code, std::size_t)>(
+    void (ModioAsio::error_code, std::size_t)>(
       detail::initiate_async_write_at<AsyncRandomAccessWriteDevice>(d),
       token, offset, buffers,
       ASIO_MOVE_CAST(CompletionCondition)(completion_condition));
 }
 
 template <typename AsyncRandomAccessWriteDevice, typename ConstBufferSequence,
-    ASIO_COMPLETION_TOKEN_FOR(void (asio::error_code,
+    ASIO_COMPLETION_TOKEN_FOR(void (ModioAsio::error_code,
       std::size_t)) WriteToken>
 inline ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(WriteToken,
-    void (asio::error_code, std::size_t))
+    void (ModioAsio::error_code, std::size_t))
 async_write_at(AsyncRandomAccessWriteDevice& d,
     uint64_t offset, const ConstBufferSequence& buffers,
     ASIO_MOVE_ARG(WriteToken) token)
   ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
     async_initiate<WriteToken,
-      void (asio::error_code, std::size_t)>(
+      void (ModioAsio::error_code, std::size_t)>(
         declval<detail::initiate_async_write_at<
           AsyncRandomAccessWriteDevice> >(),
         token, offset, buffers, transfer_all())))
 {
   return async_initiate<WriteToken,
-    void (asio::error_code, std::size_t)>(
+    void (ModioAsio::error_code, std::size_t)>(
       detail::initiate_async_write_at<AsyncRandomAccessWriteDevice>(d),
       token, offset, buffers, transfer_all());
 }
@@ -459,7 +459,7 @@ namespace detail
   {
   public:
     write_at_streambuf_op(
-        asio::basic_streambuf<Allocator>& streambuf,
+        ModioAsio::basic_streambuf<Allocator>& streambuf,
         WriteHandler& handler)
       : streambuf_(streambuf),
         handler_(ASIO_MOVE_CAST(WriteHandler)(handler))
@@ -480,7 +480,7 @@ namespace detail
     }
 #endif // defined(ASIO_HAS_MOVE)
 
-    void operator()(const asio::error_code& ec,
+    void operator()(const ModioAsio::error_code& ec,
         const std::size_t bytes_transferred)
     {
       streambuf_.consume(bytes_transferred);
@@ -488,7 +488,7 @@ namespace detail
     }
 
   //private:
-    asio::basic_streambuf<Allocator>& streambuf_;
+    ModioAsio::basic_streambuf<Allocator>& streambuf_;
     WriteHandler handler_;
   };
 
@@ -498,10 +498,10 @@ namespace detail
       write_at_streambuf_op<Allocator, WriteHandler>* this_handler)
   {
 #if defined(ASIO_NO_DEPRECATED)
-    asio_handler_alloc_helpers::allocate(size, this_handler->handler_);
+    ModioAsio::asio_handler_alloc_helpers::allocate(size, this_handler->handler_);
     return asio_handler_allocate_is_no_longer_used();
 #else // defined(ASIO_NO_DEPRECATED)
-    return asio_handler_alloc_helpers::allocate(
+    return ModioAsio::asio_handler_alloc_helpers::allocate(
         size, this_handler->handler_);
 #endif // defined(ASIO_NO_DEPRECATED)
   }
@@ -511,7 +511,7 @@ namespace detail
   asio_handler_deallocate(void* pointer, std::size_t size,
       write_at_streambuf_op<Allocator, WriteHandler>* this_handler)
   {
-    asio_handler_alloc_helpers::deallocate(
+    ModioAsio::asio_handler_alloc_helpers::deallocate(
         pointer, size, this_handler->handler_);
 #if defined(ASIO_NO_DEPRECATED)
     return asio_handler_deallocate_is_no_longer_used();
@@ -522,7 +522,7 @@ namespace detail
   inline bool asio_handler_is_continuation(
       write_at_streambuf_op<Allocator, WriteHandler>* this_handler)
   {
-    return asio_handler_cont_helpers::is_continuation(
+    return ModioAsio::asio_handler_cont_helpers::is_continuation(
         this_handler->handler_);
   }
 
@@ -531,7 +531,7 @@ namespace detail
   asio_handler_invoke(Function& function,
       write_at_streambuf_op<Allocator, WriteHandler>* this_handler)
   {
-    asio_handler_invoke_helpers::invoke(
+    ModioAsio::asio_handler_invoke_helpers::invoke(
         function, this_handler->handler_);
 #if defined(ASIO_NO_DEPRECATED)
     return asio_handler_invoke_is_no_longer_used();
@@ -543,7 +543,7 @@ namespace detail
   asio_handler_invoke(const Function& function,
       write_at_streambuf_op<Allocator, WriteHandler>* this_handler)
   {
-    asio_handler_invoke_helpers::invoke(
+    ModioAsio::asio_handler_invoke_helpers::invoke(
         function, this_handler->handler_);
 #if defined(ASIO_NO_DEPRECATED)
     return asio_handler_invoke_is_no_longer_used();
@@ -610,24 +610,24 @@ struct associator<Associator,
 
 template <typename AsyncRandomAccessWriteDevice,
     typename Allocator, typename CompletionCondition,
-    ASIO_COMPLETION_TOKEN_FOR(void (asio::error_code,
+    ASIO_COMPLETION_TOKEN_FOR(void (ModioAsio::error_code,
       std::size_t)) WriteToken>
 inline ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(WriteToken,
-    void (asio::error_code, std::size_t))
+    void (ModioAsio::error_code, std::size_t))
 async_write_at(AsyncRandomAccessWriteDevice& d,
-    uint64_t offset, asio::basic_streambuf<Allocator>& b,
+    uint64_t offset, ModioAsio::basic_streambuf<Allocator>& b,
     CompletionCondition completion_condition,
     ASIO_MOVE_ARG(WriteToken) token)
   ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
     async_initiate<WriteToken,
-      void (asio::error_code, std::size_t)>(
+      void (ModioAsio::error_code, std::size_t)>(
         declval<detail::initiate_async_write_at_streambuf<
           AsyncRandomAccessWriteDevice> >(),
         token, offset, &b,
         ASIO_MOVE_CAST(CompletionCondition)(completion_condition))))
 {
   return async_initiate<WriteToken,
-    void (asio::error_code, std::size_t)>(
+    void (ModioAsio::error_code, std::size_t)>(
       detail::initiate_async_write_at_streambuf<
         AsyncRandomAccessWriteDevice>(d),
       token, offset, &b,
@@ -635,22 +635,22 @@ async_write_at(AsyncRandomAccessWriteDevice& d,
 }
 
 template <typename AsyncRandomAccessWriteDevice, typename Allocator,
-    ASIO_COMPLETION_TOKEN_FOR(void (asio::error_code,
+    ASIO_COMPLETION_TOKEN_FOR(void (ModioAsio::error_code,
       std::size_t)) WriteToken>
 inline ASIO_INITFN_AUTO_RESULT_TYPE_PREFIX(WriteToken,
-    void (asio::error_code, std::size_t))
+    void (ModioAsio::error_code, std::size_t))
 async_write_at(AsyncRandomAccessWriteDevice& d,
-    uint64_t offset, asio::basic_streambuf<Allocator>& b,
+    uint64_t offset, ModioAsio::basic_streambuf<Allocator>& b,
     ASIO_MOVE_ARG(WriteToken) token)
   ASIO_INITFN_AUTO_RESULT_TYPE_SUFFIX((
     async_initiate<WriteToken,
-      void (asio::error_code, std::size_t)>(
+      void (ModioAsio::error_code, std::size_t)>(
         declval<detail::initiate_async_write_at_streambuf<
           AsyncRandomAccessWriteDevice> >(),
         token, offset, &b, transfer_all())))
 {
   return async_initiate<WriteToken,
-    void (asio::error_code, std::size_t)>(
+    void (ModioAsio::error_code, std::size_t)>(
       detail::initiate_async_write_at_streambuf<
         AsyncRandomAccessWriteDevice>(d),
       token, offset, &b, transfer_all());
@@ -659,7 +659,7 @@ async_write_at(AsyncRandomAccessWriteDevice& d,
 #endif // !defined(ASIO_NO_IOSTREAM)
 #endif // !defined(ASIO_NO_EXTENSIONS)
 
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

@@ -24,7 +24,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 namespace detail {
 
 template <typename Operation = scheduler_operation>
@@ -39,7 +39,7 @@ public:
 
   void wait()
   {
-    asio::detail::mutex::scoped_lock lock(mutex_);
+    ModioAsio::detail::mutex::scoped_lock lock(mutex_);
     while (!is_complete_)
       event_.wait(lock);
   }
@@ -49,7 +49,7 @@ protected:
   {
     ~do_complete_cleanup()
     {
-      asio::detail::mutex::scoped_lock lock(op_->mutex_);
+      ModioAsio::detail::mutex::scoped_lock lock(op_->mutex_);
       op_->is_complete_ = true;
       op_->event_.unlock_and_signal_one_for_destruction(lock);
     }
@@ -58,8 +58,8 @@ protected:
   };
 
 private:
-  asio::detail::mutex mutex_;
-  asio::detail::event event_;
+  ModioAsio::detail::mutex mutex_;
+  ModioAsio::detail::event event_;
   bool is_complete_;
 };
 
@@ -74,7 +74,7 @@ public:
   }
 
   static void do_complete(void* owner, Operation* base,
-      const asio::error_code& /*ec*/,
+      const ModioAsio::error_code& /*ec*/,
       std::size_t /*bytes_transferred*/)
   {
     blocking_executor_op* o(static_cast<blocking_executor_op*>(base));
@@ -90,7 +90,7 @@ public:
     {
       fenced_block b(fenced_block::half);
       ASIO_HANDLER_INVOCATION_BEGIN(());
-      asio_handler_invoke_helpers::invoke(o->handler_, o->handler_);
+      ModioAsio::asio_handler_invoke_helpers::invoke(o->handler_, o->handler_);
       ASIO_HANDLER_INVOCATION_END;
     }
   }
@@ -100,7 +100,7 @@ private:
 };
 
 } // namespace detail
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

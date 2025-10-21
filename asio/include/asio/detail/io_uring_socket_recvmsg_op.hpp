@@ -29,14 +29,14 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 namespace detail {
 
 template <typename MutableBufferSequence>
 class io_uring_socket_recvmsg_op_base : public io_uring_operation
 {
 public:
-  io_uring_socket_recvmsg_op_base(const asio::error_code& success_ec,
+  io_uring_socket_recvmsg_op_base(const ModioAsio::error_code& success_ec,
       socket_type socket, socket_ops::state_type state,
       const MutableBufferSequence& buffers, socket_base::message_flags in_flags,
       socket_base::message_flags& out_flags, func_type complete_func)
@@ -94,7 +94,7 @@ public:
         o->out_flags_ = 0;
     }
 
-    if (o->ec_ && o->ec_ == asio::error::would_block)
+    if (o->ec_ && o->ec_ == ModioAsio::error::would_block)
     {
       o->state_ |= socket_ops::internal_non_blocking;
       return false;
@@ -109,7 +109,7 @@ private:
   MutableBufferSequence buffers_;
   socket_base::message_flags in_flags_;
   socket_base::message_flags& out_flags_;
-  buffer_sequence_adapter<asio::mutable_buffer,
+  buffer_sequence_adapter<ModioAsio::mutable_buffer,
       MutableBufferSequence> bufs_;
   msghdr msghdr_;
 };
@@ -121,7 +121,7 @@ class io_uring_socket_recvmsg_op
 public:
   ASIO_DEFINE_HANDLER_PTR(io_uring_socket_recvmsg_op);
 
-  io_uring_socket_recvmsg_op(const asio::error_code& success_ec,
+  io_uring_socket_recvmsg_op(const ModioAsio::error_code& success_ec,
       int socket, socket_ops::state_type state,
       const MutableBufferSequence& buffers,
       socket_base::message_flags in_flags,
@@ -136,13 +136,13 @@ public:
   }
 
   static void do_complete(void* owner, operation* base,
-      const asio::error_code& /*ec*/,
+      const ModioAsio::error_code& /*ec*/,
       std::size_t /*bytes_transferred*/)
   {
     // Take ownership of the handler object.
     io_uring_socket_recvmsg_op* o
       (static_cast<io_uring_socket_recvmsg_op*>(base));
-    ptr p = { asio::detail::addressof(o->handler_), o, o };
+    ptr p = { ModioAsio::detail::addressof(o->handler_), o, o };
 
     ASIO_HANDLER_COMPLETION((*o));
 
@@ -159,9 +159,9 @@ public:
     // with the handler. Consequently, a local copy of the handler is required
     // to ensure that any owning sub-object remains valid until after we have
     // deallocated the memory here.
-    detail::binder2<Handler, asio::error_code, std::size_t>
+    detail::binder2<Handler, ModioAsio::error_code, std::size_t>
       handler(o->handler_, o->ec_, o->bytes_transferred_);
-    p.h = asio::detail::addressof(handler.handler_);
+    p.h = ModioAsio::detail::addressof(handler.handler_);
     p.reset();
 
     // Make the upcall if required.
@@ -180,7 +180,7 @@ private:
 };
 
 } // namespace detail
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

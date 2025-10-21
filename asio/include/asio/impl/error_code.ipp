@@ -33,7 +33,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 namespace detail {
 
 class system_category : public error_category
@@ -203,7 +203,7 @@ const error_category& system_category()
   return instance;
 }
 
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

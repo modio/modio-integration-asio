@@ -28,7 +28,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 namespace detail {
 
 // Class to adapt an append_t as a completion handler.
@@ -72,10 +72,10 @@ asio_handler_allocate(std::size_t size,
     append_handler<Handler>* this_handler)
 {
 #if defined(ASIO_NO_DEPRECATED)
-  asio_handler_alloc_helpers::allocate(size, this_handler->handler_);
+  ModioAsio::asio_handler_alloc_helpers::allocate(size, this_handler->handler_);
   return asio_handler_allocate_is_no_longer_used();
 #else // defined(ASIO_NO_DEPRECATED)
-  return asio_handler_alloc_helpers::allocate(
+  return ModioAsio::asio_handler_alloc_helpers::allocate(
       size, this_handler->handler_);
 #endif // defined(ASIO_NO_DEPRECATED)
 }
@@ -85,7 +85,7 @@ inline asio_handler_deallocate_is_deprecated
 asio_handler_deallocate(void* pointer, std::size_t size,
     append_handler<Handler>* this_handler)
 {
-  asio_handler_alloc_helpers::deallocate(
+  ModioAsio::asio_handler_alloc_helpers::deallocate(
       pointer, size, this_handler->handler_);
 #if defined(ASIO_NO_DEPRECATED)
   return asio_handler_deallocate_is_no_longer_used();
@@ -96,7 +96,7 @@ template <typename Handler>
 inline bool asio_handler_is_continuation(
     append_handler<Handler>* this_handler)
 {
-  return asio_handler_cont_helpers::is_continuation(
+  return ModioAsio::asio_handler_cont_helpers::is_continuation(
       this_handler->handler_);
 }
 
@@ -105,7 +105,7 @@ inline asio_handler_invoke_is_deprecated
 asio_handler_invoke(Function& function,
     append_handler<Handler>* this_handler)
 {
-  asio_handler_invoke_helpers::invoke(
+  ModioAsio::asio_handler_invoke_helpers::invoke(
       function, this_handler->handler_);
 #if defined(ASIO_NO_DEPRECATED)
   return asio_handler_invoke_is_no_longer_used();
@@ -117,7 +117,7 @@ inline asio_handler_invoke_is_deprecated
 asio_handler_invoke(const Function& function,
     append_handler<Handler>* this_handler)
 {
-  asio_handler_invoke_helpers::invoke(
+  ModioAsio::asio_handler_invoke_helpers::invoke(
       function, this_handler->handler_);
 #if defined(ASIO_NO_DEPRECATED)
   return asio_handler_invoke_is_no_longer_used();
@@ -209,7 +209,7 @@ struct associator<Associator,
 
 #endif // !defined(GENERATING_DOCUMENTATION)
 
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

@@ -20,7 +20,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 namespace ip {
 
 template <typename> class basic_address_iterator;
@@ -155,7 +155,7 @@ private:
 typedef basic_address_iterator<address_v4> address_v4_iterator;
 
 } // namespace ip
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

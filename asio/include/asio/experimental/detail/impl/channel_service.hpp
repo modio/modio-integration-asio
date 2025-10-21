@@ -17,13 +17,13 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 namespace experimental {
 namespace detail {
 
 template <typename Mutex>
 inline channel_service<Mutex>::channel_service(execution_context& ctx)
-  : asio::detail::execution_context_service_base<channel_service>(ctx),
+  : ModioAsio::detail::execution_context_service_base<channel_service>(ctx),
     mutex_(),
     impl_list_(0)
 {
@@ -33,8 +33,8 @@ template <typename Mutex>
 inline void channel_service<Mutex>::shutdown()
 {
   // Abandon all pending operations.
-  asio::detail::op_queue<channel_operation> ops;
-  asio::detail::mutex::scoped_lock lock(mutex_);
+  ModioAsio::detail::op_queue<channel_operation> ops;
+  ModioAsio::detail::mutex::scoped_lock lock(mutex_);
   base_implementation_type* impl = impl_list_;
   while (impl)
   {
@@ -53,7 +53,7 @@ inline void channel_service<Mutex>::construct(
   impl.send_state_ = max_buffer_size ? buffer : block;
 
   // Insert implementation into linked list of all implementations.
-  asio::detail::mutex::scoped_lock lock(mutex_);
+  ModioAsio::detail::mutex::scoped_lock lock(mutex_);
   impl.next_ = impl_list_;
   impl.prev_ = 0;
   if (impl_list_)
@@ -85,7 +85,7 @@ void channel_service<Mutex>::move_construct(
   impl.buffer_move_from(other_impl);
 
   // Insert implementation into linked list of all implementations.
-  asio::detail::mutex::scoped_lock lock(mutex_);
+  ModioAsio::detail::mutex::scoped_lock lock(mutex_);
   impl.next_ = impl_list_;
   impl.prev_ = 0;
   if (impl_list_)
@@ -106,7 +106,7 @@ void channel_service<Mutex>::move_assign(
   if (this != &other_service)
   {
     // Remove implementation from linked list of all implementations.
-    asio::detail::mutex::scoped_lock lock(mutex_);
+    ModioAsio::detail::mutex::scoped_lock lock(mutex_);
     if (impl_list_ == &impl)
       impl_list_ = impl.next_;
     if (impl.prev_)
@@ -127,7 +127,7 @@ void channel_service<Mutex>::move_assign(
   if (this != &other_service)
   {
     // Insert implementation into linked list of all implementations.
-    asio::detail::mutex::scoped_lock lock(other_service.mutex_);
+    ModioAsio::detail::mutex::scoped_lock lock(other_service.mutex_);
     impl.next_ = other_service.impl_list_;
     impl.prev_ = 0;
     if (other_service.impl_list_)
@@ -141,7 +141,7 @@ inline void channel_service<Mutex>::base_destroy(
     channel_service<Mutex>::base_implementation_type& impl)
 {
   // Remove implementation from linked list of all implementations.
-  asio::detail::mutex::scoped_lock lock(mutex_);
+  ModioAsio::detail::mutex::scoped_lock lock(mutex_);
   if (impl_list_ == &impl)
     impl_list_ = impl.next_;
   if (impl.prev_)
@@ -262,7 +262,7 @@ void channel_service<Mutex>::cancel_by_key(
 
   typename Mutex::scoped_lock lock(impl.mutex_);
 
-  asio::detail::op_queue<channel_operation> other_ops;
+  ModioAsio::detail::op_queue<channel_operation> other_ops;
   while (channel_operation* op = impl.waiters_.front())
   {
     if (op->cancellation_key_ == cancellation_key)
@@ -506,7 +506,7 @@ bool channel_service<Mutex>::try_receive(
         impl.send_state_ = (impl.send_state_ == closed) ? closed : buffer;
       }
       lock.unlock();
-      asio::detail::non_const_lvalue<Handler> handler2(handler);
+      ModioAsio::detail::non_const_lvalue<Handler> handler2(handler);
       channel_handler<payload_type, typename decay<Handler>::type>(
           ASIO_MOVE_CAST(payload_type)(payload), handler2.value)();
       return true;
@@ -521,7 +521,7 @@ bool channel_service<Mutex>::try_receive(
       if (impl.waiters_.front() == 0)
         impl.receive_state_ = (impl.send_state_ == closed) ? closed : block;
       lock.unlock();
-      asio::detail::non_const_lvalue<Handler> handler2(handler);
+      ModioAsio::detail::non_const_lvalue<Handler> handler2(handler);
       channel_handler<payload_type, typename decay<Handler>::type>(
           ASIO_MOVE_CAST(payload_type)(payload), handler2.value)();
       return true;
@@ -602,7 +602,7 @@ void channel_service<Mutex>::start_receive_op(
 
 } // namespace detail
 } // namespace experimental
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

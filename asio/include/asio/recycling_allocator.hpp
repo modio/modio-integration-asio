@@ -20,7 +20,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 
 /// An allocator that caches memory blocks in thread-local storage for reuse.
 /**
@@ -131,7 +131,7 @@ public:
   }
 };
 
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

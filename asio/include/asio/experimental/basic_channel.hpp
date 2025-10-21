@@ -25,7 +25,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 namespace experimental {
 namespace detail {
 
@@ -104,7 +104,7 @@ class basic_channel
 private:
   class initiate_async_send;
   class initiate_async_receive;
-  typedef detail::channel_service<asio::detail::null_mutex> service_type;
+  typedef detail::channel_service<ModioAsio::detail::null_mutex> service_type;
   typedef typename service_type::template implementation_type<
       Traits, Signatures...>::payload_type payload_type;
 
@@ -146,7 +146,7 @@ public:
    * in the channel.
    */
   basic_channel(const executor_type& ex, std::size_t max_buffer_size = 0)
-    : service_(&asio::use_service<service_type>(
+    : service_(&ModioAsio::use_service<service_type>(
             basic_channel::get_context(ex))),
       impl_(),
       executor_(ex)
@@ -171,7 +171,7 @@ public:
         is_convertible<ExecutionContext&, execution_context&>::value,
         defaulted_constraint
       >::type = defaulted_constraint())
-    : service_(&asio::use_service<service_type>(context)),
+    : service_(&ModioAsio::use_service<service_type>(context)),
       impl_(),
       executor_(context.get_executor())
   {
@@ -314,7 +314,7 @@ public:
   /// Cancel all asynchronous operations waiting on the channel.
   /**
    * All outstanding send operations will complete with the error
-   * @c asio::experimental::error::channel_cancelled. Outstanding receive
+   * @c ModioAsio::experimental::error::channel_cancelled. Outstanding receive
    * operations complete with the result as determined by the channel traits.
    */
   void cancel()
@@ -349,10 +349,10 @@ public:
   /// Asynchronously send a message.
   /**
    * @par Completion Signature
-   * @code void(asio::error_code) @endcode
+   * @code void(ModioAsio::error_code) @endcode
    */
   template <typename... Args,
-      ASIO_COMPLETION_TOKEN_FOR(void (asio::error_code))
+      ASIO_COMPLETION_TOKEN_FOR(void (ModioAsio::error_code))
         CompletionToken ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(executor_type)>
   auto async_send(ASIO_MOVE_ARG(Args)... args,
       ASIO_MOVE_ARG(CompletionToken) token);
@@ -405,7 +405,7 @@ private:
   static execution_context& get_context(const T& t,
       typename enable_if<execution::is_executor<T>::value>::type* = 0)
   {
-    return asio::query(t, execution::context);
+    return ModioAsio::query(t, execution::context);
   }
 
   // Helper function to get an executor's context.
@@ -435,7 +435,7 @@ private:
     void operator()(ASIO_MOVE_ARG(SendHandler) handler,
         ASIO_MOVE_ARG(payload_type) payload) const
     {
-      asio::detail::non_const_lvalue<SendHandler> handler2(handler);
+      ModioAsio::detail::non_const_lvalue<SendHandler> handler2(handler);
       self_->service_->async_send(self_->impl_,
           ASIO_MOVE_CAST(payload_type)(payload),
           handler2.value, self_->get_executor());
@@ -463,7 +463,7 @@ private:
     template <typename ReceiveHandler>
     void operator()(ASIO_MOVE_ARG(ReceiveHandler) handler) const
     {
-      asio::detail::non_const_lvalue<ReceiveHandler> handler2(handler);
+      ModioAsio::detail::non_const_lvalue<ReceiveHandler> handler2(handler);
       self_->service_->async_receive(self_->impl_,
           handler2.value, self_->get_executor());
     }
@@ -484,7 +484,7 @@ private:
 };
 
 } // namespace experimental
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

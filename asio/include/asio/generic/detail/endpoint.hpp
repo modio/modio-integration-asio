@@ -22,7 +22,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 namespace generic {
 namespace detail {
 
@@ -67,13 +67,13 @@ public:
   }
 
   // Get the underlying endpoint in the native type.
-  asio::detail::socket_addr_type* data()
+  ModioAsio::detail::socket_addr_type* data()
   {
     return &data_.base;
   }
 
   // Get the underlying endpoint in the native type.
-  const asio::detail::socket_addr_type* data() const
+  const ModioAsio::detail::socket_addr_type* data() const
   {
     return &data_.base;
   }
@@ -90,7 +90,7 @@ public:
   // Get the capacity of the endpoint in the native type.
   std::size_t capacity() const
   {
-    return sizeof(asio::detail::sockaddr_storage_type);
+    return sizeof(ModioAsio::detail::sockaddr_storage_type);
   }
 
   // Compare two endpoints for equality.
@@ -105,8 +105,8 @@ private:
   // The underlying socket address.
   union data_union
   {
-    asio::detail::socket_addr_type base;
-    asio::detail::sockaddr_storage_type generic;
+    ModioAsio::detail::socket_addr_type base;
+    ModioAsio::detail::sockaddr_storage_type generic;
   } data_;
 
   // The length of the socket address stored in the endpoint.
@@ -122,7 +122,7 @@ private:
 
 } // namespace detail
 } // namespace generic
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

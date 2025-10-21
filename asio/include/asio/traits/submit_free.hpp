@@ -28,7 +28,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 namespace traits {
 
 template <typename S, typename R, typename = void>
@@ -105,7 +105,7 @@ struct submit_free :
 };
 
 } // namespace traits
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

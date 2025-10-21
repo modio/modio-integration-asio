@@ -21,7 +21,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 namespace ip {
 namespace unicast {
 
@@ -32,18 +32,18 @@ namespace unicast {
  * @par Examples
  * Setting the option:
  * @code
- * asio::ip::udp::socket socket(my_context);
+ * ModioAsio::ip::udp::socket socket(my_context);
  * ...
- * asio::ip::unicast::hops option(4);
+ * ModioAsio::ip::unicast::hops option(4);
  * socket.set_option(option);
  * @endcode
  *
  * @par
  * Getting the current option value:
  * @code
- * asio::ip::udp::socket socket(my_context);
+ * ModioAsio::ip::udp::socket socket(my_context);
  * ...
- * asio::ip::unicast::hops option;
+ * ModioAsio::ip::unicast::hops option;
  * socket.get_option(option);
  * int ttl = option.value();
  * @endcode
@@ -54,7 +54,7 @@ namespace unicast {
 #if defined(GENERATING_DOCUMENTATION)
 typedef implementation_defined hops;
 #else
-typedef asio::ip::detail::socket_option::unicast_hops<
+typedef ModioAsio::ip::detail::socket_option::unicast_hops<
   ASIO_OS_DEF(IPPROTO_IP),
   ASIO_OS_DEF(IP_TTL),
   ASIO_OS_DEF(IPPROTO_IPV6),
@@ -63,7 +63,7 @@ typedef asio::ip::detail::socket_option::unicast_hops<
 
 } // namespace unicast
 } // namespace ip
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

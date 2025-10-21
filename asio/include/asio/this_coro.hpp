@@ -20,7 +20,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 namespace this_coro {
 
 /// Awaitable type that returns the executor of the current coroutine.
@@ -50,14 +50,14 @@ struct cancellation_state_t
 /// coroutine.
 /**
  * @par Example
- * @code asio::awaitable<void> my_coroutine()
+ * @code ModioAsio::awaitable<void> my_coroutine()
  * {
- *   asio::cancellation_state cs
- *     = co_await asio::this_coro::cancellation_state;
+ *   ModioAsio::cancellation_state cs
+ *     = co_await ModioAsio::this_coro::cancellation_state;
  *
  *   // ...
  *
- *   if (cs.cancelled() != asio::cancellation_type::none)
+ *   if (cs.cancelled() != ModioAsio::cancellation_type::none)
  *     // ...
  * } @endcode
  */
@@ -74,19 +74,19 @@ __declspec(selectany) cancellation_state_t cancellation_state;
 /**
  * Let <tt>P</tt> be the cancellation slot associated with the current
  * coroutine's @ref co_spawn completion handler. Assigns a new
- * asio::cancellation_state object <tt>S</tt>, constructed as
+ * ModioAsio::cancellation_state object <tt>S</tt>, constructed as
  * <tt>S(P)</tt>, into the current coroutine's cancellation state object.
  *
  * @par Example
- * @code asio::awaitable<void> my_coroutine()
+ * @code ModioAsio::awaitable<void> my_coroutine()
  * {
- *   co_await asio::this_coro::reset_cancellation_state();
+ *   co_await ModioAsio::this_coro::reset_cancellation_state();
  *
  *   // ...
  * } @endcode
  *
  * @note The cancellation state is shared by all coroutines in the same "thread
- * of execution" that was created using asio::co_spawn.
+ * of execution" that was created using ModioAsio::co_spawn.
  */
 ASIO_NODISCARD ASIO_CONSTEXPR unspecified
 reset_cancellation_state();
@@ -96,21 +96,21 @@ reset_cancellation_state();
 /**
  * Let <tt>P</tt> be the cancellation slot associated with the current
  * coroutine's @ref co_spawn completion handler. Assigns a new
- * asio::cancellation_state object <tt>S</tt>, constructed as <tt>S(P,
+ * ModioAsio::cancellation_state object <tt>S</tt>, constructed as <tt>S(P,
  * std::forward<Filter>(filter))</tt>, into the current coroutine's
  * cancellation state object.
  *
  * @par Example
- * @code asio::awaitable<void> my_coroutine()
+ * @code ModioAsio::awaitable<void> my_coroutine()
  * {
- *   co_await asio::this_coro::reset_cancellation_state(
- *       asio::enable_partial_cancellation());
+ *   co_await ModioAsio::this_coro::reset_cancellation_state(
+ *       ModioAsio::enable_partial_cancellation());
  *
  *   // ...
  * } @endcode
  *
  * @note The cancellation state is shared by all coroutines in the same "thread
- * of execution" that was created using asio::co_spawn.
+ * of execution" that was created using ModioAsio::co_spawn.
  */
 template <typename Filter>
 ASIO_NODISCARD ASIO_CONSTEXPR unspecified
@@ -121,23 +121,23 @@ reset_cancellation_state(ASIO_MOVE_ARG(Filter) filter);
 /**
  * Let <tt>P</tt> be the cancellation slot associated with the current
  * coroutine's @ref co_spawn completion handler. Assigns a new
- * asio::cancellation_state object <tt>S</tt>, constructed as <tt>S(P,
+ * ModioAsio::cancellation_state object <tt>S</tt>, constructed as <tt>S(P,
  * std::forward<InFilter>(in_filter),
  * std::forward<OutFilter>(out_filter))</tt>, into the current coroutine's
  * cancellation state object.
  *
  * @par Example
- * @code asio::awaitable<void> my_coroutine()
+ * @code ModioAsio::awaitable<void> my_coroutine()
  * {
- *   co_await asio::this_coro::reset_cancellation_state(
- *       asio::enable_partial_cancellation(),
- *       asio::disable_cancellation());
+ *   co_await ModioAsio::this_coro::reset_cancellation_state(
+ *       ModioAsio::enable_partial_cancellation(),
+ *       ModioAsio::disable_cancellation());
  *
  *   // ...
  * } @endcode
  *
  * @note The cancellation state is shared by all coroutines in the same "thread
- * of execution" that was created using asio::co_spawn.
+ * of execution" that was created using ModioAsio::co_spawn.
  */
 template <typename InFilter, typename OutFilter>
 ASIO_NODISCARD ASIO_CONSTEXPR unspecified
@@ -149,9 +149,9 @@ reset_cancellation_state(
 /// coroutine throws if trying to suspend when it has been cancelled.
 /**
  * @par Example
- * @code asio::awaitable<void> my_coroutine()
+ * @code ModioAsio::awaitable<void> my_coroutine()
  * {
- *   if (co_await asio::this_coro::throw_if_cancelled)
+ *   if (co_await ModioAsio::this_coro::throw_if_cancelled)
  *     // ...
  *
  *   // ...
@@ -164,9 +164,9 @@ throw_if_cancelled();
 /// coroutine throws if trying to suspend when it has been cancelled.
 /**
  * @par Example
- * @code asio::awaitable<void> my_coroutine()
+ * @code ModioAsio::awaitable<void> my_coroutine()
  * {
- *   co_await asio::this_coro::throw_if_cancelled(false);
+ *   co_await ModioAsio::this_coro::throw_if_cancelled(false);
  *
  *   // ...
  * } @endcode
@@ -273,7 +273,7 @@ throw_if_cancelled(bool value)
 #endif // defined(GENERATING_DOCUMENTATION)
 
 } // namespace this_coro
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

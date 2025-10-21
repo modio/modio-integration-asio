@@ -26,7 +26,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 namespace detail {
 
 template <typename Handler, typename IoExecutor>
@@ -35,7 +35,7 @@ class io_uring_null_buffers_op : public io_uring_operation
 public:
   ASIO_DEFINE_HANDLER_PTR(io_uring_null_buffers_op);
 
-  io_uring_null_buffers_op(const asio::error_code& success_ec,
+  io_uring_null_buffers_op(const ModioAsio::error_code& success_ec,
       int descriptor, int poll_flags, Handler& handler, const IoExecutor& io_ex)
     : io_uring_operation(success_ec,
         &io_uring_null_buffers_op::do_prepare,
@@ -61,12 +61,12 @@ public:
   }
 
   static void do_complete(void* owner, operation* base,
-      const asio::error_code& /*ec*/,
+      const ModioAsio::error_code& /*ec*/,
       std::size_t /*bytes_transferred*/)
   {
     // Take ownership of the handler object.
     io_uring_null_buffers_op* o(static_cast<io_uring_null_buffers_op*>(base));
-    ptr p = { asio::detail::addressof(o->handler_), o, o };
+    ptr p = { ModioAsio::detail::addressof(o->handler_), o, o };
 
     ASIO_HANDLER_COMPLETION((*o));
 
@@ -83,9 +83,9 @@ public:
     // with the handler. Consequently, a local copy of the handler is required
     // to ensure that any owning sub-object remains valid until after we have
     // deallocated the memory here.
-    detail::binder2<Handler, asio::error_code, std::size_t>
+    detail::binder2<Handler, ModioAsio::error_code, std::size_t>
       handler(o->handler_, o->ec_, o->bytes_transferred_);
-    p.h = asio::detail::addressof(handler.handler_);
+    p.h = ModioAsio::detail::addressof(handler.handler_);
     p.reset();
 
     // Make the upcall if required.
@@ -106,7 +106,7 @@ private:
 };
 
 } // namespace detail
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

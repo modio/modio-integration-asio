@@ -24,7 +24,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 namespace detail {
 
 // Mutex adapter used to conditionally enable or disable locking.
@@ -109,11 +109,11 @@ public:
   }
 
 private:
-  asio::detail::event event_;
+  ModioAsio::detail::event event_;
 };
 
 } // namespace detail
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

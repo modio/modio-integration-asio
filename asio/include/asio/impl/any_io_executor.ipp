@@ -23,7 +23,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 
 any_io_executor::any_io_executor() ASIO_NOEXCEPT
   : base_type()
@@ -120,7 +120,7 @@ any_io_executor any_io_executor::prefer(
   return static_cast<const base_type&>(*this).prefer(p);
 }
 
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

@@ -35,7 +35,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 namespace ip {
 
 template <typename> class basic_address_iterator;
@@ -45,7 +45,7 @@ typedef uint_least32_t scope_id_type;
 
 /// Implements IP version 6 style addresses.
 /**
- * The asio::ip::address_v6 class provides the ability to use and
+ * The ModioAsio::ip::address_v6 class provides the ability to use and
  * manipulate IP version 6 addresses.
  *
  * @par Thread Safety
@@ -63,7 +63,7 @@ public:
 #if defined(GENERATING_DOCUMENTATION)
   typedef array<unsigned char, 16> bytes_type;
 #else
-  typedef asio::detail::array<unsigned char, 16> bytes_type;
+  typedef ModioAsio::detail::array<unsigned char, 16> bytes_type;
 #endif
 
   /// Default constructor.
@@ -132,7 +132,7 @@ public:
 
 #if !defined(ASIO_NO_DEPRECATED)
   /// (Deprecated: Use other overload.) Get the address as a string.
-  ASIO_DECL std::string to_string(asio::error_code& ec) const;
+  ASIO_DECL std::string to_string(ModioAsio::error_code& ec) const;
 
   /// (Deprecated: Use make_address_v6().) Create an IPv6 address from an IP
   /// address string.
@@ -141,7 +141,7 @@ public:
   /// (Deprecated: Use make_address_v6().) Create an IPv6 address from an IP
   /// address string.
   static address_v6 from_string(
-      const char* str, asio::error_code& ec);
+      const char* str, ModioAsio::error_code& ec);
 
   /// (Deprecated: Use make_address_v6().) Create an IPv6 address from an IP
   /// address string.
@@ -150,7 +150,7 @@ public:
   /// (Deprecated: Use make_address_v6().) Create an IPv6 address from an IP
   /// address string.
   static address_v6 from_string(
-      const std::string& str, asio::error_code& ec);
+      const std::string& str, ModioAsio::error_code& ec);
 
   /// (Deprecated: Use make_address_v4().) Converts an IPv4-mapped or
   /// IPv4-compatible address to an IPv4 address.
@@ -271,7 +271,7 @@ private:
   friend class basic_address_iterator<address_v6>;
 
   // The underlying IPv6 address.
-  asio::detail::in6_addr_type addr_;
+  ModioAsio::detail::in6_addr_type addr_;
 
   // The scope ID associated with the address.
   scope_id_type scope_id_;
@@ -298,7 +298,7 @@ ASIO_DECL address_v6 make_address_v6(const char* str);
  * @relates address_v6
  */
 ASIO_DECL address_v6 make_address_v6(const char* str,
-    asio::error_code& ec) ASIO_NOEXCEPT;
+    ModioAsio::error_code& ec) ASIO_NOEXCEPT;
 
 /// Createan IPv6 address from an IP address string.
 /**
@@ -311,7 +311,7 @@ ASIO_DECL address_v6 make_address_v6(const std::string& str);
  * @relates address_v6
  */
 ASIO_DECL address_v6 make_address_v6(const std::string& str,
-    asio::error_code& ec) ASIO_NOEXCEPT;
+    ModioAsio::error_code& ec) ASIO_NOEXCEPT;
 
 #if defined(ASIO_HAS_STRING_VIEW) \
   || defined(GENERATING_DOCUMENTATION)
@@ -327,7 +327,7 @@ ASIO_DECL address_v6 make_address_v6(string_view str);
  * @relates address_v6
  */
 ASIO_DECL address_v6 make_address_v6(string_view str,
-    asio::error_code& ec) ASIO_NOEXCEPT;
+    ModioAsio::error_code& ec) ASIO_NOEXCEPT;
 
 #endif // defined(ASIO_HAS_STRING_VIEW)
        //  || defined(GENERATING_DOCUMENTATION)
@@ -362,7 +362,7 @@ ASIO_DECL address_v6 make_address_v6(
  *
  * @return The output stream.
  *
- * @relates asio::ip::address_v6
+ * @relates ModioAsio::ip::address_v6
  */
 template <typename Elem, typename Traits>
 std::basic_ostream<Elem, Traits>& operator<<(
@@ -371,18 +371,18 @@ std::basic_ostream<Elem, Traits>& operator<<(
 #endif // !defined(ASIO_NO_IOSTREAM)
 
 } // namespace ip
-} // namespace asio
+} // namespace ModioAsio
 
 #if defined(ASIO_HAS_STD_HASH)
 namespace std {
 
 template <>
-struct hash<asio::ip::address_v6>
+struct hash<ModioAsio::ip::address_v6>
 {
-  std::size_t operator()(const asio::ip::address_v6& addr)
+  std::size_t operator()(const ModioAsio::ip::address_v6& addr)
     const ASIO_NOEXCEPT
   {
-    const asio::ip::address_v6::bytes_type bytes = addr.to_bytes();
+    const ModioAsio::ip::address_v6::bytes_type bytes = addr.to_bytes();
     std::size_t result = static_cast<std::size_t>(addr.scope_id());
     combine_4_bytes(result, &bytes[0]);
     combine_4_bytes(result, &bytes[4]);

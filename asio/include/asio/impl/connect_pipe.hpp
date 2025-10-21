@@ -24,20 +24,20 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 
 template <typename Executor1, typename Executor2>
 void connect_pipe(basic_readable_pipe<Executor1>& read_end,
     basic_writable_pipe<Executor2>& write_end)
 {
-  asio::error_code ec;
-  asio::connect_pipe(read_end, write_end, ec);
-  asio::detail::throw_error(ec, "connect_pipe");
+  ModioAsio::error_code ec;
+  ModioAsio::connect_pipe(read_end, write_end, ec);
+  ModioAsio::detail::throw_error(ec, "connect_pipe");
 }
 
 template <typename Executor1, typename Executor2>
 ASIO_SYNC_OP_VOID connect_pipe(basic_readable_pipe<Executor1>& read_end,
-    basic_writable_pipe<Executor2>& write_end, asio::error_code& ec)
+    basic_writable_pipe<Executor2>& write_end, ModioAsio::error_code& ec)
 {
   detail::native_pipe_handle p[2];
   detail::create_pipe(p, ec);
@@ -55,7 +55,7 @@ ASIO_SYNC_OP_VOID connect_pipe(basic_readable_pipe<Executor1>& read_end,
   write_end.assign(p[1], ec);
   if (ec)
   {
-    asio::error_code temp_ec;
+    ModioAsio::error_code temp_ec;
     read_end.close(temp_ec);
     detail::close_pipe(p[1]);
     ASIO_SYNC_OP_VOID_RETURN(ec);
@@ -64,7 +64,7 @@ ASIO_SYNC_OP_VOID connect_pipe(basic_readable_pipe<Executor1>& read_end,
   ASIO_SYNC_OP_VOID_RETURN(ec);
 }
 
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

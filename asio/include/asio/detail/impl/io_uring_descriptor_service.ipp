@@ -24,13 +24,13 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 namespace detail {
 
 io_uring_descriptor_service::io_uring_descriptor_service(
     execution_context& context)
   : execution_context_service_base<io_uring_descriptor_service>(context),
-    io_uring_service_(asio::use_service<io_uring_service>(context))
+    io_uring_service_(ModioAsio::use_service<io_uring_service>(context))
 {
   io_uring_service_.init_task();
 }
@@ -88,19 +88,19 @@ void io_uring_descriptor_service::destroy(
           "descriptor", &impl, impl.descriptor_, "close"));
 
     io_uring_service_.deregister_io_object(impl.io_object_data_);
-    asio::error_code ignored_ec;
+    ModioAsio::error_code ignored_ec;
     descriptor_ops::close(impl.descriptor_, impl.state_, ignored_ec);
     io_uring_service_.cleanup_io_object(impl.io_object_data_);
   }
 }
 
-asio::error_code io_uring_descriptor_service::assign(
+ModioAsio::error_code io_uring_descriptor_service::assign(
     io_uring_descriptor_service::implementation_type& impl,
-    const native_handle_type& native_descriptor, asio::error_code& ec)
+    const native_handle_type& native_descriptor, ModioAsio::error_code& ec)
 {
   if (is_open(impl))
   {
-    ec = asio::error::already_open;
+    ec = ModioAsio::error::already_open;
     ASIO_ERROR_LOCATION(ec);
     return ec;
   }
@@ -113,9 +113,9 @@ asio::error_code io_uring_descriptor_service::assign(
   return ec;
 }
 
-asio::error_code io_uring_descriptor_service::close(
+ModioAsio::error_code io_uring_descriptor_service::close(
     io_uring_descriptor_service::implementation_type& impl,
-    asio::error_code& ec)
+    ModioAsio::error_code& ec)
 {
   if (is_open(impl))
   {
@@ -161,13 +161,13 @@ io_uring_descriptor_service::release(
   return descriptor;
 }
 
-asio::error_code io_uring_descriptor_service::cancel(
+ModioAsio::error_code io_uring_descriptor_service::cancel(
     io_uring_descriptor_service::implementation_type& impl,
-    asio::error_code& ec)
+    ModioAsio::error_code& ec)
 {
   if (!is_open(impl))
   {
-    ec = asio::error::bad_descriptor;
+    ec = ModioAsio::error::bad_descriptor;
     ASIO_ERROR_LOCATION(ec);
     return ec;
   }
@@ -196,7 +196,7 @@ void io_uring_descriptor_service::start_op(
 }
 
 } // namespace detail
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

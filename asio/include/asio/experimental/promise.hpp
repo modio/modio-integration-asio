@@ -31,7 +31,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 namespace experimental {
 
 template <typename Executor = any_io_executor>
@@ -103,7 +103,7 @@ struct promise<void(Ts...), Executor>
   {
     if (impl_ && !impl_->done)
     {
-      asio::dispatch(impl_->executor,
+      ModioAsio::dispatch(impl_->executor,
           [level, impl = impl_]{impl->cancel.emit(level);});
     }
   }
@@ -157,7 +157,7 @@ private:
       auto cancel = get_associated_cancellation_slot(handler);
       if (self_->done)
       {
-        asio::post(exec,
+        ModioAsio::post(exec,
             [self = self_, h = std::forward<WaitHandler>(handler)]() mutable
             {
               std::apply(std::forward<WaitHandler>(h),
@@ -221,7 +221,7 @@ struct async_result<experimental::use_promise_t<Executor>, R(Args...)>
 
 #endif // !defined(GENERATING_DOCUMENTATION)
 
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

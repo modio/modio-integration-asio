@@ -26,7 +26,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 
 #if defined(GENERATING_DOCUMENTATION)
 
@@ -330,7 +330,7 @@ struct static_query<T, execution::allocator_t<ProtoAllocator>,
 
 #endif // defined(GENERATING_DOCUMENTATION)
 
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

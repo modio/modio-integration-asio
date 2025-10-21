@@ -25,7 +25,7 @@
 
 #include "asio/detail/push_options.hpp"
 
-namespace asio {
+namespace ModioAsio {
 namespace ssl {
 namespace detail {
 
@@ -34,10 +34,10 @@ engine::engine(SSL_CTX* context)
 {
   if (!ssl_)
   {
-    asio::error_code ec(
+    ModioAsio::error_code ec(
         static_cast<int>(::ERR_get_error()),
-        asio::error::get_ssl_category());
-    asio::detail::throw_error(ec, "engine");
+        ModioAsio::error::get_ssl_category());
+    ModioAsio::detail::throw_error(ec, "engine");
   }
 
 #if (OPENSSL_VERSION_NUMBER < 0x10000000L)
@@ -117,26 +117,26 @@ SSL* engine::native_handle()
   return ssl_;
 }
 
-asio::error_code engine::set_verify_mode(
-    verify_mode v, asio::error_code& ec)
+ModioAsio::error_code engine::set_verify_mode(
+    verify_mode v, ModioAsio::error_code& ec)
 {
   ::SSL_set_verify(ssl_, v, ::SSL_get_verify_callback(ssl_));
 
-  ec = asio::error_code();
+  ec = ModioAsio::error_code();
   return ec;
 }
 
-asio::error_code engine::set_verify_depth(
-    int depth, asio::error_code& ec)
+ModioAsio::error_code engine::set_verify_depth(
+    int depth, ModioAsio::error_code& ec)
 {
   ::SSL_set_verify_depth(ssl_, depth);
 
-  ec = asio::error_code();
+  ec = ModioAsio::error_code();
   return ec;
 }
 
-asio::error_code engine::set_verify_callback(
-    verify_callback_base* callback, asio::error_code& ec)
+ModioAsio::error_code engine::set_verify_callback(
+    verify_callback_base* callback, ModioAsio::error_code& ec)
 {
   if (SSL_get_app_data(ssl_))
     delete static_cast<verify_callback_base*>(SSL_get_app_data(ssl_));
@@ -146,7 +146,7 @@ asio::error_code engine::set_verify_callback(
   ::SSL_set_verify(ssl_, ::SSL_get_verify_mode(ssl_),
       &engine::verify_callback_function);
 
-  ec = asio::error_code();
+  ec = ModioAsio::error_code();
   return ec;
 }
 
@@ -174,23 +174,23 @@ int engine::verify_callback_function(int preverified, X509_STORE_CTX* ctx)
 }
 
 engine::want engine::handshake(
-    stream_base::handshake_type type, asio::error_code& ec)
+    stream_base::handshake_type type, ModioAsio::error_code& ec)
 {
-  return perform((type == asio::ssl::stream_base::client)
+  return perform((type == ModioAsio::ssl::stream_base::client)
       ? &engine::do_connect : &engine::do_accept, 0, 0, ec, 0);
 }
 
-engine::want engine::shutdown(asio::error_code& ec)
+engine::want engine::shutdown(ModioAsio::error_code& ec)
 {
   return perform(&engine::do_shutdown, 0, 0, ec, 0);
 }
 
-engine::want engine::write(const asio::const_buffer& data,
-    asio::error_code& ec, std::size_t& bytes_transferred)
+engine::want engine::write(const ModioAsio::const_buffer& data,
+    ModioAsio::error_code& ec, std::size_t& bytes_transferred)
 {
   if (data.size() == 0)
   {
-    ec = asio::error_code();
+    ec = ModioAsio::error_code();
     return engine::want_nothing;
   }
 
@@ -199,12 +199,12 @@ engine::want engine::write(const asio::const_buffer& data,
       data.size(), ec, &bytes_transferred);
 }
 
-engine::want engine::read(const asio::mutable_buffer& data,
-    asio::error_code& ec, std::size_t& bytes_transferred)
+engine::want engine::read(const ModioAsio::mutable_buffer& data,
+    ModioAsio::error_code& ec, std::size_t& bytes_transferred)
 {
   if (data.size() == 0)
   {
-    ec = asio::error_code();
+    ec = ModioAsio::error_code();
     return engine::want_nothing;
   }
 
@@ -212,37 +212,37 @@ engine::want engine::read(const asio::mutable_buffer& data,
       data.size(), ec, &bytes_transferred);
 }
 
-asio::mutable_buffer engine::get_output(
-    const asio::mutable_buffer& data)
+ModioAsio::mutable_buffer engine::get_output(
+    const ModioAsio::mutable_buffer& data)
 {
   int length = ::BIO_read(ext_bio_,
       data.data(), static_cast<int>(data.size()));
 
-  return asio::buffer(data,
+  return ModioAsio::buffer(data,
       length > 0 ? static_cast<std::size_t>(length) : 0);
 }
 
-asio::const_buffer engine::put_input(
-    const asio::const_buffer& data)
+ModioAsio::const_buffer engine::put_input(
+    const ModioAsio::const_buffer& data)
 {
   int length = ::BIO_write(ext_bio_,
       data.data(), static_cast<int>(data.size()));
 
-  return asio::buffer(data +
+  return ModioAsio::buffer(data +
       (length > 0 ? static_cast<std::size_t>(length) : 0));
 }
 
-const asio::error_code& engine::map_error_code(
-    asio::error_code& ec) const
+const ModioAsio::error_code& engine::map_error_code(
+    ModioAsio::error_code& ec) const
 {
   // We only want to map the error::eof code.
-  if (ec != asio::error::eof)
+  if (ec != ModioAsio::error::eof)
     return ec;
 
   // If there's data yet to be read, it's an error.
   if (BIO_wpending(ext_bio_))
   {
-    ec = asio::ssl::error::stream_truncated;
+    ec = ModioAsio::ssl::error::stream_truncated;
     return ec;
   }
 
@@ -256,22 +256,22 @@ const asio::error_code& engine::map_error_code(
   // Otherwise, the peer should have negotiated a proper shutdown.
   if ((::SSL_get_shutdown(ssl_) & SSL_RECEIVED_SHUTDOWN) == 0)
   {
-    ec = asio::ssl::error::stream_truncated;
+    ec = ModioAsio::ssl::error::stream_truncated;
   }
 
   return ec;
 }
 
 #if (OPENSSL_VERSION_NUMBER < 0x10000000L)
-asio::detail::static_mutex& engine::accept_mutex()
+ModioAsio::detail::static_mutex& engine::accept_mutex()
 {
-  static asio::detail::static_mutex mutex = ASIO_STATIC_MUTEX_INIT;
+  static ModioAsio::detail::static_mutex mutex = ASIO_STATIC_MUTEX_INIT;
   return mutex;
 }
 #endif // (OPENSSL_VERSION_NUMBER < 0x10000000L)
 
 engine::want engine::perform(int (engine::* op)(void*, std::size_t),
-    void* data, std::size_t length, asio::error_code& ec,
+    void* data, std::size_t length, ModioAsio::error_code& ec,
     std::size_t* bytes_transferred)
 {
   std::size_t pending_output_before = ::BIO_ctrl_pending(ext_bio_);
@@ -283,8 +283,8 @@ engine::want engine::perform(int (engine::* op)(void*, std::size_t),
 
   if (ssl_error == SSL_ERROR_SSL)
   {
-    ec = asio::error_code(sys_error,
-        asio::error::get_ssl_category());
+    ec = ModioAsio::error_code(sys_error,
+        ModioAsio::error::get_ssl_category());
     return pending_output_after > pending_output_before
       ? want_output : want_nothing;
   }
@@ -293,12 +293,12 @@ engine::want engine::perform(int (engine::* op)(void*, std::size_t),
   {
     if (sys_error == 0)
     {
-      ec = asio::ssl::error::unspecified_system_error;
+      ec = ModioAsio::ssl::error::unspecified_system_error;
     }
     else
     {
-      ec = asio::error_code(sys_error,
-          asio::error::get_ssl_category());
+      ec = ModioAsio::error_code(sys_error,
+          ModioAsio::error::get_ssl_category());
     }
     return pending_output_after > pending_output_before
       ? want_output : want_nothing;
@@ -309,32 +309,32 @@ engine::want engine::perform(int (engine::* op)(void*, std::size_t),
 
   if (ssl_error == SSL_ERROR_WANT_WRITE)
   {
-    ec = asio::error_code();
+    ec = ModioAsio::error_code();
     return want_output_and_retry;
   }
   else if (pending_output_after > pending_output_before)
   {
-    ec = asio::error_code();
+    ec = ModioAsio::error_code();
     return result > 0 ? want_output : want_output_and_retry;
   }
   else if (ssl_error == SSL_ERROR_WANT_READ)
   {
-    ec = asio::error_code();
+    ec = ModioAsio::error_code();
     return want_input_and_retry;
   }
   else if (ssl_error == SSL_ERROR_ZERO_RETURN)
   {
-    ec = asio::error::eof;
+    ec = ModioAsio::error::eof;
     return want_nothing;
   }
   else if (ssl_error == SSL_ERROR_NONE)
   {
-    ec = asio::error_code();
+    ec = ModioAsio::error_code();
     return want_nothing;
   }
   else
   {
-    ec = asio::ssl::error::unexpected_result;
+    ec = ModioAsio::ssl::error::unexpected_result;
     return want_nothing;
   }
 }
@@ -342,7 +342,7 @@ engine::want engine::perform(int (engine::* op)(void*, std::size_t),
 int engine::do_accept(void*, std::size_t)
 {
 #if (OPENSSL_VERSION_NUMBER < 0x10000000L)
-  asio::detail::static_mutex::scoped_lock lock(accept_mutex());
+  ModioAsio::detail::static_mutex::scoped_lock lock(accept_mutex());
 #endif // (OPENSSL_VERSION_NUMBER < 0x10000000L)
   return ::SSL_accept(ssl_);
 }
@@ -374,7 +374,7 @@ int engine::do_write(void* data, std::size_t length)
 
 } // namespace detail
 } // namespace ssl
-} // namespace asio
+} // namespace ModioAsio
 
 #include "asio/detail/pop_options.hpp"
 

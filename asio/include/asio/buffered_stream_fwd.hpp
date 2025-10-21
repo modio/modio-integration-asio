@@ -15,11 +15,11 @@
 # pragma once
 #endif // defined(_MSC_VER) && (_MSC_VER >= 1200)
 
-namespace asio {
+namespace ModioAsio {
 
 template <typename Stream>
 class buffered_stream;
 
-} // namespace asio
+} // namespace ModioAsio
 
 #endif // ASIO_BUFFERED_STREAM_FWD_HPP
